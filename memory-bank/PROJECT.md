@@ -1,89 +1,149 @@
-# Project Identity & Scope: Smart Live TV
+# Project Identity & Scope: Sports Data Platform
 
-Smart Live TV (`smartlivetv.co.uk`) is a legitimate, high-performance sports telemetry platform, live scores aggregator, match fixture guide, and official TV broadcast directory designed for global sports fans. It provides real-time scores, team/league analytics, sports news, and official television broadcast listings across Premier League, Champions League, La Liga, Serie A, UFC, and Formula 1.
+A real-time sports data platform: live football scores, fixtures, league standings, team
+and player statistics, and **official television broadcast listings**.
 
----
+It is an information service. It does **not** sell, resell, or provide access to any
+television or streaming subscription, and does not host or transmit video content.
 
-## 1. Architecture & Domain Boundary Separation
-
-The project enforces a strict boundary between the main sports platform and the commercial store:
-
-*   **Main Domain (`smartlivetv.co.uk`)**: *Target state* — 100% legitimate digital sports hub containing zero grey-market IPTV terminology, illegal streaming claims, or subscription sales; able to pass Google AdSense, SEO, and legal scrutiny.
-    > **⚠️ As of 2026-07-31 this is a goal, not the current state.** An audit found 234 `iptv` matches across 26 live files, IPTV articles surfaced on the homepage, a trial funnel on every `/match/[id]` page, and two live commercial POST endpoints (`/api/orders`, `/api/subscribe`). See `reports/audit-2026-07-31.md`. Do not describe the main domain as clean until Phase 1 of `reports/implementation-plan-2026-07-31.md` is verified complete.
-*   **Store Domain (`smartlivetv-store.com`)**: Standalone commercial store portal. All commercial subscription options, IPTV channel libraries, pricing plans, device setup wizards, and payment checkouts are archived in the `smartlivetv-store/` root folder and targeted for deployment on `smartlivetv-store.com`.
+*   **Repo**: `shad-yy/version-3-clean` (private) · branch `main`
+*   **Domain**: **not yet chosen.** Fully parameterised — see §5.
+*   **Status**: not deployed.
 
 ---
 
-## 2. Product Context & Objectives
+## 1. The two-property split — read this before assuming anything
 
-*   **Primary Purpose**: Capture search traffic during major sports seasons (Premier League, UEFA Champions League, La Liga, Serie A, UFC, F1, and World Cup 2026) by offering reliable real-time match telemetry, official broadcast schedules, and team statistics.
-*   **Core Value Proposition**: "Real-time Sports Telemetry & Official Broadcast Guide" — combining live score widgets (refreshed every 60s), league standings, official broadcast directory listings, and curated sports news in a dark-mode glassmorphism interface.
-*   **Key Audiences**:
-    *   Sports fans looking for real-time scores, fixture times, and official TV channel listings.
-    *   Search engines and review bots looking for structured, compliant, high-authority sports landing pages.
-    *   Store customers redirected via external links (`https://smartlivetv-store.com/buy`).
+This codebase was extracted from an IPTV store. The two now live apart:
 
----
-
-## 3. Technical Stack
-
-| Layer | Technology | Usage & Configuration |
+| | This project | The other one |
 |---|---|---|
-| **Core Framework** | Next.js 14 (App Router) | Handles SSR/ISR, API routing, and static page generation. |
-| **Styling** | Vanilla CSS / TailwindCSS | Dark-themed glassmorphism UI, Framer Motion animations. |
-| **Language** | TypeScript | Strict compilation (`npx tsc --noEmit` verified with 0 errors). |
-| **State & Cache** | Redis / SWR / In-Memory | Aggressive caching layers for API quotas and local state. |
-| **Validation** | TypeScript / Custom Schema | API response validation using `expectedKey` structures. |
-| **Testing** | Playwright & Vitest | End-to-end user flows and unit testing for core API layers. |
-| **Hosting** | Vercel | Production deployments for `smartlivetv.co.uk`. |
+| Folder | `Downloads/Legalizedsmart-live-tv/smart-live-tv` | `Downloads/smart-live-tv` |
+| Repo | `shad-yy/version-3-clean` | `shad-yy/forclaude` |
+| Branch | `main` | `Version-3` |
+| Domain | TBD (global) | `smartlivetv.co.uk` (UK) |
+| What it is | Sports data platform | IPTV/streaming store |
+| Commercial content | **Never** | Yes — intentional |
+
+### ⚠️ The plan changed on 2026-08-11. Earlier notes are wrong.
+
+An earlier version of this file said the clean platform would keep `smartlivetv.co.uk`
+and the store would move to `smartlivetv-store.com`. **That is no longer the plan, and
+`smartlivetv-store.com` is not part of the architecture at all.**
+
+The reversal was driven by Search Console data. Over three months `smartlivetv.co.uk`
+earned **67 clicks at average position 36**, and every page earning them was commercial —
+the homepage titled "IPTV UK from £12/mo", `/ufc`, `/watch/europa-league`,
+`/setup/firestick`. Google has that domain classified as a streaming vendor. Converting
+it to a neutral data site would have discarded its only working pages and started the
+clean platform with a domain whose history actively works against it.
+
+So: the store keeps the domain it already ranks on, and this platform starts fresh.
+
+### Non-negotiable: no association between the two
+
+The point of the split is that search engines and ad networks cannot connect the
+properties. That means:
+
+*   **No links to the store.** Not in the footer, not "our partner store", not a redirect.
+*   **No shared brand identity** — different name, logo, wordmark.
+*   **No shared analytics property, AdSense ID, or WHOIS contact.**
+*   Shared *design system* (colours, type, components) is fine and costs nothing.
+
+The repos have no shared remote and cannot push to each other. Keep it that way.
 
 ---
 
-## 4. Third-Party Integrations
+## 2. Product context
 
-### TheSportsDB (v1)
-*   **Purpose**: Provider for sports leagues, teams, rosters, standings, fixtures, and events.
-*   **Access Pattern**: Fetches go through `lib/api/the-sports-db.ts` utilizing API key `123`.
-*   **Rate Limits**: Free tier allows 30 requests/minute. App is throttled at **25 requests/minute** for safety.
-*   **Caching**: 30 days for static data (leagues, teams, profiles) and 5 min / 1 min for dynamic score events.
-
-### NewsData.io
-*   **Purpose**: Fetches real-time sports news articles.
-*   **Access Pattern**: Unified proxy server-side calling `newsAPI`.
-*   **Quota**: 200 requests/day. Strict fallback to mock news data on failure/exhaustion.
-
-### UFC.com (Scraper)
-*   **Purpose**: Live scraping of UFC events, fighter stats, and fight cards.
-*   **Access Pattern**: HTML parsing via server-side scraper with a strict 5-minute cache.
+*   **Purpose**: capture search traffic for live scores, fixtures and — the actual
+    differentiator — *where to watch* a given fixture in a given country.
+*   **Positioning**: scores are a commodity. ESPN, BBC Sport, FlashScore and SofaScore
+    all do them better and have for years. The defensible ground is
+    **"which channel, in which country, at what local time."** Nobody owns that answer.
+    `components/homepage/broadcast-resolver.tsx` states it on the homepage; the
+    `/watch/[competition]/[country]` matrix is the long-term build.
+*   **Audiences**: fans checking scores and fixtures; fans abroad trying to find a legal
+    broadcaster; search engines and answer engines looking for structured sports data.
 
 ---
 
-## 5. Repository Structure
+## 3. Technical stack
+
+| Layer | Technology | Notes |
+|---|---|---|
+| Framework | Next.js 14 (App Router) | SSR/ISR, API routes, static generation |
+| Styling | TailwindCSS | Dark glassmorphism, Framer Motion |
+| Language | TypeScript | `npx tsc --noEmit` must pass with 0 errors |
+| Cache | In-memory TTL + Upstash Redis | See `PATTERNS.md` §2 |
+| Testing | Vitest + Playwright | 14 unit tests passing |
+| Hosting | Vercel | Not yet deployed |
+
+## 4. Third-party integrations
+
+*   **TheSportsDB (v1)** — leagues, teams, rosters, standings, fixtures, events. Via
+    `lib/api/the-sports-db.ts`, key `123`. Free tier is 30 req/min; **throttled to 25**.
+*   **NewsData.io** — sports news. 200 requests/day, falls back to mock data on exhaustion.
+*   **UFC.com scraper** — events and fight cards, 5-minute cache.
+*   **ESPN** — F1 and MMA scoreboards via `/api/espn/*`. ⚠️ The MMA endpoint currently
+    returns **503** on every homepage load; upstream failure, not ours.
+
+## 5. Changing the domain
+
+Parameterised — no source change required:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://example.com
+NEXT_PUBLIC_SITE_NAME="Example"
+NEXT_PUBLIC_SITE_HOST=example.com
+NEXT_PUBLIC_SUPPORT_EMAIL=support@example.com
+INDEXNOW_HOST=example.com
+```
+
+`lib/config/site-url.ts` is the single source of truth for domain, brand name, host and
+support address. **Do not hardcode a domain anywhere else.** It previously overrode the
+env var in production with a hardcoded constant, which is why a domain change used to be
+a 14-file edit.
+
+Naming note: "SmartScore" was considered and rejected — Musitek has shipped SmartScore
+music software since 1991, GE HealthCare ships SmartScore 4.0, there is a live USPTO
+registration, and both `.com`s are taken. It also names the commodity rather than the moat.
+
+---
+
+## 6. Repository structure
 
 ```
 smart-live-tv/
-├── app/                      # Main Site (smartlivetv.co.uk - Clean Sports Telemetry Hub)
-│   ├── api/                  # Server-side API endpoints & proxies
-│   ├── leagues/              # League listings & standings views
-│   ├── teams/                # Team profile views
-│   ├── scores/               # Live matches and real-time score feeds
-│   ├── watch/                # Clean sports broadcast & matchday guides
-│   ├── buy/ & free-trial/    # Redirect stubs to smartlivetv-store.com
-│   ├── pricing/              # Redirect stub to smartlivetv-store.com/pricing
-│   ├── news/ & blog/         # Sports news articles & editorial content
-│   └── page.tsx              # Homepage (Cleaned of IPTV/sales copy)
-├── components/               # Main Site UI components
-│   ├── homepage/             # Sports score widgets, matchday sliders, service pillars
-│   ├── layout/               # Clean Header (NAV: Scores, Leagues, News, UFC, Blog) & Footer
-│   └── ui/                   # Shared UI primitives (OptimizedImage, ShimmerButton, modals)
-├── smartlivetv-store/        # Archive Folder for Store Site (smartlivetv-store.com)
-│   ├── README.md             # Store setup & architecture documentation
-│   ├── pages/                # Store routes (buy, free-trial, channels, iptv-vs-sky-sports, setup)
-│   ├── components/           # Store components (channel-library, BuyForm, TrialForm, wizards)
-│   └── ui/                   # Store UI elements (PaymentLogos, DeviceIcons, SpeedChecker)
-├── data/                     # Local static data JSONs
-├── lib/                      # Central utilities & core classes
-├── scripts/                  # Automated tool scripts
-├── tsconfig.json             # Excludes smartlivetv-store from main build type checks
-└── memory-bank/              # Persistent memory for AI agents
+├── app/                    # App Router — no commercial routes exist here
+│   ├── api/                # Server-side proxies (no /orders, /subscribe, /speed-test)
+│   ├── scores/             # Live scores + SportsEvent ItemList schema
+│   ├── watch/              # Broadcast guides — the differentiator
+│   ├── leagues/ teams/ players/ events/ match/[id]/
+│   ├── news/ blog/ ufc/
+│   └── page.tsx            # Homepage
+├── components/
+│   ├── homepage/           # incl. broadcast-resolver.tsx (where-to-watch demo)
+│   └── ui/                 # Shared primitives
+├── content/blog/           # ⚠️ SOURCE OF TRUTH for blog. 5 published, 17 drafts.
+├── lib/
+│   ├── api/                # unified-sports-api.ts + low-level clients
+│   ├── config/site-url.ts  # Domain/brand single source of truth
+│   ├── data/               # broadcast-rights.ts — VERIFY before publishing
+│   └── blog/posts.ts       # ⚠️ GENERATED — never edit
+├── scripts/generate-posts.js  # Build guard; fails build on commercial copy
+├── reports/                # audit-2026-07-31.md + implementation plan
+└── memory-bank/            # AUDIT-PROGRESS.md has current status
 ```
+
+### ⚠️ `smartlivetv-store/` is still present and should be removed
+
+A ~1MB archive of IPTV pages, the channel database, checkout forms and excised marketing
+copy. It is excluded from `tsconfig.json` and never built, but it sits in this repo as
+dead weight and as IPTV content inside the "clean" tree.
+
+Its contents now exist as **live routes** in the store repo (`shad-yy/forclaude`) —
+`app/channels`, `app/setup/[device]`, `app/pricing`, `app/buy`, `app/api/orders`,
+`components/channels/channel-library.tsx`. Before deleting, confirm
+`smartlivetv-store/archived-from-main-site.md` (excised marketing copy) is either
+duplicated there or no longer wanted — it is the one file without an obvious counterpart.

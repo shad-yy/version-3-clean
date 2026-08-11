@@ -6,17 +6,58 @@ This file documents the system design guidelines, coding standards, domain bound
 
 ## 1. Domain Separation & Architectural Boundaries
 
-### Dual-Domain Architecture Rule
-To comply with search engine guidelines (Google AdSense), legal standards, and ad review policies, the project strictly separates content into two distinct boundaries:
+### The two properties
 
-1. **Main Sports Telemetry Hub (`smartlivetv.co.uk`)**:
-   - Strictly legitimate content: Live scores, match statistics, team profiles, league tables, sports news, and official television broadcast listings.
-   - **Zero Tolerance**: No IPTV sales claims, channel counts (e.g. 230K+ channels), pricing tables, illegal streaming guides, or subscription checkout components.
-   - All commercial CTAs link externally to `https://smartlivetv-store.com/buy`.
+This codebase was extracted from an IPTV store. They are now separate repos on separate
+domains, and the whole point is that **nothing connects them**.
 
-2. **Commercial Store Portal (`smartlivetv-store.com`)**:
-   - Archived in `smartlivetv-store/` at project root.
-   - Contains subscription pricing, channel directories, device setup wizards (Firestick/Smart TV), and checkout forms.
+| | This project | The store |
+|---|---|---|
+| Repo | `shad-yy/version-3-clean` | `shad-yy/forclaude` |
+| Branch | `main` | `Version-3` |
+| Domain | TBD (global) | `smartlivetv.co.uk` (UK) |
+| Content | Sports data only | IPTV/streaming sales — intentional |
+
+> **The plan reversed on 2026-08-11.** Earlier notes said this platform keeps
+> `smartlivetv.co.uk` and the store moves to `smartlivetv-store.com`. Neither is true.
+> The store keeps the domain it already ranks on; this platform gets a new one.
+> **`smartlivetv-store.com` is not part of the architecture** — do not link to it, do not
+> redirect to it, do not reference it. Three such redirects were removed from
+> `next.config.mjs` on 2026-08-11.
+
+### Zero-tolerance content rule
+
+No IPTV terminology, channel counts, subscription prices, free-trial offers, sideloading
+or device-setup instructions, or checkout components — anywhere in this tree. Not in copy,
+metadata, JSON-LD, alt text, FAQ answers, or blog content.
+
+Enforced mechanically: `scripts/generate-posts.js` runs `assertDomainCompliant()` over
+every published article and **fails the build** on a violation. It validates the **raw MDX
+source**, not the rendered HTML, so link rewriting cannot mask one.
+
+### No association with the store
+
+The separation is about signals, not just words:
+
+*   **No links to the store.** Not in the footer, not "our partner store", not a redirect.
+    One outbound link re-establishes the association the split exists to break.
+*   **No shared brand identity** — different name, logo, wordmark. There is no brand
+    equity to inherit: over three months the store domain earned 67 clicks, and the one
+    unambiguous brand query returned 1 click in that period.
+*   **No shared analytics property, AdSense ID, or WHOIS contact.**
+*   Shared *design system* — colours, typography, component library — is fine.
+
+### Never fabricate data
+
+*   `lib/data/broadcast-rights.ts` carries a `verified` date per competition and is
+    deliberately **competition-level, never fixture-level**: fixture-to-channel mappings
+    change weekly, and a wrong broadcaster is worse than no listing on a site whose entire
+    pitch is accuracy.
+*   Schema must not invent. No `offers`, no substituted `startDate`, no guessed `location`.
+    The `SportsEvent` helper previously emitted a fabricated "£12.00 GBP" Offer pointing
+    at `/pricing` — see the comments in `lib/schema.ts`.
+*   Homepage statistics must be derived from data or removed. Hardcoded "2,500+ matches"
+    and "45+ leagues" claims were deleted for this reason.
 
 ---
 
@@ -56,7 +97,7 @@ Frontend Client Component
 
 ### Type Safety & Build Hygiene
 *   **TypeScript Standard**: Strict TypeScript mode. Run `npx tsc --noEmit` to verify type safety.
-*   **Exclude Store Archive**: `tsconfig.json` excludes `"smartlivetv-store"` so archived store code does not pollute type checks for `smartlivetv.co.uk`.
+*   **Exclude Store Archive**: `tsconfig.json` excludes `"smartlivetv-store"`. That archive is slated for deletion — its contents are live routes in the store repo. See `PROJECT.md` section 6.
 
 ### UI/UX Rules & Asset Rendering
 *   **Image Fallbacks**: Render clean CSS-styled letter avatars showing team/player initials when external APIs do not supply image URLs.

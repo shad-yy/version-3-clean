@@ -202,21 +202,12 @@ const nextConfig = {
         destination: '/watch/premier-league',
         permanent: true,
       },
-      {
-        source: '/buy',
-        destination: 'https://smartlivetv-store.com/buy',
-        permanent: true,
-      },
-      {
-        source: '/pricing',
-        destination: 'https://smartlivetv-store.com/buy',
-        permanent: true,
-      },
-      {
-        source: '/free-trial',
-        destination: 'https://smartlivetv-store.com/buy',
-        permanent: true,
-      },
+      // NOTE: /buy, /pricing and /free-trial previously 301'd to
+      // smartlivetv-store.com. That domain is not part of the plan any more —
+      // the commercial store lives on smartlivetv.co.uk in a separate repo — and
+      // linking there from here would rebuild exactly the association the domain
+      // split exists to break. This site sells nothing, so those paths correctly
+      // 404. Do not re-add a redirect to a commercial domain.
     ]
   },
   webpack: (config, { isServer }) => {

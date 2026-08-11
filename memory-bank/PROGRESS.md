@@ -6,32 +6,75 @@ This file maintains the active development context, records completed tasks, and
 
 ## 1. Active Context
 
-*   **Current Objective**: Complete — not merely claim — domain separation between the main sports platform (`smartlivetv.co.uk`) and the commercial store portal (`smartlivetv-store.com`).
+*   **Current Objective**: finish hardening the clean sports-data platform, then choose a
+    domain and deploy. The domain separation itself is **done** — it is now a repo/domain
+    split, not a cleanup task.
+*   **Repo**: `shad-yy/version-3-clean` (private) · branch `main` · orphan history.
+*   **Domain**: not yet chosen. Parameterised — see `PROJECT.md` §5.
+*   **Status**: `tsc` 0 errors · `next build` succeeds · 14 unit tests passing ·
+    0 IPTV hits across all 22 rendered routes.
 
-### ⚠️ Audit 2026-07-31 — domain separation is NOT complete
+### The split was executed 2026-08-11 — and the strategy inverted
 
-Full multi-persona audit run 2026-07-31. **46 findings (12 🔴 / 14 🟡 / 11 🟢 / 9 💡).**
-Full report: `reports/audit-2026-07-31.md` · Executable plan: `reports/implementation-plan-2026-07-31.md`
+`smartlivetv.co.uk` **keeps the IPTV store**. This platform gets a new domain.
 
-The "Completed Milestones" below and the `[x]` marks in `AUDIT-PROGRESS.md` **overstate what was actually done.** Verified by direct file inspection and live HTTP checks:
+That is the reverse of the plan recorded in the older notes below, and it was decided on
+Search Console data that was not available during the audit: over three months the domain
+earned **67 clicks at average position 36**, and *every* page earning them was commercial.
+Google has that domain classified as a streaming vendor. See `PROJECT.md` §1 for the
+reasoning and the non-negotiable "no association" rules.
 
-*   **234 `iptv` matches across 26 files** outside `smartlivetv-store/` and `memory-bank/`.
-*   **Root cause (new):** `scripts/generate-posts.js` sanitises **3 link hrefs only** — body prose, prices and channel counts pass through. `generateLlmsFull()` writes **raw unsanitised markdown** to `public/llms-full.txt`. Both `npm run dev` and `npm run build` run it first, so **any manual edit to `lib/blog/posts.ts` is destroyed on the next run.** The MDX source in `content/blog/` was never cleaned.
-*   **Still live:** `app/terms/page.tsx` (230,000+ channels, trial, billing — previously recorded "verified clean"); `app/privacy/page.tsx:41`; `app/ufc/page.tsx:10-11,48`; `app/match/[id]/page.tsx:306-318` (trial funnel on *every* match page); `app/watch/europa-league/page.tsx` (£12 ×4, inside FAQ schema); `app/watch/world-cup-2026/page.tsx` (£12 ×3); `public/llms.txt`; `public/llms-full.txt`.
-*   **Live commercial endpoints:** `GET /api/orders` → 405, `GET /api/subscribe` → 405 (routes exist, accept POST), `/api/speed-test` → 200, `/login` → 200. `next.config.mjs` redirects cover the *pages* `/buy`, `/pricing`, `/free-trial` but **not** `/api/*`.
-*   **Homepage surfaces IPTV articles** ("Best IPTV for Premier League", "Is IPTV Legal in the UK?").
+`smartlivetv-store.com` is **not part of the architecture** and never was deployed.
+Anything below referring to it is historical.
+
+### Where the work stands
+
+**`memory-bank/AUDIT-PROGRESS.md` is the source of truth** — per-item status with the
+verification command for each.
+
+*   **Phase 1 (12 critical): complete and verified.** Root cause fixed structurally —
+    `scripts/generate-posts.js` now fails the build on commercial copy and validates the
+    raw MDX source, so the regression cannot recur silently.
+*   **Phase 2 (16 high): 12 done, 3 partial, 1 open.** Open: nonce CSP is *implemented*
+    but Fix 15 (motion guards) is 4 of 13.
+*   **Phase 3 (11 minor): 7 done, 1 partial, 3 open.**
+
+Top of the queue: remaining motion guards · `npm uninstall googleapis` (unused
+devDependency, 6 of 9 advisories; timed out twice at 10 min) · 21 bare `<img>` ·
+converting the 17 drafted fixture guides.
 
 ### Verified-good baseline (do not re-litigate)
 
-`npx tsc --noEmit` → **0 errors**. `next build` → **succeeds** (87.3 kB shared JS; middleware 58.1 kB). Rate limiter **confirmed** at 25 req/min (`RATE_LIMIT_MS = 2400`). Cache TTLs **match** `PATTERNS.md`. **No secrets committed** (`.env.local` untracked). DOMPurify **correctly** wraps both user-HTML injections. Header nav is correct. HSTS / X-Frame-Options / nosniff / Referrer-Policy / Permissions-Policy all present.
+`npx tsc --noEmit` → 0 errors. `next build` → succeeds. Rate limiter confirmed at
+25 req/min (`RATE_LIMIT_MS = 2400`). Cache TTLs match `PATTERNS.md`. No secrets committed.
+DOMPurify wraps both user-HTML injections. HSTS / X-Frame-Options / nosniff /
+Referrer-Policy / Permissions-Policy present. CSP is nonce-based with a fresh nonce per
+response — verified unique across requests.
 
-### Not verified in this audit (no data — do not assume)
+### Still not measured (no data — do not assume)
 
-Core Web Vitals / Lighthouse (no measurements taken) · responsive breakpoints & dark-mode contrast (browser pane could not composite frames) · **GSC data (no GSC MCP connected)** · production behaviour of the live domain (all testing was `localhost:3000`) · `full-audit.mjs` results (Playwright browsers not installed).
+Core Web Vitals / Lighthouse (never measured) · responsive breakpoints and dark-mode
+contrast (browser pane could not composite frames) · production behaviour on a real
+domain (all testing was localhost) · `full-audit.mjs` (Playwright browsers not installed)
+· whether the `sameAs` social profiles exist · Ahrefs/backlink data (connector not authorised).
+
+### Open bugs found in passing
+
+*   `/api/espn/mma/ufc/scoreboard` → **503** on every homepage load. Upstream ESPN
+    failure; the UFC widget degrades silently.
+*   `npm audit` → high-severity advisories in `next`, `postcss`, `sharp`. Resolving needs
+    a breaking Next 14 → 16 upgrade — its own task, deliberately out of scope.
+*   `next.config.mjs` sets `typescript.ignoreBuildErrors` and `eslint.ignoreDuringBuilds`,
+    so failures reach production silently. Run `tsc` manually until Fix 35 lands.
 
 ---
 
 ## 2. Completed Milestones
+
+> **Historical.** The sections below were written while the plan was still
+> "clean platform keeps smartlivetv.co.uk, store moves to smartlivetv-store.com".
+> That plan was reversed on 2026-08-11 (see section 1). The engineering work
+> described is real and landed; the domain names in it are not current.
 
 ### Domain Separation & Store Archival (`smartlivetv-store/`)
 *   **Created Store Archive Directory**: Created `smartlivetv-store/` at project root with full documentation in `smartlivetv-store/README.md`.
@@ -108,15 +151,31 @@ Core Web Vitals / Lighthouse (no measurements taken) · responsive breakpoints &
 
 ## 4. Next Steps
 
-Execute `reports/implementation-plan-2026-07-31.md` **in order**. Top 5 by impact:
+Work the queue in `memory-bank/AUDIT-PROGRESS.md` — it carries per-item status and the
+verification command for each. Highest value first:
 
-1.  **Fix 1 + Fix 2 — stop the blog regeneration loop.** Add the `assertDomainCompliant()` guard to `scripts/generate-posts.js`, then delete 6 and rewrite 6 IPTV MDX sources. Everything else is pointless until the generator can no longer reintroduce the content.
-2.  **Fix 10 — take down the live commercial endpoints.** `/api/orders`, `/api/subscribe`, `/api/speed-test`, `/login`, `app/pricing/order-form.tsx`. Keep the `next.config.mjs` redirects.
-3.  **Fix 11 + Fix 12 — security.** Auth responses are served `Cache-Control: public, max-age=3600` (shared-cache session leak); the Upstash limiter guards the wrong path; `bcrypt.compare()` runs before rate limiting and without input validation.
-4.  **Fixes 3-9 — purge the remaining IPTV surfaces:** `llms.txt`, `terms`, `privacy`, `match/[id]`, `ufc`, `europa-league`, `world-cup-2026`.
-5.  **Fix 13 + Fix 14 — seasonal, deadline 21 Aug 2026.** The homepage shows a *finished* 38-game table labelled "Live Standings", and `s=2025-2026` is hardcoded in two direct API calls that also bypass the unified layer and rate limiter.
+1.  **Choose the domain**, then set the five env vars in `PROJECT.md` section 5.
+    Nothing else blocks deployment prep.
+2.  **Fix 15 — the remaining 9 Framer Motion mount guards.** Keep the static markup and
+    defer only the animation. `header.tsx` and `footer.tsx` must retain their nav links
+    in the server-rendered HTML, or internal linking is lost.
+3.  **Delete `smartlivetv-store/`** once its one unique file is accounted for
+    (`PROJECT.md` section 6).
+4.  **Fix 27** — convert the 17 drafted fixture guides into result reports, or delete
+    them. Needs real final scores. **Do not invent them.**
+5.  **Verify `lib/data/broadcast-rights.ts`** against the rights holders before any
+    deployment. A wrong broadcaster listing is worse than none on a site whose pitch
+    is accuracy.
+6.  **Fix 29 / 31** — 21 bare `<img>` tags; 5 of 7 empty `alt` attributes remain.
+7.  **Fix 35** — re-enable `ignoreBuildErrors` / `ignoreDuringBuilds`, type checking first.
 
-**Deployment is blocked** until Phase 1 (🔴 CRITICAL, 12 fixes) is complete and verified.
+**Done 2026-08-11:** `googleapis` removed (unused devDependency). Advisories dropped
+from 9 to 6. The remaining 5 high — `next`, `postcss`, `sharp` — require the breaking
+Next 14 to 16 upgrade and stay out of scope as their own task. Three moderate advisories
+(`dompurify`, `js-yaml`, `nanoid`) surfaced once the googleapis subtree was removed.
 
 ### Process rule adopted 2026-07-31
-Do not mark a remediation item `[x]` without pasting the verifying command output. Nine items in `AUDIT-PROGRESS.md` were recorded complete while the underlying code was unchanged — see §11 of `reports/audit-2026-07-31.md` for the reconciliation table.
+
+Do not mark a remediation item done without recording the verifying command and its
+output. Nine items were previously recorded complete while the underlying code was
+unchanged — see section 11 of `reports/audit-2026-07-31.md` for the reconciliation table.
