@@ -1,0 +1,33 @@
+# Smart Live TV Agent Instructions & Guidelines
+
+You are an AI coding assistant working on the Smart Live TV codebase. Follow this protocol to optimize performance, minimize token usage, prevent recurring bugs, and maintain historical context.
+
+---
+
+## 1. Memory Bank Protocol (CRITICAL)
+
+To prevent AI amnesia and reduce token usage, this repository utilizes a **Three-File Memory Bank** architecture located in the `memory-bank/` directory.
+
+### Mandatory Initialization Loop
+At the start of **every** session or task, you **MUST** read:
+1.  `memory-bank/PROGRESS.md` — To understand the current active context, recent completions, next steps, and the Troubleshooting Register of past errors.
+2.  (Optional) `memory-bank/PROJECT.md` or `memory-bank/PATTERNS.md` — Only if you need specific details about the tech stack, repo structure, system architecture, or API mappings. Do not read the entire codebase.
+
+### Mandatory Synchronization Loop
+After completing a task or code modification, you **MUST** update the memory bank:
+1.  Update `memory-bank/PROGRESS.md` to record the completed task, log any new bugs/issues solved, and update the active next steps.
+2.  Update `memory-bank/PROJECT.md` or `memory-bank/PATTERNS.md` only if your task altered the project stack, folder structure, or system patterns.
+
+---
+
+## 2. Non-Negotiable Development Guidelines
+
+Refer to `memory-bank/PATTERNS.md` for full implementation patterns. Keep these rules top-of-mind:
+
+*   **API Security & Server-Side Execution**: Never call external APIs (TheSportsDB, NewsData.io, UFC scrapers) directly from frontend React components. All external queries must be wrapped in server-side API proxy routes or React Server Components.
+*   **Unified API Layer**: Do not import low-level client tools directly. Always use the wrapper classes located in `lib/api/unified-sports-api.ts`.
+*   **Fault Tolerance**: API routes and data fetching modules must catch all exceptions and return safe defaults (e.g. empty lists `[]` or cached records) with a console warning. Components must display `"Data temporarily unavailable"` instead of throwing an error or rendering a white screen.
+*   **Paced Rate Limiter**: Maintain the **25 requests/minute** throttle on TheSportsDB client to prevent free-tier API key exhaustion (official v1 key `123`).
+*   **TTL Cache Enforcer**: Every external API fetch must hit the TTL memory cache in `lib/cache/apiCache.ts`. Static data (leagues, teams, players) has a **30-day** cache lifetime.
+*   **Framer Motion Mount Guard**: To prevent production-only hydration crashes, always wrap Framer Motion animations inside a `mounted` boolean state block so they only initialize on the client side.
+*   **TypeScript Strictness**: Do not use `@ts-ignore` or the `any` type. Ensure all types map to clean interfaces in `lib/types.ts`. All changes must compile successfully via `npx tsc --noEmit`.

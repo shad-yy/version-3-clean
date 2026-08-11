@@ -1,0 +1,61 @@
+{
+  "name": "lookuptable",
+  "function": "lookuptable",
+  "path": "lookuptable.php",
+  "params": {
+    "l": "4328",
+    "s": "2023-2024"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuptable.php?l=4328&s=2023-2024",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 2602,
+  "responseBodySample": "{\"table\":[{\"idStanding\":\"4256545\",\"intRank\":\"1\",\"idTeam\":\"133613\",\"strTeam\":\"Manchester City\",\"strBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/vwpvry1467462651.png/tiny\",\"idLeague\":\"4328\",\"strLeague\":\"English Premier League\",\"strSeason\":\"2023-2024\",\"strForm\":\"WWWWW\",\"strDescription\":\"Promotion - Champions League (Group Stage: )\",\"intPlayed\":\"38\",\"intWin\":\"28\",\"intLoss\":\"3\",\"intDraw\":\"7\",\"intGoalsFor\":\"96\",\"intGoalsAgainst\":\"34\",\"intGoalDifference\":\"62\",\"intPoints\":\"91\",\"dateUpdated\":\"2024-06-06 23:00:48\"},{\"idStanding\":\"4256546\",\"intRank\":\"2\",\"idTeam\":\"133604\",\"strTeam\":\"Arsenal\",\"strBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/uyhbfe1612467038.png/tiny\",\"idLeague\":\"4328\",\"strLeague\":\"English Premier League\",\"strSeason\":\"2023-2024\",\"strForm\":\"WWWWW\",\"strDescription\":\"Promotion - Champions League (Group Stage: )\",\"intPlayed\":\"38\",\"intWin\":\"28\",\"intLoss\":\"5\",\"intDraw\":\"5\",\"intGoalsFor\":\"91\",\"intGoalsAgainst\":\"29\",\"intGoalDifference\":\"62\",\"intPoints\":\"89\",\"dateUpdated\":\"2024-06-06 23:00:48\"},{\"idStanding\":\"4256547\",\"intRank\":\"3\",\"idTeam\":\"133602\",\"strTeam\":\"Liverpool\",\"strBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/uvxuqq1448813372.png/tiny\",\"idLeague\":\"4328\",\"strLeague\":\"English Premier League\",\"strSeason\":\"2023-2024\",\"strForm\":\"WDWDL\",\"strDescription\":\"Promotion - Champions League (Group Stage: )\",\"intPlayed\":\"38\",\"intWin\":\"24\",\"intLoss\":\"4\",\"intDraw\":\"10\",\"intGoalsFor\":\"86\",\"intGoalsAgainst\":\"41\",\"intGoalDifference\":\"45\",\"intPoints\":\"82\",\"dateUpdated\":\"2024-06-06 23:00:48\"},{\"idStanding\":\"4256548\",\"intRank\":\"4\",\"idTeam\":\"133601\",\"strTeam\":\"Aston Villa\",\"strBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/jykrpv1717309891.png/tiny\",\"idLeague\":\"4328\",\"strLeague\":\"English Premier League\",\"strSeason\":\"2023-2024\",\"strForm\":\"LDLDW\",\"strDescription\":\"Promotion - Champions League (Group Stage: )\",\"intPlayed\":\"38\",\"intWin\":\"20\",\"intLoss\":\"10\",\"intDraw\":\"8\",\"intGoalsFor\":\"76\",\"intGoalsAgainst\":\"61\",\"intGoalDifference\":\"15\",",
+  "parsedJsonSchema": {
+    "keys": [
+      "idStanding",
+      "intRank",
+      "idTeam",
+      "strTeam",
+      "strBadge",
+      "idLeague",
+      "strLeague",
+      "strSeason",
+      "strForm",
+      "strDescription",
+      "intPlayed",
+      "intWin",
+      "intLoss",
+      "intDraw",
+      "intGoalsFor",
+      "intGoalsAgainst",
+      "intGoalDifference",
+      "intPoints",
+      "dateUpdated"
+    ],
+    "types": {
+      "idStanding": "string",
+      "intRank": "string",
+      "idTeam": "string",
+      "strTeam": "string",
+      "strBadge": "string",
+      "idLeague": "string",
+      "strLeague": "string",
+      "strSeason": "string",
+      "strForm": "string",
+      "strDescription": "string",
+      "intPlayed": "string",
+      "intWin": "string",
+      "intLoss": "string",
+      "intDraw": "string",
+      "intGoalsFor": "string",
+      "intGoalsAgainst": "string",
+      "intGoalDifference": "string",
+      "intPoints": "string",
+      "dateUpdated": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuptable.php?l=4328&s=2023-2024"
+}

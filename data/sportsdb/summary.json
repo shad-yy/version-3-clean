@@ -1,0 +1,35 @@
+{
+  "totalLeagues": 10,
+  "totalTeams": 50,
+  "majorLeagues": [
+    {
+      "name": "English Premier League",
+      "id": "4328",
+      "teamCount": 10
+    },
+    {
+      "name": "Spanish La Liga",
+      "id": "4335",
+      "teamCount": 10
+    },
+    {
+      "name": "Italian Serie A",
+      "id": "4332",
+      "teamCount": 10
+    },
+    {
+      "name": "German Bundesliga",
+      "id": "4331",
+      "teamCount": 10
+    },
+    {
+      "name": "French Ligue 1",
+      "id": "4334",
+      "teamCount": 10
+    }
+  ],
+  "leaguesBySport": {
+    "Soccer": 10
+  },
+  "timestamp": "2025-11-11T19:52:47.045Z"
+}

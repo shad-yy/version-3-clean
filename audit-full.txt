@@ -1,0 +1,173 @@
+### /
+- Status: OK
+- Title: Smart Live TV — Netflix, Sky Sports & Disney+ for £12/mo
+- Issues found:
+  None.
+### /pricing
+- Status: OK
+- Title: IPTV Pricing — Replaces Netflix + Sky Sports from £12/mo
+- Issues found:
+  None.
+### /channels
+- Status: OK
+- Title: Netflix, Sky Sports & 230,000+ Channels | Smart Live TV
+- Issues found:
+  None.
+### /free-trial
+- Status: OK
+- Title: Get Your Free 24-Hour IPTV Trial
+- Issues found:
+  None.
+### /blog
+- Status: OK
+- Title: Sports Streaming Blog | Guides & Tips
+- Issues found:
+  None.
+### /blog/how-to-watch-premier-league-from-morocco
+- Status: OK
+- Title: How to Watch Premier League from Morocco in 2026 | Smart Live TV Blog
+- Issues found:
+  None.
+### /blog/3pm-blackout-rule-explained
+- Status: OK
+- Title: The 3pm Blackout Rule Explained — And How to Get Around It | Smart Live TV Blog
+- Issues found:
+  None.
+### /blog/is-iptv-legal-uk
+- Status: OK
+- Title: Is IPTV Legal in the UK? What You Need to Know (2026) | Smart Live TV Blog
+- Issues found:
+  None.
+### /blog/sky-sports-vs-iptv-honest-comparison
+- Status: OK
+- Title: Sky Sports vs IPTV in 2026 — The Honest Comparison | Smart Live TV Blog
+- Issues found:
+  None.
+### /blog/how-to-install-iptv-firestick
+- Status: OK
+- Title: How to Install Smart Live TV on Firestick (2026 Guide) | Smart Live TV Blog
+- Issues found:
+  None.
+### /blog/watch-champions-league-without-bt-sport
+- Status: OK
+- Title: How to Watch Champions League Without BT Sport in 2026 | Smart Live TV Blog
+- Issues found:
+  None.
+### /news
+- Status: OK
+- Title: Sports News | Latest Football & MMA
+- Issues found:
+  🟡 HIGH: Missing H1 tag.
+### /watch/premier-league
+- Status: OK
+- Title: Watch Premier League Live Streaming | Free Trial
+- Issues found:
+  None.
+### /watch/la-liga
+- Status: OK
+- Title: Watch La Liga Live Streaming | Free Trial
+- Issues found:
+  None.
+### /watch/bundesliga
+- Status: OK
+- Title: Watch Bundesliga Live Streaming | Free Trial
+- Issues found:
+  None.
+### /watch/serie-a
+- Status: OK
+- Title: Watch Serie A Live Streaming | Free Trial
+- Issues found:
+  None.
+### /watch/ligue-1
+- Status: OK
+- Title: Watch Ligue 1 Live Streaming | Free Trial
+- Issues found:
+  None.
+### /watch/champions-league
+- Status: OK
+- Title: Watch Champions League Live | Stream UCL Free Trial
+- Issues found:
+  None.
+### /watch/europa-league
+- Status: OK
+- Title: Watch UEFA Europa League Live | Free Trial
+- Issues found:
+  None.
+### /watch/world-cup-2026
+- Status: OK
+- Title: Watch FIFA World Cup 2026 Live | Stream Every Match
+- Issues found:
+  None.
+### /watch/formula-1
+- Status: OK
+- Title: Watch Formula 1 Live 2026 | Stream Every F1 Race
+- Issues found:
+  None.
+### /ufc
+- Status: OK
+- Title: Watch UFC Live — All Fight Nights in 4K
+- Issues found:
+  None.
+### /setup/firestick
+- Status: OK
+- Title: How to Watch Live Sports on Firestick in 2026 | SmartLiveTV
+- Issues found:
+  None.
+### /setup/smart-tv
+- Status: OK
+- Title: How to Watch Live Sports on Smart TV in 2026 | SmartLiveTV
+- Issues found:
+  None.
+### /setup/android
+- Status: OK
+- Title: How to Watch Live Sports on Android in 2026 | SmartLiveTV
+- Issues found:
+  None.
+### /setup/iphone
+- Status: OK
+- Title: How to Watch Live Sports on iPhone in 2026 | SmartLiveTV
+- Issues found:
+  None.
+### /about
+- Status: OK
+- Title: About Smart Live TV | IPTV Streaming Service
+- Issues found:
+  None.
+### /contact
+- Status: OK
+- Title: Contact Smart Live TV | Get Support
+- Issues found:
+  None.
+### /privacy
+- Status: OK
+- Title: Privacy Policy
+- Issues found:
+  None.
+### /terms
+- Status: OK
+- Title: Terms of Service
+- Issues found:
+  None.
+### /favorites
+- Status: OK
+- Title: Favourites | Smart Live TV
+- Issues found:
+  🟡 HIGH: Empty state might be missing clear messaging.
+### /login
+- Status: OK
+- Title: Sign In
+- Issues found:
+  None.
+### /sitemap.xml
+- Status: OK
+- Title: 
+- Issues found:
+  🟡 HIGH: Missing title tag.
+  🟡 HIGH: Missing meta description.
+  🟡 HIGH: Missing H1 tag.
+
+### SUMMARY
+Total pages audited: 33
+Total 🔴 CRITICAL issues: 0
+Total 🟡 HIGH issues: 5
+Total 🟢 MINOR issues: 0

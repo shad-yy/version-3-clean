@@ -1,0 +1,38 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="#0a0a0f"/>
+  
+  <!-- Green accent border -->
+  <rect x="8" y="8" width="496" height="496" rx="88" fill="none" stroke="#00e676" stroke-width="4" opacity="0.3"/>
+  
+  <!-- TV Frame with faces - large icon version -->
+  <g transform="translate(80, 60)">
+    <!-- TV antennae -->
+    <line x1="100" y1="40" x2="60" y2="0" stroke="#e5e7eb" stroke-width="12" stroke-linecap="round"/>
+    <line x1="250" y1="40" x2="290" y2="0" stroke="#e5e7eb" stroke-width="12" stroke-linecap="round"/>
+    
+    <!-- Back speech bubble (gray, offset) -->
+    <path d="M180 60C120 60 70 100 60 150C50 200 65 240 90 275C80 295 65 310 45 320C65 318 95 310 115 295C140 315 170 325 200 325C275 325 335 280 335 200C335 120 275 60 180 60Z"
+      fill="none" stroke="#6b7280" stroke-width="8" opacity="0.4"
+      transform="translate(30, -15)"/>
+    
+    <!-- Front speech bubble (main) -->
+    <path d="M160 60C100 60 50 100 40 150C30 200 45 240 70 275C60 295 45 310 25 320C45 318 75 310 95 295C120 315 150 325 180 325C255 325 315 280 315 200C315 120 255 60 160 60Z"
+      fill="none" stroke="#00e676" stroke-width="10"/>
+    
+    <!-- Face profiles -->
+    <!-- Front face -->
+    <path d="M140 120C140 120 110 145 110 190C110 235 140 255 145 270C150 285 130 305 130 305"
+      fill="none" stroke="#e5e7eb" stroke-width="8" stroke-linecap="round"/>
+    <path d="M190 110C190 110 215 140 215 175C215 210 195 225 190 240"
+      fill="none" stroke="#e5e7eb" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Eye dot -->
+    <circle cx="165" cy="165" r="6" fill="#00e676"/>
+  </g>
+  
+  <!-- SMART LIVE TV text below the icon -->
+  <text x="256" y="430" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="800" font-size="48" fill="white" letter-spacing="2">
+    SMART <tspan fill="#00e676">LIVE</tspan> TV
+  </text>
+</svg>

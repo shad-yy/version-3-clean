@@ -1,0 +1,24 @@
+{
+  "name": "search_all_seasons",
+  "function": "search_all_seasons",
+  "path": "search_all_seasons.php",
+  "params": {
+    "id": "4328"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/search_all_seasons.php?id=4328",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 143,
+  "responseBodySample": "{\"seasons\":[{\"strSeason\":\"1992-1993\"},{\"strSeason\":\"1993-1994\"},{\"strSeason\":\"1994-1995\"},{\"strSeason\":\"1995-1996\"},{\"strSeason\":\"1996-1997\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "strSeason"
+    ],
+    "types": {
+      "strSeason": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "search_all_seasons.php?id=4328"
+}

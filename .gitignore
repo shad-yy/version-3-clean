@@ -1,0 +1,67 @@
+# dependencies
+/node_modules
+node_modules/
+
+# next.js
+/.next/
+.next/
+/out/
+out/
+/build
+dist/
+
+# Environment files
+.env
+.env.local
+.env*.local
+.env.production
+.env.production.local
+.env.development.local
+.env.test.local
+.env*.bak
+*.pem
+*.key
+*.crt
+secrets/
+config/secrets.json
+api-keys.txt
+credentials.json
+
+# Cache and logs
+.cache/
+cache/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+*.swp
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# test files with potential secrets
+scripts/test-*.js
+test-credentials.*
+
+# firecrawl
+.firecrawl/
+
+# ignore installed skills folder
+/skills/
+# or wherever it actually lives, e.g.:
+.claude/skills/
+.cursor/
+

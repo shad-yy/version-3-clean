@@ -1,0 +1,4 @@
+*** File: lib/api/unified-sports-api.ts
+- Replaced live score logic with eventsday.php (docs: line 32)
+- getTeams(): Lookup league name via lookupleague → search_all_teams by name
+- Transformations align to TheSportsDB fields: strTeam, strTeamBadge, dateEvent, scores

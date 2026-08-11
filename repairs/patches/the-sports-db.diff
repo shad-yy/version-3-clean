@@ -1,0 +1,7 @@
+*** File: lib/api/the-sports-db.ts
+- Added sportsdbFetch(endpoint, params) with required headers and no-store
+- Masked API key in logs
+- Exported sportsdbFetch
+- makeRequest now calls sportsdbFetch
+- Removed direct Next.js fetch options in favor of wrapper
+- Kept graceful fallbacks and caching

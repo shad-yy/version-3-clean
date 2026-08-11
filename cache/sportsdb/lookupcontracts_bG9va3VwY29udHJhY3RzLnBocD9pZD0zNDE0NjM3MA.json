@@ -1,0 +1,42 @@
+{
+  "name": "lookupcontracts",
+  "function": "lookupcontracts",
+  "path": "lookupcontracts.php",
+  "params": {
+    "id": "34146370"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookupcontracts.php?id=34146370",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 284,
+  "responseBodySample": "{\"contracts\":[{\"id\":\"238\",\"idPlayer\":\"34146370\",\"idTeam\":\"133739\",\"strSport\":\"Soccer\",\"strPlayer\":\"Lionel Messi\",\"strTeam\":\"Barcelona\",\"strBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/xqwpup1473502878.png\",\"strYearStart\":\"2005\",\"strYearEnd\":\"2021\",\"strWage\":\"\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "id",
+      "idPlayer",
+      "idTeam",
+      "strSport",
+      "strPlayer",
+      "strTeam",
+      "strBadge",
+      "strYearStart",
+      "strYearEnd",
+      "strWage"
+    ],
+    "types": {
+      "id": "string",
+      "idPlayer": "string",
+      "idTeam": "string",
+      "strSport": "string",
+      "strPlayer": "string",
+      "strTeam": "string",
+      "strBadge": "string",
+      "strYearStart": "string",
+      "strYearEnd": "string",
+      "strWage": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookupcontracts.php?id=34146370"
+}

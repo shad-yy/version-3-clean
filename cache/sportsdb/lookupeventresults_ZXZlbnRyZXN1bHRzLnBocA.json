@@ -1,0 +1,18 @@
+{
+  "name": "lookupeventresults",
+  "function": "lookupeventresults",
+  "path": "eventresults.php",
+  "params": {},
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/eventresults.php",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 37,
+  "responseBodySample": "{\"results\":\"Invalid Event ID passed\"}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "eventresults.php"
+}

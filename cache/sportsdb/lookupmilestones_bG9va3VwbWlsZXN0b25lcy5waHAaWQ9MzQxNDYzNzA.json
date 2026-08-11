@@ -1,0 +1,42 @@
+{
+  "name": "lookupmilestones",
+  "function": "lookupmilestones",
+  "path": "lookupmilestones.php",
+  "params": {
+    "id": "34146370"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookupmilestones.php?id=34146370",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 1655,
+  "responseBodySample": "{\"milestones\":[{\"id\":\"92\",\"idPlayer\":\"34146370\",\"strPlayer\":\"Lionel Messi\",\"idTeam\":\"134509\",\"idMilestone\":\"1676\",\"strTeam\":\"Argentina\",\"strSport\":\"Soccer\",\"strMilestone\":\"FIFA World Cup Dream Team\",\"strMilestoneLogo\":\"https://www.thesportsdb.com/images/media/milestone/logo/2zv57r1661366427.png\",\"dateMilestone\":\"2014-07-15\"},{\"id\":\"1347\",\"idPlayer\":\"34146370\",\"strPlayer\":\"Lionel Messi\",\"idTeam\":\"134509\",\"idMilestone\":\"1843\",\"strTeam\":\"Argentina\",\"strSport\":\"Soccer\",\"strMilestone\":\"FIFA World Cup Player Of The Match\",\"strMilestoneLogo\":\"https://www.thesportsdb.com/images/media/milestone/logo/kzpd281669055640.png\",\"dateMilestone\":\"2018-06-26\"},{\"id\":\"1459\",\"idPlayer\":\"34146370\",\"strPlayer\":\"Lionel Messi\",\"idTeam\":\"134509\",\"idMilestone\":\"1843\",\"strTeam\":\"Argentina\",\"strSport\":\"Soccer\",\"strMilestone\":\"FIFA World Cup Player Of The Match\",\"strMilestoneLogo\":\"https://www.thesportsdb.com/images/media/milestone/logo/kzpd281669055640.png\",\"dateMilestone\":\"2022-11-26\"},{\"id\":\"1522\",\"idPlayer\":\"34146370\",\"strPlayer\":\"Lionel Messi\",\"idTeam\":\"134509\",\"idMilestone\":\"1843\",\"strTeam\":\"Argentina\",\"strSport\":\"Soccer\",\"strMilestone\":\"FIFA World Cup Player Of The Match\",\"strMilestoneLogo\":\"https://www.thesportsdb.com/images/media/milestone/logo/kzpd281669055640.png\",\"dateMilestone\":\"2022-12-03\"},{\"id\":\"1579\",\"idPlayer\":\"34146370\",\"strPlayer\":\"Lionel Messi\",\"idTeam\":\"134509\",\"idMilestone\":\"1843\",\"strTeam\":\"Argentina\",\"strSport\":\"Soccer\",\"strMilestone\":\"FIFA World Cup Player Of The Match\",\"strMilestoneLogo\":\"https://www.thesportsdb.com/images/media/milestone/logo/kzpd281669055640.png\",\"dateMilestone\":\"2022-12-09\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "id",
+      "idPlayer",
+      "strPlayer",
+      "idTeam",
+      "idMilestone",
+      "strTeam",
+      "strSport",
+      "strMilestone",
+      "strMilestoneLogo",
+      "dateMilestone"
+    ],
+    "types": {
+      "id": "string",
+      "idPlayer": "string",
+      "strPlayer": "string",
+      "idTeam": "string",
+      "idMilestone": "string",
+      "strTeam": "string",
+      "strSport": "string",
+      "strMilestone": "string",
+      "strMilestoneLogo": "string",
+      "dateMilestone": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookupmilestones.php?id=34146370"
+}

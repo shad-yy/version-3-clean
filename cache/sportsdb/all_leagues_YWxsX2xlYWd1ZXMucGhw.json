@@ -1,0 +1,26 @@
+{
+  "name": "all_leagues",
+  "function": "all_leagues",
+  "path": "all_leagues.php",
+  "params": {},
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/all_leagues.php",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 754,
+  "responseBodySample": "{\"leagues\":[{\"idLeague\":\"4328\",\"strLeague\":\"English Premier League\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4329\",\"strLeague\":\"English League Championship\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4330\",\"strLeague\":\"Scottish Premier League\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4331\",\"strLeague\":\"German Bundesliga\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4332\",\"strLeague\":\"Italian Serie A\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4334\",\"strLeague\":\"French Ligue 1\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4335\",\"strLeague\":\"Spanish La Liga\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4336\",\"strLeague\":\"Greek Superleague Greece\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4337\",\"strLeague\":\"Dutch Eredivisie\",\"strSport\":\"Soccer\"},{\"idLeague\":\"4338\",\"strLeague\":\"Belgian Pro League\",\"strSport\":\"Soccer\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "idLeague",
+      "strLeague",
+      "strSport"
+    ],
+    "types": {
+      "idLeague": "string",
+      "strLeague": "string",
+      "strSport": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "all_leagues.php"
+}

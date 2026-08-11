@@ -1,0 +1,42 @@
+# Smart Live TV
+
+> Smart Live TV (smartlivetv.co.uk) is a real-time sports data platform providing live
+> football scores, fixtures, league standings, team and player statistics, and official
+> UK television broadcast listings for Premier League, Champions League, Europa League,
+> La Liga, Serie A, Bundesliga, Ligue 1, UFC, and Formula 1.
+
+## Core Pages
+- [Home](https://smartlivetv.co.uk/): Live scores, today's fixtures, league standings, and sports news.
+- [Live Scores](https://smartlivetv.co.uk/scores): Real-time football scores and results, updated continuously.
+- [Leagues](https://smartlivetv.co.uk/leagues): League tables, fixtures, and results for major competitions.
+- [Teams](https://smartlivetv.co.uk/teams): Club profiles, squads, and fixture histories.
+- [Players](https://smartlivetv.co.uk/players): Player profiles and season statistics.
+- [Fixtures & Results](https://smartlivetv.co.uk/events): Full fixture calendar and results archive.
+- [Sports News](https://smartlivetv.co.uk/news): Football and MMA headlines updated daily.
+- [Blog](https://smartlivetv.co.uk/blog): Editorial guides on fixtures, competitions, and UK broadcast schedules.
+- [FAQ](https://smartlivetv.co.uk/faq): Common questions about scores, fixtures, and broadcast listings.
+
+## Broadcast Guides
+- [Premier League](https://smartlivetv.co.uk/watch/premier-league): Fixtures, standings, and official UK TV channel listings.
+- [Champions League](https://smartlivetv.co.uk/watch/champions-league): Fixtures, league phase tables, and UK broadcast information.
+- [Europa League](https://smartlivetv.co.uk/watch/europa-league): Fixtures and official UK broadcast listings.
+- [World Cup 2026](https://smartlivetv.co.uk/watch/world-cup-2026): Tournament results and broadcast archive.
+- [Formula 1](https://smartlivetv.co.uk/watch/formula-1): Race calendar, session times, and UK broadcast listings.
+- [UFC](https://smartlivetv.co.uk/ufc): Event schedules, fight cards, fighter records, and rankings.
+- [La Liga](https://smartlivetv.co.uk/watch/la-liga): Spanish top-flight fixtures and UK broadcast details.
+- [Serie A](https://smartlivetv.co.uk/watch/serie-a): Italian top-flight fixtures and UK broadcast details.
+- [Bundesliga](https://smartlivetv.co.uk/watch/bundesliga): German top-flight fixtures and UK broadcast details.
+- [Ligue 1](https://smartlivetv.co.uk/watch/ligue-1): French top-flight fixtures and UK broadcast details.
+
+## Editorial Guides
+- [Premier League 2026-27 TV Guide](https://smartlivetv.co.uk/blog/watch-premier-league-2026-27-live-channels-streaming): Which UK broadcaster shows each fixture, kick-off slots, and the Saturday 3pm blackout rule.
+- [Cost to Watch the Premier League 2026-27](https://smartlivetv.co.uk/blog/sky-sports-tnt-prime-cost-premier-league-2026-27): What Sky Sports, TNT Sports and Amazon Prime Video each cover, and where the gaps are.
+- [Sky Sports Price Rise 2026](https://smartlivetv.co.uk/blog/sky-sports-price-increase-2026-alternatives): Official UK options compared, including contract-free NOW and discovery+ passes.
+- [TNT Sports SD Discontinued on Sky](https://smartlivetv.co.uk/blog/tnt-sports-sd-discontinued-sky-alternatives): How to watch TNT Sports after standard-definition channels were switched off on 1 July 2026.
+- [Harry Kane's England World Cup Goals Record](https://smartlivetv.co.uk/blog/harry-kane-world-cup-goals-record-2026): The 11-goal record, how it was set, and where the matches were broadcast.
+
+## Notes
+- Data sources: TheSportsDB (scores, fixtures, standings, teams, players) and NewsData.io (news).
+- Broadcast listings reference official UK rights holders only: Sky Sports, TNT Sports, BBC, ITV, discovery+, Amazon Prime Video.
+- Smart Live TV does not sell or provide television subscriptions.
+- Full-text corpus: https://smartlivetv.co.uk/llms-full.txt

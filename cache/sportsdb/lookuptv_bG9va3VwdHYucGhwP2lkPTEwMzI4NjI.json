@@ -1,0 +1,58 @@
+{
+  "name": "lookuptv",
+  "function": "lookuptv",
+  "path": "lookuptv.php",
+  "params": {
+    "id": "1032862"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuptv.php?id=1032862",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 1035,
+  "responseBodySample": "{\"tvevent\":[{\"id\":\"84819\",\"idEvent\":\"1032862\",\"intDivision\":null,\"strSport\":\"Soccer\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strEventThumb\":null,\"strEventPoster\":null,\"strEventBanner\":null,\"strEventSquare\":null,\"idChannel\":\"8646\",\"strCountry\":\"United Kingdom\",\"strEventCountry\":null,\"strLogo\":\"https://r2.thesportsdb.com/images/media/channel/logo/mp44981502554837.png\",\"strChannel\":\"Sky Sports Main Event\",\"strSeason\":\"2020-2021\",\"strTime\":\"20:00:00\",\"dateEvent\":\"2021-01-14\",\"strTimeStamp\":\"2021-01-14 20:00:00\"},{\"id\":\"84820\",\"idEvent\":\"1032862\",\"intDivision\":null,\"strSport\":\"Soccer\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strEventThumb\":null,\"strEventPoster\":null,\"strEventBanner\":null,\"strEventSquare\":null,\"idChannel\":\"8647\",\"strCountry\":\"United Kingdom\",\"strEventCountry\":null,\"strLogo\":\"https://r2.thesportsdb.com/images/media/channel/logo/7e2lv21502554825.png\",\"strChannel\":\"Sky Sports Premier League\",\"strSeason\":\"2020-2021\",\"strTime\":\"20:00:00\",\"dateEvent\":\"2021-01-14\",\"strTimeStamp\":\"2021-01-14 20:00:00\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "id",
+      "idEvent",
+      "intDivision",
+      "strSport",
+      "strEvent",
+      "strEventThumb",
+      "strEventPoster",
+      "strEventBanner",
+      "strEventSquare",
+      "idChannel",
+      "strCountry",
+      "strEventCountry",
+      "strLogo",
+      "strChannel",
+      "strSeason",
+      "strTime",
+      "dateEvent",
+      "strTimeStamp"
+    ],
+    "types": {
+      "id": "string",
+      "idEvent": "string",
+      "intDivision": "object",
+      "strSport": "string",
+      "strEvent": "string",
+      "strEventThumb": "object",
+      "strEventPoster": "object",
+      "strEventBanner": "object",
+      "strEventSquare": "object",
+      "idChannel": "string",
+      "strCountry": "string",
+      "strEventCountry": "object",
+      "strLogo": "string",
+      "strChannel": "string",
+      "strSeason": "string",
+      "strTime": "string",
+      "dateEvent": "string",
+      "strTimeStamp": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuptv.php?id=1032862"
+}

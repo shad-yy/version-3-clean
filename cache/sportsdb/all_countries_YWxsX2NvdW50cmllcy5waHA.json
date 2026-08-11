@@ -1,0 +1,24 @@
+{
+  "name": "all_countries",
+  "function": "all_countries",
+  "path": "all_countries.php",
+  "params": {},
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/all_countries.php",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 5955,
+  "responseBodySample": "{\"countries\":[{\"name_en\":\"Andorra\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Andorra.png\"},{\"name_en\":\"United Arab Emirates\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/United-Arab-Emirates.png\"},{\"name_en\":\"Afghanistan\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Afghanistan.png\"},{\"name_en\":\"Antigua and Barbuda\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Antigua-and-Barbuda.png\"},{\"name_en\":\"Anguilla\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Anguilla.png\"},{\"name_en\":\"Albania\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Albania.png\"},{\"name_en\":\"Armenia\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Armenia.png\"},{\"name_en\":\"Angola\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Angola.png\"},{\"name_en\":\"Antarctica\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Antarctica.png\"},{\"name_en\":\"Argentina\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Argentina.png\"},{\"name_en\":\"American Samoa\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/American-Samoa.png\"},{\"name_en\":\"Austria\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Austria.png\"},{\"name_en\":\"Australia\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Australia.png\"},{\"name_en\":\"Aruba\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Aruba.png\"},{\"name_en\":\"Aland\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Aland.png\"},{\"name_en\":\"Azerbaijan\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Azerbaijan.png\"},{\"name_en\":\"Bosnia and Herzegovina\",\"flag_url_32\":\"https://www.thesportsdb.com/images/icons/flags/shiny/32/Bosnia-and-Herzegovina.png\"},{\"name_en\":\"Barbados\",\"flag_url_32\":\"https://www.thesportsdb.com/image",
+  "parsedJsonSchema": {
+    "keys": [
+      "name_en",
+      "flag_url_32"
+    ],
+    "types": {
+      "name_en": "string",
+      "flag_url_32": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "all_countries.php"
+}

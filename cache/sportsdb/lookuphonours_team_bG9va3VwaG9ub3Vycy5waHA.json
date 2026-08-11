@@ -1,0 +1,18 @@
+{
+  "name": "lookuphonours_team",
+  "function": "lookuphonours_team",
+  "path": "lookuphonours.php",
+  "params": {},
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuphonours.php",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 38,
+  "responseBodySample": "{\"honours\":\"Invalid Player ID passed\"}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuphonours.php"
+}

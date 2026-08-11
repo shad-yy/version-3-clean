@@ -1,0 +1,22 @@
+{
+  "name": "eventstv",
+  "function": "eventstv",
+  "path": "eventstv.php",
+  "params": {
+    "d": "2025-11-07",
+    "s": "Soccer",
+    "a": "UK"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/eventstv.php?d=2025-11-07&s=Soccer&a=UK",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 17,
+  "responseBodySample": "{\"tvevents\":null}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "eventstv.php?d=2025-11-07&s=Soccer&a=UK"
+}

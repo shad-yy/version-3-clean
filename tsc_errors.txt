@@ -1,0 +1,4 @@
+app/news/NewsClientPage.tsx(264,59): error TS2322: Type 'import("C:/Users/u2000/Downloads/smart-live-tv/lib/api/news").NewsArticle' is not assignable to type 'import("C:/Users/u2000/Downloads/smart-live-tv/lib/api/types").NewsArticle'.
+  Types of property 'id' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.

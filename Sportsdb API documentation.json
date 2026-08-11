@@ -1,0 +1,596 @@
+{
+    "meta": {
+      "title": "TheSportsDB v1 — Machine-readable API Documentation (derived from provided PDF)",
+      "source_documents": [
+        "TheSportsDB2 Free Sports API Documentation - TheSportsDB.com.pdf",
+        "API_AUDIT_REPORT.json"
+      ],
+      "source_citations": [
+        ":contentReference[oaicite:0]{index=0}",
+        ":contentReference[oaicite:1]{index=1}"
+      ],
+      "notes": "This JSON is a complete, implementation-focused representation of TheSportsDB v1 endpoints, parameters, limits, examples and recommended usage patterns as extracted from the provided documentation. Use this as the canonical API spec to (1) drive client code generation, (2) validate endpoints called by the site, and (3) create automated tests that verify each endpoint returns concrete data rather than 404/empty responses."
+    },
+    "base": {
+      "base_url_template": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/",
+      "free_key_default": "123",
+      "auth": {
+        "method": "url_path",
+        "pattern": "/api/v1/json/{API_KEY}/",
+        "notes": "If THESPORTSDB_API_KEY is not set, use '123' for free-tier access. Some endpoints limit returned data for free key and may only return home events or limited records."
+      },
+      "rate_limits": {
+        "free": { "requests_per_minute": 30, "behavior_on_limit": "HTTP 429 - wait 1 minute" },
+        "premium": { "requests_per_minute": 100 },
+        "business": { "requests_per_minute": 120 }
+      },
+      "global_notes": [
+        "All endpoints are GET unless explicitly stated.",
+        "URL parameters must be URL-encoded (spaces -> underscores or %20 depending on server side usage in examples underscores used).",
+        "Season format when required: 'YYYY-YYYY' (e.g. '2020-2021').",
+        "Free tier sometimes returns only partial results (eg. next events only home events).",
+        "No 'livescore.php' endpoint in v1 — do not call it. Use eventsday.php, eventsnext.php, eventslast.php, eventsseason.php and eventsnextleague/eventspastleague to retrieve recent/next/past events."
+      ]
+    },
+    "endpoints": [
+      {
+        "id": "all_sports",
+        "path": "/all_sports.php",
+        "method": "GET",
+        "params": [],
+        "free_limit": 2,
+        "premium_limit": 50,
+        "description": "List all sport categories supported on TheSportsDB (Soccer, Motorsport, etc.).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/all_sports.php",
+        "usage": ["homepage, filters, admin UI for supported sports lists"]
+      },
+      {
+        "id": "all_countries",
+        "path": "/all_countries.php",
+        "method": "GET",
+        "params": [],
+        "free_limit": 50,
+        "premium_limit": 500,
+        "description": "List all geographical countries available in dataset.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/all_countries.php",
+        "usage": ["country filters, league country dropdowns"]
+      },
+      {
+        "id": "all_leagues",
+        "path": "/all_leagues.php",
+        "method": "GET",
+        "params": [],
+        "free_limit": 10,
+        "premium_limit": 3000,
+        "description": "List all leagues across all sports.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/all_leagues.php",
+        "usage": ["global leagues index, league directory pages"]
+      },
+      {
+        "id": "search_all_leagues",
+        "path": "/search_all_leagues.php",
+        "method": "GET",
+        "params": [
+          { "name": "c", "type": "string", "required": false, "description": "Country name (strCountry)" },
+          { "name": "s", "type": "string", "required": false, "description": "Sport name (strSport)" }
+        ],
+        "free_limit": 10,
+        "premium_limit": 100,
+        "description": "List leagues for a country and/or sport.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/search_all_leagues.php?c=England&s=Soccer",
+        "usage": ["leagues by country/sport page, country landing pages"]
+      },
+      {
+        "id": "search_all_seasons",
+        "path": "/search_all_seasons.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "League ID" },
+          { "name": "poster", "type": "boolean", "required": false, "description": "Include poster images" },
+          { "name": "badge", "type": "boolean", "required": false, "description": "Include badge images" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "List all seasons available for a league.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/search_all_seasons.php?id=4328",
+        "usage": ["league seasons dropdowns, season selection for standings and fixtures"]
+      },
+      {
+        "id": "search_all_teams",
+        "path": "/search_all_teams.php",
+        "method": "GET",
+        "params": [
+          { "name": "l", "type": "string", "required": false, "description": "League name or ID (strLeague or idLeague)" },
+          { "name": "s", "type": "string", "required": false, "description": "Sport name (strSport)" },
+          { "name": "c", "type": "string", "required": false, "description": "Country (strCountry)" }
+        ],
+        "free_limit": 10,
+        "premium_limit": 3000,
+        "description": "List all teams in a given league, sport or country.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/search_all_teams.php?l=English_Premier_League",
+        "usage": ["league teams listing, roster pages, team search"]
+      },
+      {
+        "id": "searchteams",
+        "path": "/searchteams.php",
+        "method": "GET",
+        "params": [
+          { "name": "t", "type": "string", "required": true, "description": "Team name (strTeam)" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 10,
+        "description": "Search teams by name (returns team records and IDs for lookups).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/searchteams.php?t=Arsenal",
+        "usage": ["search bar suggestions, quick team lookup"]
+      },
+      {
+        "id": "searchplayers",
+        "path": "/searchplayers.php",
+        "method": "GET",
+        "params": [
+          { "name": "p", "type": "string", "required": true, "description": "Player name (strPlayer)" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 10,
+        "description": "Search players by name.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/searchplayers.php?p=Danny_Welbeck",
+        "usage": ["player search, search-autocomplete"]
+      },
+      {
+        "id": "searchvenues",
+        "path": "/searchvenues.php",
+        "method": "GET",
+        "params": [
+          { "name": "v", "type": "string", "required": true, "description": "Venue name or partial" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 10,
+        "description": "Search stadiums/venues.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/searchvenues.php?v=Wembley",
+        "usage": ["venue pages, venue search"]
+      },
+      {
+        "id": "lookupteam",
+        "path": "/lookupteam.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Team ID (idTeam)" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 500,
+        "description": "Lookup a single team by ID, returns full team details including logos and stadium ID.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupteam.php?id=133604",
+        "usage": ["team detail page, team header/logo"]
+      },
+      {
+        "id": "lookupplayer",
+        "path": "/lookupplayer.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID (idPlayer)" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 1,
+        "description": "Lookup a player's full profile by ID.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupplayer.php?id=34145937",
+        "usage": ["player profile page (bio, images, stats)"]
+      },
+      {
+        "id": "lookup_all_players",
+        "path": "/lookup_all_players.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Team ID (idTeam)" }
+        ],
+        "free_limit": 10,
+        "premium_limit": 100,
+        "description": "List all players for a team by team ID (roster).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookup_all_players.php?id=133604",
+        "usage": ["team rosters, player lists"]
+      },
+      {
+        "id": "lookuphonours",
+        "path": "/lookuphonours.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "Lookup player honours/trophies.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuphonours.php?id=34147178",
+        "usage": ["player achievements section"]
+      },
+      {
+        "id": "lookupformerteams",
+        "path": "/lookupformerteams.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Retrieve all former clubs for a player.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupformerteams.php?id=34147178",
+        "usage": ["player career history"]
+      },
+      {
+        "id": "lookupmilestones",
+        "path": "/lookupmilestones.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Player career milestones.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupmilestones.php?id=34161397",
+        "usage": ["player timeline, highlights"]
+      },
+      {
+        "id": "lookupcontracts",
+        "path": "/lookupcontracts.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 100,
+        "description": "Lookup player contract(s).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupcontracts.php?id=34147178",
+        "usage": ["player contract info (admin/debug only)"]
+      },
+      {
+        "id": "playerresults",
+        "path": "/playerresults.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "List results for a player (match outcomes).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/playerresults.php?id=34160573",
+        "usage": ["player match history"]
+      },
+      {
+        "id": "lookupevent",
+        "path": "/lookupevent.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID (idEvent)" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 1,
+        "description": "Lookup event by ID (detailed event record).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupevent.php?id=441613",
+        "usage": ["event detail page"]
+      },
+      {
+        "id": "eventresults",
+        "path": "/eventresults.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Lookup event results (scoreline, events).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventresults.php?id=652890",
+        "usage": ["event recap, scorecards"]
+      },
+      {
+        "id": "lookuplineup",
+        "path": "/lookuplineup.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Lookup team lineups for an event.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuplineup.php?id=1032723",
+        "usage": ["event lineup tab"]
+      },
+      {
+        "id": "lookuptimeline",
+        "path": "/lookuptimeline.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Lookup the timeline (minute-by-minute key actions) for an event.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuptimeline.php?id=1032718",
+        "usage": ["event timeline tab"]
+      },
+      {
+        "id": "lookupeventstats",
+        "path": "/lookupeventstats.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Lookup detailed event statistics (possession, shots, etc.).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupeventstats.php?id=1032723",
+        "usage": ["event stats tab"]
+      },
+      {
+        "id": "lookuptv",
+        "path": "/lookuptv.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 100,
+        "description": "Lookup TV channels showing an event.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuptv.php?id=584911",
+        "usage": ["event broadcast info"]
+      },
+      {
+        "id": "eventstv",
+        "path": "/eventstv.php",
+        "method": "GET",
+        "params": [
+          { "name": "d", "type": "date", "required": true, "description": "Date (YYYY-MM-DD)" },
+          { "name": "s", "type": "string", "required": false, "description": "Sport name (strSport)" },
+          { "name": "a", "type": "string", "required": false, "description": "Country (strCountry)" },
+          { "name": "c", "type": "string", "required": false, "description": "Channel name" },
+          { "name": "id", "type": "integer", "required": false, "description": "Channel ID" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 500,
+        "description": "TV schedule for a date, optional filters for sport, country, channel.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventstv.php?d=2024-07-07",
+        "usage": ["TV schedule pages, channel listings"]
+      },
+      {
+        "id": "eventshighlights",
+        "path": "/eventshighlights.php",
+        "method": "GET",
+        "params": [
+          { "name": "d", "type": "date", "required": true, "description": "Date filter" },
+          { "name": "l", "type": "integer", "required": false, "description": "League ID" },
+          { "name": "s", "type": "string", "required": false, "description": "Sport name" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 50,
+        "description": "YouTube highlight video listings for events (may be geolocked by YouTube).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventshighlights.php?d=2024-07-07",
+        "usage": ["event highlights/videos section"]
+      },
+      {
+        "id": "eventsnext",
+        "path": "/eventsnext.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Team ID" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 10,
+        "description": "Next upcoming events for a team (free key may return only home events).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsnext.php?id=133602",
+        "usage": ["team next fixtures widget, team page"]
+      },
+      {
+        "id": "eventslast",
+        "path": "/eventslast.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Team ID" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 10,
+        "description": "Last (recent) events for a team.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventslast.php?id=133602",
+        "usage": ["team recent matches block"]
+      },
+      {
+        "id": "eventsnextleague",
+        "path": "/eventsnextleague.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "League ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "Next events for a league (multiple upcoming fixtures).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsnextleague.php?id=4328",
+        "usage": ["league upcoming fixtures, scores page prefetch"]
+      },
+      {
+        "id": "eventspastleague",
+        "path": "/eventspastleague.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "League ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "Past events for a league.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventspastleague.php?id=4328",
+        "usage": ["league results/history"]
+      },
+      {
+        "id": "eventsseason",
+        "path": "/eventsseason.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "League ID" },
+          { "name": "s", "type": "string", "required": true, "description": "Season (YYYY-YYYY)" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "Return entire season events for a league + season filter.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsseason.php?id=4328&s=2014-2015",
+        "usage": ["league season schedule and calendar"]
+      },
+      {
+        "id": "eventsday",
+        "path": "/eventsday.php",
+        "method": "GET",
+        "params": [
+          { "name": "d", "type": "date", "required": true, "description": "Date (YYYY-MM-DD)" },
+          { "name": "s", "type": "string", "required": false, "description": "Sport name (optional)" },
+          { "name": "l", "type": "string", "required": false, "description": "League identifier (optional)" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "List all events on a given date, optionally filtered by sport or league.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsday.php?d=2014-10-10",
+        "usage": ["daily scores page, calendar view"]
+      },
+      {
+        "id": "lookuptable",
+        "path": "/lookuptable.php",
+        "method": "GET",
+        "params": [
+          { "name": "l", "type": "integer", "required": true, "description": "League ID" },
+          { "name": "s", "type": "string", "required": true, "description": "Season string (YYYY-YYYY)" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "League standings/table for a specific season.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuptable.php?l=4328&s=2020-2021",
+        "usage": ["standings widget, league page standings tab"]
+      },
+      {
+        "id": "lookupvenue",
+        "path": "/lookupvenue.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Venue/Stadium ID" }
+        ],
+        "free_limit": 1,
+        "premium_limit": 1,
+        "description": "Venue details lookup.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupvenue.php?id=16163",
+        "usage": ["stadium details on team/event pages"]
+      },
+      {
+        "id": "lookupequipment",
+        "path": "/lookupequipment.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Team ID" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 100,
+        "description": "Historical/current team equipment (kits) lookup.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookupequipment.php?id=133597",
+        "usage": ["team kit gallery"]
+      },
+      {
+        "id": "lookuphonours_team",
+        "path": "/lookuphonours.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Player or Team ID depending on endpoint variant" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 500,
+        "description": "Lookup honours for players/teams.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/lookuphonours.php?id=34147178",
+        "usage": ["trophies section"]
+      },
+      {
+        "id": "search_events",
+        "path": "/searchevents.php",
+        "method": "GET",
+        "params": [
+          { "name": "e", "type": "string", "required": true, "description": "Event title string" },
+          { "name": "s", "type": "string", "required": false, "description": "Season" },
+          { "name": "d", "type": "date", "required": false, "description": "Date YYYY-MM-DD" },
+          { "name": "f", "type": "string", "required": false, "description": "Full filename exact match (league_file_eventstring)" }
+        ],
+        "free_limit": 2,
+        "premium_limit": 10,
+        "description": "Search events by title with optional season/date/filename filters.",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/searchevents.php?e=Arsenal_vs_Chelsea&s=2016-2017",
+        "usage": ["global event search, event lookup fallback"]
+      },
+      {
+        "id": "lookupeventresults",
+        "path": "/eventresults.php",
+        "method": "GET",
+        "params": [
+          { "name": "id", "type": "integer", "required": true, "description": "Event ID" }
+        ],
+        "free_limit": 5,
+        "premium_limit": 100,
+        "description": "Alias: event results lookup (same semantics as eventresults).",
+        "example": "https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventresults.php?id=652890",
+        "usage": ["event results"]
+      }
+    ],
+    "implementation_guidance": {
+      "common_reasons_for_404s_on_site": [
+        "Using wrong endpoint name or misspelling (e.g. 'livescore.php' does not exist).",
+        "Not including API key in the URL path or using invalid/empty API key — confirm env var THESPORTSDB_API_KEY or use '1'.",
+        "Incorrect parameter names or using numeric IDs where string/encoded names are required (or vice versa).",
+        "Season formatting errors (must be 'YYYY-YYYY').",
+        "Calling premium-only endpoints beyond free-limit that yield empty results for free key."
+      ],
+      "recommended_client_behaviour": [
+        "Always build URL via base_url_template + encodeURIComponent(params).",
+        "Implement centralized request wrapper that: (1) injects API key into path, (2) logs full request URL + query params, (3) retries 1 time on network errors, (4) maps 404 or unexpected response bodies to structured errors with endpoint, params, serverStatus, and rawResponse for debugging.",
+        "Rate-limit locally (leaky-bucket) to 30 req/min by default; increase when premium key present.",
+        "Cache GET responses aggressively: per-endpoint TTL suggestions — lists (all_sports, all_countries, all_leagues): 24h; league/team/player lookups: 30m; eventsday/eventsseason/eventsnext/eventslast/eventsnextleague/eventspastleague: 60s; event/lineup/stats/tv: 30s.",
+        "Validate inputs before calling (IDs numeric, season format correct, dates iso 'YYYY-MM-DD').",
+        "If an endpoint returns 404 with a valid request, capture raw response and save one sample (URL + response) for debugging; do not fall back to mock silently — surface to logs and admin UI."
+      ],
+      "mapping_to_site_pages": {
+        "homepage": ["all_sports.php", "all_leagues.php (top leagues)", "eventsday.php (today)"],
+        "scores": ["eventsday.php", "eventsnextleague.php", "eventspastleague.php", "eventsnext.php", "eventslast.php"],
+        "leagues_list": ["all_leagues.php", "search_all_leagues.php"],
+        "league_page": ["lookupleague.php", "lookuptable.php", "eventsseason.php", "eventsnextleague.php", "eventspastleague.php", "search_all_seasons.php"],
+        "teams_page": ["lookupteam.php", "lookup_all_players.php", "eventsnext.php", "eventslast.php", "lookupequipment.php"],
+        "team_roster": ["lookup_all_players.php", "lookupplayer.php"],
+        "player_page": ["lookupplayer.php", "playerresults.php", "lookuphonours.php", "lookupformerteams.php", "lookupmilestones.php", "lookupcontracts.php"],
+        "event_page": ["lookupevent.php", "lookupeventstats.php", "lookuplineup.php", "lookuptimeline.php", "lookuptv.php", "eventresults.php", "eventshighlights.php"],
+        "videos/highlights": ["eventshighlights.php"],
+        "tv_schedule": ["eventstv.php"]
+      },
+      "error_handling_policy_for_agent": [
+        "If endpoint returns HTTP 404: include full request URL, query string, HTTP status, response body (if any), timestamp, and the page that triggered the call. Save as evidence and mark endpoint as '404-failing' in audit.",
+        "If response is empty object or missing expected array: log and tag as 'schema-mismatch' with expected keys (e.g. events => 'events' array).",
+        "Do NOT silently replace with mock data for production pages. Use mock only in dev with explicit dev flag and admin-visible indicator.",
+        "When replacing ApiFootball with TheSportsDB: ensure every api-football call is mapped to a valid TheSportsDB endpoint, and test every mapping with real requests using the same parameters as the site (team IDs, league IDs)."
+      ],
+      "test_plan_template_for_each_endpoint": {
+        "1_request_build": "Construct URL using API_KEY (env or '1'), encode params. Example: base + path + '?d=2025-11-06'.",
+        "2_execute": "Perform GET and capture status, headers, body. Retry once on network failure.",
+        "3_validate_schema": "Check presence of expected root keys (examples: 'events', 'teams', 'players', 'events' => array).",
+        "4_record": "If success: save sample record (1) and field list. If fail: record error evidence as per error_handling_policy.",
+        "5_report": "Return structured object {endpoint, url, status, ok: bool, sampleCount, sampleFields[], error?:{code,message,body}}"
+      }
+    },
+    "admin_and_monitoring": {
+      "admin_endpoints_to_expose": [
+        { "name": "API Audit Report", "path": "/api/admin/metrics", "purpose": "show which TheSportsDB endpoints are returning 404, 429, or schema mismatches" },
+        { "name": "Endpoint Test Runner", "path": "/api/admin/test-endpoint", "purpose": "admin-triggered single-endpoint test that returns the structured object from test_plan_template_for_each_endpoint" }
+      ],
+      "logs_and_debugging": [
+        "Store last 100 failed requests per endpoint with full request/response for debugging.",
+        "Expose a UI to replay failing requests with admin credentials and to toggle dev mock behavior."
+      ]
+    },
+    "change_log_and_action_items": {
+      "must_fix_right_now": [
+        "Stop calling non-existent endpoints (e.g. 'livescore.php'). Replace with eventsday.php/eventsnext/eventslast/eventsnextleague/eventspastleague/eventsseason depending on desired semantics.",
+        "Ensure THESPORTSDB_API_KEY environment variable is populated; fallback to '1' only for local/dev and indicate in UI.",
+        "Add centralized request wrapper with logging, rate-limiting, caching, and schema validation.",
+        "Run the test_plan_template_for_each_endpoint against every endpoint used by the site and capture results."
+      ],
+      "followup": [
+        "Map every api-football call site to the correct TheSportsDB endpoint and run validation with real parameters used by the site (league/team/player IDs).",
+        "Update unified-sports-api translations/transformations to expect TheSportsDB response shapes (teams, events, seasons, standings).",
+        "Fix incorrect TypeScript types that assumed ApiFootball shapes; regenerate/typesafe-transform functions for TheSportsDB shapes."
+      ]
+    }
+  }
+  

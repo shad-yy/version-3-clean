@@ -1,0 +1,21 @@
+{
+  "name": "eventshighlights",
+  "function": "eventshighlights",
+  "path": "eventshighlights.php",
+  "params": {
+    "d": "2025-11-07",
+    "s": "Soccer"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/eventshighlights.php?d=2025-11-07&s=Soccer",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 21,
+  "responseBodySample": "{\"tvhighlights\":null}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "eventshighlights.php?d=2025-11-07&s=Soccer"
+}

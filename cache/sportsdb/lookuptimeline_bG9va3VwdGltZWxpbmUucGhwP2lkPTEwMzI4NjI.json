@@ -1,0 +1,58 @@
+{
+  "name": "lookuptimeline",
+  "function": "lookuptimeline",
+  "path": "lookuptimeline.php",
+  "params": {
+    "id": "1032862"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuptimeline.php?id=1032862",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 2076,
+  "responseBodySample": "{\"timeline\":[{\"idTimeline\":\"13149\",\"idEvent\":\"1032862\",\"strTimeline\":\"Card\",\"strTimelineDetail\":\"Yellow Card\",\"strHome\":\"No\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"idAPIfootball\":\"592311\",\"idPlayer\":\"34145983\",\"strPlayer\":\"James Tomkins\",\"strCountry\":null,\"idAssist\":null,\"strAssist\":\"\",\"intTime\":\"42\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal Palace\",\"strComment\":\"\",\"dateEvent\":\"2021-01-14\",\"strSeason\":\"2020-2021\"},{\"idTimeline\":\"13161\",\"idEvent\":\"1032862\",\"strTimeline\":\"subst\",\"strTimelineDetail\":\"A. Maitland-Niles\",\"strHome\":\"Yes\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"idAPIfootball\":\"592311\",\"idPlayer\":\"34167754\",\"strPlayer\":\"Nicolas Pepe \",\"strCountry\":null,\"idAssist\":\"34145444\",\"strAssist\":\"Ainsley Maitland-Niles\",\"intTime\":\"65\",\"idTeam\":\"133604\",\"strTeam\":\"Arsenal\",\"strComment\":\"\",\"dateEvent\":\"2021-01-14\",\"strSeason\":\"2020-2021\"},{\"idTimeline\":\"13162\",\"idEvent\":\"1032862\",\"strTimeline\":\"Card\",\"strTimelineDetail\":\"Yellow Card\",\"strHome\":\"Yes\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"idAPIfootball\":\"592311\",\"idPlayer\":\"34152580\",\"strPlayer\":\"David Luiz\",\"strCountry\":null,\"idAssist\":null,\"strAssist\":\"\",\"intTime\":\"67\",\"idTeam\":\"133604\",\"strTeam\":\"Arsenal\",\"strComment\":\"\",\"dateEvent\":\"2021-01-14\",\"strSeason\":\"2020-2021\"},{\"idTimeline\":\"13163\",\"idEvent\":\"1032862\",\"strTimeline\":\"subst\",\"strTimelineDetail\":\"D. Ceballos\",\"strHome\":\"Yes\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"idAPIfootball\":\"592311\",\"idPlayer\":\"34160703\",\"strPlayer\":\"Thomas Partey\",\"strCountry\":null,\"idAssist\":\"34160542\",\"strAssist\":\"Daniel Ceballos\",\"intTime\":\"69\",\"idTeam\":\"133604\",\"strTeam\":\"Arsenal\",\"strComment\":\"\",\"dateEvent\":\"2021-01-14\",\"strSeason\":\"2020-2021\"},{\"idTimeline\":\"13164\",\"idEvent\":\"1032862\",\"strTimeline\":\"subst\",\"strTimelineDetail\":\"C. Benteke\",\"strHome\":\"No\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"idAPIfootball\":\"592311\",\"idPlayer\":\"34152863\",\"strPlayer\":\"Jordan Ayew\",\"strCountry\":null,\"idAssist\":\"34145470\",\"strAssist\":\"Christian Benteke\",\"intTime\":\"81\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal",
+  "parsedJsonSchema": {
+    "keys": [
+      "idTimeline",
+      "idEvent",
+      "strTimeline",
+      "strTimelineDetail",
+      "strHome",
+      "strEvent",
+      "idAPIfootball",
+      "idPlayer",
+      "strPlayer",
+      "strCountry",
+      "idAssist",
+      "strAssist",
+      "intTime",
+      "idTeam",
+      "strTeam",
+      "strComment",
+      "dateEvent",
+      "strSeason"
+    ],
+    "types": {
+      "idTimeline": "string",
+      "idEvent": "string",
+      "strTimeline": "string",
+      "strTimelineDetail": "string",
+      "strHome": "string",
+      "strEvent": "string",
+      "idAPIfootball": "string",
+      "idPlayer": "string",
+      "strPlayer": "string",
+      "strCountry": "object",
+      "idAssist": "object",
+      "strAssist": "string",
+      "intTime": "string",
+      "idTeam": "string",
+      "strTeam": "string",
+      "strComment": "string",
+      "dateEvent": "string",
+      "strSeason": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuptimeline.php?id=1032862"
+}

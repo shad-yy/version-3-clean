@@ -1,0 +1,43 @@
+{
+  "name": "eventshighlights",
+  "function": "eventshighlights",
+  "path": "eventshighlights.php",
+  "params": {
+    "d": "2025-11-08",
+    "s": "Soccer"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/eventshighlights.php?d=2025-11-08&s=Soccer",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 717,
+  "responseBodySample": "{\"tvhighlights\":[{\"idEvent\":\"2255542\",\"strEvent\":\"Rosario Central vs San Lorenzo\",\"strSport\":\"Soccer\",\"idLeague\":\"4406\",\"strLeague\":\"Argentinian Primera Division\",\"strVideo\":\"https://www.youtube.com/watch?v=fRrDF9iFPNQ\",\"strPoster\":\"\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/event/thumb/1ckzqk1627854512.jpg\",\"strFanart\":null,\"strSeason\":\"2025\"},{\"idEvent\":\"2280699\",\"strEvent\":\"Deportes Tolima vs Llaneros\",\"strSport\":\"Soccer\",\"idLeague\":\"4497\",\"strLeague\":\"Colombia Categoría Primera A\",\"strVideo\":\"https://www.youtube.com/watch?v=AptuoH8WLOo\",\"strPoster\":\"\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/event/thumb/7zuteo1754335634.jpg\",\"strFanart\":null,\"strSeason\":\"2025\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "idEvent",
+      "strEvent",
+      "strSport",
+      "idLeague",
+      "strLeague",
+      "strVideo",
+      "strPoster",
+      "strThumb",
+      "strFanart",
+      "strSeason"
+    ],
+    "types": {
+      "idEvent": "string",
+      "strEvent": "string",
+      "strSport": "string",
+      "idLeague": "string",
+      "strLeague": "string",
+      "strVideo": "string",
+      "strPoster": "string",
+      "strThumb": "string",
+      "strFanart": "object",
+      "strSeason": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "eventshighlights.php?d=2025-11-08&s=Soccer"
+}

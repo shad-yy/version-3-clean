@@ -1,0 +1,20 @@
+{
+  "name": "playerresults",
+  "function": "playerresults",
+  "path": "playerresults.php",
+  "params": {
+    "id": "34146370"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/playerresults.php?id=34146370",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 16,
+  "responseBodySample": "{\"results\":null}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "playerresults.php?id=34146370"
+}

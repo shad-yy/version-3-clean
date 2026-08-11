@@ -1,0 +1,194 @@
+name: Auto-Index New URLs
+
+on:
+  push:
+    branches: [Version-3]
+    paths:
+      - 'content/**'
+      - 'app/**/page.tsx'
+      - 'app/**/page.ts'
+      - 'lib/blog/posts.ts'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'Comma-separated URLs to submit (leave empty to auto-detect from sitemap)'
+        required: false
+        type: string
+
+jobs:
+  index-urls:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: read
+      statuses: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit to diff
+
+      - name: Wait for Vercel Deployment
+        run: |
+          echo "⏳ Waiting for Vercel deployment to go live..."
+          MAX_ATTEMPTS=30
+          ATTEMPT=0
+          SITE_URL="https://smartlivetv.co.uk"
+          while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL" || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "✅ Site is live (HTTP $STATUS) after $((ATTEMPT * 10))s"
+              break
+            fi
+            echo "  Attempt $((ATTEMPT+1))/$MAX_ATTEMPTS — HTTP $STATUS, retrying in 10s..."
+            sleep 10
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+          if [ $ATTEMPT -eq $MAX_ATTEMPTS ]; then
+            echo "⚠️ Timed out waiting for deployment, proceeding anyway..."
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install googleapis --no-save
+
+      - name: Detect new pages & submit for indexing
+        env:
+          SITE_URL: https://smartlivetv.co.uk
+          # These secrets must be set in GitHub repo Settings → Secrets
+          # GSC_SERVICE_ACCOUNT_JSON: The full JSON key of your Google Cloud service account
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: |
+          node << 'EOF'
+          const https = require('https');
+          const { google } = require('googleapis');
+          
+          const SITE_URL = process.env.SITE_URL;
+          const MANUAL_URLS = '${{ github.event.inputs.urls }}'.split(',').filter(Boolean).map(u => u.trim());
+          
+          async function main() {
+            let urlsToSubmit = [];
+            
+            // 1. If manual URLs were provided, use those
+            if (MANUAL_URLS.length > 0) {
+              console.log(`📋 Manual submission: ${MANUAL_URLS.length} URLs`);
+              for (const url of MANUAL_URLS) {
+                console.log(`  → ${url}`);
+              }
+              urlsToSubmit = MANUAL_URLS;
+            } else {
+              // 2. Auto-detect changed files
+              const { execSync } = require('child_process');
+              let changedFiles = [];
+              try {
+                changedFiles = execSync('git diff --name-only HEAD~1 HEAD')
+                  .toString()
+                  .split('\n')
+                  .filter(Boolean);
+              } catch (e) {
+                console.log('⚠️ Could not diff commits, using empty list');
+              }
+              
+              // 3. Map changed files to URLs
+              for (const file of changedFiles) {
+                // Blog posts in content/
+                const blogMatch = file.match(/content\/blog\/(.+)\.mdx?$/);
+                if (blogMatch) {
+                  urlsToSubmit.push(`${SITE_URL}/blog/${blogMatch[1]}`);
+                }
+                
+                // App pages
+                const pageMatch = file.match(/app\/(.+)\/page\.tsx?$/);
+                if (pageMatch) {
+                  const path = pageMatch[1]
+                    .replace(/\[.*?\]/g, '')  // Remove dynamic segments
+                    .replace(/\/+/g, '/');
+                  if (!path.includes('[')) {
+                    urlsToSubmit.push(`${SITE_URL}/${path}`);
+                  }
+                }
+                
+                // If blog posts.ts changed, sitemap changed
+                if (file.includes('lib/blog/posts.ts')) {
+                  urlsToSubmit.push(`${SITE_URL}/blog`);
+                }
+              }
+              
+              if (urlsToSubmit.length === 0) {
+                console.log('ℹ️ No new URLs detected.');
+              } else {
+                console.log(`🔍 Detected ${urlsToSubmit.length} changed URL(s):`);
+                urlsToSubmit.forEach(url => console.log(`  → ${url}`));
+              }
+            }
+            
+            // 4. Always ping the sitemap
+            await pingSitemap();
+            
+            // 5. Try Indexing API if service account is available
+            if (process.env.GSC_SERVICE_ACCOUNT_JSON) {
+              try {
+                await submitViaIndexingAPI(urlsToSubmit);
+              } catch (err) {
+                console.log(`⚠️ Indexing API failed: ${err.message}`);
+                console.log('   Sitemap ping was sent — Google will discover pages naturally.');
+              }
+            } else {
+              console.log('ℹ️ GSC_SERVICE_ACCOUNT_JSON secret not set. Using sitemap ping only.');
+              console.log('   To enable fast indexing, add your Google Cloud service account JSON as a GitHub secret.');
+            }
+          }
+          
+          async function pingSitemap() {
+            const sitemapUrl = `${SITE_URL}/sitemap.xml`;
+            const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
+            
+            return new Promise((resolve) => {
+              https.get(pingUrl, (res) => {
+                console.log(`✅ Sitemap pinged: ${res.statusCode}`);
+                resolve();
+              }).on('error', (err) => {
+                console.log(`⚠️ Sitemap ping failed: ${err.message}`);
+                resolve();
+              });
+            });
+          }
+          
+          async function submitViaIndexingAPI(urls) {
+            const credentials = JSON.parse(process.env.GSC_SERVICE_ACCOUNT_JSON);
+            const auth = new google.auth.GoogleAuth({
+              credentials,
+              scopes: ['https://www.googleapis.com/auth/indexing'],
+            });
+            
+            const client = await auth.getClient();
+            const indexing = google.indexing({ version: 'v3', auth: client });
+            
+            const allUrls = urls.length > 0 ? urls : [`${SITE_URL}/`];
+            
+            for (const url of allUrls.slice(0, 200)) {  // Max 200/day
+              try {
+                await indexing.urlNotifications.publish({
+                  requestBody: {
+                    url,
+                    type: 'URL_UPDATED',
+                  },
+                });
+                console.log(`✅ Submitted: ${url}`);
+              } catch (err) {
+                console.log(`❌ Failed: ${url} — ${err.message}`);
+              }
+            }
+          }
+          
+          main().catch(err => {
+            console.error('Fatal error:', err.message);
+            process.exit(1);
+          });
+          EOF

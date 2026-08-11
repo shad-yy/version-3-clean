@@ -1,0 +1,20 @@
+{
+  "name": "eventresults",
+  "function": "eventresults",
+  "path": "eventresults.php",
+  "params": {
+    "id": "1032862"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/eventresults.php?id=1032862",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 16,
+  "responseBodySample": "{\"results\":null}",
+  "parsedJsonSchema": {
+    "keys": [],
+    "types": {}
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "eventresults.php?id=1032862"
+}

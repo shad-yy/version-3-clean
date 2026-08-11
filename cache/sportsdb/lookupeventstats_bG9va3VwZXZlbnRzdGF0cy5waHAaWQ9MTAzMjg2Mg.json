@@ -1,0 +1,36 @@
+{
+  "name": "lookupeventstats",
+  "function": "lookupeventstats",
+  "path": "lookupeventstats.php",
+  "params": {
+    "id": "1032862"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookupeventstats.php?id=1032862",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 829,
+  "responseBodySample": "{\"eventstats\":[{\"idStatistic\":\"16451\",\"idEvent\":\"1032862\",\"idApiFootball\":\"592311\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strStat\":\"Shots on Goal\",\"intHome\":\"4\",\"intAway\":\"2\"},{\"idStatistic\":\"16452\",\"idEvent\":\"1032862\",\"idApiFootball\":\"592311\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strStat\":\"Shots off Goal\",\"intHome\":\"4\",\"intAway\":\"6\"},{\"idStatistic\":\"16453\",\"idEvent\":\"1032862\",\"idApiFootball\":\"592311\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strStat\":\"Total Shots\",\"intHome\":\"10\",\"intAway\":\"11\"},{\"idStatistic\":\"16454\",\"idEvent\":\"1032862\",\"idApiFootball\":\"592311\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strStat\":\"Blocked Shots\",\"intHome\":\"2\",\"intAway\":\"3\"},{\"idStatistic\":\"16455\",\"idEvent\":\"1032862\",\"idApiFootball\":\"592311\",\"strEvent\":\"Arsenal vs Crystal Palace\",\"strStat\":\"Shots insidebox\",\"intHome\":\"5\",\"intAway\":\"7\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "idStatistic",
+      "idEvent",
+      "idApiFootball",
+      "strEvent",
+      "strStat",
+      "intHome",
+      "intAway"
+    ],
+    "types": {
+      "idStatistic": "string",
+      "idEvent": "string",
+      "idApiFootball": "string",
+      "strEvent": "string",
+      "strStat": "string",
+      "intHome": "string",
+      "intAway": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookupeventstats.php?id=1032862"
+}

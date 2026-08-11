@@ -1,0 +1,487 @@
+# Smart Live TV — Sports Telemetry & Broadcast Information Directory
+> This is a comprehensive, full-text resource detailing live sports scores, real-time match telemetry, fixture schedules, and sports editorial coverage on Smart Live TV.
+
+---
+
+## 1. About Smart Live TV
+Smart Live TV (smartlivetv.co.uk) is a real-time sports telemetry and live match data platform for UK and international sports fans.
+- **Core Features:** Live football scores, match statistics, team lineups, league standings, and official UK broadcast schedule guides for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
+- **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
+- **Broadcast Listings:** Reference official UK rights holders only — Sky Sports, TNT Sports, BBC, ITV, discovery+ and Amazon Prime Video. Smart Live TV does not sell or provide television subscriptions.
+
+---
+
+## 2. Frequently Asked Questions (FAQ)
+
+### What data does Smart Live TV provide?
+Smart Live TV provides real-time scores, match statistics, head-to-head records, official line-ups, and UK broadcast schedule information for major football leagues, UFC, and Motorsport.
+
+### Where can I check live match scores?
+Visit smartlivetv.co.uk/scores for live real-time score updates across all ongoing matches.
+
+---
+
+## 3. Full Articles & Guides
+
+### Article: Sky Sports, TNT Sports, & Prime Video: Cost to Watch Premier League 2026-27
+**Published Date:** 2026-07-19 | **Category:** comparison
+**Description:** How much does it cost to watch the 2026-27 Premier League season in the UK? A breakdown of Sky Sports, TNT Sports and Amazon Prime Video pricing and what each package actually covers.
+
+
+# Sky Sports, TNT Sports, & Prime Video: Cost to Watch Premier League 2026-27
+
+The total cost to watch all televised Premier League 2026-27 matches in the UK is **£82.99 per month** across Sky Sports, TNT Sports, and Amazon Prime Video. No single subscription covers the full televised schedule, because the rights are split deliberately between three broadcasters.
+
+With inflation and rights fees rising, football fans are paying more than ever to support their teams. In the UK, rights are heavily fragmented, meaning that one subscription is no longer enough to watch even half of the televised games. This article analyzes the real cost of following the 2026-27 season and outlines how you can save hundreds of pounds.
+
+## Official Subscription Costs Breakdown (UK)
+
+To watch every official broadcast of the 2026-27 campaign, a UK household must maintain active subscriptions with three separate companies.
+
+### 1. Sky Sports — The Lion's Share
+Sky Sports hosts the largest package, showing 128 live matches.
+*   **Monthly Rate:** Starts at £43/month.
+*   **Contract Term:** Typically 18 months, with steep price hikes after the promotional period.
+*   **Total Season Cost:** ~£516.
+
+### 2. TNT Sports — The Saturday Lunchtime Fixture
+TNT Sports holds the rights to 52 matches, primarily the Saturday 12:30 PM slot.
+*   **Monthly Rate:** £30.99 via the discovery+ Premium app.
+*   **Contract Term:** Month-to-month.
+*   **Total Season Cost:** ~£309.90.
+
+### 3. Amazon Prime Video — The Festive Rounds
+Amazon Prime Video streams two full rounds of fixtures in December.
+*   **Monthly Rate:** £8.99/month.
+*   **Contract Term:** Month-to-month (many fans subscribe only for December).
+*   **Total Season Cost:** ~£17.98 (for 2 months).
+
+**Combined Total Cost:** **£843.88 per year** for the 200 televised games.
+
+---
+
+## The Big Missing Piece: Saturday 3 PM Blackout
+
+Even if you pay over £840 a year for all three subscriptions, you are still blocked from watching **180 matches** due to the UK's Saturday 3 PM broadcasting blackout. If your team plays at 3 PM on Saturday, you cannot watch them live on TV in the UK.
+
+For international viewers in the US (via Peacock/NBC Sports) or Australia (via Optus Sport), this rule does not apply. They get access to all 380 games for a single, low-cost subscription.
+
+---
+
+## Why the UK Bill Is Higher Than Elsewhere
+
+The gap is a rights-structure difference, not a pricing accident.
+
+The UK operates a **Saturday 3pm blackout**: no match kicking off between 2:45pm and 5:15pm on a Saturday may be broadcast live in the UK. The rule dates to the 1960s and exists to protect attendance at lower-league grounds. It means roughly 180 of the 380 fixtures each season are never televised here at all — no UK subscription, at any price, includes them.
+
+Markets without that rule sell a single all-inclusive package instead, which is why a US or Australian viewer pays once and sees every game.
+
+### What Each UK Package Actually Buys
+
+| Feature | Sky Sports | TNT Sports | Amazon Prime Video |
+| :--- | :--- | :--- | :--- |
+| **Monthly cost** | £43.00 | £30.99 | £8.99 |
+| **PL fixtures** | Largest package | Smaller package | One December matchweek |
+| **Champions League** | No | Yes (full) | No |
+| **Contract** | Up to 18 months | Rolling available | Rolling |
+| **Contract-free route** | NOW Sports pass | discovery+ pass | Included with Prime |
+
+### How to Reduce the Bill Legitimately
+
+*   **Use NOW Sports passes seasonally.** Sky Sports content on a rolling monthly pass, cancellable over the summer break — typically three months of savings a year.
+*   **Pick one broadcaster by competition.** If the Champions League matters more than full Premier League coverage, TNT Sports alone roughly halves the cost.
+*   **Watch the free tier.** *Match of the Day* highlights on BBC iPlayer, plus the FA Cup and England internationals live under Ofcom "Listed Events" rules, cost nothing.
+
+Prices quoted are the advertised UK rates at the time of writing and change regularly — confirm with the broadcaster before subscribing.
+
+## Follow the Fixtures
+
+Smart Live TV publishes the full [Premier League fixture list, kick-off times and official broadcaster for every match](/watch/premier-league), plus [live scores](/scores) as they happen.
+
+
+---
+
+### Article: TNT Sports SD Discontinued on Sky: How to Watch Without Upgrading Your Box
+**Published Date:** 2026-07-19 | **Category:** guides
+**Description:** Sky has discontinued TNT Sports Standard Definition (SD) channels, blocking older Sky+ box users. Find out how to watch TNT Sports without expensive upgrades.
+
+
+**Direct Answer:** On July 1, 2026, Sky discontinued standard definition (SD) broadcasts for TNT Sports, leaving older Sky+ box owners unable to watch TNT Sports without changing equipment. The contract-free route is discovery+, which carries TNT Sports 1–4 on a rolling monthly pass and runs on any Smart TV, streaming stick, phone or browser — no satellite hardware required.
+
+---
+
+The shutdown of TNT Sports SD channels on Sky satellite platforms has left thousands of UK sports fans in the dark. If you have been trying to tune into TNT Sports 1, 2, 3, or 4 on an older Sky+ or Sky+ HD box running SD-only subscriptions, you will now see a message informing you that the broadcast has ceased.
+
+To continue watching Premier League matches, Champions League football, UFC fights, and Premiership Rugby, you are forced to make a choice: pay Sky for an expensive hardware upgrade, or find a modern streaming alternative.
+
+Here is a breakdown of what happened, your official options, and the most cost-effective way to get your sports coverage back.
+
+## Sky TNT Sports SD Shutdown: The Details
+
+As of July 2026, Sky has completely terminated Standard Definition feeds for TNT Sports. This follows a broader industry-wide push to phase out legacy SD satellite transmissions in favour of HD and Ultra HD streaming standards.
+
+| Feature | Legacy Sky+ SD Setup | Sky Q / Sky Glass Upgrade | discovery+ (TNT Sports) |
+| :--- | :--- | :--- | :--- |
+| **TNT Sports Access** | No (discontinued July 1, 2026) | Yes (requires HD package) | Yes (all TNT Sports channels) |
+| **Hardware Required** | Legacy Sky+ box (satellite) | Sky Q or Sky Glass box | Any Smart TV, streaming stick, phone or browser |
+| **Contract Length** | None (cancelled service) | 18 or 24-month contract | Rolling monthly, cancel anytime |
+| **Monthly Cost** | £0 (cancelled) | £30+ per month (sports add-on) | Around £30.99 per month |
+| **Resolution** | Standard Definition | High Definition | HD (4K on selected events) |
+
+## Official Solutions (And the Hidden Costs)
+
+If you contact Sky, they will offer to upgrade your system to a Sky Q box or Sky Glass TV. While Sky often provides the physical Sky Q box for free to existing subscribers, this upgrade comes with hidden conditions:
+
+1. **New Long-Term Contracts:** Upgrading your box almost always requires signing a brand-new 18-month or 24-month contract, locking you into Sky's ecosystem.
+2. **Mandatory Subscription Price Increases:** To watch TNT Sports on your new box, you must pay for both the base Sky TV subscription and the TNT Sports HD add-on, which typically costs an extra £30 per month.
+3. **Installation Fees:** Depending on your setup, you may need a satellite dish modification (Wideband LNB upgrade), which incurs installation costs.
+
+Alternatively, you could sign up for NOW Sports, which offers TNT Sports access. However, NOW requires a monthly sports membership of £34.99, and they charge an additional £6/month "Boost" fee if you want to watch in full HD resolution instead of 720p.
+
+## The Contract-Free Route: discovery+
+
+discovery+ is the official streaming home of TNT Sports in the UK. It carries TNT Sports 1, 2, 3 and 4 without any satellite hardware, and it sells on a rolling monthly basis rather than an 18-month term.
+
+It runs on Smart TVs (Samsung, LG), Amazon Fire TV devices, Roku, Chromecast, games consoles, phones, tablets and any modern browser — so a legacy Sky+ box owner can keep the same television and simply plug in a streaming stick.
+
+### How to Set It Up
+
+1. Download the **discovery+** app from your device's official app store, or go to discoveryplus.co.uk in a browser.
+2. Create an account and choose the tier that includes TNT Sports.
+3. Sign in and open the Sport section to find the TNT Sports channels and the live fixture schedule.
+
+Because it is a rolling pass, it can be cancelled at the end of any month — useful if you only want it for the Champions League group stage or a single Premiership Rugby run.
+
+## A Note on Free UK Alternatives
+
+Many sporting events remain free-to-air under the Ofcom "Listed Events" rules. The FA Cup Final, the Wimbledon Finals, and all England national football matches at the World Cup or Euros are broadcast free on BBC and ITV, and are available on BBC iPlayer and ITVX at no cost.
+
+Commercial rights — specifically the Premier League, Champions League, UFC and Premiership Rugby — sit with pay-TV rights holders. TNT Sports content is only licensed in the UK through Sky, Virgin Media, EE TV, BT and discovery+; NOW carries the Sky Sports package rather than TNT.
+
+---
+
+## Frequently Asked Questions
+
+### Why did TNT Sports stop working on my Sky+ box?
+Sky terminated all standard definition (SD) feeds for TNT Sports on July 1, 2026. Older Sky+ boxes are satellite-only and cannot process the newer high-definition or streaming feeds without a hardware upgrade.
+
+### Can I get TNT Sports in HD on an old Sky box?
+No. Standard legacy Sky+ boxes do not support HD channels. To watch HD content via Sky, you must upgrade your hardware to a Sky Q box, Sky Glass, or transition to a digital streaming service.
+
+### Do I have to pay to upgrade my Sky box to HD?
+While Sky sometimes waives the cost of the replacement Sky Q box, they will require you to sign a new 18-month or 24-month contract and subscribe to a premium HD package, raising your monthly bill.
+
+### Is there a way to watch TNT Sports without a Sky contract?
+Yes. discovery+ is the official streaming platform for TNT Sports and sells on a rolling monthly pass with no minimum term. It works on Smart TVs, streaming sticks, phones and browsers, so no satellite equipment is needed.
+
+### What is the cheapest way to watch TNT Sports in the UK?
+A rolling discovery+ pass that includes TNT Sports is the cheapest contract-free route, at around £30.99 per month at the time of writing. Adding TNT Sports to an existing Sky, Virgin Media or EE TV package is usually a similar monthly figure but ties you to a longer term. Prices change regularly — check the provider before subscribing.
+
+
+---
+
+### Article: How to Watch Premier League 2026-27 Live: Complete TV & Streaming Guide
+**Published Date:** 2026-07-19 | **Category:** guides
+**Description:** Where to watch the 2026-27 Premier League season live. Full breakdown of UK TV rights, official streaming apps, kick-off slots, and how to cut the cost.
+
+
+# How to Watch Premier League 2026-27 Live: Complete TV & Streaming Guide
+
+You can watch televised Premier League 2026-27 matches in the UK on Sky Sports, TNT Sports, and Amazon Prime Video. The rights are split across all three, and roughly 180 of the 380 fixtures — the Saturday 3pm kick-offs — are not broadcast live in the UK at all under the long-standing blackout rule.
+
+The 2026-27 Premier League campaign kicks off on August 21, 2026, and promises to be one of the most competitive seasons yet. With broadcasting rights split across multiple subscription providers, UK football fans face record-high costs to catch every televised fixture. This guide details every official channel, kickoff slot, and the most cost-effective alternatives to watch every match live.
+
+## Official UK TV Rights & Broadcasters for 2026-27
+
+For the 2026-27 season, domestic live broadcasts remain divided between three primary rights holders.
+
+### 1. Sky Sports
+Sky Sports remains the dominant broadcaster, showing the majority of live matches.
+*   **Fixtures:** 128 live matches per season.
+*   **Kickoff Slots:** Friday nights, Saturday 5:30 PM, Sunday 2:00 PM & 4:30 PM, and selected Monday night games.
+*   **Cost:** Standalone Sky Sports package starts at £43/month, often requiring bundled TV contracts.
+
+### 2. TNT Sports (formerly BT Sport)
+TNT Sports covers the early weekend kickoffs and midweek rounds.
+*   **Fixtures:** 52 live matches.
+*   **Kickoff Slots:** Saturday 12:30 PM and selected midweek fixtures.
+*   **Cost:** £30.99/month via discovery+ or Sky/Virgin add-ons.
+
+### 3. Amazon Prime Video
+Amazon retains rights to specific holiday game weeks.
+*   **Fixtures:** 20 live matches (two full midweek/bank holiday rounds).
+*   **Kickoff Slots:** December bank holidays and early December midweek rounds.
+*   **Cost:** £8.99/month (or £95/year for Amazon Prime subscription).
+
+---
+
+## The Cost Problem: Paying for Three Subscriptions
+
+To legally watch all televised matches in the UK through standard subscription packages, you must subscribe to all three services:
+
+| Broadcaster | Monthly Cost | Live Fixtures |
+| :--- | :--- | :--- |
+| **Sky Sports** | £43.00 | 128 matches |
+| **TNT Sports** | £30.99 | 52 matches |
+| **Amazon Prime** | £8.99 | 20 matches |
+| **Total Cost** | **£82.99 / month** | **200 matches (180 blackout)** |
+
+Furthermore, traditional UK broadcasters are subject to the **3 PM Saturday blackout rule**, meaning the remaining 180 matches cannot be shown live on UK television under any circumstances.
+
+---
+
+## How to Cut the Cost Without Losing Coverage
+
+You do not have to hold all three subscriptions at once.
+
+**NOW Sports passes.** NOW sells the Sky Sports package on a rolling monthly basis with no contract. Cancelling across the summer break and restarting in August typically saves around three months of fees per season.
+
+**discovery+ for TNT Sports.** TNT Sports is available through discovery+ on a rolling pass, which also covers the Champions League and Europa League in full.
+
+**Amazon Prime for one matchweek.** The dedicated December round is included with a standard Prime membership, so most households already have it.
+
+**Free-to-air highlights.** *Match of the Day* on BBC One and BBC iPlayer carries highlights of every Saturday fixture at no cost, including the 3pm games no broadcaster may show live.
+
+Prices quoted are the advertised UK rates at the time of writing and change regularly — confirm with each broadcaster before subscribing.
+
+## Follow Every Fixture on Smart Live TV
+
+Smart Live TV publishes the complete [Premier League fixture list and official broadcaster for every match](/watch/premier-league), plus [live scores](/scores) and [full league standings](/leagues) throughout the season — free, with no account required.
+
+
+---
+
+### Article: Harry Kane Breaks Gary Lineker's England World Cup Goals Record — 11 Goals
+**Published Date:** 2026-06-28 | **Category:** guides
+**Description:** Harry Kane headed home against Panama to score his 11th World Cup goal, breaking Gary Lineker's England record set in 1986. Everything you need to know about the historic moment.
+
+
+Harry Kane became England's all-time top scorer 
+at World Cups last night, heading home against Panama 
+to score his 11th goal at the tournament — 
+surpassing the record of ten held by Gary Lineker 
+since the 1986 World Cup in Mexico.
+
+## The Record-Breaking Moment
+
+Kane's header in England's 2-0 win over Panama 
+in their final Group L match came after 
+Jude Bellingham had opened the scoring.
+
+The goal moved Kane clear as England's greatest 
+ever World Cup scorer.
+
+| Player | World Cup Goals | Years Active |
+|--------|----------------|-------------|
+| Harry Kane | 11 | 2018-2026 |
+| Gary Lineker | 10 | 1986-1990 |
+| Geoff Hurst | 5 | 1966 |
+| Raheem Sterling | 4 | 2018-2022 |
+
+## Kane's World Cup Goal Timeline
+
+Kane first scored at a World Cup in Russia 2018, 
+finishing as the tournament's top scorer 
+with six goals including a hat-trick against Panama.
+
+In Qatar 2022 he scored three goals in four matches.
+
+In the 2026 tournament in North America he has 
+already scored twice in the group stage.
+
+## England Next Match
+
+England face DR Congo in the Round of 32 
+on Wednesday July 1 at 5pm BST in Atlanta — 
+live free on BBC One.
+
+Kane will be looking to add to his record 
+as England pursue a first World Cup final 
+since 1966.
+
+## Where England's World Cup Matches Were Broadcast
+
+England's 2026 World Cup fixtures were shown free-to-air in the UK, split between 
+BBC One/BBC iPlayer and ITV1/ITVX under the Ofcom "Listed Events" rules, which 
+guarantee free coverage of England's tournament matches.
+
+[Full World Cup 2026 results and broadcast archive →](/watch/world-cup-2026)
+
+## Frequently Asked Questions
+
+**How many World Cup goals has Harry Kane scored?**
+11 — after his header against Panama on June 27.
+
+**Who held the England World Cup goals record before Kane?**
+Gary Lineker, who scored ten World Cup goals 
+across the 1986 and 1990 tournaments.
+
+**When did Kane break the record?**
+June 27 2026 against Panama in Houston, 
+during England's final Group L match 
+at the 2026 World Cup.
+
+**How many World Cup goals did Gary Lineker score?**
+Ten. Six in Mexico 1986 (earning the Golden Boot) 
+and four in Italy 1990.
+
+**Will Kane become World Cup all-time top scorer?**
+The all-time World Cup top scorer is Miroslav Klose 
+of Germany with 16 goals. 
+Kane would need five more goals across this 
+and future tournaments to reach that record.
+
+
+---
+
+### Article: Sky Sports Is Raising Prices Again in 2026 — Here Are Your Alternatives
+**Published Date:** 2026-06-20 | **Category:** comparison
+**Description:** Sky Sports standalone now costs £43/month. Third price increase since 2024. If you're paying it, here is exactly what you can switch to and whether it works for the Premier League, Champions League and World Cup.
+
+
+Sky raised their sports subscription prices for the 
+third time since 2024. If you received the email, 
+you are not alone — and you are asking the right question.
+
+Here is every genuine alternative, 
+what each one costs, and whether it actually works 
+for Premier League, Champions League, UFC and Formula 1.
+
+## What Sky Sports Costs in 2026
+
+Sky Sports standalone (without a Sky broadband deal): **£43/month**
+
+With a full Sky Entertainment + Sports bundle: £65-85/month depending on deal.
+
+For Sky Sports as a streaming add-on via Sky Glass or NOW TV: £34.99/month for the NOW Sports Month Pass.
+
+Over a year, standalone Sky Sports costs **£516**. 
+A Sky bundle costs £780-1,020.
+
+## What You Get For That Price
+
+All Sky Sports channels: Premier League, Main Event, 
+Football, F1, Cricket, Golf, Arena, News, Mix.
+
+**Notable omissions at standard price:**  
+- Champions League and Europa League: requires TNT Sports (£30.99/month extra)
+- NFL Game Pass: separate subscription
+- UFC events: occasional PPV charges apply
+
+To watch Premier League AND Champions League on Sky, 
+you need Sky Sports (£43) AND TNT Sports (£31) = **£74/month**.
+
+## The Alternatives — Honest Assessment
+
+### Option 1: NOW TV Sports Pass
+**Cost:** £34.99/month (Sports Month Pass)  
+**What you get:** All Sky Sports channels  
+**What you don't get:** TNT Sports, Champions League, no contract flexibility at this price  
+**Verdict:** £8 cheaper than standalone Sky Sports. 
+Still does not include Champions League. 
+Still no contract lock-in, which is a genuine advantage 
+over traditional Sky. **Best for: casual viewers 
+who watch Sky Sports occasionally.**
+
+### Option 2: TNT Sports via Discovery+
+**Cost:** £30.99/month  
+**What you get:** TNT Sports 1-4, Champions League, 
+Europa League, Premier League (selected fixtures), 
+boxsets via discovery+  
+**What you don't get:** All Premier League matches 
+(Sky holds most), F1, cricket, golf  
+**Verdict:** If Champions League is your priority 
+and you can live without Sky Sports, this is worth 
+considering. **Best for: Champions League-focused viewers.**
+
+### Option 3: Amazon Prime Video
+**Cost:** £8.99/month  
+**What you get:** A dedicated Premier League matchweek in 
+December, included with a standard Prime membership  
+**What you don't get:** Any other Premier League fixtures, 
+Champions League, F1, cricket or golf  
+**Verdict:** Not a Sky replacement on its own, but it covers 
+a matchweek neither Sky nor TNT carries. 
+**Best for: filling the December gap cheaply.**
+
+## The Cost Comparison
+
+| Service | Monthly | Annual | Includes UCL? | Includes most PL? |
+|---------|---------|--------|---------------|-------------------|
+| Sky Sports | £43 | £516 | No | Yes |
+| Sky + TNT Sports | £74 | £888 | Yes | Yes |
+| NOW Sports (monthly) | £35 | £420 | No | Yes |
+| TNT Sports only | £31 | £372 | Yes | Selected fixtures |
+| Amazon Prime Video | £8.99 | £108 | No | One matchweek |
+
+Prices are the advertised UK rates at the time of writing and 
+change regularly — check the broadcaster before committing.
+
+## Which Combination Actually Covers What
+
+No single UK service carries every televised Premier League 
+match, because the rights are deliberately split.
+
+**Sky Sports** holds the largest package, including most 
+Sunday and Monday fixtures and Saturday evening games.
+
+**TNT Sports** holds a smaller Premier League package plus 
+the Champions League and Europa League in full.
+
+**Amazon Prime Video** streams one dedicated December matchweek.
+
+**BBC** carries no live Premier League, but *Match of the Day* 
+highlights are free and the FA Cup and England internationals 
+are shown live under the Ofcom "Listed Events" rules.
+
+Saturday 3pm kick-offs are not televised in the UK at all, 
+under the long-standing blackout rule designed to protect 
+attendance at lower-league grounds.
+
+## How to Cut the Bill Without Losing Coverage
+
+**Use NOW passes seasonally.** NOW sells Sky Sports content 
+on a rolling monthly pass with no contract. Cancelling over 
+the summer break and restarting in August saves roughly 
+three months of fees each year.
+
+**Drop to TNT Sports alone in a Champions League year.** If 
+European football matters more to you than full Premier 
+League coverage, this roughly halves the bill.
+
+**Check your Sky contract end date first.** Sky Sports can be 
+cancelled at any time after the minimum term, but cancelling 
+early usually incurs a fee. Sky Sports and Sky Broadband are 
+separate products — check whether a bundle discount ties them 
+together before you cancel either.
+
+## Frequently Asked Questions
+
+**Why does Sky Sports keep raising prices?**  
+Sky's rights fees for Premier League broadcasts 
+increased significantly in the 2025-2028 cycle. 
+Sky paid approximately £4.5 billion for UK Premier 
+League rights — costs passed directly to subscribers.
+
+**Will the Premier League ever be on a cheaper service?**  
+The current Premier League rights deal runs to 2028. 
+Sky Sports and TNT Sports hold the UK broadcast rights 
+until then, so no cheaper licensed route to the full 
+package exists before that cycle ends. The next auction 
+is the realistic point at which pricing could change.
+
+**Can I keep my broadband if I cancel Sky Sports?**  
+Yes. Sky Sports and Sky Broadband are separate products. 
+Cancelling Sky Sports does not affect your broadband 
+contract. Check your specific contract terms as some 
+bundle deals tie the two together.
+
+**What is the cheapest way to watch televised Premier League matches in 2026?**  
+A NOW Sports monthly pass at around £35 is the cheapest 
+contract-free route to the Sky Sports package. Adding TNT 
+Sports is required for Champions League and TNT's Premier 
+League fixtures. Note that no UK service shows all 380 
+matches — Saturday 3pm kick-offs are not televised here.
+
+
+---

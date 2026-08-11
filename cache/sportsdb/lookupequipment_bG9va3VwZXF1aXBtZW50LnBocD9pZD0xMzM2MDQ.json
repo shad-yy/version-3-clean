@@ -1,0 +1,36 @@
+{
+  "name": "lookupequipment",
+  "function": "lookupequipment",
+  "path": "lookupequipment.php",
+  "params": {
+    "id": "133604"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookupequipment.php?id=133604",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 486,
+  "responseBodySample": "{\"equipment\":[{\"idEquipment\":\"592\",\"idTeam\":\"133604\",\"date\":\"2019-08-15 11:41:11\",\"strSeason\":\"2019-2020\",\"strEquipment\":\"https://r2.thesportsdb.com/images/media/team/equipment/2019-133604-Jersey.png\",\"strType\":\"1st\",\"strUsername\":\"Anonymous\"},{\"idEquipment\":\"1130\",\"idTeam\":\"133604\",\"date\":\"2020-04-14 15:27:09\",\"strSeason\":\"2019-2020\",\"strEquipment\":\"https://r2.thesportsdb.com/images/media/team/equipment/svssgp1586874381.png\",\"strType\":\"2nd\",\"strUsername\":\"cydalby\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "idEquipment",
+      "idTeam",
+      "date",
+      "strSeason",
+      "strEquipment",
+      "strType",
+      "strUsername"
+    ],
+    "types": {
+      "idEquipment": "string",
+      "idTeam": "string",
+      "date": "string",
+      "strSeason": "string",
+      "strEquipment": "string",
+      "strType": "string",
+      "strUsername": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookupequipment.php?id=133604"
+}

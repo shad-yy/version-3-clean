@@ -1,0 +1,48 @@
+{
+  "name": "lookuplineup",
+  "function": "lookuplineup",
+  "path": "lookuplineup.php",
+  "params": {
+    "id": "1032862"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuplineup.php?id=1032862",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 2542,
+  "responseBodySample": "{\"lineup\":[{\"idLineup\":\"28396\",\"idEvent\":\"1032862\",\"strPosition\":\"Goalkeeper\",\"strHome\":\"No\",\"strSubstitute\":\"No\",\"intSquadNumber\":\"31\",\"idPlayer\":\"34169081\",\"strPlayer\":\"Vicente Guaita\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal Palace\",\"strCutout\":\"https://r2.thesportsdb.com/images/media/player/cutout/na7gay1724495526.png\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/8qchiw1577552300.jpg\",\"strRender\":\"https://r2.thesportsdb.com/images/media/player/render/gxms5f1579280705.png\"},{\"idLineup\":\"28397\",\"idEvent\":\"1032862\",\"strPosition\":\"Defender\",\"strHome\":\"No\",\"strSubstitute\":\"No\",\"intSquadNumber\":\"2\",\"idPlayer\":\"34145550\",\"strPlayer\":\"Joel Ward\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal Palace\",\"strCutout\":\"https://r2.thesportsdb.com/images/media/player/cutout/9sn98y1694025354.png\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/bvc52j1510410467.jpg\",\"strRender\":\"https://r2.thesportsdb.com/images/media/player/render/yxzbq91577657066.png\"},{\"idLineup\":\"28398\",\"idEvent\":\"1032862\",\"strPosition\":\"Defender\",\"strHome\":\"No\",\"strSubstitute\":\"No\",\"intSquadNumber\":\"5\",\"idPlayer\":\"34145983\",\"strPlayer\":\"James Tomkins\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal Palace\",\"strCutout\":\"https://r2.thesportsdb.com/images/media/player/cutout/hobm7f1694025331.png\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/4b5fv61510410257.jpg\",\"strRender\":\"https://r2.thesportsdb.com/images/media/player/render/nos14l1577656662.png\"},{\"idLineup\":\"28399\",\"idEvent\":\"1032862\",\"strPosition\":\"Midfielder\",\"strHome\":\"No\",\"strSubstitute\":\"No\",\"intSquadNumber\":\"8\",\"idPlayer\":\"34146016\",\"strPlayer\":\"Cheikhou Kouyate\",\"idTeam\":\"133632\",\"strTeam\":\"Crystal Palace\",\"strCutout\":\"https://r2.thesportsdb.com/images/media/player/cutout/9yk9i41693757085.png\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/imv9l71509106806.jpg\",\"strRender\":\"https://r2.thesportsdb.com/images/media/player/render/j41gys1577618621.png\"},{\"idLineup\":\"28400\",\"idEvent\":\"1032862\",\"strPosition",
+  "parsedJsonSchema": {
+    "keys": [
+      "idLineup",
+      "idEvent",
+      "strPosition",
+      "strHome",
+      "strSubstitute",
+      "intSquadNumber",
+      "idPlayer",
+      "strPlayer",
+      "idTeam",
+      "strTeam",
+      "strCutout",
+      "strThumb",
+      "strRender"
+    ],
+    "types": {
+      "idLineup": "string",
+      "idEvent": "string",
+      "strPosition": "string",
+      "strHome": "string",
+      "strSubstitute": "string",
+      "intSquadNumber": "string",
+      "idPlayer": "string",
+      "strPlayer": "string",
+      "idTeam": "string",
+      "strTeam": "string",
+      "strCutout": "string",
+      "strThumb": "string",
+      "strRender": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuplineup.php?id=1032862"
+}

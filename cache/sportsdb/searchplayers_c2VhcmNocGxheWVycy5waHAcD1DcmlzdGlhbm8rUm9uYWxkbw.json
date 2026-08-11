@@ -1,0 +1,48 @@
+{
+  "name": "searchplayers",
+  "function": "searchplayers",
+  "path": "searchplayers.php",
+  "params": {
+    "p": "Cristiano Ronaldo"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=Cristiano+Ronaldo",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 928,
+  "responseBodySample": "{\"player\":[{\"idPlayer\":\"34146304\",\"idTeam\":\"136022\",\"strPlayer\":\"Cristiano Ronaldo\",\"strTeam\":\"Al Nassr FC\",\"strSport\":\"Soccer\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/bkre241600892282.jpg\",\"strCutout\":\"https://www.thesportsdb.com/images/media/player/cutout/a19jje1761592498.png\",\"strNationality\":\"Portugal\",\"dateBorn\":\"1985-02-05\",\"strStatus\":\"Active\",\"strGender\":\"Male\",\"strPosition\":\"Centre-Forward\",\"relevance\":\"26.833080291748047\"},{\"idPlayer\":\"34147090\",\"idTeam\":\"133687\",\"strPlayer\":\"Cristiano Biraghi\",\"strTeam\":\"Torino\",\"strSport\":\"Soccer\",\"strThumb\":\"https://r2.thesportsdb.com/images/media/player/thumb/013bbl1546377757.jpg\",\"strCutout\":\"https://www.thesportsdb.com/images/media/player/cutout/39grvw1758813369.png\",\"strNationality\":\"Italy\",\"dateBorn\":\"1992-09-01\",\"strStatus\":\"Active\",\"strGender\":\"Male\",\"strPosition\":\"Defender\",\"relevance\":\"14.342772483825684\"}]}",
+  "parsedJsonSchema": {
+    "keys": [
+      "idPlayer",
+      "idTeam",
+      "strPlayer",
+      "strTeam",
+      "strSport",
+      "strThumb",
+      "strCutout",
+      "strNationality",
+      "dateBorn",
+      "strStatus",
+      "strGender",
+      "strPosition",
+      "relevance"
+    ],
+    "types": {
+      "idPlayer": "string",
+      "idTeam": "string",
+      "strPlayer": "string",
+      "strTeam": "string",
+      "strSport": "string",
+      "strThumb": "string",
+      "strCutout": "string",
+      "strNationality": "string",
+      "dateBorn": "string",
+      "strStatus": "string",
+      "strGender": "string",
+      "strPosition": "string",
+      "relevance": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "searchplayers.php?p=Cristiano+Ronaldo"
+}

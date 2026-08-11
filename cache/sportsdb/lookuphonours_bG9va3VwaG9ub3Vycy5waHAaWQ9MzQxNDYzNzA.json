@@ -1,0 +1,48 @@
+{
+  "name": "lookuphonours",
+  "function": "lookuphonours",
+  "path": "lookuphonours.php",
+  "params": {
+    "id": "34146370"
+  },
+  "finalUrl": "https://www.thesportsdb.com/api/v1/json/123/lookuphonours.php?id=34146370",
+  "statusCode": 200,
+  "contentType": "application/json; charset=utf-8",
+  "responseSize": 2558,
+  "responseBodySample": "{\"honours\":[{\"id\":\"611\",\"idPlayer\":\"34146370\",\"idTeam\":\"133739\",\"idLeague\":\"4335\",\"idHonour\":\"566\",\"strSport\":\"Soccer\",\"strPlayer\":\"Lionel Messi\",\"strTeam\":\"Barcelona\",\"strTeamBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png\",\"strHonour\":\"Spanish La Liga\",\"strHonourLogo\":\"https://www.thesportsdb.com/images/media/honour/logo/f83x5q1725095441.png\",\"strHonourTrophy\":\"https://www.thesportsdb.com/images/media/honour/trophy/nco20w1650642293.png\",\"strSeason\":\"2004-2005\"},{\"id\":\"612\",\"idPlayer\":\"34146370\",\"idTeam\":\"133739\",\"idLeague\":\"4335\",\"idHonour\":\"566\",\"strSport\":\"Soccer\",\"strPlayer\":\"Lionel Messi\",\"strTeam\":\"Barcelona\",\"strTeamBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png\",\"strHonour\":\"Spanish La Liga\",\"strHonourLogo\":\"https://www.thesportsdb.com/images/media/honour/logo/f83x5q1725095441.png\",\"strHonourTrophy\":\"https://www.thesportsdb.com/images/media/honour/trophy/nco20w1650642293.png\",\"strSeason\":\"2005-2006\"},{\"id\":\"613\",\"idPlayer\":\"34146370\",\"idTeam\":\"133739\",\"idLeague\":\"4335\",\"idHonour\":\"566\",\"strSport\":\"Soccer\",\"strPlayer\":\"Lionel Messi\",\"strTeam\":\"Barcelona\",\"strTeamBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png\",\"strHonour\":\"Spanish La Liga\",\"strHonourLogo\":\"https://www.thesportsdb.com/images/media/honour/logo/f83x5q1725095441.png\",\"strHonourTrophy\":\"https://www.thesportsdb.com/images/media/honour/trophy/nco20w1650642293.png\",\"strSeason\":\"2008-2009\"},{\"id\":\"614\",\"idPlayer\":\"34146370\",\"idTeam\":\"133739\",\"idLeague\":\"4335\",\"idHonour\":\"566\",\"strSport\":\"Soccer\",\"strPlayer\":\"Lionel Messi\",\"strTeam\":\"Barcelona\",\"strTeamBadge\":\"https://r2.thesportsdb.com/images/media/team/badge/wq9sir1639406443.png\",\"strHonour\":\"Spanish La Liga\",\"strHonourLogo\":\"https://www.thesportsdb.com/images/media/honour/logo/f83x5q1725095441.png\",\"strHonourTrophy\":\"https://www.thesportsdb.com/images/media/honour/trophy/nco20w1650642293.png\",\"strSeason\":\"2009-2010\"},{\"id\":\"615\",\"idPlayer\":\"34146370\",\"i",
+  "parsedJsonSchema": {
+    "keys": [
+      "id",
+      "idPlayer",
+      "idTeam",
+      "idLeague",
+      "idHonour",
+      "strSport",
+      "strPlayer",
+      "strTeam",
+      "strTeamBadge",
+      "strHonour",
+      "strHonourLogo",
+      "strHonourTrophy",
+      "strSeason"
+    ],
+    "types": {
+      "id": "string",
+      "idPlayer": "string",
+      "idTeam": "string",
+      "idLeague": "string",
+      "idHonour": "string",
+      "strSport": "string",
+      "strPlayer": "string",
+      "strTeam": "string",
+      "strTeamBadge": "string",
+      "strHonour": "string",
+      "strHonourLogo": "string",
+      "strHonourTrophy": "string",
+      "strSeason": "string"
+    }
+  },
+  "ok": true,
+  "fixStatus": "valid",
+  "correctUsage": "lookuphonours.php?id=34146370"
+}

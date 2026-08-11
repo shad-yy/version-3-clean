@@ -1,0 +1,6 @@
+*** File: scripts/validate-sportsdb-endpoints.ts
+- Now imports SPORTSDB_SPEC and builds endpoints dynamically
+- Adds retry strategy: normal → no-www → apikey-as-query
+- Logs HTML bodies to logs/sportsdb/*.response.html on invalid JSON
+- Writes reports/sportsdb_validation.json and reports/sportsdb_summary.md
+- Adds User-Agent header to requests
