@@ -1,0 +1,178 @@
+# Decision log
+
+Append-only. Newest last. Never edit or delete a past entry — if a decision is reversed,
+add a new entry that supersedes it and link back.
+
+Each entry records: **what was decided**, **what else was considered**, **the evidence**,
+and **the consequence**. The evidence field is what makes this log useful six months from
+now; an entry without it is just an assertion.
+
+Format:
+
+```
+## YYYY-MM-DD — <short title>
+**Decision:** …
+**Considered:** …
+**Evidence:** …
+**Consequence:** …
+```
+
+---
+
+## 2026-08-11 — Split the clean platform from the IPTV store
+
+**Decision:** The IPTV store keeps `smartlivetv.co.uk` and its existing repo
+(`shad-yy/forclaude`). This codebase becomes an independent project in a new private repo
+(`shad-yy/version-3-clean`) with orphan git history and no shared remote.
+
+**Considered:** The reverse — clean platform keeps `smartlivetv.co.uk`, store moves to
+`smartlivetv-store.com`. That was the plan of record until this date.
+
+**Evidence:** Search Console for `smartlivetv.co.uk`, three months to 2026-07-31: 67
+clicks, 2.3K impressions, average position 36. Every page earning clicks was a commercial
+one — the homepage titled "IPTV UK from £12/mo", `/ufc`, `/watch/europa-league`,
+`/setup/firestick`. Google has that domain classified as a streaming vendor, and those are
+its only ranking pages. **Caveat: 67 clicks over three months is a very small sample.** It
+is sufficient to show the domain does not rank for sports-data queries; it is not
+sufficient for anything finer-grained.
+
+**Consequence:** Nothing is lost by moving this platform to a new domain, because it has
+no rankings to forfeit. `smartlivetv-store.com` is no longer part of the architecture.
+
+---
+
+## 2026-08-11 — No store link, no commercial funnel
+
+**Decision:** This site is fully independent. No links, CTAs, redirects or references to
+any store, in any form.
+
+**Considered:** Keeping a single discreet outbound link, as an earlier owner brief
+requested ("drive customers to our shop without sounding like this website was only made
+to get traffic").
+
+**Evidence:** The purpose of the domain split is that search engines and ad networks
+cannot associate the two properties. One outbound link, a shared brand identity, a shared
+analytics property or a shared WHOIS contact re-establishes exactly that association.
+There is also no brand equity to inherit — the unambiguous brand query `smartlivetv`
+returned 1 click in three months.
+
+**Consequence:** Supersedes the earlier "drive traffic to the shop" instruction. Three
+redirects to `smartlivetv-store.com` were removed from `next.config.mjs`; the CORS
+allowlist in `middleware.ts` no longer trusts that origin.
+
+---
+
+## 2026-08-11 — Reposition to a global "where to watch" source
+
+**Decision:** Reposition from a UK sports-data platform to a global information source
+answering *"where and how can I watch this?"* across sport, film, television and
+entertainment. **Sports is retained** as one vertical; film/TV is added alongside it.
+
+**Considered:** Staying sports-only; or pivoting fully to film/TV and deprecating the
+sports infrastructure.
+
+**Evidence:** Live scores are a commodity — ESPN, BBC Sport, FlashScore and SofaScore hold
+that ground with decades of authority. Per-country availability is a real recurring
+question that no single source answers well, and it maps onto schema types Google already
+supports (`Movie`, `TVSeries`, `WatchAction`, `ActionAccessSpecification.eligibleRegion`,
+`BroadcastEvent`). Keeping sports avoids discarding working API integrations and content.
+
+**Consequence:** Every UK-only assumption becomes a defect. `lib/data/broadcast-rights.ts`
+— already multi-country, ISO-coded, with a per-competition `verified` date — becomes the
+model for the whole site rather than a single homepage component's data source.
+
+---
+
+## 2026-08-11 — Film/TV availability sourced from TMDB Watch Providers
+
+**Decision:** Build the film/TV vertical on TMDB's Watch Providers API rather than
+hand-written availability data.
+
+**Considered:** Manually curating availability; scraping; omitting the vertical.
+
+**Evidence:** TMDB's Watch Providers endpoints are powered by JustWatch, the API key is
+free, and they return per-country streaming/rental/purchase availability
+(`/movie/{id}/watch/providers`, `/tv/{id}/watch/providers`, `/watch/providers/regions`).
+Two constraints: **JustWatch attribution is mandatory** wherever the data appears, and the
+API returns availability only — **no deep links**.
+
+**Consequence:** Per-country availability can be generated from verified data instead of
+authored claims, satisfying the never-fabricate rule at scale. Design must surface the
+JustWatch attribution and must not imply deep links exist.
+
+---
+
+## 2026-08-11 — Sequence structure before theme
+
+**Decision:** Fix positioning, global targeting and structural defects first. Defer the
+visual redesign.
+
+**Considered:** Redesigning in the same pass; or centralising design tokens immediately
+while keeping the current look.
+
+**Evidence:** The theme is not centralised — ~604 hardcoded hex utilities and 953 default
+Tailwind greys against ~188 semantic tokens, across 64 files including 20 of 35 page
+routes. There are 12 hand-typed variants of one intended surface colour. Redesigning now
+would mean restyling pages that are about to change or disappear, and would near-certainly
+miss some.
+
+**Consequence:** Redesign is blocked on a normalise-then-tokenise pass. Also outstanding:
+the four sport themes are broken by construction (Tailwind maps `var(--background)` with
+no `hsl()` wrapper while the theme classes set HSL triplets), `components/theme-provider.tsx`
+is orphaned, and `SportThemeProvider` is a no-op with zero consumers.
+
+---
+
+## 2026-08-11 — Domain deferred, project stays domain-agnostic
+
+**Decision:** No domain assigned yet. Everything stays parameterised behind environment
+variables.
+
+**Considered:** Shortlisting and buying now.
+
+**Evidence:** `lib/config/site-url.ts` is already the single source of truth for domain,
+brand name, host and support email. A domain change is five environment variables, not a
+source change. Separately, "SmartScore" was rejected as a candidate name: Musitek has
+shipped SmartScore music software since 1991, GE HealthCare ships SmartScore 4.0, there is
+a live USPTO registration (88577232), and both `.com` variants are registered. It also
+names the commodity (scores) rather than the differentiator (where to watch).
+
+**Consequence:** Naming can be decided independently of engineering. Any candidate must be
+checked for availability and trademark at a registrar — DNS probes cannot confirm either.
+
+---
+
+## 2026-08-11 — Removed the IPTV artifacts that still shipped
+
+**Decision:** Removed all five remaining IPTV artifacts that reached real users, plus the
+tracked store archive.
+
+**Considered:** Leaving the archive in place, since it was excluded from `tsconfig.json`
+and not routed by Next.
+
+**Evidence:** Five artifacts were still live. Two were severe:
+
+1. `public/og-default.png` rendered **"15,000+ Channels · 4K · Free Trial"** in pixels and
+   was referenced **13×** across built routes as the site-wide `openGraph.images`,
+   `twitter.images` and Organization JSON-LD `logo.url` — i.e. what Google, X, Facebook,
+   LinkedIn and Slack showed for **every URL on the domain**. Confirmed by opening the
+   image, not by grep.
+2. `public/og-default.svg`, served publicly, read **"230,000+ Channels · 4K · Free Trial"**
+   — disagreeing with the PNG.
+3. `middleware.ts` CORS allowlist still trusted `smartlivetv-store.com`.
+4. `app/match/[id]/page.tsx` emitted a live JSON-LD `Offer` of `12.00 GBP` pointing at
+   `/pricing`, a 404 — on every match page.
+5. Two `?? "/pricing"` fallbacks sent users to that same 404.
+
+`smartlivetv-store/` was 23 files / 16,094 lines, fully git-tracked, including a live
+WhatsApp number hardcoded in `FirestickWizard.tsx`.
+
+**Consequence:** `scripts/generate-og.mjs` now generates both SVG and PNG from
+env-driven text and **fails if a channel count, price, trial or IPTV reference appears**.
+Dead code deleted: `lib/data/channels.ts` (fake channels with `m3u8` URLs),
+`lib/structured-data.ts` (unimported, carried its own £12 Offer).
+
+**Process lesson, recorded because it will recur:** every text-based audit of this
+codebase — including several this session — reported the built site clean. All were wrong,
+because the worst remnant was inside an image. **Grep cannot audit binaries. Open the
+assets.**

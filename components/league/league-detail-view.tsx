@@ -342,7 +342,8 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
     "UEFA Champions League":  "/watch/champions-league",
     "UEFA Europa League":     "/watch/europa-league",
   }
-  const watchHref = leagueWatchMap[league.name] ?? "/pricing"
+  // Falls back to the competition index, not a commercial route.
+  const watchHref = leagueWatchMap[league.name] ?? "/watch"
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">

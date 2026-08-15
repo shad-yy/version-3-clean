@@ -91,7 +91,8 @@ export default async function MatchPage(
     'UEFA Champions League': '/watch/champions-league',
     'UEFA Europa League': '/watch/europa-league',
   }
-  const watchHref = leagueWatchMap[league] || '/pricing'
+  // Falls back to the competition index, not a commercial route.
+  const watchHref = leagueWatchMap[league] || '/watch'
 
   const startIso = match.dateEvent ? (match.dateEvent.includes('T') ? match.dateEvent : `${match.dateEvent}T20:00:00+00:00`) : new Date().toISOString()
   const endDateObj = new Date(startIso)
@@ -126,14 +127,8 @@ export default async function MatchPage(
       name: league,
       url: `${ENV.BASE_URL}${watchHref}`,
     },
-    offers: {
-      '@type': 'Offer',
-      url: `${ENV.BASE_URL}/pricing`,
-      price: '12.00',
-      priceCurrency: 'GBP',
-      availability: 'https://schema.org/InStock',
-      validFrom: '2026-01-01',
-    },
+    // No `offers`. This site sells nothing, and a fabricated Offer is a
+    // structured-data misrepresentation. See lib/schema.ts for the same rule.
     superEvent: {
       '@type': 'EventSeries',
       name: league,

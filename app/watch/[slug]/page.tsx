@@ -19,7 +19,6 @@ function safeBadge(url: string | null | undefined, size: 'tiny' | 'small' | 'med
     return `${url}/${size}`
 }
 
-const DEVICES = ['firestick', 'smart-tv', 'android', 'iphone']
 
 type Props = { params: { slug: string } }
 

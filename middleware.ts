@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { PRODUCTION_SITE_URL } from '@/lib/config/site-url'
 import type { NextRequest } from "next/server"
 import { jwtVerify } from "jose"
 import { ENV } from "@/lib/config/env"
@@ -127,8 +128,9 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/api/')) {
     // CORS headers for public API endpoints
     const origin = request.headers.get('origin') || '*'
-    const isAllowedOrigin = origin === 'https://smartlivetv.co.uk' || origin === 'https://smartlivetv-store.com' || process.env.NODE_ENV !== 'production'
-    const allowOrigin = isAllowedOrigin ? origin : 'https://smartlivetv.co.uk'
+    // Only this site's own origin. Never trust another domain here.
+    const isAllowedOrigin = origin === PRODUCTION_SITE_URL || process.env.NODE_ENV !== 'production'
+    const allowOrigin = isAllowedOrigin ? origin : PRODUCTION_SITE_URL
 
     if (request.method === 'OPTIONS') {
       return new NextResponse(null, {

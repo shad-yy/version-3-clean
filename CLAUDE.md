@@ -1,22 +1,31 @@
-# Project: Sports data platform (clean)
+# Project: global "where to watch" information source
 
 **Repo:** `shad-yy/version-3-clean` (private) · **Branch:** `main`
 **Domain:** not yet chosen — see "Changing the domain" below
 **Not yet deployed.**
 
+> ## ⚠️ READ FIRST: `memory-bank/OWNER-INSTRUCTIONS.md`
+>
+> Standing constraints from the project owner — never fabricate data, never build on weak
+> data, global not UK, no IPTV trace, no store link, theme changes reach every page.
+> Read it before starting any task. Decision history is in `memory-bank/DECISIONS.md`.
+
 ---
 
 ## What this is
 
-Live football scores, fixtures, league standings, team and player statistics, and
-**official UK television broadcast listings**.
+An information source answering **"where and how can I watch this?"** — across sport,
+film, television and entertainment, for a **global** audience.
+
+Sport is one vertical: live scores, fixtures, standings, team and player data. Film and TV
+availability is being added alongside it, sourced per country from TMDB Watch Providers
+(JustWatch-powered; attribution mandatory).
+
+The differentiator is not scores — those are a commodity. It is **which service, in which
+country, at what local time**.
 
 It is an information service. It does **not** sell, resell, or provide access to any
 television or streaming subscription, and it does not host or transmit video.
-
-The differentiator is not scores — ESPN, BBC Sport, FlashScore and SofaScore all do
-scores better and have for years. It is **"which channel, in which country, at what
-local time"**. Nobody owns that answer. Build toward it.
 
 ---
 
@@ -27,7 +36,7 @@ local time"**. Nobody owns that answer. Build toward it.
 | Folder | `Downloads/Legalizedsmart-live-tv/smart-live-tv` | `Downloads/smart-live-tv` |
 | Repo | `shad-yy/version-3-clean` | `shad-yy/forclaude` |
 | Branch | `main` | `Version-3` |
-| What it is | Sports data platform | IPTV/streaming store |
+| What it is | Global where-to-watch information source | IPTV/streaming store |
 | Commercial content | **Never** | Yes — intentional |
 
 The other project is the live commercial store on smartlivetv.co.uk. Its IPTV content is
