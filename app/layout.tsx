@@ -10,7 +10,6 @@ import { ENV } from "@/lib/config/env"
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics"
 import { WebVitals } from "@/components/analytics/WebVitals"
 import { CookieBanner } from "@/components/consent/CookieBanner"
-import { WhatsAppFloat } from "@/components/chat/WhatsAppFloat"
 import { LiveEventFloat } from "@/components/ui/LiveEventFloat"
 
 const inter = Inter({
@@ -188,7 +187,6 @@ export default function RootLayout({
         <GoogleAnalytics measurementId={ENV.GA_MEASUREMENT_ID} />
         <WebVitals />
         <CookieBanner />
-        <WhatsAppFloat />
         <LiveEventFloat />
       </body>
     </html>

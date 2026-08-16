@@ -9,10 +9,26 @@ if (process.env.INDEXNOW_ENABLED !== 'true') {
 const fs = require('fs');
 const path = require('path');
 
-// Key details
-// Override per deployment: INDEXNOW_HOST=example.com
-const HOST = process.env.INDEXNOW_HOST || 'smartlivetv.co.uk';
-const KEY = 'f63234d7ee824249a5b3260c6d2c49e2';
+// Host and key are required, with no defaults.
+//
+// Both previously defaulted to the commercial store's domain and its IndexNow key.
+// That combination is worse than a broken script: enabling IndexNow here without
+// setting these would have submitted THIS site's URL paths under the STORE's
+// hostname to Bing and Yandex — an outward-facing action against a domain this
+// project does not own.
+//
+// The key must also be the one whose `{key}.txt` file is served from this site's
+// own root; a key belonging to another domain cannot validate.
+const HOST = process.env.INDEXNOW_HOST;
+const KEY = process.env.INDEXNOW_KEY;
+
+if (!HOST || !KEY) {
+  console.error(
+    'IndexNow: INDEXNOW_HOST and INDEXNOW_KEY must both be set when INDEXNOW_ENABLED=true.\n' +
+      'Refusing to submit URLs rather than guess a hostname.',
+  );
+  process.exit(1);
+}
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const BASE_URL = `https://${HOST}`;
 

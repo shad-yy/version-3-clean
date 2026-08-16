@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 import { ENV } from "@/lib/config/env"
+import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 
 import { HeroSection } from "@/components/homepage/hero-section"
@@ -24,11 +25,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: ENV.BASE_URL,
   },
-  openGraph: {
+  openGraph: buildOpenGraph({
     title: 'Smart Live TV | Real-Time Live Sports Scores & Global Broadcast Guide',
     description:
       'Live sports scores, match schedules, league standings, team stats, and official broadcast guides for Premier League, Champions League, UFC, F1, and more.',
-  },
+    url: ENV.BASE_URL,
+  }),
 }
 
 

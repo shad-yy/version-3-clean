@@ -20,14 +20,6 @@ export default function ContactPage() {
           </p>
           <StaggerIn className="space-y-6">
             <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6">
-              <h2 className="font-bold text-white mb-2">💬 Instant Support</h2>
-              <p className="text-gray-400 text-sm mb-4">Available 7 days a week, 9am–11pm GMT</p>
-              <a href={process.env.NEXT_PUBLIC_WHATSAPP_URL || '/contact'} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-[#25D366] text-black font-bold rounded-lg hover:brightness-110 transition-all">
-                Message Support →
-              </a>
-            </div>
-            <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6">
               <h2 className="font-bold text-white mb-2">📧 Email Support</h2>
               <p className="text-gray-400 text-sm mb-2">For editorial corrections, data partnerships, and platform support</p>
               <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#00e676] hover:underline">

@@ -9,6 +9,31 @@ the assumption that this file is out of date.
 
 ---
 
+## 0. Work only in this folder.
+
+There are two similarly named checkouts on the owner's machine. They are **different
+products with different repositories**, and confusing them has already happened once.
+
+| Path | Repo | What it is |
+|---|---|---|
+| `Legalizedsmart-live-tv\smart-live-tv` | `shad-yy/version-3-clean` · `main` | **This project.** The global where-to-watch information source. |
+| `Downloads\smart-live-tv` | `shad-yy/forclaude` · `Version-3` | The commercial store on `smartlivetv.co.uk`. **Not ours. Do not edit it.** |
+
+**Known tooling trap:** the `preview_start` tool resolves `.claude/launch.json` from the
+*session's primary working directory*, which is the **store**. Calling
+`preview_start({name: "dev"})` therefore boots the wrong project, and it looks convincing —
+it serves a real site on `localhost:3000`. It was caught only because the page title read
+`Smart Live TV | IPTV UK from £12/mo — Free Trial`, which cannot come from this codebase.
+
+Start this project's dev server explicitly instead, on a port the store is not using:
+
+```bash
+cd "C:/Users/u2000/Downloads/Legalizedsmart-live-tv/smart-live-tv" && PORT=3200 npm run dev
+```
+
+Before trusting any `curl` or browser check, confirm which project answered. A served page
+containing `iptv`, a channel count or a price is the store, not this site.
+
 ## 1. Never fabricate data. Ever.
 
 This is the first rule because it is the one that destroys the product if broken.

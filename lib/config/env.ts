@@ -29,12 +29,6 @@ export const ENV = {
   get JWT_SECRET() {
     return process.env.JWT_SECRET || ""
   },
-  get STORE_URL() {
-    return process.env.NEXT_PUBLIC_STORE_URL || ""
-  },
-  get WHATSAPP_URL() {
-    return process.env.NEXT_PUBLIC_WHATSAPP_URL || ""
-  },
   get BASE_URL() {
     return resolveSiteUrl()
   },

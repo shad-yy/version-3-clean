@@ -390,3 +390,103 @@ news-source filter value, which is a real source name, not a rights claim.
 
 **Verified:** tsc 0 errors · vitest 14/14 · build succeeds · no hardcoded
 `addressCountry` remains outside the ISO-coded league map.
+
+---
+
+## 2026-08-16 — The store's WhatsApp sales line was still live in this project
+
+**Decision:** Delete `components/chat/WhatsAppFloat.tsx`, unmount it from
+`app/layout.tsx`, remove the "Instant Support" block from `app/contact/page.tsx`, and drop
+the `WHATSAPP_URL` and `STORE_URL` accessors from `lib/config/env.ts`. Email support stays.
+
+**Considered:** keeping the widget and swapping the number. Rejected — this site has no
+sales function, and "We reply in under 5 minutes" is conversion copy, not a contact
+affordance. An information source does not need a chat sales channel.
+
+**Evidence:** `.env.local` carried
+`NEXT_PUBLIC_WHATSAPP_URL=https://wa.me/447429313810` — the **same number** that was
+hardcoded in `smartlivetv-store/FirestickWizard.tsx`, deleted in Phase 1. Two source files
+still read it, so deleting the store folder did not remove the sales line. The widget was
+mounted site-wide at `app/layout.tsx:191` and rendered on every page.
+
+**Consequence:** the last live commercial affordance is gone. `STORE_URL` was already a
+dead accessor — defined, never read. `ORDER_NOTIFY_EMAIL` and `RESEND_API_KEY` remain in
+`.env.local` but have no consumer in source.
+
+**How it survived earlier audits:** the phone number never appears in tracked source. It
+lives in a gitignored `.env.local`, reached through a generic `process.env` lookup. Grep
+for the number finds nothing. This is the second time a remnant has hidden from text
+search — the first was rendered text inside `og-default.png`.
+
+---
+
+## 2026-08-16 — This project defaulted to the store's domain
+
+**Decision:** Remove `smartlivetv.co.uk` as the fallback origin everywhere. Production now
+**throws** if `NEXT_PUBLIC_SITE_URL` is unset rather than guessing; local builds fall back
+to `http://localhost:3200`.
+
+**Considered:** leaving the default until a domain is chosen. Rejected — a wrong canonical
+is the most damaging metadata error a site can ship, and the failure mode is silent.
+
+**Evidence:** the served homepage emitted
+`<link rel="canonical" href="https://smartlivetv.co.uk"/>` — a domain this project does
+not own, belonging to a different product in a different repo. Sources:
+`lib/config/site-url.ts:23`, `.env.local`, `scripts/generate-posts.js:14`,
+`scripts/ping-indexnow.js:14`. Every URL in `public/llms.txt` — the file answer engines
+read first — pointed at the store.
+
+**Also removed:** `public/f63234d7ee824249a5b3260c6d2c49e2.txt`, the store's IndexNow key
+file, and the same key hardcoded in `scripts/ping-indexnow.js`. Host and key are now both
+required with no defaults. Enabling IndexNow without them would have submitted this site's
+URL paths **under the store's hostname** to Bing and Yandex — an outward-facing action
+against a domain we do not control.
+
+**Consequence:** a domain change is now a pure environment change. Set
+`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SITE_HOST`, `NEXT_PUBLIC_SITE_NAME`, and — only if
+IndexNow is wanted — `INDEXNOW_HOST` plus `INDEXNOW_KEY` with a matching `{key}.txt` in
+`public/`.
+
+---
+
+## 2026-08-16 — Next.js metadata replaces, it does not merge
+
+**Decision:** Add `lib/seo/open-graph.ts` with `buildOpenGraph()`. Route metadata calls it
+instead of hand-writing an `openGraph` object.
+
+**Evidence (measured, not assumed):** the served homepage carried exactly two OG tags,
+`og:title` and `og:description`, while `twitter:image` **survived**. The homepage overrode
+`openGraph` but not `twitter`, which is the replacement semantics visible in one page's
+output. Consequence: sharing the homepage on any social platform produced a card with no
+image. Ten of eleven routes that declare `openGraph` were losing `siteName`, `type` and
+`locale` the same way.
+
+**After the fix**, the homepage emits all ten OG tags including `og:image` (1200x630),
+`og:url`, `og:site_name`, `og:locale` and `og:type`.
+
+**Consequence:** the nine remaining routes still hand-write `openGraph` and still lose
+`siteName`/`type`/`locale`. That is cosmetic — the image and title survive on those pages
+— so it is queued rather than urgent. Convert them when each is next touched.
+
+---
+
+## 2026-08-16 — hreflang is NOT being fanned out across routes
+
+**Decision:** Keep the single `x-default` in the root layout as scaffolding. Do **not**
+add hreflang to the 19 routes whose `alternates` override drops it.
+
+**Considered:** fanning `x-default` out to every route for consistency. Rejected as
+busywork with no ranking benefit.
+
+**Evidence:** Google's documentation describes hreflang as the mechanism for indicating
+*alternate* language or region versions. With a single locale there is no alternate to
+point at, so a self-referencing `x-default` is a no-op. Source:
+[Localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+**Consequence:** when translations ship, hreflang becomes real work and must be done
+properly — every variant links to every variant including itself, and the region code for
+the United Kingdom is **`GB`**; Google explicitly ignores `UK`.
+
+**Verified this session:** `npx tsc --noEmit` exit 0 · `node scripts/generate-posts.js`
+exit 0 · served homepage and `/contact` both HTTP 200 with zero matches for
+`smartlivetv.co.uk`, `iptv`, `wa.me`, `whatsapp` or `free trial`.

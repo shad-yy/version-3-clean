@@ -19,8 +19,36 @@ function stripTrailingSlash(url: string): string {
   return url.replace(/\/$/, '')
 }
 
-/** Fallback used when no environment variable is set. */
-const DEFAULT_SITE_URL = 'https://smartlivetv.co.uk'
+/**
+ * Local fallback. Deliberately NOT a real domain.
+ *
+ * This used to default to `https://smartlivetv.co.uk`, which is a **different
+ * product on a different repo** — the commercial store. With that default, any
+ * deployment missing `NEXT_PUBLIC_SITE_URL` would emit canonicals, sitemap
+ * entries and schema `@id`s claiming the store's domain, telling Google this
+ * site's content belongs to someone else's origin.
+ *
+ * A wrong canonical is not a cosmetic defect; it is the single most damaging
+ * metadata error a site can ship. So the fallback is now localhost, which is
+ * obviously non-production, and production refuses to guess at all.
+ */
+const DEV_SITE_URL = 'http://localhost:3200'
+
+function resolveProductionOrigin(): string {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL
+  if (configured) return stripTrailingSlash(configured)
+
+  // Fail loudly rather than silently canonicalising to the wrong domain.
+  if (process.env.VERCEL_ENV === 'production') {
+    throw new Error(
+      'NEXT_PUBLIC_SITE_URL is not set. A production build must be told its own ' +
+        'origin — it must never fall back to a default, because the wrong canonical ' +
+        'attributes this site to another domain. Set it in the Vercel project settings.',
+    )
+  }
+
+  return DEV_SITE_URL
+}
 
 /**
  * Canonical production origin, e.g. `https://example.com` — no trailing slash.
@@ -28,9 +56,7 @@ const DEFAULT_SITE_URL = 'https://smartlivetv.co.uk'
  * Previously this was a hardcoded constant that production *overrode* the env
  * var with, which made a domain migration a source change across 14 files.
  */
-export const PRODUCTION_SITE_URL = stripTrailingSlash(
-  process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL,
-)
+export const PRODUCTION_SITE_URL = resolveProductionOrigin()
 
 /** Brand name used in metadata, schema, and generated text. */
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Smart Live TV'

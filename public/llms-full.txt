@@ -4,7 +4,7 @@
 ---
 
 ## 1. About Smart Live TV
-Smart Live TV (smartlivetv.co.uk) is a real-time sports telemetry and live match data platform for UK and international sports fans.
+Smart Live TV (localhost:3200) is a real-time sports telemetry and live match data platform serving an international audience, with no single-market focus.
 - **Core Features:** Live football scores, match statistics, team lineups, league standings, and broadcast schedule guides by country for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
 - **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
 - **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. Smart Live TV does not sell or provide television subscriptions.
@@ -17,7 +17,7 @@ Smart Live TV (smartlivetv.co.uk) is a real-time sports telemetry and live match
 Smart Live TV provides real-time scores, match statistics, head-to-head records, official line-ups, and per-country broadcast schedule information for major football leagues, UFC, and Motorsport.
 
 ### Where can I check live match scores?
-Visit smartlivetv.co.uk/scores for live real-time score updates across all ongoing matches.
+Visit localhost:3200/scores for live real-time score updates across all ongoing matches.
 
 ---
 

@@ -10,8 +10,19 @@ marked.setOptions({
 });
 
 // Override per deployment: NEXT_PUBLIC_SITE_NAME / NEXT_PUBLIC_SITE_HOST
+//
+// SITE_HOST previously defaulted to the commercial store's domain, so every absolute
+// URL written into public/llms.txt and public/llms-full.txt — the files answer engines
+// read first — pointed at a site this project does not own. localhost is an obviously
+// wrong value that gets noticed; another company's domain is not.
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Smart Live TV';
-const SITE_HOST = process.env.NEXT_PUBLIC_SITE_HOST || 'smartlivetv.co.uk';
+const SITE_HOST = process.env.NEXT_PUBLIC_SITE_HOST || 'localhost:3200';
+
+// Local hosts are not served over TLS, so a hardcoded `https://` would write
+// unreachable URLs into the generated files whenever SITE_HOST is a dev host.
+const SITE_ORIGIN = /^(localhost|127\.0\.0\.1)/.test(SITE_HOST)
+  ? `http://${SITE_HOST}`
+  : `https://${SITE_HOST}`;
 
 const CONTENT_DIR = path.join(__dirname, '../content/blog');
 const OUTPUT_FILE = path.join(__dirname, '../lib/blog/posts.ts');
@@ -162,7 +173,7 @@ export const BLOG_POSTS: BlogPost[] = ${JSON.stringify(posts, null, 2)};
  */
 function generateLlmsIndex(posts) {
   const file = path.join(__dirname, '../public/llms.txt');
-  const base = `https://${SITE_HOST}`;
+  const base = SITE_ORIGIN;
 
   const blogLines = posts
     .map((p) => `- [${p.title}](${base}/blog/${p.slug}): ${p.description}`)
@@ -230,7 +241,7 @@ function generateLlmsFull(posts) {
 ---
 
 ## 1. About ${SITE_NAME}
-${SITE_NAME} (${SITE_HOST}) is a real-time sports telemetry and live match data platform for UK and international sports fans.
+${SITE_NAME} (${SITE_HOST}) is a real-time sports telemetry and live match data platform serving an international audience, with no single-market focus.
 - **Core Features:** Live football scores, match statistics, team lineups, league standings, and broadcast schedule guides by country for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
 - **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
 - **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. ${SITE_NAME} does not sell or provide television subscriptions.
