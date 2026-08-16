@@ -106,10 +106,11 @@ function formatTime(dateStr: string, timeStr: string): string {
     const timePart = timeStr.split('+')[0].split('-')[0]
     const date = new Date(`${dateStr}T${timePart}Z`)
     if (isNaN(date.getTime())) return 'TBD'
-    return date.toLocaleTimeString('en-GB', {
+    // Visitor's timezone, not London's — see components/homepage/match-card.tsx.
+    return date.toLocaleTimeString(undefined, {
       hour: '2-digit',
       minute: '2-digit',
-      timeZone: 'Europe/London',
+      hour12: false,
     })
   } catch {
     return 'TBD'

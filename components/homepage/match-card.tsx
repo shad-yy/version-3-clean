@@ -82,19 +82,21 @@ function formatMatchTime(dateStr?: string, timeStr?: string): string {
         const now = new Date()
         const isToday = date.toDateString() === now.toDateString()
 
+        // Timezone is the VISITOR's, not London's. `timeZone: undefined` lets Intl
+        // use the runtime zone, which on the client is the viewer's own. Callers gate
+        // this behind a mount check so the server render does not disagree.
         if (isToday) {
-            return date.toLocaleTimeString('en-GB', {
+            return date.toLocaleTimeString(undefined, {
                 hour: '2-digit',
                 minute: '2-digit',
-                timeZone: 'Europe/London',
+                hour12: false,
             })
         }
 
-        return date.toLocaleDateString('en-GB', {
+        return date.toLocaleDateString(undefined, {
             weekday: 'short',
             day: 'numeric',
             month: 'short',
-            timeZone: 'Europe/London',
         })
     } catch {
         return 'TBA'
@@ -146,6 +148,10 @@ export function MatchCard() {
     const [dayLabel, setDayLabel] = useState<string>("today")
     const [tab, setTab] = useState<"upcoming" | "results">("upcoming")
     const [selectedMatch, setSelectedMatch] = useState<MatchData | null>(null)
+    // Kick-off times render in the visitor's timezone, which the server cannot know.
+    // Gate them on mount so SSR and hydration agree.
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
 
     useEffect(() => {
         async function fetchFixtures() {
@@ -217,7 +223,10 @@ export function MatchCard() {
                         {currentList.map((match) => {
                             const isLive = ['Live', 'HT', '1H', '2H', 'IN PLAY', 'In Progress'].includes(match.strStatus)
                             const isFinished = ['match finished', 'ft', 'aet', 'pen', 'fulltime', 'full time', 'finished'].includes((match.strStatus || '').toLowerCase().trim())
-                            const formattedTime = formatMatchTime(match.strDate, match.strTime)
+                            // Empty until mounted: the server has no way to know the
+                            // viewer's timezone, so rendering a time server-side would
+                            // guarantee a hydration mismatch.
+                            const formattedTime = mounted ? formatMatchTime(match.strDate, match.strTime) : ''
                             const formattedDate = formatMatchDate(match.strDate)
                             const borderClass = getLeagueColor(match.strLeague)
                             const homeBadge = safeBadge(match.strHomeTeamBadge)

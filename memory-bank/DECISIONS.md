@@ -227,3 +227,60 @@ collision, added `/watch` to the sitemap, removed a dead `revalidate`.
 **Verified:** `/watch` → 200 (was 404) · `/watch/champions-league` → 200 (literal route
 still wins) · `/watch/la-liga` → 200 (`[slug]` unaffected) · 10 cards, one Champions
 League · zero UK-only phrases on the page · tsc 0 errors · build succeeds.
+
+---
+
+## 2026-08-11 — Deleted the /info/* duplicate routes
+
+**Decision:** Removed `app/info/` entirely — 8 indexable near-duplicates of 5 real pages.
+
+**Considered:** Adding canonical tags pointing at the primaries.
+
+**Evidence:** `/info/about-us`, `/info/contact-us`, `/info/privacy-policy`,
+`/info/terms-of-service`, `/info/faq` and `/info/contact` duplicated `/about`, `/contact`,
+`/privacy`, `/terms` and `/faq` with no canonicals. Content came from a hardcoded object
+literal carrying a `// mock function… In a real app, you'd fetch this from a CMS` comment.
+A repo-wide grep found **zero inbound links**. Canonicalising would have kept 8 low-value
+URLs in the crawl budget for no benefit.
+
+**Consequence:** 8 routes gone, no redirects needed (nothing linked to them), `tsc` clean.
+
+---
+
+## 2026-08-11 — Phase 3a/3b: global locale and timezone
+
+**Decision:** Removed the root UK locale pins and stopped rendering every kick-off in
+London time.
+
+**Evidence and changes:**
+
+- **hreflang.** The only annotation was a self-referencing `en-GB`, telling Google the
+  site targets Britain. Replaced with **`x-default`**, which per Google's documentation
+  marks the fallback when no locale is a better match — correct for a single global site.
+  Note for future locale work: **never emit `UK`** — Google explicitly ignores it, and the
+  ISO 3166-1 code is `GB`.
+- `<html lang>` `en-GB` → `en`; OG `locale` `en_GB` → `en`; WebSite `inLanguage` → `en`.
+- Dropped `areaServed: "GB"` from both the Organization and ContactPoint JSON-LD — the
+  audience is worldwide.
+- `public/manifest.json` declared `en-US` while `<html>` said `en-GB`. Both were wrong and
+  they contradicted each other. Aligned on `en`.
+- **`components/homepage/match-card.tsx` and `spotlight-events.tsx` hardcoded
+  `timeZone: 'Europe/London'`,** so a visitor in Sydney saw a Saturday 17:30 fixture as
+  "Sat 17:30" when it actually starts 02:30 Sunday where they are. Wrong information, not
+  a cosmetic issue. Now uses the runtime timezone (the viewer's, on the client).
+- **Hydration:** both are client components, so viewer-timezone rendering would make the
+  server render disagree with the client. Added a `mounted` gate in `match-card.tsx` so
+  the time renders only after hydration. This is the same class of bug as Trouble Registry
+  Bug 5 — it would have shipped as a production-only hydration error.
+
+**New:** `lib/utils/datetime.ts` — shared, locale-and-timezone-aware formatters, with the
+rule that a timezone abbreviation must come from `Intl`, never a hardcoded "BST" (which is
+wrong half the year even in Britain).
+
+**Still open in Phase 3:** ~30 remaining `en-GB` formatter calls in server components,
+`addressCountry: 'GB'` applied to every match regardless of league, and 65 hardcoded
+UK-broadcaster references in page copy and FAQ schema. These are a larger content job and
+are scoped separately.
+
+**Verified:** `Europe/London` no longer appears anywhere outside per-country data ·
+tsc 0 errors · vitest 14/14 · build succeeds.

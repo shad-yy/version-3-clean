@@ -8,7 +8,7 @@
   "theme_color": "#3b82f6",
   "orientation": "portrait-primary",
   "categories": ["sports", "news", "entertainment"],
-  "lang": "en-US",
+  "lang": "en",
   "dir": "ltr",
   "scope": "/",
   "id": "smart-live-tv",

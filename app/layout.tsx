@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     "Real-time live sports scores, match schedules, league standings, team stats, and global TV broadcast guides for all major sporting events.",
   openGraph: {
     type: "website",
-    locale: "en_GB",
+    locale: "en",
     siteName: "SmartLiveTV",
     title: "Smart Live TV — Live Sports Scores & Global Broadcast Guide",
     description:
@@ -59,8 +59,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: ENV.BASE_URL,
+    // x-default marks this as the fallback when no locale is a better match, which is
+    // correct for a single global site. Add real locale entries here as translations
+    // ship — and never use "UK": Google ignores it, the ISO code is "GB".
     languages: {
-      "en-GB": ENV.BASE_URL,
+      "x-default": ENV.BASE_URL,
     },
   },
   robots: {
@@ -91,7 +94,7 @@ export default function RootLayout({
   const nonce = headers().get("x-nonce") ?? undefined
 
   return (
-    <html lang="en-GB" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -119,7 +122,6 @@ export default function RootLayout({
               description:
                 "Real-time live sports scores, match schedules, league standings, team stats, and official broadcast guides for all major sporting events.",
               foundingDate: "2024",
-              areaServed: "GB",
               knowsAbout: [
                 "Live Sports Scores",
                 "Football Fixtures",
@@ -134,7 +136,6 @@ export default function RootLayout({
                 "@type": "ContactPoint",
                 contactType: "customer support",
                 availableLanguage: ["English"],
-                areaServed: "GB",
               },
             }),
           }}
@@ -149,7 +150,7 @@ export default function RootLayout({
               name: SITE_NAME,
               url: PRODUCTION_SITE_URL,
               publisher: { "@id": `${PRODUCTION_SITE_URL}/#organization` },
-              inLanguage: "en-GB",
+              inLanguage: "en",
               potentialAction: {
                 "@type": "SearchAction",
                 target: {
