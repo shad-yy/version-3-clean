@@ -25,7 +25,7 @@ async function hydrateStaticData() {
     // 1. Fetch all leagues (static data - cached for 30 days)
     console.log("[Hydration] Fetching all leagues...")
     const leagues = await unifiedSportsAPI.getLeagues()
-    console.log(`[Hydration] ✓ Fetched ${leagues.length} leagues`)
+    console.log(`[Hydration] Fetched ${leagues.length} leagues`)
 
     // 2. Fetch teams for popular leagues (static data - cached for 30 days)
     console.log("[Hydration] Fetching teams for popular leagues...")
@@ -36,30 +36,30 @@ async function hydrateStaticData() {
       try {
         const teams = await unifiedSportsAPI.getTeams(leagueId)
         totalTeams += teams.length
-        console.log(`[Hydration] ✓ Fetched ${teams.length} teams for league ${leagueId}`)
+        console.log(`[Hydration] Fetched ${teams.length} teams for league ${leagueId}`)
       } catch (error) {
-        console.warn(`[Hydration] ⚠ Failed to fetch teams for league ${leagueId}:`, error)
+        console.warn(`[Hydration] Failed to fetch teams for league ${leagueId}:`, error)
       }
     }
 
-    console.log(`[Hydration] ✓ Fetched ${totalTeams} total teams`)
+    console.log(`[Hydration] Fetched ${totalTeams} total teams`)
 
     // 3. Fetch all sports (static data)
     console.log("[Hydration] Fetching all sports...")
     const sports = await theSportsDB.allSports()
-    console.log(`[Hydration] ✓ Fetched ${sports.length} sports`)
+    console.log(`[Hydration] Fetched ${sports.length} sports`)
 
     // 4. Fetch all countries (static data)
     console.log("[Hydration] Fetching all countries...")
     const countries = await theSportsDB.allCountries()
-    console.log(`[Hydration] ✓ Fetched ${countries.length} countries`)
+    console.log(`[Hydration] Fetched ${countries.length} countries`)
 
     const duration = Date.now() - startTime
-    console.log(`[Hydration] ✅ Static data hydration complete in ${duration}ms`)
+    console.log(`[Hydration] Static data hydration complete in ${duration}ms`)
     console.log(`[Hydration] Summary: ${leagues.length} leagues, ${totalTeams} teams, ${sports.length} sports, ${countries.length} countries`)
 
   } catch (error) {
-    console.error("[Hydration] ❌ Error during hydration:", error)
+    console.error("[Hydration] Error during hydration:", error)
     process.exit(1)
   }
 }

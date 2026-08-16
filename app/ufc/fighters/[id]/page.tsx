@@ -101,7 +101,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                           : "bg-red-500 text-white text-lg px-4 py-2"
                       }
                     >
-                      {fighter.ranking === "Champion" ? "🏆 Champion" : `#${fighter.ranking}`}
+                      {fighter.ranking === "Champion" ? "Champion" : `#${fighter.ranking}`}
                     </Badge>
                     <Badge variant="outline" className="text-lg px-4 py-2 border-gray-600">
                       {fighter.weightClass}

@@ -490,3 +490,95 @@ the United Kingdom is **`GB`**; Google explicitly ignores `UK`.
 **Verified this session:** `npx tsc --noEmit` exit 0 · `node scripts/generate-posts.js`
 exit 0 · served homepage and `/contact` both HTTP 200 with zero matches for
 `smartlivetv.co.uk`, `iptv`, `wa.me`, `whatsapp` or `free trial`.
+
+---
+
+## 2026-08-16 — No emoji anywhere in the product
+
+**Decision:** Remove every emoji from shipped code, replacing icon-duty emoji with
+lucide-react SVGs and deleting decorative ones. Recorded as standing rule 5a in
+`OWNER-INSTRUCTIONS.md`.
+
+**Considered:** deleting all of them outright. Rejected — several were doing an icon's
+job (a pin before a venue, a calendar before a date, per-type icons in search results),
+and deleting those leaves dangling text with no affordance.
+
+**Evidence:** emoji are font-dependent glyphs, not images. They render differently on
+every platform, cannot inherit theme colour, and carry no reliable accessible name. An
+SVG icon does all three. Every replacement is marked `aria-hidden="true"` because each
+sits beside text that already says the same thing.
+
+**Scope:** 128 emoji across 34 files in `app/`, `components/`, `lib/`, `scripts/`. Not
+touched: `.claude/` and `.cursor/` agent rule files (4,397 occurrences, agent-facing
+tooling rather than the product) and `memory-bank/` (84, internal documentation).
+
+**Notable calls:**
+
+- Twelve error pages each opened with a *different* decorative emoji at `text-5xl` — a
+  football, a trophy, a magnifying glass. Twelve glyphs for one state. All now one
+  `AlertTriangle`.
+- Console output in scripts: decoration deleted, but where a glyph carried the whole
+  signal (tick versus cross in a validation report) it became a **word**, `PASS`/`FAIL`.
+- `⌘K` in the command palette was **kept and made platform-aware**. It is a keyboard
+  symbol, not decoration — but the handler accepts `metaKey || ctrlKey` while the hint
+  always showed the Command symbol, so Windows and Linux visitors were shown a key
+  their keyboard does not have. Now `Ctrl K` unless the platform is Apple.
+- Typography is not emoji: arrows, dashes, curly quotes and bullets stay.
+
+**Process lesson:** the first sweep used too narrow a codepoint range and missed
+U+23F0 by omitting Miscellaneous Technical (U+2300–U+23FF). That one line was also
+printing a false timezone — see below. Audit with a wide range.
+
+---
+
+## 2026-08-16 — A literal "BST" was labelling a UTC value
+
+**Decision:** Add `components/ui/local-time.tsx` and use it for match kick-off times.
+
+**Evidence:** `app/match/[id]/page.tsx` rendered
+`{match.strTime.split('+')[0]} BST` on every match page. That `strTime` is UTC is not
+an assumption — `app/api/spotlight/route.ts:44` builds `new Date(`${date}T${time}Z`)`
+from the same field. So the label was wrong for every visitor outside Britain, and
+wrong for British ones from November to March when the country is on GMT.
+
+**How it works:** the first client render deliberately reproduces the server's output
+(UTC, explicitly labelled) so hydration matches, then an effect swaps to the viewer's
+own zone with the abbreviation supplied by `Intl` rather than hardcoded. The
+machine-readable instant always sits in `<time dateTime>`.
+
+---
+
+## 2026-08-16 — The build guard never inspected source files
+
+**Decision:** Extend `scripts/generate-posts.js` with `assertSourceCompliant()`, which
+runs the forbidden-phrase patterns over `app/` and `components/` and fails the build.
+
+**Evidence — this is the significant finding of the session.** The MDX guard has run on
+every dev start and every build for months. Meanwhile:
+
+- `app/watch/formula-1/page.tsx` rendered *"Smart Live TV works worldwide with no
+  regional restrictions or VPN required. Stream every F1 race from anywhere in the
+  world."* The phrase `no VPN required` was **already in the guard's FORBIDDEN list**.
+  Worse, it was a FAQ answer, so `generateFAQSchema` emitted it as structured data —
+  the claim was being handed to Google.
+- `app/watch/world-cup-2026/page.tsx` rendered *"Smart Live TV includes all broadcast
+  channels — Sky Sports Main Event, Sky Sports Premier League, TNT Sports 1 and
+  international feeds — so you never miss a fixture,"* above four channel tiles each
+  labelled "Included".
+
+Both are false: this site transmits no video, sells no access and bundles nobody's
+subscription. The guard simply never looked at `.tsx`.
+
+**Design note:** comments are stripped before matching, because the fix for each past
+violation quotes the removed wording so the next reader understands what was wrong.
+Only whole-line `//` comments are stripped, so `https://` inside a string survives.
+
+**Verified by injection, not by absence:** re-adding the F1 sentence made the guard
+exit 1 naming `app/watch/formula-1/page.tsx:58` and the matching pattern; restoring the
+file returned exit 0.
+
+**Still open:** the 17 `draft: true` MDX files in `content/blog/` carry heavy IPTV sales
+copy — £12/mo, "230,000+ channels", free-trial links, IPTV-player setup instructions.
+They are excluded from the build and from the sitemap, so they reach no user, but they
+ship in the repo. They are expired World Cup fixture guides previously earmarked for
+conversion into result reports. Deleting versus rewriting is the owner's call.

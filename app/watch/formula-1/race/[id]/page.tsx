@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Calendar } from "lucide-react"
+import { formatLongDate } from "@/lib/utils/datetime"
 
 export const metadata: Metadata = {
   title: 'F1 Race',
@@ -42,10 +44,7 @@ export default async function F1RacePage({
         
         {date && (
           <p className="text-gray-400 mb-8">
-            📅 {new Date(date).toLocaleDateString('en-GB', {
-              weekday: 'long', day: 'numeric', 
-              month: 'long', year: 'numeric'
-            })}
+            <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{formatLongDate(date)}</span>
             {venue && ` · ${venue}`}
           </p>
         )}

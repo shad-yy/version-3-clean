@@ -100,6 +100,31 @@ If you change the visual theme, colours or typography, you change it **everywher
 - The prerequisite is **normalise, then tokenise** — there are 12 hand-typed variants of
   one intended surface colour. Collapse them before applying tokens.
 
+## 5a. No emoji. Anywhere in the product.
+
+Not in UI copy, headings, buttons, code comments, console output, commit messages or
+blog content. This site presents itself as a reference people trust for accuracy;
+emoji read as informal and undercut that.
+
+There is also a practical reason. Emoji are **font-dependent glyphs**, not images:
+they render differently on every platform, cannot inherit theme colour, and carry no
+reliable accessible name. An icon is a better icon than an emoji is.
+
+- Where an emoji was doing an icon's job, replace it with a **lucide-react** SVG and
+  mark it `aria-hidden="true"` when the adjacent text already says the same thing.
+- Where it was pure decoration — a heading ornament, a `console.log` prefix — delete
+  it. If a glyph carried the actual signal, as a tick-versus-cross does in a
+  validation report, replace it with a **word** (`PASS` / `FAIL`), never nothing.
+- **Typography is not emoji.** Arrows, en and em dashes, curly quotes, bullets and
+  the multiplication sign stay.
+- **Platform key symbols are not decoration either.** The Command symbol in a
+  keyboard hint is correct on macOS and wrong everywhere else — make it
+  platform-aware rather than deleting it. See `components/search/command-palette.tsx`.
+
+When auditing, use a **wide** codepoint range. The first sweep of this repo missed a
+clock glyph because it omitted the Miscellaneous Technical block (U+2300–U+23FF), and
+that one line also happened to be printing a false timezone.
+
 ## 6. Suggest improvements — with evidence.
 
 The owner wants proactive proposals, not silent execution.

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Heart } from "lucide-react"
 
 export const metadata: Metadata = {
   title: 'Favourites | Smart Live TV',
@@ -13,8 +14,8 @@ export default function FavouritesPage() {
       <div className="max-w-md text-center">
         <div className="w-16 h-16 rounded-full bg-[#00e676]/10 
           border border-[#00e676]/20 flex items-center 
-          justify-center mx-auto mb-6 text-3xl">
-          ♥
+          justify-center mx-auto mb-6">
+          <Heart className="w-7 h-7 text-[#00e676]" aria-hidden="true" />
         </div>
         <h1 className="text-2xl font-extrabold text-white mb-3">
           Favourites

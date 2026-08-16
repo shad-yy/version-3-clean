@@ -24,7 +24,7 @@ interface TeamData {
 }
 
 async function refreshSportsDbIds() {
-  console.log("🔄 Starting SportsDB ID refresh...\n")
+  console.log("Starting SportsDB ID refresh...\n")
 
   try {
     const dataDir = join(process.cwd(), "data", "sportsdb")
@@ -33,14 +33,14 @@ async function refreshSportsDbIds() {
     }
 
     // 1. Fetch all leagues
-    console.log("📋 Fetching all leagues...")
+    console.log("Fetching all leagues...")
     const allLeagues = await theSportsDB.allLeagues()
-    console.log(`   ✓ Found ${allLeagues.length} leagues`)
+    console.log(`   Found ${allLeagues.length} leagues`)
 
     // Save leagues
     const leaguesFile = join(dataDir, "leagues.json")
     writeFileSync(leaguesFile, JSON.stringify(allLeagues, null, 2))
-    console.log(`   ✓ Saved to ${leaguesFile}\n`)
+    console.log(`   Saved to ${leaguesFile}\n`)
 
     // Group by sport
     const leaguesBySport: Record<string, LeagueData[]> = {}
@@ -54,10 +54,10 @@ async function refreshSportsDbIds() {
 
     const leaguesBySportFile = join(dataDir, "leagues-by-sport.json")
     writeFileSync(leaguesBySportFile, JSON.stringify(leaguesBySport, null, 2))
-    console.log(`   ✓ Saved leagues by sport to ${leaguesBySportFile}\n`)
+    console.log(`   Saved leagues by sport to ${leaguesBySportFile}\n`)
 
     // 2. Fetch teams for all major leagues
-    console.log("⚽ Fetching teams for major leagues...")
+    console.log("Fetching teams for major leagues...")
     const majorLeagues = [
       { name: "English Premier League", id: "4328" },
       { name: "Spanish La Liga", id: "4335" },
@@ -74,24 +74,24 @@ async function refreshSportsDbIds() {
         const leagueInfo = await theSportsDB.lookupLeague(league.id)
         if (leagueInfo?.strLeague) {
           const teams = await theSportsDB.searchAllTeams({ league: leagueInfo.strLeague })
-          console.log(`   ✓ Found ${teams.length} teams for ${league.name}`)
+          console.log(`   Found ${teams.length} teams for ${league.name}`)
           
           teamsByLeague[league.id] = teams
           allTeams.push(...teams)
         }
       } catch (err) {
-        console.warn(`   ⚠ Failed to fetch teams for ${league.name}:`, err)
+        console.warn(`   Failed to fetch teams for ${league.name}:`, err)
       }
     }
 
     // Save teams
     const teamsFile = join(dataDir, "teams.json")
     writeFileSync(teamsFile, JSON.stringify(allTeams, null, 2))
-    console.log(`   ✓ Saved ${allTeams.length} teams to ${teamsFile}\n`)
+    console.log(`   Saved ${allTeams.length} teams to ${teamsFile}\n`)
 
     const teamsByLeagueFile = join(dataDir, "teams-by-league.json")
     writeFileSync(teamsByLeagueFile, JSON.stringify(teamsByLeague, null, 2))
-    console.log(`   ✓ Saved teams by league to ${teamsByLeagueFile}\n`)
+    console.log(`   Saved teams by league to ${teamsByLeagueFile}\n`)
 
     // 3. Create summary
     const summary = {
@@ -109,16 +109,16 @@ async function refreshSportsDbIds() {
 
     const summaryFile = join(dataDir, "summary.json")
     writeFileSync(summaryFile, JSON.stringify(summary, null, 2))
-    console.log(`   ✓ Saved summary to ${summaryFile}\n`)
+    console.log(`   Saved summary to ${summaryFile}\n`)
 
-    console.log("✅ SportsDB ID refresh completed successfully!")
-    console.log(`\n📊 Summary:`)
+    console.log("SportsDB ID refresh completed successfully!")
+    console.log(`\nSummary:`)
     console.log(`   - Leagues: ${allLeagues.length}`)
     console.log(`   - Sports: ${Object.keys(leaguesBySport).length}`)
     console.log(`   - Teams: ${allTeams.length}`)
     console.log(`   - Major Leagues: ${majorLeagues.length}`)
   } catch (error) {
-    console.error("❌ Error refreshing SportsDB IDs:", error)
+    console.error("Error refreshing SportsDB IDs:", error)
     process.exit(1)
   }
 }

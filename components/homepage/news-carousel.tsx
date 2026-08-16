@@ -1,7 +1,7 @@
 "use client"
 import useEmblaCarousel from 'embla-carousel-react'
 import { useCallback, useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ExternalLink, Newspaper } from "lucide-react"
 import Link from 'next/link'
 
 interface NewsArticle {
@@ -164,7 +164,7 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-[#12121a]">
-                      <span className="text-4xl opacity-20">📰</span>
+                      <Newspaper className="w-10 h-10 opacity-20" aria-hidden="true" />
                     </div>
                   )}
                   {/* Category badge */}

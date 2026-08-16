@@ -209,12 +209,21 @@ export default function WorldCup2026Page() {
             Where to Watch the Premier League 2026-27 in the UK
           </h2>
           <div className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-6 md:p-8">
+            {/*
+              This paragraph used to end: "Smart Live TV includes all broadcast channels
+              — Sky Sports Main Event, Sky Sports Premier League, TNT Sports 1 and
+              international feeds — so you never miss a fixture." An explicit claim to
+              carry those channels, which this site does not: it transmits no video and
+              resells no subscription. The channel tiles below each read "Included" for
+              the same reason. Both are now stated as what they are — the broadcasters
+              who hold the rights, named as information.
+            */}
             <p className="text-gray-300 leading-relaxed mb-6">
               The 2026-27 Premier League is broadcast across{' '}
               <strong className="text-white">Sky Sports</strong> and{' '}
               <strong className="text-white">TNT Sports</strong> in the UK, with some matches on Amazon Prime Video.
-              Smart Live TV includes all broadcast channels — Sky Sports Main Event, Sky Sports Premier League,
-              TNT Sports 1 and international feeds — so you never miss a fixture.
+              Each broadcaster holds rights to a different portion of the fixture list, so the channel
+              varies by match — check the fixture above for the round you want.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {['Sky Sports PL', 'TNT Sports 1', 'Sky Sports ME', 'Amazon Prime'].map(ch => (
@@ -223,7 +232,7 @@ export default function WorldCup2026Page() {
                     {ch}
                   </div>
                   <div className="text-gray-500 text-xs mt-1">
-                    Included
+                    UK rights holder
                   </div>
                 </div>
               ))}

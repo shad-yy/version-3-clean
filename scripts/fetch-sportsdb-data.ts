@@ -30,7 +30,7 @@ interface TeamData {
 }
 
 async function fetchAllData() {
-  console.log('🚀 Starting TheSportsDB data fetch...\n')
+  console.log('Starting TheSportsDB data fetch...\n')
 
   try {
     // Create data directory if it doesn't exist
@@ -38,14 +38,14 @@ async function fetchAllData() {
     mkdirSync(dataDir, { recursive: true })
 
     // 1. Fetch all leagues
-    console.log('📋 Fetching all leagues...')
+    console.log('Fetching all leagues...')
     const allLeagues = await theSportsDB.allLeagues()
-    console.log(`   ✓ Found ${allLeagues.length} leagues`)
+    console.log(`   Found ${allLeagues.length} leagues`)
 
     // Save leagues
     const leaguesFile = join(dataDir, 'leagues.json')
     writeFileSync(leaguesFile, JSON.stringify(allLeagues, null, 2))
-    console.log(`   ✓ Saved to ${leaguesFile}\n`)
+    console.log(`   Saved to ${leaguesFile}\n`)
 
     // 2. Group leagues by sport
     const leaguesBySport = new Map<string, LeagueData[]>()
@@ -64,7 +64,7 @@ async function fetchAllData() {
       sportMap[sport] = leagues
     }
     writeFileSync(leaguesBySportFile, JSON.stringify(sportMap, null, 2))
-    console.log(`   ✓ Saved leagues by sport to ${leaguesBySportFile}\n`)
+    console.log(`   Saved leagues by sport to ${leaguesBySportFile}\n`)
 
     // 3. Fetch teams for major leagues (Premier League, La Liga, Serie A, Bundesliga, Ligue 1)
     const majorLeagues = [
@@ -78,12 +78,12 @@ async function fetchAllData() {
     const allTeams: TeamData[] = []
     const teamsByLeague: Record<string, TeamData[]> = {}
 
-    console.log('⚽ Fetching teams for major leagues...')
+    console.log('Fetching teams for major leagues...')
     for (const league of majorLeagues) {
       try {
         console.log(`   Fetching teams for ${league.name}...`)
         const teams = await theSportsDB.searchAllTeams({ league: league.name })
-        console.log(`   ✓ Found ${teams.length} teams for ${league.name}`)
+        console.log(`   Found ${teams.length} teams for ${league.name}`)
         
         allTeams.push(...teams)
         teamsByLeague[league.id] = teams
@@ -91,19 +91,19 @@ async function fetchAllData() {
         // Small delay to respect rate limits
         await new Promise(resolve => setTimeout(resolve, 2500))
       } catch (error) {
-        console.error(`   ✗ Error fetching teams for ${league.name}:`, error)
+        console.error(`   Error fetching teams for ${league.name}:`, error)
       }
     }
 
     // Save all teams
     const teamsFile = join(dataDir, 'teams.json')
     writeFileSync(teamsFile, JSON.stringify(allTeams, null, 2))
-    console.log(`   ✓ Saved ${allTeams.length} teams to ${teamsFile}\n`)
+    console.log(`   Saved ${allTeams.length} teams to ${teamsFile}\n`)
 
     // Save teams by league
     const teamsByLeagueFile = join(dataDir, 'teams-by-league.json')
     writeFileSync(teamsByLeagueFile, JSON.stringify(teamsByLeague, null, 2))
-    console.log(`   ✓ Saved teams by league to ${teamsByLeagueFile}\n`)
+    console.log(`   Saved teams by league to ${teamsByLeagueFile}\n`)
 
     // 4. Create a summary file with key league IDs
     const summary = {
@@ -125,17 +125,17 @@ async function fetchAllData() {
 
     const summaryFile = join(dataDir, 'summary.json')
     writeFileSync(summaryFile, JSON.stringify(summary, null, 2))
-    console.log(`   ✓ Saved summary to ${summaryFile}\n`)
+    console.log(`   Saved summary to ${summaryFile}\n`)
 
-    console.log('✅ Data fetch completed successfully!')
-    console.log(`\n📊 Summary:`)
+    console.log('Data fetch completed successfully!')
+    console.log(`\nSummary:`)
     console.log(`   - Leagues: ${allLeagues.length}`)
     console.log(`   - Teams: ${allTeams.length}`)
     console.log(`   - Sports: ${leaguesBySport.size}`)
-    console.log(`\n💾 All data saved to: ${dataDir}/`)
+    console.log(`\nAll data saved to: ${dataDir}/`)
 
   } catch (error) {
-    console.error('❌ Error fetching data:', error)
+    console.error('Error fetching data:', error)
     process.exit(1)
   }
 }

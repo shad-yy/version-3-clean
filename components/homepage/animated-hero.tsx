@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowRight, Sparkles, TrendingUp, Zap } from "lucide-react"
+import { ArrowRight, Sparkles, TrendingUp, Tv, Zap } from "lucide-react"
 import { motion, useAnimation } from "framer-motion"
 
 export function AnimatedHero() {
@@ -133,7 +133,8 @@ export function AnimatedHero() {
               className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white opacity-100 font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
               style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '16px 32px', borderRadius: '8px', fontWeight: '600', fontSize: '18px', opacity: 1, visibility: 'visible' }}
             >
-              📺 View Live Scores
+              <Tv className="w-5 h-5" aria-hidden="true" />
+              View Live Scores
             </a>
             <Button
               asChild

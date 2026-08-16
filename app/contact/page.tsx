@@ -20,14 +20,14 @@ export default function ContactPage() {
           </p>
           <StaggerIn className="space-y-6">
             <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6">
-              <h2 className="font-bold text-white mb-2">📧 Email Support</h2>
+              <h2 className="font-bold text-white mb-2">Email Support</h2>
               <p className="text-gray-400 text-sm mb-2">For editorial corrections, data partnerships, and platform support</p>
               <a href={`mailto:${SUPPORT_EMAIL}`} className="text-[#00e676] hover:underline">
                 {SUPPORT_EMAIL}
               </a>
             </div>
             <div className="bg-gray-900 rounded-2xl border border-gray-800 p-6">
-              <h2 className="font-bold text-white mb-2">⚽ Live Broadcast Guides</h2>
+              <h2 className="font-bold text-white mb-2">Live Broadcast Guides</h2>
               <p className="text-gray-400 text-sm mb-4">
                 Explore real-time match schedules, team statistics, and official TV networks.
               </p>

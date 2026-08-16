@@ -41,26 +41,26 @@ function checkDynamicRouteExists(route) {
   return fs.existsSync(pagePath)
 }
 
-console.log("🔍 Verifying route structure...\n")
+console.log("Verifying route structure...\n")
 
 // Check static routes
-console.log("📄 Static Routes:")
+console.log("Static Routes:")
 EXPECTED_ROUTES.forEach((route) => {
   const exists = checkRouteExists(route)
-  const status = exists ? "✅" : "❌"
+  const status = exists ? "OK" : "MISSING"
   const filePath = route === "/" ? "app/page.tsx" : `app${route}/page.tsx`
   console.log(`${status} ${route} → ${filePath}`)
 })
 
-console.log("\n🔗 Dynamic Routes:")
+console.log("\nDynamic Routes:")
 EXPECTED_DYNAMIC_ROUTES.forEach((route) => {
   const exists = checkDynamicRouteExists(route)
-  const status = exists ? "✅" : "❌"
+  const status = exists ? "OK" : "MISSING"
   const filePath = `app${route}/page.tsx`
   console.log(`${status} ${route} → ${filePath}`)
 })
 
-console.log("\n📋 Summary:")
+console.log("\nSummary:")
 const staticRouteCount = EXPECTED_ROUTES.filter(checkRouteExists).length
 const dynamicRouteCount = EXPECTED_DYNAMIC_ROUTES.filter(checkDynamicRouteExists).length
 const totalExpected = EXPECTED_ROUTES.length + EXPECTED_DYNAMIC_ROUTES.length
@@ -71,7 +71,7 @@ console.log(`Static routes: ${staticRouteCount}/${EXPECTED_ROUTES.length}`)
 console.log(`Dynamic routes: ${dynamicRouteCount}/${EXPECTED_DYNAMIC_ROUTES.length}`)
 
 if (totalFound === totalExpected) {
-  console.log("\n🎉 All routes are properly configured!")
+  console.log("\nAll routes are properly configured!")
 } else {
-  console.log("\n⚠️  Some routes are missing. Check the file structure.")
+  console.log("\n Some routes are missing. Check the file structure.")
 }

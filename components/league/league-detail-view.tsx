@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Calendar, Users, Info, Trophy, ExternalLink } from "lucide-react"
+import { Calendar, ExternalLink, Info, MapPin, Trophy, Users } from "lucide-react"
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const CARD_BG = "bg-[#181824]"
@@ -222,7 +222,7 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
 
               {fixture.venue && (
                 <p className="text-[10px] text-gray-500 mt-4 pt-3 border-t border-white/5">
-                  📍 {fixture.venue}
+                  <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{fixture.venue}</span>
                 </p>
               )}
 

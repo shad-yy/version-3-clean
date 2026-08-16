@@ -1,7 +1,7 @@
 /**
  * Competition-level broadcast rights, used by the homepage broadcast resolver demo.
  *
- * ⚠️ VERIFY BEFORE PUBLISHING, AND RE-VERIFY EACH SEASON.
+ * VERIFY BEFORE PUBLISHING, AND RE-VERIFY EACH SEASON.
  *
  * These are deliberately COMPETITION-level, not fixture-level, because
  * competition rights are stable across a rights cycle while fixture-to-channel
@@ -21,7 +21,6 @@ export interface BroadcastListing {
   /** Display name of the country. */
   countryName: string
   /** Flag emoji for compact display. */
-  flag: string
   /** Rights-holding broadcaster as the viewer would recognise it. */
   broadcaster: string
   /** Where the viewer actually streams it, if different from the broadcaster. */
@@ -57,7 +56,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "GB",
         countryName: "United Kingdom",
-        flag: "🇬🇧",
         broadcaster: "Sky Sports",
         streamingOn: "Sky Go / NOW",
         timeZone: "Europe/London",
@@ -65,7 +63,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "US",
         countryName: "United States",
-        flag: "🇺🇸",
         broadcaster: "NBC Sports",
         streamingOn: "Peacock",
         timeZone: "America/New_York",
@@ -73,7 +70,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "AU",
         countryName: "Australia",
-        flag: "🇦🇺",
         broadcaster: "Optus Sport",
         timeZone: "Australia/Sydney",
       },
@@ -90,7 +86,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "GB",
         countryName: "United Kingdom",
-        flag: "🇬🇧",
         broadcaster: "TNT Sports",
         streamingOn: "discovery+",
         timeZone: "Europe/London",
@@ -98,7 +93,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "US",
         countryName: "United States",
-        flag: "🇺🇸",
         broadcaster: "CBS Sports",
         streamingOn: "Paramount+",
         timeZone: "America/New_York",
@@ -106,7 +100,6 @@ export const COMPETITION_RIGHTS: CompetitionRights[] = [
       {
         country: "FR",
         countryName: "France",
-        flag: "🇫🇷",
         broadcaster: "Canal+",
         timeZone: "Europe/Paris",
       },

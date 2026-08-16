@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { Clock, Zap, ArrowRight } from "lucide-react"
+import { ArrowRight, Clock, MapPin, Zap } from "lucide-react"
 
 interface SpotlightEvent {
   idEvent: string
@@ -313,7 +313,7 @@ function SpotlightCard({
           {/* Venue */}
           {featured && event.strVenue && (
             <p className="text-center text-[10px] text-gray-500 mb-3 truncate">
-              📍 {event.strVenue}
+              <span className="inline-flex items-center gap-1.5 justify-center"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{event.strVenue}</span>
             </p>
           )}
 

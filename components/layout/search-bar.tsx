@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Search, X, Clock, TrendingUp } from "lucide-react"
+import { Clock, Landmark, Newspaper, Search, TrendingUp, Trophy, User, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
@@ -218,15 +218,15 @@ export function SearchBar({ className }: { className?: string }) {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "team":
-        return "🏆"
+        return <Trophy className="w-4 h-4" aria-hidden="true" />
       case "player":
-        return "👤"
+        return <User className="w-4 h-4" aria-hidden="true" />
       case "league":
-        return "🏟️"
+        return <Landmark className="w-4 h-4" aria-hidden="true" />
       case "news":
-        return "📰"
+        return <Newspaper className="w-4 h-4" aria-hidden="true" />
       default:
-        return "🔍"
+        return <Search className="w-4 h-4" aria-hidden="true" />
     }
   }
 
@@ -304,7 +304,7 @@ export function SearchBar({ className }: { className?: string }) {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-lg">{getTypeIcon(result.type)}</span>
+                      <span className="text-gray-400 shrink-0">{getTypeIcon(result.type)}</span>
                       <div className="flex-1">
                         <div className="font-medium text-white">{result.title}</div>
                         {result.description && <div className="text-sm text-gray-400">{result.description}</div>}

@@ -248,7 +248,7 @@ async function main() {
     const result = await testEndpoint(endpoint)
     results.push(result)
     
-    const status = result.ok ? '✓' : '✗'
+    const status = result.ok ? 'PASS' : 'FAIL'
     console.log(`${status} ${endpoint.name} -> ${result.statusCode} (${result.responseSize} bytes)`)
     
     if (!result.ok) {
@@ -329,7 +329,7 @@ async function main() {
   // Print summary table
   console.log('\n=== SUMMARY ===')
   results.forEach((r) => {
-    const icon = r.ok ? '✓' : '✗'
+    const icon = r.ok ? 'PASS' : 'FAIL'
     console.log(`${icon} ${r.name.padEnd(25)} ${r.statusCode} ${r.fixStatus}`)
   })
 }

@@ -8,6 +8,8 @@ import { FadeIn } from "@/components/ui/fade-in"
 import { StaggerIn } from "@/components/ui/stagger-in"
 import { getF1Schedule, getF1News, getF1FullSchedule } from '@/lib/api/espn'
 import type { F1Race } from '@/lib/api/espn'
+import { Calendar, Flag, MapPin, Trophy } from "lucide-react"
+import { formatDate } from "@/lib/utils/datetime"
 
 export const metadata: Metadata = {
   title: 'F1 2026 Race Calendar & UK TV Guide | Smart Live TV',
@@ -49,8 +51,14 @@ export default async function Formula1Page() {
       answer: 'Partly. Channel 4 broadcasts a selection of races live each season free-to-air, and shows highlights of every round. For the full calendar, Sky Sports F1 is the only UK route, available on Sky, Virgin Media or a NOW Sports pass.',
     },
     {
+      // This answer previously read "Smart Live TV works worldwide with no regional
+      // restrictions or VPN required. Stream every F1 race from anywhere in the world."
+      // Two separate problems: it advertised a streaming service this site is not, and
+      // "no VPN required" is one of the phrases the build guard exists to block — the
+      // guard just never inspected .tsx files. It was also being emitted as a FAQPage
+      // answer, so the claim was going to Google as structured data.
       question: 'Can I watch F1 from abroad?',
-      answer: 'Smart Live TV works worldwide with no regional restrictions or VPN required. Stream every F1 race from anywhere in the world.',
+      answer: 'Formula 1 broadcast rights are sold country by country, so the channel depends on where you are watching from. The listings above cover the United Kingdom. We have not yet verified rights holders for other countries and do not publish listings we cannot confirm.',
     },
   ]
 
@@ -86,7 +94,8 @@ export default async function Formula1Page() {
             </h1>
             {nextRace && (
               <div className="inline-flex items-center gap-2 bg-[#e10600]/10 border border-[#e10600]/30 text-[#ff4444] text-sm font-bold px-4 py-2 rounded-full mb-6">
-                🏎️ Next race: {nextRace.name} — {new Date(nextRace.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long' })}
+                <Flag className="w-4 h-4 shrink-0" aria-hidden="true" />
+                Next race: {nextRace.name} — {formatDate(nextRace.date)}
               </div>
             )}
             <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
@@ -125,11 +134,11 @@ export default async function Formula1Page() {
                           </span>
                         </div>
                         <p className="text-xs text-gray-400 mb-1">
-                          📅 {new Date(race.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long' })}
+                          <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{formatDate(race.date)}</span>
                         </p>
                         {venue && (
                           <p className="text-xs text-gray-500">
-                            📍 {venue.fullName}{venue.address?.city ? `, ${venue.address.city}` : ''}
+                            <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{venue.fullName}{venue.address?.city ? `, ${venue.address.city}` : ''}</span>
                           </p>
                         )}
                       </div>
@@ -152,11 +161,11 @@ export default async function Formula1Page() {
                       <div key={race.id} className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-5">
                         <h3 className="font-bold text-white text-sm mb-2">{race.name}</h3>
                         <p className="text-xs text-gray-400 mb-1">
-                          📅 {new Date(race.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long' })}
+                          <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{formatDate(race.date)}</span>
                         </p>
                         {venue && (
                           <p className="text-xs text-gray-500">
-                            📍 {venue.fullName}
+                            <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{venue.fullName}</span>
                           </p>
                         )}
                         <span className="inline-block mt-2 text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded-full font-medium">
@@ -207,7 +216,7 @@ export default async function Formula1Page() {
                         </p>
                         {race.completed && race.winner && (
                           <p className="text-xs text-[#00e676] mt-0.5 font-semibold">
-                            🏆 {race.winner}
+                            <span className="inline-flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />{race.winner}</span>
                           </p>
                         )}
                         {!race.completed && (
@@ -260,26 +269,34 @@ export default async function Formula1Page() {
           {/* F1 HIGHLIGHTS */}
           <FadeIn direction="up">
             <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
-              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Experience The Pinnacle of Motorsport</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">What This Guide Covers</h2>
               <StaggerIn className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/*
+                These three cards used to describe a streaming product: "Watch every Free
+                Practice ... with live timing and full commentary", "Sky Sports F1
+                Included", "Access multiple feeds including driver on-board cameras, pit
+                lane feeds, and data channels". This site carries none of that — it does
+                not transmit video, sell access, or bundle anyone's subscription. Every
+                card now describes something the page actually contains.
+              */}
               {[
                 {
-                  title: 'All Practice & Qualifying',
-                  subtitle: 'Every Session Live',
+                  title: 'Full Season Calendar',
+                  subtitle: 'Every Round',
                   body:
-                    'Watch every Free Practice, Sprint Shootout, and Qualifying session with live timing and full commentary.',
+                    'Race dates and circuits for all rounds of the 2026 season, with session times shown once they are confirmed.',
                 },
                 {
-                  title: 'Sky Sports F1 Included',
-                  subtitle: 'Expert Analysis',
+                  title: 'Results & Standings',
+                  subtitle: 'Updated Each Round',
                   body:
-                    'Access all the pre-race and post-race coverage, driver interviews, and technical analysis from the Sky Sports F1 team.',
+                    "Race winners as each round completes, alongside the drivers' and constructors' championship tables.",
                 },
                 {
-                  title: 'On-Board Cameras',
-                  subtitle: 'Driver Perspectives',
+                  title: 'Where To Watch',
+                  subtitle: 'By Country',
                   body:
-                    'Access multiple feeds including driver on-board cameras, pit lane feeds, and data channels.',
+                    'The official rights holder for each country we have verified. Where a country is not covered, we make no claim for it.',
                 },
               ].map((c) => (
                 <div key={c.title} className="bg-gray-950/60 rounded-2xl border border-gray-800 p-6">
@@ -336,7 +353,9 @@ export default async function Formula1Page() {
         <div className="lg:col-span-1">
           <div className="sticky top-24 bg-gray-950/60 rounded-3xl border border-gray-800 overflow-hidden">
             <div className="p-6 border-b" style={{ borderColor: '#e10600' }}>
-              <h3 className="text-lg font-extrabold text-white">Start Watching This Weekend</h3>
+              {/* Was "Start Watching This Weekend" — an invitation to a service that
+                  does not exist here. The panel links to scores, not to a player. */}
+              <h3 className="text-lg font-extrabold text-white">This Weekend&apos;s Race</h3>
               <p className="text-sm text-gray-400 mt-2">
                 Session times, circuit information and the UK broadcaster for every round.
               </p>

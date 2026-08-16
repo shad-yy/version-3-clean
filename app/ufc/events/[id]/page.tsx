@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ENV } from '@/lib/config/env'
+import { Calendar, MapPin } from "lucide-react"
+import { formatLongDate } from "@/lib/utils/datetime"
 
 export const metadata: Metadata = {
   title: 'UFC Event',
@@ -70,12 +72,9 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
               </h1>
               <div className="flex flex-wrap gap-4 text-sm text-gray-400">
                 {date && (
-                  <span>📅 {new Date(date).toLocaleDateString('en-GB', {
-                    weekday: 'long', day: 'numeric', 
-                    month: 'long', year: 'numeric'
-                  })}</span>
+                  <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{formatLongDate(date)}</span>
                 )}
-                {venue && <span>📍 {venue}</span>}
+                {venue && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{venue}</span>}
               </div>
             </div>
 

@@ -5,6 +5,8 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { ENV } from '@/lib/config/env'
 import { theSportsDB } from '@/lib/api/the-sports-db'
 import { MatchTabs } from '@/components/match/match-tabs'
+import { Calendar, Clock, MapPin } from "lucide-react"
+import { LocalTime } from "@/components/ui/local-time"
 
 async function getMatchData(id: string) {
   try {
@@ -241,9 +243,14 @@ export default async function MatchPage(
           </div>
 
           <div className="flex items-center justify-center gap-6 text-gray-400 text-sm mb-8 flex-wrap">
-            <span>📅 {date}</span>
-            {match.strTime && <span>⏰ {match.strTime.split('+')[0]} BST</span>}
-            {venue && <span>📍 {venue}</span>}
+            <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{date}</span>
+            {match.strTime && (
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <LocalTime value={`${match.strDate}T${match.strTime.split('+')[0]}Z`} />
+              </span>
+            )}
+            {venue && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{venue}</span>}
           </div>
 
           {!isCompleted && (

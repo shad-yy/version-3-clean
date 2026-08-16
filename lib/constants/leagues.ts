@@ -7,7 +7,6 @@ export interface LeagueInfo {
    * competitions — omit the property rather than inventing a code for "Europe".
    */
   countryCode?: string
-  emoji: string
   slug: string
   heroText: string
   primary: string
@@ -23,7 +22,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     name: 'Premier League',
     country: 'England',
     countryCode: 'GB',
-    emoji: '🏴',
     slug: 'premier-league',
     heroText: "The World's Most Watched League",
     primary: '#3d195b',
@@ -37,7 +35,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     name: 'La Liga',
     country: 'Spain',
     countryCode: 'ES',
-    emoji: '🇪🇸',
     slug: 'la-liga',
     heroText: 'Home of El Clásico. Home of Magic.',
     primary: '#ff4b44',
@@ -51,7 +48,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     name: 'Bundesliga',
     country: 'Germany',
     countryCode: 'DE',
-    emoji: '🇩🇪',
     slug: 'bundesliga',
     heroText: 'Speed. Passion. German Precision.',
     primary: '#d20515',
@@ -65,7 +61,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     name: 'Serie A',
     country: 'Italy',
     countryCode: 'IT',
-    emoji: '🇮🇹',
     slug: 'serie-a',
     heroText: 'The Home of Tactical Masterclasses',
     primary: '#1a56a0',
@@ -79,7 +74,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     name: 'Ligue 1',
     country: 'France',
     countryCode: 'FR',
-    emoji: '🇫🇷',
     slug: 'ligue-1',
     heroText: 'Où Naissent les Légendes',
     primary: '#091c3e',
@@ -92,7 +86,6 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4480',
     name: 'UEFA Champions League',
     country: 'Europe',
-    emoji: '⭐',
     slug: 'champions-league',
     heroText: 'The Greatest Club Competition on Earth',
     primary: '#001a4e',

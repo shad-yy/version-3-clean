@@ -63,15 +63,82 @@ const FORBIDDEN = [
 function assertDomainCompliant(label, text) {
   const hits = FORBIDDEN.filter((re) => re.test(text)).map((re) => re.source);
   if (hits.length) {
-    console.error(`\n❌ DOMAIN SEPARATION VIOLATION in ${label}`);
+    console.error(`\nDOMAIN SEPARATION VIOLATION in ${label}`);
     console.error(`   Matched forbidden patterns: ${hits.join(', ')}`);
     console.error(`   Fix the source file in content/blog/ — do not edit generated output.\n`);
     process.exit(1);
   }
 }
 
+// Claims that are false for this site regardless of how commercial they sound. It
+// transmits no video, sells no access and bundles nobody's subscription, so any
+// first-person promise to carry channels or stream an event is untrue on its face.
+const FORBIDDEN_SOURCE = FORBIDDEN.concat([
+  /no\s+regional\s+restrictions/i,
+  /works\s+worldwide\s+with\s+no/i,
+  /includes\s+all\s+broadcast\s+channels/i,
+  /\bstream\s+(the|every)\s+\w+\s+from\s+anywhere/i,
+]);
+
+// Comments are stripped before matching. The guard cares what the site *renders*, and
+// the fixes for past violations quote the removed wording in comments so the next
+// reader understands what was wrong — that documentation must not trip the check.
+function stripComments(src) {
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')   // block comments, including JSX {/* */} bodies
+    .replace(/^\s*\/\/.*$/gm, ' ');      // whole-line // comments only, so "https://" survives
+}
+
+/**
+ * Applies the domain guard to SOURCE files, not just blog MDX.
+ *
+ * Why this exists: the MDX guard above has run on every build for months while
+ * app/watch/formula-1/page.tsx rendered "no regional restrictions or VPN required" and
+ * app/watch/world-cup-2026/page.tsx rendered "Smart Live TV includes all broadcast
+ * channels". Both phrases were already in FORBIDDEN. The guard simply never looked at
+ * .tsx, so a page could ship the exact wording the guard existed to block — and the F1
+ * one was emitted as a FAQPage answer, sending the claim to Google as structured data.
+ */
+function assertSourceCompliant() {
+  const roots = ['app', 'components'].map((d) => path.join(__dirname, '..', d));
+  const violations = [];
+
+  const walk = (dir) => {
+    if (!fs.existsSync(dir)) return;
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name !== 'node_modules' && entry.name !== '.next') walk(full);
+        continue;
+      }
+      if (!/\.(tsx?|jsx?)$/.test(entry.name)) continue;
+
+      const rel = path.relative(path.join(__dirname, '..'), full).replace(/\\/g, '/');
+      const lines = stripComments(fs.readFileSync(full, 'utf-8')).split('\n');
+      lines.forEach((line, i) => {
+        for (const re of FORBIDDEN_SOURCE) {
+          if (re.test(line)) {
+            violations.push(`${rel}:${i + 1}  /${re.source}/  ${line.trim().slice(0, 90)}`);
+            break;
+          }
+        }
+      });
+    }
+  };
+
+  roots.forEach(walk);
+
+  if (violations.length) {
+    console.error(`\nDOMAIN SEPARATION VIOLATION in source (${violations.length}):`);
+    violations.forEach((v) => console.error(`   ${v}`));
+    console.error('   These phrases must not appear in rendered output. See memory-bank/OWNER-INSTRUCTIONS.md rule 4.\n');
+    process.exit(1);
+  }
+}
+
 function generate() {
   console.log('Generating posts from MDX...');
+  assertSourceCompliant();
   if (!fs.existsSync(CONTENT_DIR)) {
     console.error(`Content directory ${CONTENT_DIR} does not exist!`);
     process.exit(1);

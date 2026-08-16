@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import { Cookie } from "lucide-react"
 
 type ConsentState = 'pending' | 'accepted' | 'declined'
 
@@ -74,7 +75,7 @@ export function CookieBanner() {
         <div className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl
           p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           <div className="flex items-start gap-3 mb-4">
-            <span className="text-xl flex-shrink-0">🍪</span>
+            <Cookie className="w-5 h-5 flex-shrink-0 text-[#00e676]" aria-hidden="true" />
             <div>
               <h3 className="font-bold text-white text-sm mb-1">
                 We use cookies

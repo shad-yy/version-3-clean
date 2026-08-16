@@ -59,6 +59,15 @@ export function CommandPalette() {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  // The shortcut hint used to read the Command symbol for everyone, while the handler
+  // below accepts metaKey OR ctrlKey. Windows and Linux visitors — most of them — were
+  // shown a key their keyboard does not have. Detected after mount because the server
+  // cannot know the platform, and rendering a guess would break hydration.
+  const [isMac, setIsMac] = useState(false)
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent))
+  }, [])
+
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [activeIdx, setActiveIdx] = useState(0)
@@ -215,7 +224,7 @@ export function CommandPalette() {
         <kbd className="hidden sm:inline-flex items-center gap-1 
           bg-[#0a0a0f] border border-[#2a2a3a] rounded px-1.5 
           py-0.5 text-[10px] text-gray-600 font-mono">
-          ⌘K
+          {mounted && isMac ? "⌘K" : "Ctrl K"}
         </kbd>
       </button>
 

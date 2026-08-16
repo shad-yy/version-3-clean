@@ -83,10 +83,6 @@ function CompetitionCard({
                   : "border-transparent bg-white/[0.02]",
               ].join(" ")}
             >
-              <span aria-hidden="true" className="text-lg leading-none shrink-0">
-                {listing.flag}
-              </span>
-
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-semibold text-white truncate">
                   {listing.broadcaster}

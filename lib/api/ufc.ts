@@ -255,7 +255,7 @@ function setCachedData<T>(key: string, data: T): void {
 }
 
 export async function getUpcomingEvents(): Promise<UFCEvent[]> {
-  // 1️⃣ Try RapidAPI MMA first (most reliable for UFC data)
+  // 1. Try RapidAPI MMA first (most reliable for UFC data)
   try {
     const { getUpcomingMMAEvents } = await import('./mma-rapidapi')
     const events = await getUpcomingMMAEvents()
@@ -288,7 +288,7 @@ export async function getUpcomingEvents(): Promise<UFCEvent[]> {
     // fall through to ESPN
   }
 
-  // 2️⃣ Fallback: ESPN API
+  // 2. Fallback: ESPN API
   try {
     const { getUFCEvents } = await import('./espn')
     const { upcoming } = await getUFCEvents()
@@ -311,12 +311,12 @@ export async function getUpcomingEvents(): Promise<UFCEvent[]> {
     // fall through to mock
   }
 
-  // 3️⃣ Final fallback: mock data
+  // 3. Final fallback: mock data
   return mockUpcomingEvents
 }
 
 export async function getPastEvents(): Promise<UFCEvent[]> {
-  // 1️⃣ Try RapidAPI MMA first
+  // 1. Try RapidAPI MMA first
   try {
     const { getRecentMMAResults } = await import('./mma-rapidapi')
     const events = await getRecentMMAResults()
@@ -349,7 +349,7 @@ export async function getPastEvents(): Promise<UFCEvent[]> {
     // fall through to ESPN
   }
 
-  // 2️⃣ Fallback: ESPN API
+  // 2. Fallback: ESPN API
   try {
     const { getUFCEvents } = await import('./espn')
     const { recent } = await getUFCEvents()
@@ -369,7 +369,7 @@ export async function getPastEvents(): Promise<UFCEvent[]> {
     // fall through to mock
   }
 
-  // 3️⃣ Final fallback: mock data
+  // 3. Final fallback: mock data
   return mockPastEvents
 }
 

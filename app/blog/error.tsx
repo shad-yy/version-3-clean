@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import Link from "next/link"
+import { AlertTriangle } from "lucide-react"
 
 export default function BlogError({
   error,
@@ -16,7 +17,7 @@ export default function BlogError({
 
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center gap-6 px-4 text-center">
-      <div className="text-5xl">📝</div>
+      <AlertTriangle className="w-12 h-12 text-[#00e676]" aria-hidden="true" />
       <h2 className="text-2xl font-bold text-white">Blog unavailable</h2>
       <p className="text-gray-400 max-w-md">
         We couldn&apos;t load this content right now. Please try again or read the latest sports news instead.
