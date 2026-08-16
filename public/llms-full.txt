@@ -23,6 +23,257 @@ Visit localhost:3200/scores for live real-time score updates across all ongoing 
 
 ## 3. Full Articles & Guides
 
+### Article: Kick-Off Times Explained: How to Read a Fixture List in Your Own Timezone
+**Published Date:** 2026-08-16 | **Category:** guides
+**Description:** Why fixture lists disagree about kick-off times, what BST and CET actually mean, and the two weeks each year when the usual time difference between Europe and North America is simply wrong.
+
+
+# Kick-Off Times Explained: How to Read a Fixture List in Your Own Timezone
+
+Two websites, one fixture, two different kick-off times. Neither is lying. They are quoting different clocks, and unless one of them tells you which, you cannot know which applies to you.
+
+Almost every fixture list is published in the **local time of the country hosting the match**, or in the local time of the publisher — and those are frequently not the same thing. This guide covers how to read one correctly, and the specific weeks each year when the arithmetic everyone relies on quietly stops working.
+
+## Fixture times are local to somewhere, and the label matters
+
+A Premier League fixture at "17:30" means 17:30 in Britain. A La Liga fixture at "21:00" means 21:00 in Spain. Neither statement tells a reader in Toronto, Lagos or Sydney anything useful until it is anchored to a named zone.
+
+Three labels do most of the work in European football:
+
+- **GMT** — Greenwich Mean Time, Britain's winter clock, identical to UTC+0
+- **BST** — British Summer Time, Britain's clock from late March to late October, UTC+1
+- **CET / CEST** — Central European Time and its summer form, covering most of continental Europe at UTC+1 and UTC+2 respectively
+
+The most common error in published listings is treating **GMT and BST as interchangeable**. They differ by a full hour, and Britain spends about seven months of the year on BST. A schedule that says "GMT" all year round is wrong from late March to late October — and it is wrong in the direction that makes people miss kick-off.
+
+## Why the "usual" time difference is wrong twice a year
+
+Here is the trap that catches even careful readers.
+
+Most people carry a rule of thumb: London is five hours ahead of New York, one hour behind Berlin, and so on. That rule holds for most of the year and then breaks, because **countries do not change their clocks on the same date**.
+
+- The United States switches on the **second Sunday in March** and back on the **first Sunday in November**
+- The European Union switches on the **last Sunday in March** and back on the **last Sunday in October**
+
+In 2026 that produces two windows where the familiar offset is simply wrong:
+
+| Period | What happens | Effect |
+|---|---|---|
+| 8 March – 29 March 2026 | US on summer time, Europe still on winter time | Europe-to-US gap is **one hour smaller** than usual for three weeks |
+| 25 October – 1 November 2026 | Europe back on winter time, US still on summer time | Gap is **one hour smaller** than usual for one week |
+
+The spring gap is the dangerous one. It lasts three weeks, it covers a busy part of the European season, and anyone converting a kick-off time using their year-round mental arithmetic will be an hour out for the whole of it.
+
+The southern hemisphere inverts this again — Australia and New Zealand shift in the opposite direction to Europe — so the Europe-to-Sydney offset moves several times a year.
+
+## How to convert a kick-off time correctly
+
+The reliable method is short.
+
+1. **Find the zone the time is quoted in.** If a listing does not say, treat the time as unverified rather than assuming.
+2. **Convert through UTC, not through a remembered offset.** UTC does not observe daylight saving, so it is the one fixed point in the system.
+3. **Check the date, not just the time.** A 20:00 kick-off in Europe is the following morning in much of Asia and Oceania. The day of the week changes, and people miss matches by a day rather than an hour.
+4. **Re-check anything scheduled near a clock change.** Late March, late October and early November are when stored conversions go stale.
+
+## Why we show times differently
+
+A kick-off time rendered in one fixed timezone is wrong for almost everyone reading it. A site that prints every match in British time is answering a question only British visitors asked.
+
+So we do not do that. Times on this site are rendered in **your own timezone**, taken from your device, with the zone abbreviation generated rather than hard-coded — because a fixed label like "BST" is wrong for five months of the year even in Britain.
+
+Every timestamp also carries a machine-readable value in the underlying markup, so calendar tools, search engines and assistive technology read an unambiguous instant rather than a piece of text that needs interpreting.
+
+## Frequently asked questions
+
+**What does BST mean on a football schedule?**
+British Summer Time, UTC+1, in force from the last Sunday in March to the last Sunday in October. Outside those dates Britain is on GMT, UTC+0.
+
+**Why do two sites show different kick-off times for the same match?**
+Almost always because they are quoting different local clocks — one the host country's, one the publisher's — and at least one of them has not labelled which.
+
+**Is UTC the same as GMT?**
+For reading a fixture list, treat them as the same. UTC is a precise time standard and GMT is a timezone that happens to sit at UTC+0; the technical distinction does not affect kick-off times.
+
+**When do the clocks change in 2026?**
+The US moved to summer time on 8 March and returns on 1 November. The EU moved on 29 March and returns on 25 October.
+
+**Why does the date change for some matches?**
+Because a European evening kick-off falls after midnight in much of Asia and Oceania. Always read the date alongside the time.
+
+---
+
+*Sources: [timeanddate.com — Daylight Saving Time in the United States](https://www.timeanddate.com/time/change/usa), [Time Change 2026 worldwide DST schedule](https://timechange.org/pages/time-change-2026)*
+
+
+---
+
+### Article: Why the Saturday 3pm Kick-Off Isn't on TV in Britain (But Is Almost Everywhere Else)
+**Published Date:** 2026-08-16 | **Category:** guides
+**Description:** The 3pm blackout is a British rule, not a football rule. Here is what UEFA Article 48 actually says, the exact hours it blocks, and why the same fixture is shown live in most other countries.
+
+
+# Why the Saturday 3pm Kick-Off Isn't on TV in Britain (But Is Almost Everywhere Else)
+
+Saturday 3pm matches are not shown live on British television because England and Scotland are the only football associations in Europe that still use UEFA's "blocked hours" provision. It blocks live broadcasting between roughly 2.45pm and 5.15pm on Saturdays. The rule is territorial, not universal: in most other countries, those same fixtures are broadcast normally.
+
+That distinction matters more than it first appears. Almost every explanation of the blackout treats it as a fact of football. It is not. It is a choice one or two national associations make, and the rest of Europe has stopped making it.
+
+## What UEFA Article 48 actually does
+
+Article 48 of the UEFA Statutes gives each national association the right to designate a **two-and-a-half-hour window**, on a Saturday or a Sunday, during which live football may not be broadcast within its territory. UEFA calls these "blocked broadcasting hours."
+
+Two points are commonly misreported:
+
+- **UEFA does not impose the blackout.** It permits one. The decision to use it belongs to each national association.
+- **It is a window, not a fixture list.** The rule blocks a period of time. Any match falling inside it is affected, wherever in the world that match is being played.
+
+According to UEFA's published blocked-hours documentation, England and Scotland both declare a Saturday window of 15:45–18:15 CET, which is 14:45–17:15 in British time.
+
+## Who still uses it
+
+This is the part that gets left out. Of all UEFA's member associations, only the English and Scottish associations currently exercise the option. The United Kingdom is the last significant holdout in Europe.
+
+The practical consequence: a Premier League match kicking off at 3pm on a Saturday can be watched live in the large majority of countries that hold rights to it. It simply cannot be watched live in the country where it is being played.
+
+If you have ever been abroad on a Saturday afternoon and found a match on television that you could not have watched at home, that is why. Nothing unusual happened. You crossed a rights boundary.
+
+## Why it exists at all
+
+The blackout dates to the 1960s. Football League chairmen took the view that televising matches at the traditional Saturday-afternoon kick-off time would reduce attendance at every other ground playing at the same hour. Lower divisions and non-league clubs, whose gate receipts matter proportionally far more than a top-flight club's, were the intended beneficiaries.
+
+Whether the protection still works as designed is genuinely contested. The original reasoning predates the internet, pay television, and a Premier League fixture list scattered across five kick-off slots. What is not contested is that the rule is doing something narrower than most people assume: it protects the 3pm slot specifically, and only inside Britain.
+
+## What this means when you are looking for a match
+
+Three things follow that are worth knowing.
+
+**A missing broadcast is not always a missing broadcast.** If a fixture appears in the schedule but no channel is listed for your country, the fixture is still being played and is very likely being shown somewhere. Availability is a property of your location, not of the match.
+
+**Kick-off time determines everything.** The blackout is keyed to the clock, not the competition. Move the same fixture to 12:30 or 17:30 and it becomes televisable in Britain. This is precisely why so many matches are scheduled outside the 3pm slot.
+
+**Highlights are unaffected.** The restriction covers live broadcasting during the blocked window. Recorded highlights after it closes are a separate rights package, which is why they have been a fixture of British television for decades.
+
+## The wider point about where to watch
+
+The 3pm blackout is the clearest example of something that shapes every answer to "where can I watch this": **broadcast rights are sold territory by territory, and the answer changes at every border.**
+
+There is no single global channel for a competition. There is a different rights holder in each market, sometimes several, with different packages, different platforms, and — as the blackout shows — sometimes different rules about whether a match may be shown at all.
+
+That is why a genuinely useful answer to "where can I watch this" has to begin with a question: where are you?
+
+We publish fixtures, kick-off times, live scores, standings and results for every competition we cover, and name the official rights holder for each country we have verified, with the date each listing was last checked. Where we have not verified a country, we say nothing rather than guess — a broadcaster you cannot actually watch on is worse than no answer at all.
+
+## Frequently asked questions
+
+**Is the 3pm blackout a law?**
+No. It is a rule enforced under Article 48 of the UEFA Statutes, adopted at the discretion of a national association. It is not statute.
+
+**Which hours exactly are blocked?**
+UEFA's documentation records a Saturday window of 15:45–18:15 CET for both England and Scotland, equivalent to 14:45–17:15 UK time.
+
+**Do other European countries have a blackout?**
+Article 48 is available to every UEFA member association, but only the English and Scottish associations currently use it.
+
+**Why are some Saturday matches on television in Britain, then?**
+Because they kick off outside the blocked window. A 12:30 or 17:30 Saturday kick-off is not affected.
+
+**Was the blackout ever suspended?**
+Yes. It was lifted temporarily during the 2019-20 season when matches were played without crowds, which removed the attendance rationale it exists to protect. It was subsequently reinstated.
+
+---
+
+*Sources: [UEFA — Blocked broadcasting hours](https://www.uefa.com/news-media/news/025f-0fca25bed000-61c2e92414f0-1000--blocked-broadcasting-hours), [LawInSport — What is the "black-out" rule in football and is it lawful?](https://www.lawinsport.com/topics/item/what-is-the-black-out-rule-in-football-and-is-it-lawful), [BBC Sport — Why does football have a Saturday 3pm TV blackout in the UK?](https://www.bbc.co.uk/sport/football/articles/c98l671604vo)*
+
+
+---
+
+### Article: Why the Same Match Is on a Different Channel in Every Country
+**Published Date:** 2026-08-16 | **Category:** guides
+**Description:** There is no global channel for any competition. Broadcast rights are sold territory by territory, in packages, on staggered cycles — which is why the answer to 'where can I watch this' changes at every border.
+
+
+# Why the Same Match Is on a Different Channel in Every Country
+
+One match. One kick-off. One set of twenty-two players. And, depending on where you are sitting, a completely different channel — or no channel at all. This is not an accident or an oversight. It is how sports broadcasting has been built for forty years, and understanding it turns "where can I watch this" from a frustrating question into a solvable one.
+
+The short answer: **competitions do not sell one worldwide broadcast right. They sell dozens of separate territorial rights, and each one goes to a different buyer.**
+
+## Rights are sold by territory, not by match
+
+When a league or governing body sells its media rights, it does not auction "the Champions League." It auctions the right to broadcast the Champions League **in a defined territory, for a defined period**.
+
+That means a single competition might have thirty or more rights holders operating simultaneously — one or several per country — each of whom paid separately, each of whom shows the same football to a different audience.
+
+There is no central channel that carries a competition everywhere, because no such right is ever sold. The closest thing to a global product is a competition's own subscription service, and even those are usually blacked out in the markets where a local broadcaster has bought exclusivity.
+
+## Rights are split into packages
+
+Within a single country, the rights are rarely sold whole. They are broken into **packages**, and different buyers take different ones.
+
+Packages are typically divided by some combination of:
+
+- **Kick-off slot** — the Sunday afternoon fixtures might be one package, the Monday night game another
+- **Pick order** — who chooses first from each round of fixtures, which is worth a great deal when one club draws far more viewers than another
+- **Platform** — linear television, streaming, mobile, and clips can all be sold separately
+- **Exclusivity** — some packages are exclusive, others shared
+
+This is why one country can require two or three subscriptions to follow a single league. Nobody designed that outcome deliberately; it is the natural consequence of selling a competition in pieces to the highest bidder for each piece.
+
+## The cycles are staggered
+
+Rights are sold for a fixed term — commonly three years, sometimes more. Critically, **those terms do not run in step across countries.**
+
+A competition's rights in one market might be mid-way through a cycle while another market goes to auction. So the channel showing a competition in Germany can change in a year when nothing changes in Spain, and vice versa.
+
+The practical consequence for anyone trying to find a match: **a broadcast listing has a shelf life.** An answer that was correct last season may be wrong this season, in one country, while remaining right in every other. Any source that tells you where to watch something without telling you when it last checked is asking you to trust a number that decays.
+
+## Free-to-air rules change the picture again
+
+Several countries maintain a **listed events** regime — a legal requirement that events of major national significance remain available on free-to-air television rather than moving entirely behind a paywall.
+
+Which events qualify differs by country, and the lists reflect national sporting culture rather than any common standard. The result is that the same tournament can be free-to-air in one country and subscription-only in its neighbour, with no relationship between the two beyond geography.
+
+## And sometimes it is not shown at all
+
+The most extreme version of territorial variation is a match that is not broadcast in a country even though a rights holder exists there.
+
+The clearest example is the British Saturday afternoon blackout, which blocks live football during a two-and-a-half-hour window under UEFA Article 48. England and Scotland are the only associations in Europe still using it, so those fixtures are broadcast normally in most other countries and not at all in the one where they are being played. We covered [how that rule works in detail here](/blog/saturday-3pm-blackout-explained).
+
+## What this means for finding a match
+
+Four things follow, and they apply to essentially every sport.
+
+**"Where can I watch this" is incomplete without "and where are you?"** Any answer that omits the country is either wrong somewhere or accidentally right.
+
+**No broadcaster covers everything.** A competition split across three packages in your market means three answers, varying by fixture.
+
+**Listings decay.** Rights cycles turn over constantly and out of step. A listing without a verification date is a guess wearing a suit.
+
+**A missing listing is not a missing match.** If no channel is shown for your country, the fixture is still being played, and is very likely being broadcast somewhere else.
+
+## How we handle it
+
+We publish fixtures, kick-off times, live scores, league tables and results for the competitions we cover, and we name the official rights holder for each country we have actually verified — with the date that listing was last checked, so you can judge how much weight it carries.
+
+Where we have not verified a country, we publish nothing for it. That is a deliberate choice. A broadcaster named wrongly sends someone to a channel that does not carry the match, or to a subscription that does not do what they bought it for. An honest gap is recoverable. A confident wrong answer is not.
+
+## Frequently asked questions
+
+**Why can't I just buy one subscription that shows everything?**
+Because no single organisation holds worldwide rights to sell you. Rights are fragmented by territory, package and platform by design, and the fragments are owned by competing companies.
+
+**Why does my country's channel keep changing?**
+Because rights are sold on multi-year cycles that expire and go back to auction. When a cycle turns over in your market, the broadcaster can change even if nothing changes elsewhere.
+
+**Why is a match free on television in one country and paid in another?**
+Some countries maintain listed-events rules requiring nationally significant events to stay on free-to-air television. Which events qualify is a national decision, so it varies.
+
+**Does a competition's own streaming service solve this?**
+Only partially. Those services generally cannot operate in markets where exclusive rights have already been sold to a local broadcaster, which is usually the market you are in.
+
+
+---
+
 ### Article: Sky Sports, TNT Sports, & Prime Video: Cost to Watch Premier League 2026-27
 **Published Date:** 2026-07-19 | **Category:** comparison
 **Description:** How much does it cost to watch the 2026-27 Premier League season in the UK? A breakdown of Sky Sports, TNT Sports and Amazon Prime Video pricing and what each package actually covers.

@@ -582,3 +582,59 @@ copy — £12/mo, "230,000+ channels", free-trial links, IPTV-player setup instr
 They are excluded from the build and from the sitemap, so they reach no user, but they
 ship in the repo. They are expired World Cup fixture guides previously earmarked for
 conversion into result reports. Deleting versus rewriting is the owner's call.
+
+---
+
+## 2026-08-16 — Deleted 17 expired drafts; replaced with evergreen global guides
+
+**Decision:** Delete all 17 `draft: true` MDX files and publish three new evergreen
+guides in their place.
+
+**Evidence for deleting:** every one was a **dated fixture guide** — Argentina vs
+Algeria, England vs Ghana, the World Cup quarter-finals, a July UFC Fight Night — with
+dates from June and July 2026. All were in the past as of 16 August. They also carried
+the IPTV sales copy the project is removing: £12/mo, "230,000+ channels", free-trial
+links, IPTV-player setup instructions.
+
+**The pattern is worth recording.** Of the 22 posts in the repo, the 17 that died were
+all fixture-specific and the 5 that survived were all evergreen — cost comparisons and
+how-to-watch guides. A post pinned to one kick-off has a shelf life measured in days;
+a post about how something *works* does not. New content should default to the second
+kind.
+
+**The three replacements**, chosen to be evergreen, global, and writable without
+inventing anything:
+
+1. `saturday-3pm-blackout-explained` — why Britain blacks out the 3pm kick-off. The
+   angle that makes it fit this site: it is a **British** rule, not a football rule.
+   England and Scotland are the only UEFA associations still using Article 48 blocked
+   hours, so the same fixture is broadcast normally almost everywhere else. That is the
+   "availability differs by country" thesis attached to a question people actually ask.
+2. `why-different-channel-every-country` — territorial rights, packages, staggered
+   cycles, listed-events regimes. The site's positioning argued from first principles.
+3. `kick-off-times-timezones-explained` — how to convert a fixture time, and the two
+   windows each year when the familiar Europe-to-US offset is wrong because the two
+   blocs change clocks on different dates.
+
+**Every factual claim is sourced.** UEFA Article 48 permitting a two-and-a-half-hour
+window, the 15:45–18:15 CET declaration for England and Scotland, and the 2026 daylight
+saving dates (US 8 March / 1 November, EU 29 March / 25 October) were each verified
+against published sources, which are cited in the posts.
+
+**What was deliberately not claimed:** no per-country broadcaster listings beyond what
+`lib/data/broadcast-rights.ts` actually holds, and no search-volume or traffic figures.
+Keyword tooling was not available in this session, so no post asserts demand it cannot
+evidence. The topics were chosen on durability and fit, not on a number.
+
+**Also fixed while in the file:** `app/blog/page.tsx` was headed "Sports Streaming Blog"
+and promised "watching every match from anywhere", with a description naming "the
+official UK broadcaster". All three replaced.
+
+**Correction for the record:** `/blog` returned 404 on first request during this session
+and was briefly reported as a defect. It was a dev-server compile race on the first hit,
+not a bug — three consecutive runs afterwards returned 200 for the index and all three
+new posts.
+
+**Verified:** tsc 0 errors · vitest 14/14 · `generate-posts.js` exit 0 with 8 posts and
+the source guard passing · `/blog` and all three posts HTTP 200 · new posts present on
+the index and in `public/llms.txt`.

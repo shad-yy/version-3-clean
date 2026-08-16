@@ -9,7 +9,7 @@ import { StaggerIn } from "@/components/ui/stagger-in"
 export const metadata: Metadata = {
   title: "Sports Guides, Fixtures & TV Listings | Smart Live TV",
   description:
-    "Editorial guides to football, UFC and Formula 1 fixtures — kick-off times, competition formats, and which official UK broadcaster is showing each event.",
+    "Editorial guides to football, UFC and Formula 1 — kick-off times, competition formats, how broadcast rights work, and which official broadcaster carries each event in the countries we have verified.",
   alternates: { canonical: `${ENV.BASE_URL}/blog` },
 }
 
@@ -42,9 +42,12 @@ export default function BlogIndexPage() {
       <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="space-y-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-text-primary">Sports Streaming Blog</h1>
+            {/* Was "Sports Streaming Blog" / "watching every match from anywhere" —
+                both implied a streaming service. This site publishes information. */}
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-text-primary">Guides &amp; Analysis</h1>
             <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-              Expert how-to guides, comparisons, and practical tips for watching every match from anywhere.
+              How broadcast rights work, why availability changes at every border, and where to find
+              the competitions you follow.
             </p>
           </div>
         </div>
