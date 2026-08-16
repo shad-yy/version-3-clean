@@ -284,3 +284,54 @@ are scoped separately.
 
 **Verified:** `Europe/London` no longer appears anywhere outside per-country data ·
 tsc 0 errors · vitest 14/14 · build succeeds.
+
+---
+
+## 2026-08-11 — Sports broadcast rights: no API exists; TMDB does not cover them
+
+**Decision:** Built the TMDB integration for the film/TV vertical. Sports broadcast
+listings stay on hand-verified data in `lib/data/broadcast-rights.ts`.
+
+**Considered:** Using TMDB for sports too; using TheSportsDB's TV endpoints.
+
+**Evidence — both alternatives were tested and ruled out:**
+
+- **TMDB Watch Providers covers films and TV series only.** It has no concept of a
+  fixture or a competition. It cannot answer "who shows La Liga in Spain".
+- **TheSportsDB's TV data is too sparse to use.** Tested live on 2026-08-16:
+  `eventstv.php?d=…&s=Soccer` returned **1 event for all of world soccer**, carrying
+  `idChannel`/`strChannel`. `eventsday.php` returned 3 events with **no TV fields at
+  all**. `strTVStation` is modelled in `lib/types/sportsdb.ts` and `lib/types.ts` but
+  comes back empty. One event per day globally cannot back a broadcast listing.
+
+**Consequence:** There is no data source that would let us assert sports broadcasters at
+scale. That leaves one honest option for the 65 hardcoded UK-broadcaster references:
+**remove the assertions we cannot source**, rather than keep UK-pinned claims that are
+also wrong for non-UK competitions (e.g. `DynamicSEOContent.tsx` currently tells La Liga,
+Serie A, Bundesliga and Ligue 1 visitors that "official UK broadcasters include Sky
+Sports, TNT Sports, BBC Sport"). Where `broadcast-rights.ts` has verified data, name the
+broadcaster; where it does not, say nothing. **Not yet done — this is the top of the
+Phase 3 queue.**
+
+---
+
+## 2026-08-11 — TMDB client added (UNVERIFIED against the live API)
+
+**Decision:** `lib/api/tmdb.ts` — per-country film/TV availability, cached, server-only.
+
+**Design constraints baked in:**
+- **JustWatch attribution is mandatory** — exported as `JUSTWATCH_ATTRIBUTION` so a page
+  cannot render the data without having the string to hand.
+- **No deep links exist.** TMDB returns a TMDB landing link, not a provider play URL. The
+  type names it `tmdbLink` and the doc-block warns against rendering provider logos as
+  though they launch playback.
+- Empty results are a **legitimate answer**, not an error — the fetch logs its real cause
+  so "no data" is never confused with a fault.
+- `isTmdbConfigured()` lets callers hide the vertical rather than 500 when no key is set.
+- TTLs: 6h for availability, 7d for provider/region reference data.
+
+**⚠️ NOT VERIFIED.** `TMDB_API_KEY` is not configured in this environment, so the client
+has been type-checked and written against the documented response shape but **never run
+against the live API**. Before relying on it: add the key (see `README.env.example`), then
+confirm `getWatchProviders('movie', 550)` returns populated countries and that the field
+mapping matches. Do not mark this integration done until that output is recorded.
