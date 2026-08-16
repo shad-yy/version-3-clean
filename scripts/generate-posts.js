@@ -143,7 +143,82 @@ export const BLOG_POSTS: BlogPost[] = ${JSON.stringify(posts, null, 2)};
     console.log(`Skipped ${skipped.length} draft post(s): ${skipped.join(', ')}`);
   }
 
+  generateLlmsIndex(posts);
   generateLlmsFull(posts);
+}
+
+/**
+ * Generates public/llms.txt — the short index answer engines read first.
+ *
+ * Generated rather than hand-written because it was hardcoding a domain that now
+ * belongs to a different property, telling AI crawlers this content lived there.
+ *
+ * Content rules:
+ *  - Describe only what the site actually has today. Do not announce planned
+ *    verticals as if they exist.
+ *  - Broadcast coverage is per country and comes from lib/data/broadcast-rights.ts.
+ *    Never claim a country or competition that file does not cover.
+ *  - No single-market framing. This site is not UK-only.
+ */
+function generateLlmsIndex(posts) {
+  const file = path.join(__dirname, '../public/llms.txt');
+  const base = `https://${SITE_HOST}`;
+
+  const blogLines = posts
+    .map((p) => `- [${p.title}](${base}/blog/${p.slug}): ${p.description}`)
+    .join('\n');
+
+  const content = `# ${SITE_NAME}
+
+> ${SITE_NAME} (${SITE_HOST}) answers one question: where and how can I watch this?
+> It publishes live football scores, fixtures, league standings, team and player
+> statistics, and the broadcast listings that show which service carries a given
+> competition in a given country.
+
+## Core pages
+- [Home](${base}/): Live scores, today's fixtures, standings and sports news.
+- [Live Scores](${base}/scores): Real-time football scores and results.
+- [Leagues](${base}/leagues): Tables, fixtures and results for major competitions.
+- [Teams](${base}/teams): Club profiles, squads and fixture histories.
+- [Players](${base}/players): Player profiles and season statistics.
+- [Fixtures & Results](${base}/events): Full fixture calendar and results archive.
+- [Sports News](${base}/news): Football and MMA headlines updated daily.
+- [Blog](${base}/blog): Editorial guides on fixtures, competitions and broadcast schedules.
+- [FAQ](${base}/faq): Common questions about scores, fixtures and broadcast listings.
+
+## Competition guides
+Each guide carries the fixture list, standings where applicable, and the broadcast
+listing for the countries we have verified.
+
+- [Premier League](${base}/watch/premier-league)
+- [Champions League](${base}/watch/champions-league)
+- [Europa League](${base}/watch/europa-league)
+- [La Liga](${base}/watch/la-liga)
+- [Serie A](${base}/watch/serie-a)
+- [Bundesliga](${base}/watch/bundesliga)
+- [Ligue 1](${base}/watch/ligue-1)
+- [Formula 1](${base}/watch/formula-1)
+- [UFC](${base}/ufc)
+- [World Cup 2026](${base}/watch/world-cup-2026): Results and broadcast archive.
+
+## Editorial guides
+${blogLines}
+
+## Notes
+- Audience is international. Content is not restricted to any single country.
+- Data sources: TheSportsDB (scores, fixtures, standings, teams, players) and
+  NewsData.io (news).
+- Broadcast listings name the official rights holder for each country covered, and
+  each competition record carries the date it was last verified. Where a country is
+  not covered, no claim is made for it.
+- ${SITE_NAME} does not sell, resell or provide access to any television or
+  streaming subscription, and does not host or transmit video.
+- Full-text corpus: ${base}/llms-full.txt
+`;
+
+  assertDomainCompliant('public/llms.txt', content);
+  fs.writeFileSync(file, content, 'utf-8');
+  console.log(`Successfully generated public/llms.txt`);
 }
 
 function generateLlmsFull(posts) {
@@ -156,16 +231,16 @@ function generateLlmsFull(posts) {
 
 ## 1. About ${SITE_NAME}
 ${SITE_NAME} (${SITE_HOST}) is a real-time sports telemetry and live match data platform for UK and international sports fans.
-- **Core Features:** Live football scores, match statistics, team lineups, league standings, and official UK broadcast schedule guides for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
+- **Core Features:** Live football scores, match statistics, team lineups, league standings, and broadcast schedule guides by country for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
 - **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
-- **Broadcast Listings:** Reference official UK rights holders only — Sky Sports, TNT Sports, BBC, ITV, discovery+ and Amazon Prime Video. ${SITE_NAME} does not sell or provide television subscriptions.
+- **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. ${SITE_NAME} does not sell or provide television subscriptions.
 
 ---
 
 ## 2. Frequently Asked Questions (FAQ)
 
 ### What data does ${SITE_NAME} provide?
-${SITE_NAME} provides real-time scores, match statistics, head-to-head records, official line-ups, and UK broadcast schedule information for major football leagues, UFC, and Motorsport.
+${SITE_NAME} provides real-time scores, match statistics, head-to-head records, official line-ups, and per-country broadcast schedule information for major football leagues, UFC, and Motorsport.
 
 ### Where can I check live match scores?
 Visit ${SITE_HOST}/scores for live real-time score updates across all ongoing matches.

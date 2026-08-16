@@ -57,9 +57,19 @@ const LEAGUE_TITLES: Record<string, string> = {
     'champions-league': 'UEFA Champions League Scores & TV Guide',
 }
 
-// Force static building for the top SEO pages
+// Force static building for the top SEO pages.
+//
+// champions-league is excluded deliberately: app/watch/champions-league/page.tsx is a
+// literal route with its own copy and metadata, and Next gives literal segments
+// precedence over dynamic ones. Generating it here produced a shadowed page that could
+// never be served. LEAGUES still carries the entry — it is used for badges and theming
+// elsewhere — this only stops the dead route being built.
+const SHADOWED_BY_LITERAL_ROUTE = new Set(["champions-league"])
+
 export function generateStaticParams() {
-    return Object.keys(LEAGUES).map((slug) => ({ slug }))
+    return Object.keys(LEAGUES)
+        .filter((slug) => !SHADOWED_BY_LITERAL_ROUTE.has(slug))
+        .map((slug) => ({ slug }))
 }
 
 export function generateMetadata({ params }: Props): Metadata {

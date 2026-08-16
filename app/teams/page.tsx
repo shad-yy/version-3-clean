@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 }
 
 
-// Optimize for static data - revalidate every 24 hours
-export const revalidate = 86400
+// NOTE: no `revalidate` here. This page reads searchParams, which forces a dynamic
+// render on every request — an ISR value would never take effect and only misleads.
 
 interface TeamsPageProps {
   searchParams: {

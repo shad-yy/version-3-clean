@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/players`, priority: 0.7, changeFrequency: 'weekly' as const, lastModified: now },
     { url: `${baseUrl}/events`, priority: 0.8, changeFrequency: 'daily' as const, lastModified: now },
     { url: `${baseUrl}/search`, priority: 0.4, changeFrequency: 'monthly' as const, lastModified: STATIC_PAGE_UPDATED },
+    { url: `${baseUrl}/watch`, priority: 0.9, changeFrequency: 'weekly' as const, lastModified: now },
     { url: `${baseUrl}/watch/premier-league`, priority: 0.9, changeFrequency: 'daily', lastModified: now },
     { url: `${baseUrl}/watch/la-liga`, priority: 0.9, changeFrequency: 'daily', lastModified: now },
     { url: `${baseUrl}/watch/bundesliga`, priority: 0.9, changeFrequency: 'daily', lastModified: now },
