@@ -12,15 +12,19 @@ interface LiveFixture {
   name: string
   /** ISO date string */
   date: string
-  /** BST channel label */
+  /** Broadcaster label for the viewer's country. Never a hardcoded UK channel. */
   channel: string
   href: string
 }
 
-const KNOCKOUT_FIXTURES: LiveFixture[] = [
-  { name: "World Cup Third-Place Play-off", date: "2026-07-18T20:00:00+01:00", channel: "BBC One / ITV1", href: "/watch/world-cup-2026" },
-  { name: "Spain vs Argentina (World Cup Final)", date: "2026-07-19T20:00:00+01:00", channel: "ITV1 & ITVX", href: "/watch/world-cup-2026" },
-]
+// Empty by design. This previously held two hardcoded World Cup fixtures from July 2026
+// with UK-only channel labels ("BBC One / ITV1"). They expired, so the component silently
+// rendered nothing while still shipping UK-pinned broadcaster names in the bundle.
+//
+// Do not hardcode fixtures here again. Anything added must come from the fixtures API,
+// and any channel label must be resolved for the viewer's country from
+// lib/data/broadcast-rights.ts — never a single market's broadcaster.
+const KNOCKOUT_FIXTURES: LiveFixture[] = []
 
 type MatchState = "pre" | "live" | null
 

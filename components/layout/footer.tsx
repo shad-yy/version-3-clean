@@ -24,8 +24,10 @@ const footerLinks = [
   {
     title: "Broadcast Guides",
     links: [
-      { name: "Sky Sports Guide", href: "/watch/premier-league" },
-      { name: "TNT Sports Guide", href: "/watch/champions-league" },
+      // Named by competition, not by one country's broadcaster. These links appear on
+      // every page, so a UK broadcaster label framed the whole site as UK-only.
+      { name: "Premier League", href: "/watch/premier-league" },
+      { name: "Champions League", href: "/watch/champions-league" },
       { name: "DAZN & Global Channels", href: "/watch/la-liga" },
     ],
   },

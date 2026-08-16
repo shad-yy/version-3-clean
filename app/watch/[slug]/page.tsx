@@ -159,10 +159,12 @@ export default async function WatchLeaguePage({ params }: Props) {
         name: theme.name,
         url: `${ENV.BASE_URL}/watch/${slug}`,
         sport: 'Soccer',
-        location: {
-            '@type': 'Place',
-            addressCountry: theme.country,
-        },
+        // addressCountry must be ISO 3166-1 alpha-2. This previously passed the country
+        // NAME ('England', 'Spain'), which is invalid schema. Multi-national competitions
+        // have no code, so the property is omitted rather than guessed.
+        ...(theme.countryCode
+            ? { location: { '@type': 'Place', addressCountry: theme.countryCode } }
+            : {}),
     }
 
     const breadcrumbSchema = {

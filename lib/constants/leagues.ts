@@ -2,6 +2,11 @@ export interface LeagueInfo {
   id: string
   name: string
   country: string
+  /**
+   * ISO 3166-1 alpha-2, for schema.org addressCountry. Absent for multi-national
+   * competitions — omit the property rather than inventing a code for "Europe".
+   */
+  countryCode?: string
   emoji: string
   slug: string
   heroText: string
@@ -17,6 +22,7 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4328',
     name: 'Premier League',
     country: 'England',
+    countryCode: 'GB',
     emoji: '🏴',
     slug: 'premier-league',
     heroText: "The World's Most Watched League",
@@ -30,6 +36,7 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4335',
     name: 'La Liga',
     country: 'Spain',
+    countryCode: 'ES',
     emoji: '🇪🇸',
     slug: 'la-liga',
     heroText: 'Home of El Clásico. Home of Magic.',
@@ -43,6 +50,7 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4331',
     name: 'Bundesliga',
     country: 'Germany',
+    countryCode: 'DE',
     emoji: '🇩🇪',
     slug: 'bundesliga',
     heroText: 'Speed. Passion. German Precision.',
@@ -56,6 +64,7 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4332',
     name: 'Serie A',
     country: 'Italy',
+    countryCode: 'IT',
     emoji: '🇮🇹',
     slug: 'serie-a',
     heroText: 'The Home of Tactical Masterclasses',
@@ -69,6 +78,7 @@ export const LEAGUES: Record<string, LeagueInfo> = {
     id: '4334',
     name: 'Ligue 1',
     country: 'France',
+    countryCode: 'FR',
     emoji: '🇫🇷',
     slug: 'ligue-1',
     heroText: 'Où Naissent les Légendes',

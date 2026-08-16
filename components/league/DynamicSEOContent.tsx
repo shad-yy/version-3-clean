@@ -57,7 +57,7 @@ export function DynamicSEOContent({
       '@context': 'https://schema.org',
       '@type': 'SportsEvent',
       name: `${match.homeTeam} vs ${match.awayTeam}`,
-      description: `${match.homeTeam} vs ${match.awayTeam}, a ${leagueName} fixture. Kick-off time, live score and official UK broadcast listing.`,
+      description: `${match.homeTeam} vs ${match.awayTeam}, a ${leagueName} fixture. Kick-off time, live score and match statistics.`,
       startDate: startIso,
       endDate: endIso,
       eventStatus: 'https://schema.org/EventScheduled',
@@ -65,10 +65,9 @@ export function DynamicSEOContent({
       location: {
         '@type': 'Place',
         name: match.venue || `${match.homeTeam} Stadium`,
-        address: {
-          '@type': 'PostalAddress',
-          addressCountry: 'GB',
-        },
+        // No addressCountry. It was hardcoded 'GB' for every fixture in every league,
+        // which is wrong for most of them. Omitting an unknown property is valid schema;
+        // asserting a false one is not.
       },
       homeTeam: { '@type': 'SportsTeam', name: match.homeTeam },
       awayTeam: { '@type': 'SportsTeam', name: match.awayTeam },
@@ -100,9 +99,13 @@ export function DynamicSEOContent({
       question: `Who is top of the ${leagueName} table?`,
       answer: `As of ${today}, ${topTeam.team} leads ${leagueName} with ${topTeam.points} points from ${topTeam.played} games (${topTeam.won}W ${topTeam.drawn}D ${topTeam.lost}L). Follow real-time standings and team stats on Smart Live TV.`,
     },
+    // No broadcaster FAQ here. This component renders for every league, so a single
+    // templated answer asserted UK rights holders for La Liga, Serie A, Bundesliga and
+    // Ligue 1 alike — unverified for all of them. Broadcaster names belong on pages
+    // backed by lib/data/broadcast-rights.ts, which carries a per-country verified date.
     {
-      question: `How to watch ${leagueName} live in the UK?`,
-      answer: `Official UK broadcasters for ${leagueName} include Sky Sports, TNT Sports, BBC Sport, and Amazon Prime Video. Check our fixture guide for kickoff times and channel coverage for every match.`,
+      question: `Where can I follow ${leagueName} fixtures and results?`,
+      answer: `Fixtures, kick-off times, live scores, the full table and results for ${leagueName} are published here and updated as matches are played.`,
     },
   ].filter(Boolean) as Array<{ question: string; answer: string }>
 

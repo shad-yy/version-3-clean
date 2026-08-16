@@ -335,3 +335,58 @@ has been type-checked and written against the documented response shape but **ne
 against the live API**. Before relying on it: add the key (see `README.env.example`), then
 confirm `getWatchProviders('movie', 550)` returns populated countries and that the field
 mapping matches. Do not mark this integration done until that output is recorded.
+
+---
+
+## 2026-08-11 — Removed the unverifiable broadcaster assertions
+
+**Decision:** Deleted every **templated** broadcaster claim — the ones generated for all
+competitions or all fixtures from one string — and fixed the invalid `addressCountry`.
+
+**Considered:** Making them country-aware instead. Rejected for now: there is no data
+source behind them (see the previous entry — TMDB covers film/TV only, TheSportsDB's TV
+data is 1 event/day globally). Country-awareness with no data is still fabrication.
+
+**Rule applied:** where `lib/data/broadcast-rights.ts` has a verified entry, name the
+broadcaster. Where it does not, say nothing. An absent answer is recoverable; a wrong one
+on an accuracy-led site is not.
+
+**What was removed:**
+
+- `components/league/DynamicSEOContent.tsx` — an FAQ answering *"How to watch {league}
+  live in the UK?"* with *"Official UK broadcasters … include Sky Sports, TNT Sports,
+  BBC Sport, and Amazon Prime Video."* This component renders for **every** league, so
+  that sentence asserted UK rights holders for La Liga, Serie A, Bundesliga and Ligue 1.
+  Replaced with a fixtures/results answer that names nobody.
+- `app/match/[id]/page.tsx` — *"In the UK, {league} fixtures are broadcast by … typically
+  Sky Sports or TNT Sports"*, generated for **every match on the site**. Now states that
+  rights differ by country and points at the guide.
+- `components/match/match-tabs.tsx` — *"We list the official UK rights holder for every
+  fixture"*, shown on every match page. That was also simply untrue: we list rights
+  holders for 2 competitions in 4 countries.
+- `components/layout/footer.tsx` — "Sky Sports Guide" / "TNT Sports Guide" links, on
+  **every page**, framing the whole site as UK-only. Now named by competition.
+- `components/ui/LiveEventFloat.tsx` — two hardcoded World Cup fixtures from July 2026
+  with UK channel labels. They had expired, so the component rendered nothing while still
+  shipping UK-pinned broadcaster names in the bundle.
+
+**`addressCountry` fixed in three places:**
+
+- `app/match/[id]/page.tsx` and `components/league/DynamicSEOContent.tsx` hardcoded `'GB'`
+  for every venue in every league — wrong for most fixtures. **Property omitted**, which
+  is valid schema; asserting a false country is not.
+- `app/watch/[slug]/page.tsx` passed the country **name** (`'England'`, `'Spain'`) where
+  schema requires ISO 3166-1 alpha-2 — invalid regardless of market. Added `countryCode`
+  to `lib/constants/leagues.ts` (`GB`, `ES`, `DE`, `IT`, `FR`) and the property is now
+  omitted for multi-national competitions rather than inventing a code for "Europe".
+
+**Deliberately left:** broadcaster names on the six **competition-specific** pages
+(`/ufc`, `/watch/champions-league`, `/watch/europa-league`, `/watch/formula-1`,
+`/watch/formula-1/race/[id]`, `/watch/world-cup-2026`). Those are single-competition
+claims that are plausibly accurate for the UK — they are **UK-pinned, not fabricated**.
+Fixing them is a country-awareness job that needs `broadcast-rights.ts` extended first,
+which is a different decision. `components/news/news-filters.tsx` keeps "BBC Sport" as a
+news-source filter value, which is a real source name, not a rights claim.
+
+**Verified:** tsc 0 errors · vitest 14/14 · build succeeds · no hardcoded
+`addressCountry` remains outside the ISO-coded league map.

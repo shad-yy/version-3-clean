@@ -144,9 +144,9 @@ function InfoView({ date, time, venue, league }: InfoViewProps) {
               Live Broadcast
             </h4>
             <p className="text-xs text-gray-300 leading-relaxed mb-6">
-              We list the official UK rights holder for every fixture — Sky Sports,
-              TNT Sports, BBC, ITV, discovery+ and Amazon Prime Video — alongside
-              confirmed kick-off times.
+              Broadcast rights differ by country. We list the rights holder for each
+              country we have verified, alongside confirmed kick-off times shown in
+              your local time.
             </p>
           </div>
           <Link

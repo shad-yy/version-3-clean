@@ -111,10 +111,8 @@ export default async function MatchPage(
     location: {
       '@type': 'Place',
       name: venue || `${homeTeam} Stadium`,
-      address: {
-        '@type': 'PostalAddress',
-        addressCountry: 'GB',
-      },
+      // No addressCountry — see components/league/DynamicSEOContent.tsx. It was
+      // hardcoded 'GB' for every match on the site.
     },
     homeTeam: { '@type': 'SportsTeam', name: homeTeam },
     awayTeam: { '@type': 'SportsTeam', name: awayTeam },
@@ -154,7 +152,11 @@ export default async function MatchPage(
         name: `What channel is ${homeTeam} vs ${awayTeam} on?`,
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `In the UK, ${league} fixtures are broadcast by the competition's official rights holders, typically Sky Sports or TNT Sports depending on the fixture. Our ${league} broadcast guide lists the channel for each match.`,
+          // Names no broadcaster. This answer is generated for every fixture in every
+          // competition, so any named rights holder would be asserted for markets and
+          // leagues nobody verified. The competition guide shows broadcasters only where
+          // lib/data/broadcast-rights.ts has a verified entry for that country.
+          text: `Broadcast rights for ${league} differ by country. Our ${league} guide lists the confirmed kick-off time, and the rights holder for each country we have verified.`,
         },
       },
       {
