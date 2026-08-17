@@ -125,6 +125,22 @@ When auditing, use a **wide** codepoint range. The first sweep of this repo miss
 clock glyph because it omitted the Miscellaneous Technical block (U+2300–U+23FF), and
 that one line also happened to be printing a false timezone.
 
+## 5b. Do not mix this project with the previous IPTV business in third-party tools.
+
+The owner's accounts on external platforms contain projects for **both** properties. The
+Ahrefs account is a known case: it carries a project for the previous IPTV business
+alongside anything created for this site.
+
+- Before pulling data from any connected analytics, SEO or search tool, **confirm which
+  project or property it belongs to.** A domain-level metric from the wrong project is
+  worse than no metric, because it looks authoritative.
+- **Create a new project for this site** rather than reusing or renaming the old one.
+- The same caution applies to Search Console properties, analytics accounts and any other
+  tool where both businesses may appear.
+
+Where credentials or plan limits block verification of which project is which, say so and
+stop rather than guessing.
+
 ## 6. Suggest improvements — with evidence.
 
 The owner wants proactive proposals, not silent execution.
