@@ -4,6 +4,12 @@ import { ENV } from "@/lib/config/env"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 import { LEAGUES } from "@/lib/constants/leagues"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
+import {
+  JUSTWATCH_ATTRIBUTION,
+  buildTitleSlug,
+  getTrendingTitles,
+  isTmdbConfigured,
+} from "@/lib/api/tmdb"
 
 /**
  * The competition index.
@@ -87,7 +93,15 @@ function GuideCard({ guide }: { guide: Guide }) {
   )
 }
 
-export default function WatchIndexPage() {
+/** Revalidate daily so the trending list below does not go stale. */
+export const revalidate = 86400
+
+export default async function WatchIndexPage() {
+  // Films and series, when TMDB is configured. The section is omitted entirely rather
+  // than rendered empty when it is not — an empty shelf invites the reader to wonder
+  // what is broken.
+  const titles = isTmdbConfigured() ? await getTrendingTitles(12) : []
+
   // LEAGUES minus the entry that has its own literal route, to avoid listing it twice.
   const leagueGuides: Guide[] = Object.entries(LEAGUES)
     .filter(([slug]) => slug !== "champions-league")
@@ -158,6 +172,39 @@ export default function WatchIndexPage() {
           kick-off.
         </p>
       </section>
+
+      {titles.length > 0 && (
+        <section className="border-t border-[#1a1a2a] px-4 py-12 md:py-16">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="mb-3 text-2xl md:text-3xl font-bold text-white">Films and series</h2>
+            <p className="mb-8 max-w-2xl text-sm text-gray-400 leading-relaxed">
+              The same question, asked of film and television: which service carries this,
+              where you are. Availability is listed per country, because a title on a
+              subscription in one market is a rental in the next and absent from a third.
+            </p>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {titles.map((t) => (
+                <Link
+                  key={`${t.mediaType}-${t.tmdbId}`}
+                  href={`/watch/title/${buildTitleSlug(t.mediaType, t.tmdbId, t.name)}`}
+                  className="group flex flex-col rounded-2xl border border-[#2a2a3a] bg-[#12121a] p-5 transition-colors hover:border-[#00e676]/40"
+                >
+                  <p className="mb-1 text-[10px] uppercase tracking-wide text-gray-500">
+                    {t.mediaType === "movie" ? "Film" : "Series"}
+                    {t.year ? ` · ${t.year}` : ""}
+                  </p>
+                  <h3 className="text-lg font-bold text-white transition-colors group-hover:text-[#00e676]">
+                    {t.name}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+
+            <p className="mt-8 text-xs text-gray-600">{JUSTWATCH_ATTRIBUTION}.</p>
+          </div>
+        </section>
+      )}
     </div>
   )
 }

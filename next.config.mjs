@@ -13,6 +13,15 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        // TMDB poster and provider artwork, used by /watch/title/[slug].
+        // Without this entry next/image throws at render time and the whole page
+        // errors — the route still answers 200, so the failure is easy to miss.
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        port: '',
+        pathname: '/t/p/**',
+      },
+      {
         protocol: 'https',
         hostname: 'media.api-sports.io',
         port: '',

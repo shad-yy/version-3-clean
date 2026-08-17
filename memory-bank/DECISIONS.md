@@ -638,3 +638,80 @@ new posts.
 **Verified:** tsc 0 errors · vitest 14/14 · `generate-posts.js` exit 0 with 8 posts and
 the source guard passing · `/blog` and all three posts HTTP 200 · new posts present on
 the index and in `public/llms.txt`.
+
+---
+
+## 2026-08-16 — Film and TV vertical built on TMDB; three bugs found by testing it
+
+**Decision:** Ship `/watch/title/[slug]`, per-country availability for films and series,
+and surface it from `/watch`. TMDB key supplied by the owner and verified live.
+
+**The client had a real bug that only live data could reveal.** `lib/api/tmdb.ts` was
+written and committed weeks earlier without ever running. TMDB returns a separate **`ads`**
+bucket for free-with-advertising availability, distinct from `free`. The client mapped
+`free` alone, so `ads` was dropped. For Fight Club, the only free route in Great Britain is
+ITVX and it arrives under `ads` — the code was silently hiding the free option and leaving
+only paid ones. That is the worst direction to be wrong in. Now mapped and rendered first,
+above every paid tier.
+
+**Caching hardened against the owner's rate-limit concern.** TMDB removed hard limits in
+2019; the practical ceiling is around 50 requests/second with 20 connections per IP, and
+they answer 429 rather than banning an IP. The real exposure was not volume but shape:
+
+- **Negative caching.** `cacheGet` returns null both for "not cached" and "cached null", so
+  a bare null could not express a remembered negative. Values are now wrapped in
+  `{ v: T | null }`. Without this, title pages rendering on demand made the route an open
+  relay — `/watch/title/movie-1-x`, `movie-2-x`, `movie-3-x` each missed cache and proxied
+  to TMDB on our key. 404s are now remembered for an hour.
+- **In-flight deduplication.** A popular title on a cold cache issued one upstream request
+  per visitor. Identical concurrent requests now share a promise.
+- **429 and network faults are never cached.** Both are transient; caching either would
+  freeze a blip into an hour of wrong answers. A 404 is cached because it is a fact.
+
+**Schema: `Movie`/`TVSeries` only, deliberately NO `WatchAction`.** Google's Watch Action
+requires a `target` deep link that opens playback. TMDB does not provide one — it reports
+that a provider carries a title in a country, not where to play it. Emitting a WatchAction
+aimed at a landing page would mark up a link that does not do what the schema claims. The
+availability data is already shaped for `ActionAccessSpecification` and `eligibleRegion`
+whenever a licensed source of deep links exists.
+
+---
+
+## 2026-08-16 — A root loading.tsx was causing soft 404s site-wide
+
+**Found while testing the new route, but it was never about the new route.**
+
+`/watch/title/garbage` returned **HTTP 200** while rendering the 404 page. So did
+`/watch/nonexistent-league` and `/teams/99999999`. Meanwhile a genuinely unmatched path
+like `/this-route-does-not-exist` correctly returned 404.
+
+**Cause:** `app/loading.tsx` at the repository root wraps *every* route in a Suspense
+boundary. Next commits response headers and begins streaming the loading shell before the
+page body runs, so by the time `notFound()` is called the 200 is already sent and cannot be
+changed. The served HTML contained the loading skeleton **and** the 404 page together,
+which is what gave it away.
+
+**Why it matters:** a soft 404 tells Google a nonexistent page is a real page. Every invalid
+team id, league slug and title slug was an indexable 200 — thin duplicate content and
+wasted crawl budget, flagged in Search Console as "Soft 404".
+
+**Decision:** delete `app/loading.tsx`. Verified against a production build and server, not
+dev: invalid slugs now return 404 and every valid route still returns 200. Removing it also
+stops a full-page skeleton flashing on every navigation, since the App Router keeps the
+current page visible while the next one resolves.
+
+**Not fixed, deliberately:** six routes keep their own segment-level `loading.tsx` and still
+soft-404 — `/teams/[id]`, `/events/[id]`, `/ufc/fighters/[id]`, `/ufc/events/[id]`,
+`/leagues/[id]` and `/blog/[slug]`. The same mechanism applies. Fixing them means removing a
+loading state that has genuine UX value on a slow segment, or restructuring with route
+groups so the index keeps its skeleton while the detail route does not. That is a UX call
+for the owner, not a silent change.
+
+**Also fixed:** `image.tmdb.org` was missing from `next.config.mjs` `remotePatterns`, so
+every poster threw at render time while the route still answered 200 — a failure quiet
+enough to reach production unnoticed.
+
+**Verified:** tsc 0 errors · vitest 14/14 · production build compiles and pre-renders 20
+trending title paths from the live API · `/watch/title/movie-550-fight-club` renders
+"Available in 131 countries" with ISO codes resolved to country names · ITVX present under
+the recovered `ads` bucket · JustWatch attribution on both the index and the title page.
