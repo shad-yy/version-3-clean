@@ -99,10 +99,19 @@ function TeamLoading() {
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default function TeamPage({ params }: TeamPageProps) {
+export default async function TeamPage({ params }: TeamPageProps) {
   // Use params.id directly - ensure it's used as a key for React to detect changes
   const teamId = params.id
-  
+
+  // Existence check awaited HERE, before any JSX. TeamContent also calls notFound(),
+  // but it sits inside the Suspense boundary below -- by the time it runs, the shell
+  // has streamed with a 200 and the status can no longer change. That is why an
+  // unknown team id used to render the 404 page while answering 200.
+  //
+  // getTeam() is TTL-cached, so TeamContent's own fetch below is a cache hit.
+  const team = await unifiedSportsAPI.getTeam(teamId)
+  if (!team) notFound()
+
   return (
     <div className="container mx-auto px-4 pt-24 md:pt-28 pb-8">
       <Suspense fallback={<TeamLoading />}>

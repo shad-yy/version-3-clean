@@ -117,7 +117,20 @@ function LeagueLoading() {
   )
 }
 
-export default function LeaguePage({ params }: LeaguePageProps) {
+export default async function LeaguePage({ params }: LeaguePageProps) {
+  // The existence check must be awaited HERE, in the page body, before any JSX is
+  // returned. Inside the Suspense boundary below, the shell has already streamed with
+  // a 200 and notFound() can no longer change the status -- which is why an unknown
+  // league id used to render "Page Not Found" while answering 200. Google reads that
+  // as a real page: a soft 404.
+  //
+  // getLeagues() is TTL-cached, so LeagueContent's own call below is a cache hit
+  // rather than a second round trip.
+  const leagues = await unifiedSportsAPI.getLeagues()
+  if (!leagues.some((l) => l.id === params.id)) {
+    notFound()
+  }
+
   return (
     <main className="min-h-screen bg-[#0a0a0f] py-8 px-4 md:px-6 lg:px-8">
       {/* Ambient background glows */}

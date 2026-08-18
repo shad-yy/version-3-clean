@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { notFound } from "next/navigation"
 import Image from 'next/image'
 import Link from 'next/link'
 import { ENV } from '@/lib/config/env'
@@ -41,7 +42,13 @@ async function getUFCEvent(id: string) {
 
 export default async function UFCEventPage({ params }: { params: { id: string } }) {
   const summary = await getUFCEvent(params.id)
-  
+
+  // getUFCEvent returns null when ESPN has no such event. Without this check the page
+  // fell through to the hardcoded 'UFC Event' placeholder below and rendered an empty
+  // shell reading "UFC Event Details Loading" -- forever, with a 200. A soft 404 that
+  // also looks broken to anyone who lands on it.
+  if (!summary) notFound()
+
   // Extract data from ESPN summary format
   const header = summary?.header || summary
   const eventName = header?.competitions?.[0] 

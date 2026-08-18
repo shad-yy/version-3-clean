@@ -43,7 +43,7 @@ A rule is not "done" until the proving command returns zero.
 | R1 | No emoji in shipped code | **Done** | Wide-range codepoint scan over `app components lib scripts` returns 0 |
 | R2 | No IPTV / streaming-claim phrases in source | **Done, enforced at build** | `assertSourceCompliant()` in `scripts/generate-posts.js`; verified by injection |
 | R3 | Animations must never hide content | **Done for the two wrappers** | `ScrollReveal`, `FadeIn` rewritten to `whileInView`; all homepage sections at opacity 1 |
-| R4 | Invalid ids must return 404, not 200 | **Partial** | Root `app/loading.tsx` removed. **Six routes still soft-404** — see below |
+| R4 | Invalid ids must return 404, not 200 | **Done** | All 8 invalid routes return 404, all 14 valid routes 200, verified on a production server |
 | R5 | Semantic tokens, no raw hex | **Not started** | ~604 hex + 953 default greys vs ~188 tokens |
 | R6 | No single-market (UK) copy or config | **Partial** | Root layout and formatters done; **6 competition pages + ~30 formatters remain** |
 | R7 | Film/TV must be discoverable | **Partial** | `/watch` links to titles; **header nav still has no entry** |
@@ -52,18 +52,48 @@ A rule is not "done" until the proving command returns zero.
 
 ## Open findings
 
-### F1 — Six routes still return 200 for missing records
+### F1 — Soft 404s across dynamic routes — RESOLVED
 
-Each keeps its own segment-level `loading.tsx`, which starts streaming a 200 before the page
-can call `notFound()`. Same mechanism as the root `loading.tsx` already removed.
+All six routes now return 404. Three distinct causes, which is why removing one file was
+not enough:
 
-`/teams/[id]` · `/events/[id]` · `/ufc/fighters/[id]` · `/ufc/events/[id]` ·
-`/leagues/[id]` · `/blog/[slug]`
+**Cause 1 — segment `loading.tsx` boundaries.** A `loading.tsx` wraps its whole segment
+*including descendants*, so the shell streams with a 200 before a child page can call
+`notFound()`. Removing them fixed `/events/[id]` and `/blog/[slug]` outright. Note the
+parent-segment trap: deleting `app/ufc/fighters/[id]/loading.tsx` changed nothing until
+`app/ufc/loading.tsx` also went, because the parent covers every descendant.
 
-Soft 404s tell Google a nonexistent page is real — thin duplicates, wasted crawl budget,
-flagged in Search Console. **Fixing it means removing a loading state that has genuine UX
-value, or restructuring with route groups so an index keeps its skeleton while the detail
-route does not.** Owner decision, deliberately not made silently.
+**Cause 2 — `notFound()` called inside an in-page Suspense boundary.** `/teams/[id]` and
+`/leagues/[id]` returned 200 even with no `loading.tsx`, because the existence check lived
+in a component *inside* `<Suspense>`. By the time it ran the shell had streamed. Fixed by
+awaiting the existence check in the page body before any JSX is returned. Both lookups are
+TTL-cached, so the inner component's own fetch is a cache hit rather than a second call.
+
+**Cause 3 — a null result that was never checked.** `/ufc/events/[id]` called
+`getUFCEvent()`, which correctly returns null for an unknown id, then ignored it and fell
+through to a hardcoded `'UFC Event'` placeholder. It rendered an empty shell reading "UFC
+Event Details Loading" forever, with a 200.
+
+**Loading states were replaced, not just deleted**, per the owner's instruction:
+
+- `/blog` is statically rendered from the generated posts file, so it never needed a
+  loading state. Removing its skeleton is correct rather than a regression.
+- `/teams` had a `loading.tsx` that returned `null` — no UI at all, pure cost.
+- `/ufc` is genuinely async, so its skeleton moved to
+  `components/ufc/ufc-skeleton.tsx` and is now mounted via `<Suspense>` *inside*
+  `app/ufc/page.tsx`. The index keeps its skeleton; the dynamic routes beneath it no longer
+  inherit a boundary.
+- `/events`, `/leagues`, `/players`, `/search`, `/teams` already had in-page Suspense
+  fallbacks, so their loading UX is unchanged.
+
+Proof, on a production server:
+
+```
+404: /teams/99999999  /events/99999999  /ufc/fighters/99999999  /ufc/events/99999999
+     /leagues/99999999  /blog/does-not-exist  /watch/title/garbage  /watch/nonexistent
+200: /  /teams  /events  /leagues  /blog  /ufc  /news  /scores  /watch  /search
+     /players  /about  /faq  /contact
+```
 
 ### F2 — Film and TV are effectively invisible
 
@@ -108,14 +138,14 @@ Legend: `?` not yet audited · `ok` verified · `!` finding recorded
 | `/` | ok | ok | ? | **!** F4 | ? | **!** F2, F3 |
 | `/about` | ? | ? | ? | ? | ? | ? |
 | `/blog` | ok | ok 200 | ok | ? | ? | ? |
-| `/blog/[slug]` | ok | **!** F1 | ok | ? | ? | ? |
+| `/blog/[slug]` | ok | ok 404 | ok | ? | ? | ? |
 | `/contact` | ok | ok 200 | n/a | ? | ? | ? |
 | `/events` | ? | ? | ? | ? | ? | ? |
-| `/events/[id]` | ? | **!** F1 | ? | ? | ? | ? |
+| `/events/[id]` | ? | ok 404 | ? | ? | ? | ? |
 | `/faq` | ? | ? | n/a | ? | ? | ? |
 | `/favorites` | ? | ? | ? | ? | ? | ? |
 | `/leagues` | ? | ? | ? | ? | ? | ? |
-| `/leagues/[id]` | ? | **!** F1 | ? | ? | ? | ? |
+| `/leagues/[id]` | ? | ok 404 | ? | ? | ? | ? |
 | `/match/[id]` | ? | ? | ? | ? | ? | ? |
 | `/news` | ? | ? | ok | ? | ? | ? |
 | `/players` | ? | ? | ? | ? | ? | ? |
@@ -124,11 +154,11 @@ Legend: `?` not yet audited · `ok` verified · `!` finding recorded
 | `/scores` | ? | ? | ? | ? | ? | ? |
 | `/search` | ? | ? | ? | ? | ? | ? |
 | `/teams` | ? | ok 200 | ? | ? | ? | ? |
-| `/teams/[id]` | ? | **!** F1 | ? | ? | ? | ? |
+| `/teams/[id]` | ? | ok 404 | ? | ? | ? | ? |
 | `/terms` | ? | ? | n/a | ? | ? | ? |
 | `/ufc` | ? | ? | ? | ? | ? | **!** F3 |
-| `/ufc/events/[id]` | ? | **!** F1 | ? | ? | ? | ? |
-| `/ufc/fighters/[id]` | ? | **!** F1 | ? | ? | ? | ? |
+| `/ufc/events/[id]` | ? | ok 404 | ? | ? | ? | ? |
+| `/ufc/fighters/[id]` | ? | ok 404 | ? | ? | ? | ? |
 | `/watch` | ok | ok 200 | ok | ? | ? | ? |
 | `/watch/[slug]` | ok | ok 404 | ? | ? | ? | **!** F3 |
 | `/watch/champions-league` | ok | ? | ? | ? | ? | **!** F3 |

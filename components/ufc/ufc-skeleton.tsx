@@ -1,7 +1,14 @@
+/**
+ * Loading skeleton for the UFC index.
+ *
+ * Was app/ufc/loading.tsx. Moved here and mounted via Suspense inside app/ufc/page.tsx,
+ * because a segment-level loading.tsx also wraps /ufc/events/[id] and /ufc/fighters/[id]
+ * and made both answer 200 for ids that do not exist.
+ */
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function UFCLoading() {
+export function UFCSkeleton() {
   return (
     <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
       {/* Header Skeleton */}

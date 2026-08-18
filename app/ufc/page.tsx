@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
+import { UFCSkeleton } from '@/components/ufc/ufc-skeleton'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ENV } from '@/lib/config/env'
@@ -67,7 +69,7 @@ const faqSchema = {
   ],
 }
 
-export default async function UFCPage() {
+async function UFCContent() {
   const [upcoming, recent] = await Promise.allSettled([
     getUpcomingEvents(),
     getPastEvents(),
@@ -336,5 +338,23 @@ export default async function UFCPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+/**
+ * The async work is wrapped in Suspense HERE, inside the page, rather than in a
+ * segment-level loading.tsx.
+ *
+ * A loading.tsx at app/ufc/ covers every descendant, including /ufc/events/[id] and
+ * /ufc/fighters/[id]. That boundary starts streaming a 200 before those pages can call
+ * notFound(), so an unknown fighter id answered 200 while rendering the 404 page -- a
+ * soft 404. Keeping the boundary inside this file gives the index its skeleton back
+ * without imposing one on the dynamic routes below it.
+ */
+export default function UFCPage() {
+  return (
+    <Suspense fallback={<UFCSkeleton />}>
+      <UFCContent />
+    </Suspense>
   )
 }

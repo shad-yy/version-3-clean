@@ -715,3 +715,91 @@ enough to reach production unnoticed.
 trending title paths from the live API · `/watch/title/movie-550-fight-club` renders
 "Available in 131 countries" with ISO codes resolved to country names · ITVX present under
 the recovered `ads` bucket · JustWatch attribution on both the index and the title page.
+
+
+---
+
+## 2026-08-17 — Name: evidence favours Sightline over FrontRow
+
+**Owner's initial pick was FrontRow**, on the reasoning that a K-pop act of the same name
+draws traffic that would "give the website a push".
+
+**That reasoning inverts the effect, and the band is not even the main problem.**
+
+Search intent does not transfer. Someone searching a music act wants the act; landing on
+broadcast listings they bounce immediately, which hands us poor engagement signals on our
+own brand term. Worse, where a same-name entity has more traffic and links, Google may
+treat our name as a variant of theirs — so we would never own our own brand SERP.
+
+**The decisive evidence is trademark class, not the band.** Marks are granted per class of
+goods and services; collisions in unrelated classes routinely coexist, collisions in the
+same class are what block registration and cause confusion.
+
+*Front Row* is crowded **inside our own category**:
+
+- Front Row Media, Inc. — Los Angeles entertainment marketing, media and rights company,
+  trading since 2003
+- frontrow.co — a media company building for Apple Vision Pro
+- **Front Row Channel** — a global digital live music channel owned by Jungo TV
+- A Front Row Entertainment mark covering *"video featuring movies, entertainment events,
+  and sporting events"* — almost a description of this product
+
+*Sightline* is crowded **only in unrelated classes**: Sightline Payments (financial
+services), VINCI Highways (tolling software), ICF International (energy-efficiency
+compliance), Dow AgroSciences (agriculture), a Texas design studio, and an out-of-home
+media-buying agency. None competes for consumer entertainment intent.
+
+**Recommendation: Sightline.** Nobody searching "sightline" wants entertainment, so there
+is no incumbent to lose to. Searching "front row" already returns a live-media channel and
+an entertainment agency before we would ever appear.
+
+**Status: owner has not yet confirmed.** Nothing is registered and no name is hardcoded —
+the codebase reads brand and domain from environment variables, so this stays reversible
+until a domain is bought. Trademark clearance is still required either way.
+
+---
+
+## 2026-08-17 — Soft 404s fixed; loading states replaced rather than deleted
+
+**Decision:** remove segment-level `loading.tsx` from routes that can 404, move existence
+checks into page bodies, and re-mount the one genuinely needed skeleton via in-page
+Suspense.
+
+**Three distinct causes**, which is why the first fix was insufficient:
+
+1. **Segment boundaries.** A `loading.tsx` covers its whole segment *including
+   descendants*, streaming a 200 before a child can call `notFound()`. Removing them fixed
+   `/events/[id]` and `/blog/[slug]`. The trap: deleting
+   `app/ufc/fighters/[id]/loading.tsx` changed nothing until `app/ufc/loading.tsx` also
+   went, because the parent covers everything below it.
+2. **`notFound()` inside an in-page Suspense boundary.** `/teams/[id]` and `/leagues/[id]`
+   still returned 200 with no `loading.tsx` at all, because the check ran in a component
+   inside `<Suspense>` — by then the shell had streamed. Fixed by awaiting the existence
+   check in the page body before returning any JSX. Both lookups are TTL-cached, so the
+   inner fetch is a cache hit.
+3. **An unchecked null.** `/ufc/events/[id]` called `getUFCEvent()`, which correctly
+   returns null for an unknown id, then ignored it and fell through to a hardcoded
+   `'UFC Event'` placeholder — rendering an empty "UFC Event Details Loading" shell
+   forever, at 200.
+
+**Loading UX preserved**, per the owner's instruction not to simply delete it: `/blog` is
+statically rendered and never needed one; `/teams` had a `loading.tsx` returning `null`
+(no UI, pure cost); `/ufc` is genuinely async so its skeleton moved to
+`components/ufc/ufc-skeleton.tsx` and now mounts via Suspense *inside* `app/ufc/page.tsx`,
+giving the index its skeleton without imposing a boundary on the dynamic routes beneath;
+`/events`, `/leagues`, `/players`, `/search` and `/teams` already had in-page fallbacks.
+
+**Verified on a production server:** 8 invalid routes return 404, 14 valid routes return
+200. tsc 0 errors.
+
+---
+
+## 2026-08-17 — JWT_SECRET replaced
+
+Was the literal `your-strong-secret`, which signs the admin session cookie for `/admin`.
+A guessable value makes that authentication effectively open to anyone who reads the repo.
+
+Replaced with 48 bytes from `crypto.randomBytes`, base64url-encoded (64 characters), in
+`.env.local` — which is gitignored, so the value never enters version control. **The same
+variable must be set in the Vercel project before deployment**; `middleware.ts` throws when
+it is missing in production, which is the correct behaviour.
