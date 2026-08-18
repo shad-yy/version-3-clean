@@ -141,6 +141,41 @@ alongside anything created for this site.
 Where credentials or plan limits block verification of which project is which, say so and
 stop rather than guessing.
 
+## 5c. Every page and component follows the declared design system.
+
+The design law lives in [DESIGN-SYSTEM.md](./DESIGN-SYSTEM.md). It is not advisory.
+
+- **No page or component is left on an old pattern.** When a rule changes, it is applied
+  across the whole project in one pass, and the rollout is proved by re-running the search
+  and showing a count of zero. Log it in [AUDIT-REGISTER.md](./AUDIT-REGISTER.md).
+- **Use the shadcn skill** at `.agents/skills/shadcn` for UI work. The project already has
+  shadcn configured with 60 components in `components/ui/` — compose those before writing
+  anything bespoke.
+- **The owner has authorised far-reaching design proposals.** Suggest the right design even
+  when it departs sharply from what exists. Say so plainly, with the reasoning.
+- **Audit before redesign.** Every route is checked for working features and for pattern
+  conformance before its appearance is changed. Follow the six-step method in the register;
+  step 4 (render visually) is mandatory and has been skipped before with real consequences.
+- **Check where every clickable thing actually goes**, not where it is meant to go, and
+  cross-check against `app/sitemap.ts`.
+
+## 5d. Content serves the product's one question.
+
+The product answers: **"where can I watch this, from where I am?"** — for sport, film and
+television alike.
+
+- Every page, heading, and paragraph is judged against that sentence.
+- Copy is written for a viewer, not an engineer. "Real-Time Telemetry" is not a phrase a
+  sports fan has ever used.
+- Prefer a concrete checkable number over an adjective. "139 countries" beats "global
+  coverage".
+- Demonstrate rather than assert. Show a real availability answer instead of claiming
+  accuracy.
+- **Persuasion techniques must be honest ones** — curiosity, self-reference, specificity,
+  demonstration. Never fake scarcity, fake urgency, invented counts, or timers on things
+  that are not timed. Those were the previous business's tools and they are incompatible
+  with a reference brand.
+
 ## 6. Suggest improvements — with evidence.
 
 The owner wants proactive proposals, not silent execution.

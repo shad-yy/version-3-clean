@@ -6,9 +6,26 @@
 
 > ## ⚠️ READ FIRST: `memory-bank/OWNER-INSTRUCTIONS.md`
 >
-> Standing constraints from the project owner — never fabricate data, never build on weak
-> data, global not UK, no IPTV trace, no store link, theme changes reach every page.
-> Read it before starting any task. Decision history is in `memory-bank/DECISIONS.md`.
+> Standing constraints from the project owner — work only in this folder, never fabricate
+> data, never build on weak data, global not UK, no IPTV trace, no store link, no emoji,
+> theme changes reach every page, content serves one question.
+> Read it before starting any task.
+>
+> **The rest of the memory bank:**
+>
+> | File | What it holds |
+> |---|---|
+> | `OWNER-INSTRUCTIONS.md` | Standing rules. Not advisory. |
+> | `DECISIONS.md` | Append-only decision log with evidence. |
+> | `SETUP-REQUIRED.md` | Everything blocked on owner input — keys, domain, access. |
+> | `BRAND.md` | Brand and domain strategy; naming analysis and recommendation. |
+> | `DESIGN-SYSTEM.md` | The UI law every page must follow, plus the hero assessment. |
+> | `AUDIT-REGISTER.md` | Route-by-route audit tracker and open findings. |
+> | `PROGRESS.md` · `PROJECT.md` · `PATTERNS.md` | Context, stack, API conventions. |
+>
+> **One rule worth repeating here:** a `curl` check cannot detect a page that renders
+> transparent. Opacity-0 markup is present in the HTML, so server-side checks pass while
+> the page is blank to a human. UI work requires visual or computed-style verification.
 
 ---
 
