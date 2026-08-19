@@ -1,7 +1,7 @@
 import type React from "react"
 import { headers } from "next/headers"
 import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import { Archivo, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
@@ -12,14 +12,34 @@ import { WebVitals } from "@/components/analytics/WebVitals"
 import { CookieBanner } from "@/components/consent/CookieBanner"
 import { LiveEventFloat } from "@/components/ui/LiveEventFloat"
 
-const inter = Inter({
+/*
+ * Sightline typography — design/sightline/HANDOFF.md.
+ *
+ * Archivo carries all interface and editorial text; IBM Plex Mono carries
+ * timestamps, counts, labels, eyebrows and data. The mono face is not decorative:
+ * the design uses it to mark machine-checked facts, which is why a verification
+ * date is set in mono and never given a colour or a tick.
+ *
+ * Weights are limited to those the spec actually uses, so nothing unused ships.
+ */
+const archivo = Archivo({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
   preload: true,
+  variable: "--font-archivo",
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  preload: true,
+  variable: "--font-plex-mono",
 })
 
 export const viewport: Viewport = {
-  themeColor: "#020617",
+  themeColor: "#0b0d11", // Sightline ground
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -164,7 +184,7 @@ export default function RootLayout({
         />
 
       </head>
-      <body className={cn(inter.className, "antialiased")}>
+      <body className={cn(archivo.variable, plexMono.variable, "font-sans antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false} nonce={nonce}>
         <SportThemeProvider>
           <a

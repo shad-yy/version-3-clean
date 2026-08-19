@@ -176,6 +176,59 @@ television alike.
   that are not timed. Those were the previous business's tools and they are incompatible
   with a reference brand.
 
+## 5e. The Sightline handoff is binding. Read it before any UI task.
+
+`design/sightline/HANDOFF.md` is the design specification, vendored into this repo so it
+travels with the code. Colours, type, spacing, radii, motion timings **and copy** are
+final — the wording is part of the product's position, not placeholder text.
+
+- The HTML files are **references, not code to copy.** Rebuild every screen with this
+  project's own stack: Next.js App Router, shadcn/ui, lucide, framer-motion, Tailwind
+  tokens.
+- `Sightline.dc.html` sections: `1e` desktop home, `1f` mobile home, `1g` film
+  availability. **`1b` is the locked art direction. Ignore `1a`, `1c`, `1d`.**
+- **Never port** `browser-window.jsx` or `ios-frame.jsx` — mockup frames only. They are
+  deliberately absent from this repo.
+- **The seven design opinions are load-bearing.** Each rejected an obvious alternative on
+  purpose. Do not "improve" the design by filling empty states with plausible data, adding
+  popularity ranking, or adding a green verified tick.
+- **Colour law:** amber means live/sport, blue means film and TV, nothing else is
+  coloured. "Verified" gets no colour — a mono date only. Never encode state by colour
+  alone.
+- **Everything designed for desktop ships on mobile too**, following mobile practice:
+  44px minimum tap targets, 18px gutters, no hover-only affordances.
+
+## 5f. Escalate every conflict. Do not silently pick a side.
+
+When two sources of truth disagree — at **any** level: design versus data, design versus
+these instructions, spec versus technical constraint, one instruction versus another —
+**stop and put the choice to the owner.** State both sides, the consequence of each, and a
+recommendation. Never resolve it quietly.
+
+The one exception, because it is already decided: **never fabricate data to satisfy a
+design.** If a design calls for a value the data cannot supply, that is a conflict to
+raise, never a blank to fill. Rule 1 outranks the handoff.
+
+Log every conflict and its resolution in `DECISIONS.md`.
+
+## 5g. Content follows what is actually happening, and targets answer engines.
+
+The site must keep publishing against real, current events — new fixtures, fight cards,
+race weekends, film and series releases — so that both search engines and AI assistants
+find a current answer here.
+
+- **Dynamic before static.** Components and page copy should reflect live data rather than
+  fixed text, so a page re-crawled next week is not identical to last week's.
+- **The target is the question itself.** When anyone — a person or an AI assistant — asks
+  *"where can I watch X"*, this site should be the source with the answer. Structure
+  content so a machine can lift the answer cleanly: direct answer first, structured data,
+  per-country specificity, an explicit date on every claim.
+- **This is SEO, GEO and AEO at once.** Answer engines cite sources that are unambiguous,
+  current and attributable. Every one of those properties is already a rule here.
+- **It never licenses invention.** Publishing about a fixture requires the fixture to be
+  real and the claim to be sourced. Trend-following expands *what* is covered, never
+  loosens *how* it is verified.
+
 ## 6. Suggest improvements — with evidence.
 
 The owner wants proactive proposals, not silent execution.

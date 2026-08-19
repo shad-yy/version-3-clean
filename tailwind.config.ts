@@ -23,7 +23,41 @@ const config: Config = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        // Archivo for all interface and editorial text, IBM Plex Mono for
+        // timestamps, counts, labels and data. Loaded via next/font in app/layout.tsx,
+        // which exposes these CSS variables.
+        sans: ["var(--font-archivo)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-plex-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      boxShadow: {
+        // The only shadow in the system.
+        dock: "var(--sl-dock-shadow)",
+      },
       colors: {
+        // --- Sightline design tokens (design/sightline/HANDOFF.md) -------------
+        // Namespaced `sl` so migrating routes one at a time cannot repaint the
+        // unmigrated ones. Usage: bg-sl-ground, text-sl-mute, border-sl-line.
+        sl: {
+          ground: "var(--sl-ground)",
+          surface: "var(--sl-surface)",
+          panel: "var(--sl-panel)",
+          raise: "var(--sl-raise)",
+          line: "var(--sl-line)",
+          hair: "var(--sl-hair)",
+          text: "var(--sl-text)",
+          mid: "var(--sl-mid)",
+          mute: "var(--sl-mute)",
+          dim: "var(--sl-dim)",
+          outline: "var(--sl-outline)",
+          "outline-text": "var(--sl-outline-text)",
+          amber: "var(--sl-amber)",
+          "amber-hover": "var(--sl-amber-hover)",
+          blue: "var(--sl-blue)",
+          "blue-mid": "var(--sl-blue-mid)",
+          "blue-low": "var(--sl-blue-low)",
+          "chip-border": "var(--sl-chip-border)",
+        },
         background: "var(--background)",
         foreground: "var(--foreground)",
         surface: "var(--surface)",

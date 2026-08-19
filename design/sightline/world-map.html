@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<style>
+  html,body{margin:0;background:#0b0d11;font-family:Archivo,sans-serif;overflow:hidden}
+  #wrap{position:relative;width:100%;height:100vh}
+  svg{display:block;width:100%;height:100%}
+  path.c{transition:fill .18s ease,stroke .18s ease}
+  #tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .14s ease;background:#14171d;border:1px solid #323845;border-radius:6px;padding:9px 11px;min-width:160px;transform:translate(-50%,-118%)}
+  #tip .n{font:600 13px/1 Archivo,sans-serif;color:#e8e5de}
+  #tip .s{margin-top:7px;font:400 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#8c92a0}
+  #tip .lanes{margin-top:8px;display:flex;gap:4px}
+  #tip .lanes span{width:18px;height:18px;box-sizing:border-box;border-radius:3px;font:600 10px/16px 'IBM Plex Mono',monospace;text-align:center}
+  #legend{position:absolute;left:16px;bottom:14px;display:flex;align-items:center;gap:14px;font:400 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;color:#8c92a0}
+  #legend .sw{display:flex;align-items:center;gap:6px}
+  #legend i{width:22px;height:10px;border-radius:2px;display:block}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <svg id="map"></svg>
+  <div id="tip"><div class="n"></div><div class="s"></div><div class="lanes"></div></div>
+  <div id="legend">
+    <span class="sw"><i style="background:#93a9ff"></i>4–5 KINDS</span>
+    <span class="sw"><i style="background:#5b6ea8"></i>3</span>
+    <span class="sw"><i style="background:#39456b"></i>1–2</span>
+    <span class="sw"><i style="background:#1b1f27;border:1px solid #5c657a"></i>NOTHING RECORDED</span>
+    <span class="sw"><i style="background:#12151a;border:1px solid #262b35"></i>NOT CHECKED</span>
+  </div>
+</div>
+<script>
+const LANES = ['F','A','S','R','B'];
+const LABELS = ['Free','Free with ads','Subscription','Rent','Buy'];
+const RAW = {
+ 'United Kingdom':'00111','Ireland':'00111','France':'01111','Germany':'01111','Spain':'00111','Italy':'00111',
+ 'Netherlands':'00111','Belgium':'00011','Portugal':'00111','Switzerland':'00011','Austria':'01111','Sweden':'00111',
+ 'Norway':'00111','Denmark':'00111','Finland':'00111','Poland':'00111','Czechia':'00110','Hungary':'00110',
+ 'Romania':'00100','Greece':'00110','Croatia':'00100','Serbia':'00100','Ukraine':'00100','Turkey':'00110','Iceland':'00000',
+ 'United States of America':'01111','Canada':'00111','Mexico':'01111','Brazil':'01111','Argentina':'00111','Chile':'00111',
+ 'Colombia':'00111','Peru':'00110','Ecuador':'00100','Costa Rica':'00100',
+ 'Australia':'00111','New Zealand':'00111','Japan':'00111','South Korea':'00110','India':'10111','Indonesia':'00110',
+ 'Philippines':'00110','Thailand':'00110','Malaysia':'00110','Singapore':'00111','Taiwan':'00110',
+ 'United Arab Emirates':'00110','Saudi Arabia':'00110','Israel':'00110','South Africa':'00110',
+ 'Nigeria':'00100','Kenya':'00100','Egypt':'00100','Morocco':'00100'
+};
+const fillFor = bits => {
+  if (bits === undefined) return '#12151a';
+  const n = bits.split('').filter(b => b === '1').length;
+  if (n === 0) return '#1b1f27';
+  if (n <= 2) return '#39456b';
+  if (n === 3) return '#5b6ea8';
+  return '#93a9ff';
+};
+const strokeFor = bits => bits === undefined ? '#262b35' : (bits.split('').every(b => b === '0') ? '#5c657a' : '#0b0d11');
+
+const svg = d3.select('#map');
+const tip = document.getElementById('tip');
+let features = [], path, g;
+
+function draw(){
+  const w = document.getElementById('wrap').clientWidth, h = document.getElementById('wrap').clientHeight;
+  svg.attr('viewBox', `0 0 ${w} ${h}`);
+  const proj = d3.geoNaturalEarth1().fitExtent([[8, 10], [w - 8, h - 34]], {type:'FeatureCollection', features});
+  path = d3.geoPath(proj);
+  svg.selectAll('path.c').attr('d', path);
+}
+
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(topo => {
+  features = topojson.feature(topo, topo.objects.countries).features;
+  g = svg.append('g');
+  g.selectAll('path.c').data(features).join('path').attr('class','c')
+    .attr('fill', d => fillFor(RAW[d.properties.name]))
+    .attr('stroke', d => strokeFor(RAW[d.properties.name]))
+    .attr('stroke-width', 0.7)
+    .style('cursor', d => RAW[d.properties.name] !== undefined ? 'pointer' : 'default')
+    .on('mousemove', function(ev, d){
+      const bits = RAW[d.properties.name];
+      d3.select(this).attr('stroke', '#e8e5de').attr('stroke-width', 1.3).raise();
+      tip.style.left = ev.offsetX + 'px';
+      tip.style.top = ev.offsetY + 'px';
+      tip.querySelector('.n').textContent = d.properties.name;
+      const on = bits ? bits.split('').filter(b => b === '1').length : 0;
+      tip.querySelector('.s').textContent = bits === undefined ? 'NOT YET CHECKED'
+        : on === 0 ? 'NOTHING RECORDED' : on + (on === 1 ? ' KIND OF OFFER' : ' KINDS OF OFFER');
+      tip.querySelector('.lanes').innerHTML = bits === undefined ? ''
+        : LANES.map((ch,i) => {
+            const isOn = bits[i] === '1';
+            return `<span title="${LABELS[i]}" style="background:${isOn?'#93a9ff':'transparent'};border:1px solid ${isOn?'#93a9ff':'#5c657a'};color:${isOn?'#0b0d11':'#a2a9b8'}">${isOn?ch:'—'}</span>`;
+          }).join('');
+      tip.style.opacity = 1;
+    })
+    .on('mouseleave', function(ev, d){
+      d3.select(this).attr('stroke', strokeFor(RAW[d.properties.name])).attr('stroke-width', 0.7);
+      tip.style.opacity = 0;
+    })
+    .on('click', (ev, d) => {
+      if (RAW[d.properties.name] === undefined) return;
+      parent.postMessage({type:'sightline-country', name: d.properties.name}, '*');
+    });
+  draw();
+});
+window.addEventListener('resize', draw);
+</script>
+</body>
+</html>

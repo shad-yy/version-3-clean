@@ -16,6 +16,7 @@
 > | File | What it holds |
 > |---|---|
 > | `OWNER-INSTRUCTIONS.md` | Standing rules. Not advisory. |
+> | `../design/sightline/HANDOFF.md` | **The binding design spec. Read before any UI task.** |
 > | `DECISIONS.md` | Append-only decision log with evidence. |
 > | `SETUP-REQUIRED.md` | Everything blocked on owner input — keys, domain, access. |
 > | `BRAND.md` | Brand and domain strategy; naming analysis and recommendation. |

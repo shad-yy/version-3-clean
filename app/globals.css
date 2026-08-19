@@ -147,6 +147,54 @@ a:hover {
 }
 
 @layer base {
+  /*
+   * Sightline design tokens — design/sightline/HANDOFF.md
+   *
+   * Dark is the only theme, so these sit on :root rather than under .dark.
+   *
+   * Namespaced `--sl-*` on purpose. The legacy palette still owns names like
+   * `--surface` with different values, and swapping them wholesale would repaint
+   * every unmigrated route at once with no way to tell intended change from
+   * regression. Routes move onto these tokens one at a time (see
+   * memory-bank/AUDIT-REGISTER.md R5); the legacy set is deleted once nothing
+   * references it.
+   *
+   * Colour law, enforced in review: amber means live/sport, blue means film and TV,
+   * nothing else is coloured. "Verified" gets no colour at all -- a mono date only.
+   * Never encode state by colour alone.
+   */
+  :root {
+    --sl-ground: #0b0d11;
+    --sl-surface: #14171d;
+    --sl-panel: #0f1216;
+    --sl-raise: #1b1f27;
+    --sl-line: #262b35;
+    --sl-hair: #1d222b;
+
+    --sl-text: #e8e5de;
+    --sl-mid: #b6bac4;
+    --sl-mute: #8c92a0;
+    --sl-dim: #4a5262;
+    --sl-outline: #5c657a;
+    --sl-outline-text: #a2a9b8;
+
+    /* live / sport only */
+    --sl-amber: #f0a63c;
+    --sl-amber-hover: #ffbc5c;
+
+    /* film & tv only */
+    --sl-blue: #93a9ff;
+    --sl-blue-mid: #5b6ea8;
+    --sl-blue-low: #39456b;
+
+    --sl-chip-border: #323845;
+
+    /* The single permitted shadow, on the discovery dock. */
+    --sl-dock-shadow: 0 20px 44px rgba(0, 0, 0, .5);
+  }
+}
+
+@layer base {
   :root {
     --background: #ffffff;
     --surface: #f3f4f6;
