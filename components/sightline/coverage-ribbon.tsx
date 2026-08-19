@@ -83,7 +83,15 @@ export function CoverageRibbon({
     : activeRegion ?? "The film"
 
   return (
-    <div className="sticky top-[62px] z-40 border-b border-sl-line bg-[rgba(11,13,17,.94)] backdrop-blur-[9px]">
+    <div
+      /*
+       * Hidden below 768px by owner decision. 139 ticks across a 390px viewport is
+       * roughly 2px each with no gaps -- unreadable, untappable, and decoration
+       * pretending to be a control. The list, filter and map carry the same
+       * information on mobile.
+       */
+      className="sticky top-[62px] z-40 hidden border-b border-sl-line bg-[rgba(11,13,17,.94)] backdrop-blur-[9px] md:block"
+    >
       <div className="mx-auto max-w-[1280px] px-[18px] py-3 lg:px-10">
         <div className="mb-2 flex items-baseline justify-between gap-4">
           <p className="truncate font-mono text-[10.5px] uppercase tracking-[.14em] text-sl-mid">

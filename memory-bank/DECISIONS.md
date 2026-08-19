@@ -946,3 +946,46 @@ every ribbon tick at 16px, collapsing 0, 1 and 2 offer kinds into one height and
 the encoding for exactly the low-coverage countries the ribbon exists to reveal. Worth
 recording that the first diagnosis was wrong — an empty button's line box — and only
 reading the computed style showed 8px of padding from a rule 300 lines away.
+
+
+---
+
+## 2026-08-19 — Owner decisions (interactive session)
+
+Eleven decisions taken directly by the owner. Recorded so no agent re-litigates them.
+
+| # | Question | Decision |
+|---|---|---|
+| 1 | Routes outside the handoff (`/scores`, `/events`, `/leagues`, `/news`, `/teams`, `/players`) | **Rebuild fully in Sightline** — not tokens-only. Largest remaining chunk of work. |
+| 2 | Discovery dock | **Build the verification log first**, then the dock becomes real. Not shipped until then. |
+| 3 | Per-country verified dates | **Keep one date per competition.** Differs from the reference, but the date is real and claims nothing false. No schema change. |
+| 4 | Trend-based publishing | **Auto-publish within strict rules** — no human gate. |
+| 5 | What auto-publishing may assert | **Verified data plus cited web sources.** May use web research if the source URL is recorded in the post. |
+| 6 | Sports rights expansion | **Leave at 2 competitions / 4 countries** for now. The ledger and empty states already state this honestly. |
+| 7 | Coverage ribbon on mobile | **Hide below 768px.** 139 ticks in a 390px viewport is ~2px each — decoration pretending to be a control. List, filter and map stay. |
+| 8 | Admin routes | **Delete** `/admin/api-health` and `/admin/api-management` and their endpoints. Guessable secret, unlinked, nothing they do cannot be done from a terminal. |
+| 9 | The "and N more" gap figure | **Sovereign states only (~191)**, not the full ISO list (237, which includes territories). Still derived. |
+| 10 | Ahrefs | **Do not upgrade.** Use Search Console once a domain is live and verified. Topic selection stays judgement-based until then. |
+| 11 | TheSportsDB paid key | **Stay on the free tier.** Caching cut homepage usage to ~6 calls per 90–120s regardless of traffic. Revisit if 429s appear. |
+| 12 | Google Search Console verification | **Defer** until a domain exists. Remove the dead `GOOGLE_SITE_VERIFICATION` placeholder so nothing looks configured when it is not. |
+
+### The one decision carrying real risk, stated plainly
+
+**Auto-publishing with web sources and no human review** is the riskiest combination
+offered, and the owner chose it knowingly after the alternatives were laid out.
+
+The build guard blocks known-bad *phrasing*. It cannot tell whether a statement is
+*true*. A wrong fact from a cited source becomes a live claim under this brand with
+nobody having read it — on a site whose entire position is that its answers are correct.
+
+Mitigations to build in, since the human gate is gone:
+
+- Every generated post records its source URL, and a post with no source does not publish.
+- Facts that can be checked against our own store (fixtures, availability, rights) are
+  checked, and a mismatch blocks publication rather than being written around.
+- Anything naming a broadcaster must come from `broadcast-rights.ts`, never from a search
+  result — that is the one claim the whole site is built on.
+- A kill switch: one environment variable that halts publishing without a deploy.
+
+Nothing is built yet. Recorded so it is designed with these constraints rather than
+retrofitted.

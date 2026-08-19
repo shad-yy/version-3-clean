@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
-import { KNOWN_COUNTRY_CODES } from "@/lib/geo/regions"
+import { SOVEREIGN_COUNTRY_CODES } from "@/lib/geo/regions"
 import { formatLongDate } from "@/lib/utils/datetime"
 
 /**
@@ -62,7 +62,7 @@ export function RightsLedger() {
     .sort()
     .pop()
 
-  const unverifiedCount = Math.max(0, KNOWN_COUNTRY_CODES.length - countries.length)
+  const unverifiedCount = Math.max(0, SOVEREIGN_COUNTRY_CODES.length - countries.length)
 
   if (countries.length === 0) return null
 

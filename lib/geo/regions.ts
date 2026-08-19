@@ -75,8 +75,31 @@ export const KNOWN_COUNTRY_CODES: string[] = [
   ...EUROPE, ...AMERICAS, ...ASIA_PACIFIC, ...MIDDLE_EAST_AFRICA,
 ].sort()
 
+/**
+ * Territories and dependencies, excluded from the "how many have we not checked" count.
+ *
+ * KNOWN_COUNTRY_CODES holds every code we group, which includes places like Guernsey,
+ * Pitcairn and Åland. Counting those inflates the gap figure to ~237 and makes the
+ * sentence read oddly — nobody means Pitcairn when they ask how many countries are not
+ * covered. Removing them gives roughly the number of sovereign states, which is what a
+ * reader understands by "country".
+ *
+ * Still derived, never hardcoded.
+ */
+const NON_SOVEREIGN = new Set([
+  "AI", "AW", "AX", "BL", "BM", "BQ", "CC", "CK", "CW", "CX", "EH", "FK", "FO", "GF",
+  "GG", "GI", "GL", "GP", "GU", "HK", "IM", "JE", "KY", "MF", "MO", "MP", "MQ", "MS",
+  "NC", "NF", "NU", "PF", "PM", "PR", "PS", "RE", "SX", "TC", "TF", "TK", "VG", "VI",
+  "WF", "YT", "XK", "AS", "PN", "SH", "VA",
+])
+
+/** Sovereign states only — the denominator a reader means by "country". */
+export const SOVEREIGN_COUNTRY_CODES: string[] = KNOWN_COUNTRY_CODES.filter(
+  (c) => !NON_SOVEREIGN.has(c),
+)
+
 /** How many countries we hold no data for at all. */
 export function notCheckedCount(coveredCodes: string[]): number {
   const covered = new Set(coveredCodes.map((c) => c.toUpperCase()))
-  return KNOWN_COUNTRY_CODES.filter((c) => !covered.has(c)).length
+  return SOVEREIGN_COUNTRY_CODES.filter((c) => !covered.has(c)).length
 }

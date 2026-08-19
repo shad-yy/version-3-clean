@@ -21,7 +21,7 @@ describe("routes config", () => {
 
   it("non-existent route falls back to default metadata", () => {
     const meta = getRouteMetadata("/does-not-exist")
-    expect(meta.title).toBe("Smart Live TV")
+    expect(meta.title).toBe("Sightline")
     expect(meta.description).toBe("Sports Hub")
   })
 })

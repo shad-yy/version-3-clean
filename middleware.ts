@@ -107,23 +107,9 @@ export async function middleware(request: NextRequest) {
     throw new Error('JWT_SECRET must be set in production')
   }
 
-  // Protect /admin routes (legacy admin - can be removed later)
-  if (request.nextUrl.pathname.startsWith("/admin")) {
-    const adminToken = request.cookies.get("admin-session")?.value
-
-    if (!adminToken) {
-      return NextResponse.redirect(new URL("/", request.url))
-    }
-
-    try {
-      if (!ENV.JWT_SECRET) {
-        return NextResponse.redirect(new URL("/", request.url))
-      }
-      await jwtVerify(adminToken, new TextEncoder().encode(ENV.JWT_SECRET))
-    } catch {
-      return NextResponse.redirect(new URL("/", request.url))
-    }
-  }
+  // The /admin routes were deleted: they were gated by a secret that shipped as the
+  // literal "your-strong-secret", were linked from nowhere, and did nothing that cannot
+  // be done from a terminal. Nothing here needs guarding any more.
 
   if (request.nextUrl.pathname.startsWith('/api/')) {
     // CORS headers for public API endpoints
