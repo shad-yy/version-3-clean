@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
 import { SOVEREIGN_COUNTRY_CODES } from "@/lib/geo/regions"
+import { lastCheckedForCountry, lastCheckedOverall } from "@/lib/data/verification-log"
 import { formatLongDate } from "@/lib/utils/datetime"
 
 /**
@@ -56,11 +57,12 @@ export function RightsLedger() {
 
   const countries = [...byCountry.entries()].sort((a, b) => a[1].name.localeCompare(b[1].name))
 
-  // The most recent hand-verification across the set. Never invented.
-  const lastChecked = COMPETITION_RIGHTS.map((c) => c.verified)
-    .filter(Boolean)
-    .sort()
-    .pop()
+  // From the verification log, which records when a person actually looked. The
+  // competition file's `verified` field is the coarser fallback for anything the log
+  // has no entry for yet.
+  const lastChecked =
+    lastCheckedOverall() ??
+    COMPETITION_RIGHTS.map((c) => c.verified).filter(Boolean).sort().pop()
 
   const unverifiedCount = Math.max(0, SOVEREIGN_COUNTRY_CODES.length - countries.length)
 
@@ -97,12 +99,18 @@ export function RightsLedger() {
                     .filter((b, i, arr) => arr.indexOf(b) === i)
                     .join(" · ")}
                 </p>
-                {lastChecked && (
-                  // A mono date. No tick, no colour -- design opinion 3.
-                  <p className="font-mono text-[10px] uppercase tracking-[.12em] text-sl-mute">
-                    Verified {verifiedDate(lastChecked)}
-                  </p>
-                )}
+                {(() => {
+                  // Per-country date, as the reference shows. Falls back to the overall
+                  // date only where the log has nothing for this country yet.
+                  const checked = lastCheckedForCountry(code) ?? lastChecked
+                  if (!checked) return null
+                  return (
+                    // A mono date. No tick, no colour -- design opinion 3.
+                    <p className="font-mono text-[10px] uppercase tracking-[.12em] text-sl-mute">
+                      Verified {verifiedDate(checked)}
+                    </p>
+                  )
+                })()}
               </div>
             ))}
           </div>

@@ -989,3 +989,29 @@ Mitigations to build in, since the human gate is gone:
 
 Nothing is built yet. Recorded so it is designed with these constraints rather than
 retrofitted.
+
+
+---
+
+## 2026-08-19 — Auto-publishing reversed: human review before anything goes live
+
+**Supersedes decisions 4 and 5 from earlier today.** The owner reconsidered and now
+requires every post to be verified before publication.
+
+**New position:** generated content is written as a **draft**. Nothing reaches the live
+site until a human has read it and approved it.
+
+This is the safer option and matches the original recommendation. The reasoning is
+unchanged: the build guard blocks known-bad *phrasing* but cannot judge whether a
+statement is *true*, so on a site whose entire position is that its answers are correct,
+an unreviewed claim is the one failure mode that damages the product rather than
+inconveniencing it.
+
+The mechanism already exists. `content/blog/*.mdx` supports `draft: true`, and
+`scripts/generate-posts.js` excludes drafts from the build, the sitemap and `llms.txt`.
+So a generated post lands as a draft file, and approving it is a one-word edit.
+
+The four mitigations recorded earlier still apply — source URL required, cross-check
+against our own store, broadcaster names only ever from `broadcast-rights.ts`, and a kill
+switch. They are cheaper to keep than to re-argue, and they remain useful with a human
+gate rather than redundant.

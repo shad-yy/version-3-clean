@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
+import { recentEntries } from "@/lib/data/verification-log"
+import { countryName } from "@/lib/geo/country"
 import { BLOG_POSTS } from "@/lib/blog/posts"
 import { formatDate } from "@/lib/utils/datetime"
 
@@ -20,17 +22,32 @@ import { formatDate } from "@/lib/utils/datetime"
 export function ChangedAndUnknown() {
   const entries: { date: string; text: string }[] = []
 
-  for (const competition of COMPETITION_RIGHTS) {
-    if (!competition.verified) continue
-    const countries = new Set(competition.listings.map((l) => l.countryName))
+  // Real verification events, in the words of what actually happened. A 90-day window
+  // rather than 7, because at the current cadence a strict week would usually be empty
+  // and an empty changelog reads as neglect rather than honesty.
+  const VERBS: Record<string, string> = {
+    confirmed: "Re-checked",
+    added: "Added",
+    removed: "Removed",
+    changed: "Changed",
+  }
+  for (const e of recentEntries(90)) {
+    const competition =
+      COMPETITION_RIGHTS.find((c) => c.id === e.competition)?.name ?? e.competition
     entries.push({
-      date: competition.verified,
-      text: `Re-checked ${competition.name} rights in ${[...countries].join(", ")}.`,
+      date: e.at,
+      text: `${VERBS[e.action] ?? "Checked"} ${e.broadcaster} for ${competition} in ${countryName(e.country)}.`,
     })
   }
 
-  for (const post of BLOG_POSTS.slice(0, 3)) {
-    entries.push({ date: post.publishedAt, text: `Published “${post.title}”.` })
+  // Articles are a fallback, never the headline. This column sits opposite "what we do
+  // not know" and is about **coverage** -- what we checked, added or withdrew. A new
+  // explainer is not a change to what we know, so posts only appear when there is no
+  // verification activity to report at all.
+  if (entries.length === 0) {
+    for (const post of BLOG_POSTS.slice(0, 3)) {
+      entries.push({ date: post.publishedAt, text: `Published “${post.title}”.` })
+    }
   }
 
   const recent = entries
