@@ -58,8 +58,11 @@ function resolveProductionOrigin(): string {
  */
 export const PRODUCTION_SITE_URL = resolveProductionOrigin()
 
-/** Brand name used in metadata, schema, and generated text. */
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Smart Live TV'
+/**
+ * Brand name used in metadata, schema and generated text. Still overridable per deployment, but the default is now the real name
+ * rather than the inherited one -- the design handoff ships as Sightline.
+ */
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Sightline'
 
 /** Bare hostname, e.g. `example.com`. Used by IndexNow and generated copy. */
 export const SITE_HOST = PRODUCTION_SITE_URL.replace(/^https?:\/\//, '')

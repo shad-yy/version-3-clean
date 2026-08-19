@@ -3,7 +3,7 @@ import { ENV } from "@/lib/config/env"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 
-import { HeroSection } from "@/components/homepage/hero-section"
+import { Hero } from "@/components/sightline/hero"
 import { LiveNowBanner } from '@/components/homepage/LiveNowBanner'
 import { EventCountdown } from '@/components/homepage/EventCountdown'
 import { MatchCard } from "@/components/homepage/match-card"
@@ -19,32 +19,32 @@ import { SiteNavigationLinks } from "@/components/seo/site-navigation-links"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 export const metadata: Metadata = {
-  title: 'Smart Live TV | Real-Time Live Sports Scores & Global Broadcast Guide',
+  title: 'Where can I watch it? Sport, film and TV by country',
   description:
-    'Live sports scores, match schedules, league standings, team stats, and official broadcast guides for Premier League, Champions League, UFC, F1, and more.',
+    'Find which service carries a match, film or series in your country. Live scores, fixtures and per-country availability, each with the date we last checked.',
   alternates: {
     canonical: ENV.BASE_URL,
   },
   openGraph: buildOpenGraph({
-    title: 'Smart Live TV | Real-Time Live Sports Scores & Global Broadcast Guide',
+    title: 'Where can I watch it? Sport, film and TV by country',
     description:
-      'Live sports scores, match schedules, league standings, team stats, and official broadcast guides for Premier League, Champions League, UFC, F1, and more.',
+      'Find which service carries a match, film or series in your country. Live scores, fixtures and per-country availability, each with the date we last checked.',
     url: ENV.BASE_URL,
   }),
 }
 
 
-export default function HomePage() {
+export default async function HomePage() {
   const homepageFAQSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
       {
         '@type': 'Question',
-        name: 'What is Smart Live TV?',
+        name: 'What is Sightline?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Smart Live TV is a real-time live sports score, telemetry, and official TV broadcast directory hub covering Premier League, Champions League, UFC, Formula 1, and global leagues.',
+          text: 'Sightline answers one question: where can I watch this, from where I am. It covers sport, film and television, naming the service that carries something in your country and the date that answer was last checked.',
         },
       },
       {
@@ -52,7 +52,7 @@ export default function HomePage() {
         name: 'How frequently are scores and fixtures updated?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Match scores, live match stats, and league tables are updated in real time via live sports telemetry APIs.',
+          text: 'Scores, fixtures and league tables update continuously from live data. Broadcast rights are verified by hand and carry the date they were last confirmed, because rights change by rights cycle rather than by minute.',
         },
       },
       {
@@ -60,7 +60,7 @@ export default function HomePage() {
         name: 'Which sports and competitions are tracked?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Smart Live TV tracks top European football leagues (Premier League, La Liga, Bundesliga, Serie A, Ligue 1), UEFA Champions League, Europa League, UFC, Formula 1, and international tournaments.',
+          text: 'Football across the major European leagues, the UEFA club competitions, UFC and Formula 1, alongside film and television availability listed per country.',
         },
       },
     ],
@@ -71,7 +71,7 @@ export default function HomePage() {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': `${ENV.BASE_URL}/#webpage`,
-    name: 'Smart Live TV — Real-Time Live Sports Scores & Global Broadcast Guide',
+    name: 'Where can I watch it? Sport, film and TV by country',
     url: `${ENV.BASE_URL}/`,
     speakable: {
       '@type': 'SpeakableSpecification',
@@ -83,7 +83,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 overflow-x-hidden text-gray-100">
+    <div className="min-h-screen bg-sl-ground overflow-x-hidden text-sl-text">
       {/* Organization and WebSite are declared once, site-wide, in app/layout.tsx.
           Re-declaring them here produced two nodes sharing one @id with conflicting
           values. Only page-specific schema belongs on this page. */}
@@ -91,7 +91,7 @@ export default function HomePage() {
       <SchemaMarkup schema={speakableSchema} />
 
       {/* ─── 1. HERO ─── */}
-      <HeroSection />
+      <Hero />
 
       {/* Service Pillars (clarity strip) */}
       <ServicePillars />

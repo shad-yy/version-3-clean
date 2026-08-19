@@ -1,20 +1,20 @@
-# Smart Live TV — Sports Telemetry & Broadcast Information Directory
-> This is a comprehensive, full-text resource detailing live sports scores, real-time match telemetry, fixture schedules, and sports editorial coverage on Smart Live TV.
+# Sightline — Sports Telemetry & Broadcast Information Directory
+> This is a comprehensive, full-text resource detailing live sports scores, real-time match telemetry, fixture schedules, and sports editorial coverage on Sightline.
 
 ---
 
-## 1. About Smart Live TV
-Smart Live TV (localhost:3200) is a real-time sports telemetry and live match data platform serving an international audience, with no single-market focus.
+## 1. About Sightline
+Sightline (localhost:3200) is a real-time sports telemetry and live match data platform serving an international audience, with no single-market focus.
 - **Core Features:** Live football scores, match statistics, team lineups, league standings, and broadcast schedule guides by country for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
 - **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
-- **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. Smart Live TV does not sell or provide television subscriptions.
+- **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. Sightline does not sell or provide television subscriptions.
 
 ---
 
 ## 2. Frequently Asked Questions (FAQ)
 
-### What data does Smart Live TV provide?
-Smart Live TV provides real-time scores, match statistics, head-to-head records, official line-ups, and per-country broadcast schedule information for major football leagues, UFC, and Motorsport.
+### What data does Sightline provide?
+Sightline provides real-time scores, match statistics, head-to-head records, official line-ups, and per-country broadcast schedule information for major football leagues, UFC, and Motorsport.
 
 ### Where can I check live match scores?
 Visit localhost:3200/scores for live real-time score updates across all ongoing matches.

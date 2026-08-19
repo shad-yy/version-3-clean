@@ -1,6 +1,6 @@
-# Smart Live TV
+# Sightline
 
-> Smart Live TV (localhost:3200) answers one question: where and how can I watch this?
+> Sightline (localhost:3200) answers one question: where and how can I watch this?
 > It publishes live football scores, fixtures, league standings, team and player
 > statistics, and the broadcast listings that show which service carries a given
 > competition in a given country.
@@ -48,6 +48,6 @@ listing for the countries we have verified.
 - Broadcast listings name the official rights holder for each country covered, and
   each competition record carries the date it was last verified. Where a country is
   not covered, no claim is made for it.
-- Smart Live TV does not sell, resell or provide access to any television or
+- Sightline does not sell, resell or provide access to any television or
   streaming subscription, and does not host or transmit video.
 - Full-text corpus: http://localhost:3200/llms-full.txt

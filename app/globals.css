@@ -2,14 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fallback styles for when CSS processing fails */
+/* Fallback styles for when CSS processing fails.
+   Colours are the Sightline ground and text tokens written literally, because this rule
+   exists precisely for the case where the cascade or the token layer did not load. */
 body {
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  color: #ffffff;
-  background-color: #0a0a0a;
+  color: #e8e5de;
+  background-color: #0b0d11;
   margin: 0;
   padding: 0;
+  /* Handoff: pretty wrapping on all multi-line prose. */
+  text-wrap: pretty;
 }
 
 /* ── Mobile scroll & touch fixes ── */

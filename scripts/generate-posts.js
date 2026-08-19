@@ -15,7 +15,7 @@ marked.setOptions({
 // URL written into public/llms.txt and public/llms-full.txt — the files answer engines
 // read first — pointed at a site this project does not own. localhost is an obviously
 // wrong value that gets noticed; another company's domain is not.
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Smart Live TV';
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Sightline';
 const SITE_HOST = process.env.NEXT_PUBLIC_SITE_HOST || 'localhost:3200';
 
 // Local hosts are not served over TLS, so a hardcoded `https://` would write
