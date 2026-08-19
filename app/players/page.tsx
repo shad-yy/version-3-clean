@@ -1,247 +1,128 @@
 import type { Metadata } from "next"
-import { ENV } from "@/lib/config/env"
-import { unifiedSportsAPI, type UnifiedPlayer } from "@/lib/api/unified-sports-api"
-import { Card, CardContent } from "@/components/ui/card"
-import { PlayerCard } from "@/components/players/player-card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { OptimizedImage } from "@/components/ui/optimized-image"
-import { Badge } from "@/components/ui/badge"
-import { Users, Search, Globe, Trophy, Filter, User } from "lucide-react"
-import Link from "next/link"
 import { Suspense } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
-import { PLAYER_POSITIONS } from "@/lib/config"
+import { SchemaMarkup } from "@/components/SchemaMarkup"
+import { ENV } from "@/lib/config/env"
+import { SITE_NAME } from "@/lib/config/site-url"
+import { buildOpenGraph } from "@/lib/seo/open-graph"
+import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
+import {
+  PageShell,
+  PageHeader,
+  Section,
+  RowList,
+  Row,
+  EmptyState,
+  RowSkeleton,
+} from "@/components/sightline/page-shell"
+
+/**
+ * Players index, rebuilt in Sightline.
+ *
+ * Search-led rather than browse-led: the underlying source holds far too many players to
+ * present as a list, and a directory the reader has to page through is worse than one
+ * they can query. With no search term it shows a squad, which is a useful default and an
+ * honest one.
+ */
+
+export const revalidate = 86400
+
+const TITLE = "Players"
+const DESCRIPTION =
+  "Player profiles and season statistics for the squads in the competitions we cover."
 
 export const metadata: Metadata = {
-  title: "Football Players — Profiles & Season Stats | Sightline",
-  description:
-    "Player profiles with appearances, goals, assists and career history for squads across the Premier League, La Liga, Serie A and more.",
+  title: `${TITLE} | ${SITE_NAME}`,
+  description: DESCRIPTION,
   alternates: { canonical: `${ENV.BASE_URL}/players` },
+  openGraph: buildOpenGraph({
+    title: TITLE,
+    description: DESCRIPTION,
+    url: `${ENV.BASE_URL}/players`,
+  }),
 }
 
-
-const FEATURED_TEAMS = [
-  { id: '133604', name: 'Arsenal' },
-  { id: '133602', name: 'Liverpool' },
-  { id: '133600', name: 'Barcelona' },
-  { id: '133613', name: 'Bayern Munich' },
-  { id: '133632', name: 'PSG' },
-]
-
-interface PlayersPageProps {
-  searchParams: {
-    search?: string
-    team?: string
-    position?: string
-    nationality?: string
-  }
-}
-
-function PlayersFallback() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <Skeleton key={i} className="h-64 w-full rounded-xl" />
-      ))}
-    </div>
-  )
-}
-
-async function PlayersList({ searchParams }: { searchParams: PlayersPageProps["searchParams"] }) {
-  let players: UnifiedPlayer[] = []
-  let error = null
-  const selectedTeamId = searchParams.team || "133604" // Arsenal default
-
+async function PlayerList({ search, team }: { search?: string; team?: string }) {
+  let players: Awaited<ReturnType<typeof unifiedSportsAPI.searchPlayers>> = []
   try {
-    if (searchParams.search) {
-      players = await unifiedSportsAPI.searchPlayers(searchParams.search)
-    } else {
-      players = await unifiedSportsAPI.getPlayers(selectedTeamId)
-    }
-
-    // Filter by position if specified
-    if (searchParams.position && searchParams.position !== "all") {
-      players = players.filter((player) =>
-        player.position?.toLowerCase().includes(searchParams.position!.toLowerCase()),
-      )
-    }
-
-    // Filter by nationality if specified
-    if (searchParams.nationality && searchParams.nationality !== "all") {
-      players = players.filter((player) =>
-        player.nationality?.toLowerCase().includes(searchParams.nationality!.toLowerCase()),
-      )
-    }
-  } catch (err) {
-    error = err instanceof Error ? err.message : "Failed to load players"
+    players = search
+      ? await unifiedSportsAPI.searchPlayers(search)
+      : await unifiedSportsAPI.getPlayers(team ?? "133604")
+  } catch {
     players = []
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-16">
-        <Users className="w-16 h-16 mx-auto mb-4 text-red-400" />
-        <h3 className="text-xl font-semibold mb-2 text-red-400">Error Loading Players</h3>
-        <p className="text-sl-mute mb-4">{error}</p>
-        <Button asChild variant="outline">
-          <Link href="/players">Try Again</Link>
-        </Button>
-      </div>
-    )
   }
 
   if (players.length === 0) {
     return (
-      <div className="text-center py-16">
-        <Users className="w-16 h-16 mx-auto mb-4 text-sl-dim" />
-        <h3 className="text-xl font-semibold mb-2">No Players Found</h3>
-        <p className="text-sl-mute">
-          {searchParams.search ? `No players found for "${searchParams.search}"` : "No players available at the moment"}
-        </p>
-      </div>
+      <EmptyState title={search ? `Nothing found for “${search}”` : "No players to show"}>
+        {search
+          ? "No player matches that. Names vary between sources — try a surname on its own."
+          : "We could not load a squad just now. Everything else on the site is unaffected."}
+      </EmptyState>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {players.map((player) => (
-        <div key={player.id} className="h-full">
-          <PlayerCard player={player} />
-        </div>
-      ))}
-    </div>
+    <Section
+      title={search ? `Results for “${search}”` : "Squad"}
+      aside={
+        <span className="font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mute">
+          {players.length} {players.length === 1 ? "player" : "players"}
+        </span>
+      }
+    >
+      <RowList>
+        {players.map((p) => (
+          <Row
+            key={p.id}
+            href={`/players/${p.id}`}
+            accent="sport"
+            /* UnifiedPlayer carries no squad number, so the lead column shows position
+               -- the next most useful thing to sort a squad by in your head. Inventing a
+               number would be exactly the kind of plausible filler rule 1 forbids. */
+            lead={p.position?.slice(0, 12)}
+            leadSub={p.age ? `Age ${p.age}` : undefined}
+            title={p.name}
+            meta={[p.team, p.nationality].filter(Boolean).join(" · ")}
+          />
+        ))}
+      </RowList>
+    </Section>
   )
 }
 
-export default function PlayersPage({ searchParams }: PlayersPageProps) {
+export default function PlayersPage({
+  searchParams,
+}: {
+  searchParams: { search?: string; team?: string }
+}) {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${ENV.BASE_URL}/players#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${ENV.BASE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Players", item: `${ENV.BASE_URL}/players` },
+    ],
+  }
+
   return (
-    <div className="container mx-auto px-4 pt-24 md:pt-32 pb-8">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4">Football Players</h1>
-        <p className="text-lg text-sl-mute">Discover players from the world's top football teams</p>
-      </div>
-
-      {/* Search and Filters */}
-      <div className="mb-8">
-        <Card className="bg-sl-surface/50 border-sl-line">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Search */}
-              <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sl-mute w-5 h-5" />
-                <Input
-                  placeholder="Search players..."
-                  defaultValue={searchParams.search || ""}
-                  className="pl-12 bg-sl-raise border-sl-line text-white placeholder-gray-400"
-                />
-              </div>
-
-              {/* Quick Filters */}
-              <div className="flex gap-2">
-                <Button asChild variant="outline" size="sm" className="bg-transparent">
-                  <Link href="/players?position=forward">
-                    <User className="w-4 h-4 mr-2" />
-                    Forwards
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="sm" className="bg-transparent">
-                  <Link href="/players?position=midfielder">
-                    <User className="w-4 h-4 mr-2" />
-                    Midfielders
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="sm" className="bg-transparent">
-                  <Link href="/players?position=defender">
-                    <User className="w-4 h-4 mr-2" />
-                    Defenders
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="sm" className="bg-transparent">
-                  <Link href="/players">
-                    <Filter className="w-4 h-4 mr-2" />
-                    All Players
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Browse by Team</h2>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {FEATURED_TEAMS.map((team) => {
-            const currentTeam = searchParams.team || "133604";
-            const isActive = currentTeam === team.id;
-            const positionParams = searchParams.position && searchParams.position !== "all"
-              ? `&position=${searchParams.position}`
-              : "";
-            return (
-              <Button
-                key={team.id}
-                asChild
-                variant={isActive ? "default" : "outline"}
-                className={isActive ? "bg-blue-600 hover:bg-blue-700 text-white border-transparent" : "bg-transparent"}
-              >
-                <Link href={`/players?team=${team.id}${positionParams}`}>
-                  {team.name}
-                </Link>
-              </Button>
-            )
-          })}
-        </div>
-
-        <h2 className="text-2xl font-bold mb-4">Browse by Position</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {PLAYER_POSITIONS.filter(p => p.value !== 'all').map((pos) => (
-            <Link key={pos.value} href={`/players?position=${pos.value}`}>
-              <Card className="bg-sl-surface/50 border-sl-line hover:bg-sl-raise/50 transition-colors text-center p-4">
-                <div className="text-2xl mb-2">
-                  <User className="w-8 h-8 mx-auto text-primary" />
-                </div>
-                <div className="font-semibold text-white">{pos.label}</div>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Players Grid */}
-      <Suspense fallback={<PlayersFallback />}>
-        <PlayersList searchParams={searchParams} />
+    <PageShell>
+      <SchemaMarkup schema={breadcrumb} />
+      <PageHeader
+        eyebrow="Players"
+        title="Who plays where"
+        intro="Profiles and season statistics for the squads in the competitions we cover."
+      />
+      <Suspense
+        key={`${searchParams.search ?? ""}-${searchParams.team ?? ""}`}
+        fallback={
+          <Section title="Squad">
+            <RowSkeleton rows={6} />
+          </Section>
+        }
+      >
+        <PlayerList search={searchParams.search} team={searchParams.team} />
       </Suspense>
-
-      {/* Browse More */}
-      <div className="mt-12 text-center">
-        <Card className="bg-sl-surface/50 border-sl-line">
-          <CardContent className="p-8">
-            <h3 className="text-xl font-semibold mb-4">Explore More</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild variant="outline" className="bg-transparent">
-                <Link href="/teams">
-                  <Users className="w-4 h-4 mr-2" />
-                  Browse Teams
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="bg-transparent">
-                <Link href="/leagues">
-                  <Trophy className="w-4 h-4 mr-2" />
-                  View Leagues
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="bg-transparent">
-                <Link href="/scores">
-                  <Trophy className="w-4 h-4 mr-2" />
-                  Live Scores
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    </PageShell>
   )
 }
