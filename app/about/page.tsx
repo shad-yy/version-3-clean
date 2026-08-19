@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
       <FadeIn>
       <section className="pt-28 md:pt-36 pb-16 md:pb-20 px-4 border-b border-[var(--sl-line)]">
         <div className="container mx-auto max-w-3xl">

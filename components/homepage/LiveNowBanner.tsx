@@ -145,7 +145,7 @@ export function LiveNowBanner() {
                 className={`h-1.5 rounded-full transition-all duration-300
                   ${i === current 
                     ? 'bg-[var(--sl-amber)] w-4' 
-                    : 'bg-[var(--sl-line)] w-1.5 hover:bg-[#3a3a4a]'
+                    : 'bg-[var(--sl-line)] w-1.5 hover:bg-[var(--sl-line)]'
                   }`}
                 aria-label={`Show ${ALWAYS_ON[i].title}`}
               />

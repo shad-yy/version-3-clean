@@ -20,7 +20,7 @@ export default function Error({
 
   return (
     <div className="container mx-auto px-4 py-16 flex items-center justify-center min-h-[calc(100vh-8rem)]">
-      <Card className="w-full max-w-2xl bg-gray-900/50 border-gray-800 text-center">
+      <Card className="w-full max-w-2xl bg-sl-surface/50 border-sl-line text-center">
         <CardHeader>
           <div className="w-20 h-20 mx-auto bg-orange-500/10 rounded-full flex items-center justify-center border-2 border-orange-500/20 mb-4">
             <AlertCircle className="w-10 h-10 text-orange-400" />
@@ -28,7 +28,7 @@ export default function Error({
           <CardTitle className="text-3xl font-bold text-orange-400">Something went wrong!</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-lg text-gray-300 mb-8">
+          <p className="text-lg text-sl-mid mb-8">
             We encountered an unexpected error. This has been logged and we'll look into it.
           </p>
 

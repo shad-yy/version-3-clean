@@ -12,7 +12,7 @@ export default function SearchLoading() {
 
       {/* Search Form Skeleton */}
       <div className="mb-8">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row gap-4">
               <Skeleton className="h-12 flex-1" />
@@ -25,7 +25,7 @@ export default function SearchLoading() {
       {/* Results Skeleton */}
       <div className="space-y-4">
         {Array.from({ length: 6 }).map((_, i) => (
-          <Card key={i} className="bg-gray-900/50 border-gray-800">
+          <Card key={i} className="bg-sl-surface/50 border-sl-line">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Skeleton className="w-16 h-16 rounded-lg" />

@@ -17,7 +17,7 @@ export function EventCard({ fixture }: EventCardProps) {
         if (status.includes("Finished") || status.includes("FT")) return "bg-green-500/20 text-green-400 border-green-500/30"
         if (status.includes("Scheduled") || status.includes("Not Started")) return "bg-blue-500/20 text-blue-400 border-blue-500/30"
         if (status.includes("Live") || status.includes("In Play")) return "bg-red-500/20 text-red-400 border-red-500/30 animate-pulse"
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30"
+        return "bg-sl-mute/20 text-sl-mute border-sl-outline/30"
     }
 
     const formatDateTime = (date: string, time: string) => {

@@ -4,6 +4,28 @@ import { KNOWN_COUNTRY_CODES } from "@/lib/geo/regions"
 import { formatLongDate } from "@/lib/utils/datetime"
 
 /**
+ * "14 AUG 2026" — the mono date form the reference uses throughout.
+ *
+ * Built from Intl rather than a month lookup table so it stays correct if the site is
+ * ever localised, and uppercased to match the mono treatment.
+ */
+function verifiedDate(iso: string): string {
+  const d = new Date(`${iso}T00:00:00Z`)
+  if (isNaN(d.getTime())) return iso
+  // Assembled from parts rather than formatted as a whole string, because the reference
+  // is day-first ("14 AUG 2026") and Intl's "en" locale orders it month-first. Reading
+  // the parts gives the designed order without pinning a regional locale.
+  const parts = new Intl.DateTimeFormat("en", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).formatToParts(d)
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? ""
+  return `${get("day")} ${get("month")} ${get("year")}`.toUpperCase()
+}
+
+/**
  * Verified-rights ledger — design/sightline/HANDOFF.md §1.3.
  *
  * The panel that states our coverage and, more importantly, its limits. This is the
@@ -56,7 +78,7 @@ export function RightsLedger() {
               {COMPETITION_RIGHTS.length}{" "}
               {COMPETITION_RIGHTS.length === 1 ? "competition" : "competitions"} ·{" "}
               {countries.length} {countries.length === 1 ? "country" : "countries"}
-              {lastChecked ? ` · last checked ${formatLongDate(lastChecked)}` : ""}
+              {lastChecked ? ` · last checked ${verifiedDate(lastChecked)}` : ""}
             </p>
           </div>
 
@@ -69,18 +91,16 @@ export function RightsLedger() {
                 <h3 className="mb-2.5 text-[15px] font-medium text-sl-text">
                   {country.name}
                 </h3>
-                <ul className="mb-3 flex flex-col gap-1.5">
-                  {country.entries.map((e) => (
-                    <li key={`${e.competition}-${e.broadcaster}`} className="text-[13px] leading-tight">
-                      <span className="text-sl-mid">{e.broadcaster}</span>
-                      <span className="block text-sl-mute">{e.competition}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="mb-3 text-[13px] leading-[1.5] text-sl-mid">
+                  {country.entries
+                    .map((e) => e.broadcaster)
+                    .filter((b, i, arr) => arr.indexOf(b) === i)
+                    .join(" · ")}
+                </p>
                 {lastChecked && (
                   // A mono date. No tick, no colour -- design opinion 3.
                   <p className="font-mono text-[10px] uppercase tracking-[.12em] text-sl-mute">
-                    Verified {formatLongDate(lastChecked)}
+                    Verified {verifiedDate(lastChecked)}
                   </p>
                 )}
               </div>

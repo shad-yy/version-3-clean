@@ -122,11 +122,11 @@ export default async function WatchLeaguePage({ params }: Props) {
     const FormPill = ({ result }: { result: string }) => {
         const colors: Record<string, string> = {
             W: 'bg-green-500 text-black',
-            D: 'bg-gray-500 text-sl-text',
+            D: 'bg-sl-mute text-sl-text',
             L: 'bg-red-500 text-sl-text'
         }
         return (
-            <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-sl-text'}`}>
+            <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-sl-raise text-sl-text'}`}>
                 {result}
             </span>
         )
@@ -194,7 +194,7 @@ export default async function WatchLeaguePage({ params }: Props) {
     }
 
     return (
-        <div className="min-h-screen bg-sl-ground text-gray-100">
+        <div className="min-h-screen bg-sl-ground text-sl-text">
             <SchemaMarkup schema={sportsOrgSchema} />
             <SchemaMarkup schema={breadcrumbSchema} />
 
@@ -270,13 +270,13 @@ export default async function WatchLeaguePage({ params }: Props) {
                                 <h3 className="text-2xl font-bold text-sl-text mb-6">Explore Competition Hubs</h3>
                                 <p className="mb-4">Navigate to live match hubs and live data pages:</p>
                                 <div className="flex flex-wrap gap-4">
-                                    <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
+                                    <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-sl-raise rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         Live Scores
                                     </Link>
-                                    <Link href="/leagues" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
+                                    <Link href="/leagues" className="px-4 py-2 bg-sl-raise hover:bg-sl-raise rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         All Leagues
                                     </Link>
-                                    <Link href="/news" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
+                                    <Link href="/news" className="px-4 py-2 bg-sl-raise hover:bg-sl-raise rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         Sports News
                                     </Link>
                                 </div>
@@ -288,7 +288,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                                     {Object.entries(LEAGUES)
                                         .filter(([s]) => s !== params.slug)
                                         .map(([s, l]) => (
-                                            <Link key={s} href={`/watch/${s}`} className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
+                                            <Link key={s} href={`/watch/${s}`} className="px-4 py-2 bg-sl-raise hover:bg-sl-raise rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                                 {l.name}
                                             </Link>
                                         ))}
@@ -367,8 +367,8 @@ export default async function WatchLeaguePage({ params }: Props) {
 
                         <div className="overflow-x-auto">
                             <table className="w-full text-xs">
-                                <thead className="sticky top-0 z-10" style={{ backgroundColor: '#0f1118' }}>
-                                    <tr className="text-gray-200 font-bold uppercase border-b" style={{ borderColor: theme.secondary }}>
+                                <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--sl-panel)' }}>
+                                    <tr className="text-sl-text font-bold uppercase border-b" style={{ borderColor: theme.secondary }}>
                                         <th className="py-2 px-2 text-center w-8">#</th>
                                         <th className="py-2 px-2 text-left">Team</th>
                                         <th className="py-2 px-2 text-center w-8">P</th>
@@ -392,7 +392,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                                             <td className="py-2 px-2">
                                                 <div className={`flex items-center gap-2 pl-2 ${getDescriptionBorder(team.description)}`}>
                                                     <img src={safeBadge(team.teamLogo)} alt={team.team} width={20} height={20} className="w-5 h-5 object-contain" loading="lazy" />
-                                                    <span className="font-semibold text-gray-200 line-clamp-1 flex-1">{team.team}</span>
+                                                    <span className="font-semibold text-sl-text line-clamp-1 flex-1">{team.team}</span>
                                                 </div>
                                             </td>
                                             <td className="py-2 px-2 text-center text-sl-mute">{team.played}</td>

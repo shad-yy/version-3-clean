@@ -40,7 +40,7 @@ export function ResponsiveImage({
     return (
       <div
         className={cn(
-          "flex items-center justify-center bg-gray-800 text-gray-400 text-sm",
+          "flex items-center justify-center bg-sl-raise text-sl-mute text-sm",
           aspectRatioClasses[aspectRatio],
           className,
         )}
@@ -53,8 +53,8 @@ export function ResponsiveImage({
   return (
     <div className={cn("relative overflow-hidden", aspectRatioClasses[aspectRatio], className)}>
       {isLoading && (
-        <div className="absolute inset-0 bg-gray-800 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin" />
+        <div className="absolute inset-0 bg-sl-raise animate-pulse flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-sl-line border-t-gray-400 rounded-full animate-spin" />
         </div>
       )}
       <Image

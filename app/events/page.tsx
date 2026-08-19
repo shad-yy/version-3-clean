@@ -91,7 +91,7 @@ async function EventsList({
       <div className="text-center py-16">
         <Calendar className="w-16 h-16 mx-auto mb-4 text-red-400" />
         <h3 className="text-xl font-semibold mb-2 text-red-400">Error Loading Events</h3>
-        <p className="text-gray-400 mb-4">{error}</p>
+        <p className="text-sl-mute mb-4">{error}</p>
         <Button asChild variant="outline">
           <Link href="/events">Try Again</Link>
         </Button>
@@ -102,9 +102,9 @@ async function EventsList({
   if (fixtures.length === 0) {
     return (
       <div className="text-center py-16">
-        <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-600" />
+        <Calendar className="w-16 h-16 mx-auto mb-4 text-sl-dim" />
         <h3 className="text-xl font-semibold mb-2">No Events Found</h3>
-        <p className="text-gray-400">
+        <p className="text-sl-mute">
           {type === "today" && "No matches scheduled for today"}
           {type === "upcoming" && "No upcoming matches available"}
           {type === "recent" && "No recent matches available"}

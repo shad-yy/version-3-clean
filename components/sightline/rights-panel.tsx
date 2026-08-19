@@ -35,12 +35,15 @@ export function RightsPanel({
   initialCountry,
   verifiedDate,
   competitionName,
+  verifiedSummary,
 }: {
   countries: RightsCountry[]
   initialCountry: string
   /** YYYY-MM-DD, from the rights data. Never invented. */
   verifiedDate: string | null
   competitionName: string
+  /** e.g. "2 competitions across 4 countries" — derived, never hardcoded. */
+  verifiedSummary: string
 }) {
   const [selected, setSelected] = useState(initialCountry)
   const [copied, setCopied] = useState(false)
@@ -176,14 +179,12 @@ export function RightsPanel({
               </div>
               <div className="flex flex-col gap-3 pl-[26px]">
                 <p className="max-w-[620px] text-[13px] leading-[1.55] text-sl-mid">
-                  Our broadcast coverage is built by hand, one competition and one country
-                  at a time, and each listing carries the date a person last confirmed it.
-                  {competitionName} in {current.name} is not one we have checked yet.
+                  Our broadcast rights are checked by hand, one country at a time. So far
+                  that is {verifiedSummary} — and {current.name} is not one of them yet.
+                  Rather than guess or scrape, we are showing you nothing.
                 </p>
                 <p className="max-w-[620px] text-[13px] leading-[1.55] text-sl-mid">
-                  The match is still being played, and it is very likely being shown
-                  somewhere in {current.name}. We would rather tell you we do not know than
-                  send you to a channel that does not carry it.
+                  The match is still on. We just cannot tell you the channel here.
                 </p>
               </div>
             </div>

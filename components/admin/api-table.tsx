@@ -94,7 +94,7 @@ function getStatusIcon(status: string) {
     case "active":
       return <CheckCircle className="w-4 h-4 text-green-400" />
     case "inactive":
-      return <Clock className="w-4 h-4 text-gray-400" />
+      return <Clock className="w-4 h-4 text-sl-mute" />
     case "error":
       return <XCircle className="w-4 h-4 text-red-400" />
     default:
@@ -107,7 +107,7 @@ function getStatusColor(status: string) {
     case "active":
       return "text-green-400 bg-green-400/10 border-green-400/20"
     case "inactive":
-      return "text-gray-400 bg-gray-400/10 border-gray-400/20"
+      return "text-sl-mute bg-sl-mute/10 border-sl-outline/20"
     case "error":
       return "text-red-400 bg-red-400/10 border-red-400/20"
     default:
@@ -126,7 +126,7 @@ function getMethodColor(method: string) {
     case "DELETE":
       return "text-red-400 bg-red-400/10"
     default:
-      return "text-gray-400 bg-gray-400/10"
+      return "text-sl-mute bg-sl-mute/10"
   }
 }
 
@@ -181,7 +181,7 @@ export function ApiTable() {
   }
 
   return (
-    <Card className="bg-gray-900/50 border-gray-800">
+    <Card className="bg-sl-surface/50 border-sl-line">
       <CardHeader>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <CardTitle>API Endpoints</CardTitle>
@@ -200,12 +200,12 @@ export function ApiTable() {
         {/* Filters */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sl-mute w-4 h-4" />
             <Input
               placeholder="Search endpoints..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-gray-800 border-gray-700"
+              className="pl-10 bg-sl-raise border-sl-line"
             />
           </div>
           <div className="flex gap-2">
@@ -224,10 +224,10 @@ export function ApiTable() {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-md border border-gray-700 overflow-hidden">
+        <div className="rounded-md border border-sl-line overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow className="border-gray-700">
+              <TableRow className="border-sl-line">
                 <TableHead>Endpoint</TableHead>
                 <TableHead>Method</TableHead>
                 <TableHead>Status</TableHead>
@@ -240,11 +240,11 @@ export function ApiTable() {
             </TableHeader>
             <TableBody>
               {filteredEndpoints.map((endpoint) => (
-                <TableRow key={endpoint.id} className="border-gray-700">
+                <TableRow key={endpoint.id} className="border-sl-line">
                   <TableCell>
                     <div>
                       <div className="font-medium">{endpoint.name}</div>
-                      <div className="text-sm text-gray-400 font-mono">{endpoint.endpoint}</div>
+                      <div className="text-sm text-sl-mute font-mono">{endpoint.endpoint}</div>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -283,7 +283,7 @@ export function ApiTable() {
                     </span>
                   </TableCell>
                   <TableCell>{endpoint.callCount.toLocaleString()}</TableCell>
-                  <TableCell className="text-gray-400">{endpoint.lastCalled}</TableCell>
+                  <TableCell className="text-sl-mute">{endpoint.lastCalled}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -291,7 +291,7 @@ export function ApiTable() {
                           <MoreHorizontal className="w-4 h-4" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="bg-gray-800 border-gray-700">
+                      <DropdownMenuContent align="end" className="bg-sl-raise border-sl-line">
                         <DropdownMenuItem>Test Endpoint</DropdownMenuItem>
                         <DropdownMenuItem>View Logs</DropdownMenuItem>
                         <DropdownMenuItem>Configure</DropdownMenuItem>
@@ -306,7 +306,7 @@ export function ApiTable() {
         </div>
 
         {filteredEndpoints.length === 0 && (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-sl-mute">
             <Filter className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>No endpoints found matching your criteria</p>
           </div>

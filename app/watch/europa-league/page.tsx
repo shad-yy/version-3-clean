@@ -73,12 +73,12 @@ function safeParseSportsDBDate(date: string, time?: string): Date | null {
 const FormPill = ({ result }: { result: string }) => {
   const colors: Record<string, string> = {
     W: 'bg-green-500 text-black',
-    D: 'bg-gray-500 text-sl-text',
+    D: 'bg-sl-mute text-sl-text',
     L: 'bg-red-500 text-sl-text',
   }
   return (
     <span
-      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-sl-text'
+      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-sl-raise text-sl-text'
         }`}
     >
       {result}
@@ -163,7 +163,7 @@ export default async function EuropaLeaguePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
       <SchemaMarkup schema={faqSchema} />
       <SchemaMarkup schema={breadcrumbSchema} />
 
@@ -258,7 +258,7 @@ export default async function EuropaLeaguePage() {
                 <Link href="#upcoming-matches" className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-xs font-bold text-black transition-colors">
                   Upcoming Fixtures
                 </Link>
-                <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-xs font-semibold text-sl-text border border-sl-line transition">
+                <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-sl-raise rounded-lg text-xs font-semibold text-sl-text border border-sl-line transition">
                   Live Scores
                 </Link>
               </div>
@@ -375,7 +375,7 @@ export default async function EuropaLeaguePage() {
               <div className="bg-sl-ground/60 rounded-2xl border border-sl-line overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="sticky top-0 z-10" style={{ backgroundColor: '#0f1118' }}>
+                    <thead className="sticky top-0 z-10" style={{ backgroundColor: 'var(--sl-panel)' }}>
                       <tr className="text-xs font-bold uppercase border-b" style={{ borderColor: '#f97316' }}>
                         <th className="py-3 px-3 text-center w-10">#</th>
                         <th className="py-3 px-3 text-left">Team</th>

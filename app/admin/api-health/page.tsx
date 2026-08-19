@@ -58,7 +58,7 @@ export default function ApiHealthPage() {
   // Loading state
   if (!mounted) {
     return (
-      <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+      <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
         <div className="space-y-4">
           <Skeleton className="h-12 w-96" />
           <Skeleton className="h-6 w-64" />
@@ -76,12 +76,12 @@ export default function ApiHealthPage() {
   // Access denied state
   if (!isAdmin) {
     return (
-      <div className="container mx-auto px-4 py-8 bg-gray-950 min-h-screen">
+      <div className="container mx-auto px-4 py-8 bg-sl-ground min-h-screen">
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <Shield className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+            <Shield className="w-16 h-16 text-sl-dim mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
-            <p className="text-gray-400">Administrator privileges required to access this page.</p>
+            <p className="text-sl-mute">Administrator privileges required to access this page.</p>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@ export default function ApiHealthPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+    <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -100,14 +100,14 @@ export default function ApiHealthPage() {
             </Badge>
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-white">API Health Monitor</h1>
-          <p className="text-lg text-gray-400 mt-2">Real-time monitoring and diagnostics for all system APIs</p>
+          <p className="text-lg text-sl-mute mt-2">Real-time monitoring and diagnostics for all system APIs</p>
         </div>
         <div className="flex items-center gap-3">
           <Button
             onClick={generateReport}
             disabled={generatingReport}
             variant="outline"
-            className="gap-2 border-gray-700 text-gray-300 hover:text-white bg-transparent"
+            className="gap-2 border-sl-line text-sl-mid hover:text-white bg-transparent"
           >
             <Activity className="w-4 h-4" />
             {generatingReport ? "Generating..." : "Generate Report"}
@@ -126,7 +126,7 @@ export default function ApiHealthPage() {
 
       {/* Health Report */}
       {healthReport && (
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Activity className="w-5 h-5" />
@@ -134,8 +134,8 @@ export default function ApiHealthPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-gray-800/50 rounded-lg p-4 max-h-96 overflow-y-auto">
-              <pre className="text-sm text-gray-300 whitespace-pre-wrap font-mono">{healthReport}</pre>
+            <div className="bg-sl-raise/50 rounded-lg p-4 max-h-96 overflow-y-auto">
+              <pre className="text-sm text-sl-mid whitespace-pre-wrap font-mono">{healthReport}</pre>
             </div>
           </CardContent>
         </Card>
@@ -151,7 +151,7 @@ export default function ApiHealthPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-300 text-sm mb-4">All APIs are operational and ready for production deployment.</p>
+            <p className="text-sl-mid text-sm mb-4">All APIs are operational and ready for production deployment.</p>
             <Button variant="outline" size="sm" className="bg-transparent border-green-500/30 text-green-400">
               Deploy to Production
             </Button>
@@ -166,7 +166,7 @@ export default function ApiHealthPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-300 text-sm mb-4">Set up alerts and monitoring for production environment.</p>
+            <p className="text-sl-mid text-sm mb-4">Set up alerts and monitoring for production environment.</p>
             <Button variant="outline" size="sm" className="bg-transparent border-yellow-500/30 text-yellow-400">
               Configure Alerts
             </Button>
@@ -181,7 +181,7 @@ export default function ApiHealthPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-300 text-sm mb-4">Automated API health checks run every 5 minutes.</p>
+            <p className="text-sl-mid text-sm mb-4">Automated API health checks run every 5 minutes.</p>
             <Button variant="outline" size="sm" className="bg-transparent border-blue-500/30 text-blue-400">
               View Schedule
             </Button>

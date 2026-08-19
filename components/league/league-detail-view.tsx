@@ -97,7 +97,7 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
         <div className="overflow-x-auto border border-white/5 rounded-xl shadow-lg">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className={`${CARD_BG} border-b border-[#2a2a3e] text-[11px] font-black uppercase text-sl-mute tracking-wider`}>
+              <tr className={`${CARD_BG} border-b border-[var(--sl-line)] text-[11px] font-black uppercase text-sl-mute tracking-wider`}>
                 <th className="py-4 px-4 text-center w-12">Pos</th>
                 <th className="py-4 px-4">Team</th>
                 <th className="py-4 px-3 text-center w-12">P</th>
@@ -184,7 +184,7 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
           {fixtures.map((fixture) => (
             <div
               key={fixture.id}
-              className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-5 hover:border-[var(--sl-amber)]/30 transition-all group relative overflow-hidden`}
+              className={`${CARD_BG_40} border border-[var(--sl-line)] rounded-xl p-5 hover:border-[var(--sl-amber)]/30 transition-all group relative overflow-hidden`}
             >
               {fixture.isLive && <div className="absolute top-0 left-0 right-0 h-0.5 bg-red-500" />}
 
@@ -258,7 +258,7 @@ function TeamsTab({ teams }: { teams: Team[] }) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {teams.map((team) => (
             <Link key={team.id} href={`/teams/${team.id}`}>
-              <div className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-4 flex flex-col items-center text-center hover:border-[var(--sl-amber)]/30 transition-all hover:scale-[1.03] group h-full justify-between`}>
+              <div className={`${CARD_BG_40} border border-[var(--sl-line)] rounded-xl p-4 flex flex-col items-center text-center hover:border-[var(--sl-amber)]/30 transition-all hover:scale-[1.03] group h-full justify-between`}>
                 <div className="w-16 h-16 rounded-full bg-[var(--sl-raise)] border border-white/5 flex items-center justify-center p-2.5 mb-3 group-hover:scale-105 transition-transform">
                   {team.logo ? (
                     <img src={team.logo} alt={team.name} className="w-full h-full object-contain" loading="lazy" />
@@ -378,7 +378,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
             </div>
           </div>
 
-          <div className="w-full md:w-auto self-center md:self-auto bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-[#2a2a3e] rounded-2xl p-5 md:min-w-[240px] text-center shadow-lg">
+          <div className="w-full md:w-auto self-center md:self-auto bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-5 md:min-w-[240px] text-center shadow-lg">
             <h4 className="text-xs font-bold text-sl-mute uppercase tracking-widest mb-2">Live Streaming</h4>
             <p className="text-xs text-sl-mid mb-4">Stream all matches in 4K UHD.</p>
             <Link

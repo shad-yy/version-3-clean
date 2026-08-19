@@ -39,6 +39,8 @@ export interface ResolvedRights {
   competitionName: string
   /** Which country the panel should open on. */
   initialCountry: string
+  /** e.g. "2 competitions across 4 countries". Derived, so it cannot drift. */
+  verifiedSummary: string
 }
 
 export function resolveRights(
@@ -90,10 +92,19 @@ export function resolveRights(
       ? viewerCountry
       : countries[0]?.code ?? ""
 
+  const allCountries = new Set(
+    COMPETITION_RIGHTS.flatMap((c) => c.listings.map((l) => l.country)),
+  )
+  const comps = COMPETITION_RIGHTS.length
+  const verifiedSummary =
+    `${comps} ${comps === 1 ? "competition" : "competitions"} across ` +
+    `${allCountries.size} ${allCountries.size === 1 ? "country" : "countries"}`
+
   return {
     countries,
     verifiedDate: competition?.verified ?? null,
     competitionName,
     initialCountry,
+    verifiedSummary,
   }
 }

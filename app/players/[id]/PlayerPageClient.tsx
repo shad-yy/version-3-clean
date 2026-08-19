@@ -77,7 +77,7 @@ function PlayerStatsClient({ playerId }: { playerId: string }) {
           </div>
         ) : (
           <div className="text-center py-12">
-            <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin mx-auto mb-2" />
+            <div className="w-6 h-6 border-2 border-sl-outline border-t-blue-500 rounded-full animate-spin mx-auto mb-2" />
             <p className="text-muted-foreground">Loading statistics...</p>
           </div>
         )}

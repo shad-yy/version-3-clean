@@ -29,7 +29,7 @@ export default async function F1RacePage({
   const venue = header?.competitions?.[0]?.venue?.fullName
 
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100 
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text 
       pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
         <Link href="/watch/formula-1"

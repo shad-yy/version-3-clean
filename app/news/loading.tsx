@@ -12,7 +12,7 @@ export default function NewsLoading() {
 
       {/* Filters Skeleton */}
       <div className="mb-8">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardHeader>
             <Skeleton className="h-6 w-32" />
           </CardHeader>
@@ -28,7 +28,7 @@ export default function NewsLoading() {
 
       {/* Featured Article Skeleton */}
       <div className="mb-8">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <div className="relative">
             <Skeleton className="w-full h-64" />
             <div className="absolute bottom-4 left-4 right-4">
@@ -42,7 +42,7 @@ export default function NewsLoading() {
       {/* News Grid Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: 9 }).map((_, i) => (
-          <Card key={i} className="bg-gray-900/50 border-gray-800">
+          <Card key={i} className="bg-sl-surface/50 border-sl-line">
             <Skeleton className="w-full h-48" />
             <CardContent className="p-6">
               <Skeleton className="h-6 w-full mb-3" />

@@ -90,7 +90,7 @@ export default function WorldCup2026Page() {
   }))
 
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
       <SchemaMarkup schema={faqSchema} />
       <SchemaMarkup schema={eventSchema} />
 

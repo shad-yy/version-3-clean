@@ -28,7 +28,7 @@ export async function Header() {
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-[18px] lg:px-10">
         <Link
           href="/"
-          className="shrink-0 text-[17px] font-semibold tracking-[-0.022em] text-sl-text transition-colors duration-[.16s] hover:text-sl-amber-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60 rounded-[5px]"
+          className="shrink-0 text-[15px] font-semibold uppercase tracking-[.08em] text-sl-text transition-colors duration-[.16s] hover:text-sl-amber-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60 rounded-[5px]"
         >
           {SITE_NAME}
         </Link>

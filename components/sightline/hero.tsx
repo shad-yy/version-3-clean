@@ -53,9 +53,8 @@ export async function Hero() {
         </h1>
 
         <p className="mb-8 max-w-[620px] text-[15px] leading-[1.55] text-sl-mid lg:text-[17px]">
-          One lookup for sport, film and television. We name the service that carries it
-          where you are, and show the date we last checked — or say plainly that we have
-          not checked yet.
+          One lookup for sport, film and television. We tell you which service carries it
+          where you are — and the date we last checked.
         </p>
 
         <HeroSearch countryText={countryText} />

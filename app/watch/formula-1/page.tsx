@@ -75,7 +75,7 @@ export default async function Formula1Page() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
       <SchemaMarkup schema={faqSchema} />
       <SchemaMarkup schema={breadcrumbSchema} />
 

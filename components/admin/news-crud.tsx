@@ -116,7 +116,7 @@ export function NewsCRUD() {
   }
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-400">Loading news posts...</div>
+    return <div className="text-center py-8 text-sl-mute">Loading news posts...</div>
   }
 
   return (
@@ -124,7 +124,7 @@ export function NewsCRUD() {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-2xl font-bold text-white mb-2">News Management</h3>
-          <p className="text-gray-400">Create, edit, and manage news posts</p>
+          <p className="text-sl-mute">Create, edit, and manage news posts</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
@@ -133,7 +133,7 @@ export function NewsCRUD() {
               Create Post
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-800">
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-sl-surface border-sl-line">
             <DialogHeader>
               <DialogTitle>{editingPost ? "Edit News Post" : "Create News Post"}</DialogTitle>
               <DialogDescription>Fill in the details for your news post</DialogDescription>
@@ -152,7 +152,7 @@ export function NewsCRUD() {
                   id="title"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="bg-gray-800"
+                  className="bg-sl-raise"
                 />
               </div>
 
@@ -162,7 +162,7 @@ export function NewsCRUD() {
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="bg-gray-800"
+                  className="bg-sl-raise"
                   rows={3}
                 />
               </div>
@@ -173,7 +173,7 @@ export function NewsCRUD() {
                   id="content"
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  className="bg-gray-800"
+                  className="bg-sl-raise"
                   rows={8}
                 />
               </div>
@@ -184,7 +184,7 @@ export function NewsCRUD() {
                   id="image"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="bg-gray-800"
+                  className="bg-sl-raise"
                   placeholder="https://..."
                 />
               </div>
@@ -196,7 +196,7 @@ export function NewsCRUD() {
                     id="author"
                     value={formData.author}
                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                    className="bg-gray-800"
+                    className="bg-sl-raise"
                   />
                 </div>
                 <div>
@@ -205,7 +205,7 @@ export function NewsCRUD() {
                     id="category"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="bg-gray-800"
+                    className="bg-sl-raise"
                   />
                 </div>
               </div>
@@ -236,15 +236,15 @@ export function NewsCRUD() {
       </div>
 
       {posts.length === 0 ? (
-        <Card className="bg-gray-800/50 border-gray-700">
+        <Card className="bg-sl-raise/50 border-sl-line">
           <CardContent className="p-8 text-center">
-            <p className="text-gray-400">No news posts yet. Create your first post!</p>
+            <p className="text-sl-mute">No news posts yet. Create your first post!</p>
           </CardContent>
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {posts.map((post) => (
-            <Card key={post.id} className="bg-gray-800/50 border-gray-700">
+            <Card key={post.id} className="bg-sl-raise/50 border-sl-line">
               <CardContent className="p-6">
                 {post.image && (
                   <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
@@ -255,9 +255,9 @@ export function NewsCRUD() {
                   <h4 className="font-bold text-white text-lg">{post.title}</h4>
                   {post.featured && <Badge className="bg-yellow-500/20 text-yellow-400">Featured</Badge>}
                 </div>
-                <p className="text-sm text-gray-400 mb-4 line-clamp-2">{post.description}</p>
+                <p className="text-sm text-sl-mute mb-4 line-clamp-2">{post.description}</p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <div className="flex items-center gap-2 text-xs text-sl-mute">
                     <span>{post.author}</span>
                     <span>•</span>
                     <span>{new Date(post.publishedAt).toLocaleDateString()}</span>

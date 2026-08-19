@@ -69,7 +69,7 @@ function getStatusIcon(status: string) {
     case "down":
       return <XCircle className="w-4 h-4 text-red-400" />
     default:
-      return <Activity className="w-4 h-4 text-gray-400" />
+      return <Activity className="w-4 h-4 text-sl-mute" />
   }
 }
 
@@ -82,7 +82,7 @@ function getStatusColor(status: string) {
     case "down":
       return "text-red-400 bg-red-400/10 border-red-400/20"
     default:
-      return "text-gray-400 bg-gray-400/10 border-gray-400/20"
+      return "text-sl-mute bg-sl-mute/10 border-sl-outline/20"
   }
 }
 
@@ -97,7 +97,7 @@ function getApiIcon(name: string) {
     case "Claude AI":
       return <TrendingUp className="w-5 h-5 text-purple-400" />
     default:
-      return <Activity className="w-5 h-5 text-gray-400" />
+      return <Activity className="w-5 h-5 text-sl-mute" />
   }
 }
 
@@ -194,11 +194,11 @@ export function ApiStats() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <Card key={i} className="bg-gray-900/50 border-gray-800">
+            <Card key={i} className="bg-sl-surface/50 border-sl-line">
               <CardContent className="p-4">
                 <div className="animate-pulse">
-                  <div className="h-4 bg-gray-700 rounded w-20 mb-2"></div>
-                  <div className="h-8 bg-gray-700 rounded w-16"></div>
+                  <div className="h-4 bg-sl-raise rounded w-20 mb-2"></div>
+                  <div className="h-8 bg-sl-raise rounded w-16"></div>
                 </div>
               </CardContent>
             </Card>
@@ -222,11 +222,11 @@ export function ApiStats() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">System Health</p>
+                <p className="text-sm text-sl-mute">System Health</p>
                 <p className="text-2xl font-bold text-green-400">{overallHealth.toFixed(1)}%</p>
               </div>
               <CheckCircle className="w-8 h-8 text-green-400" />
@@ -234,11 +234,11 @@ export function ApiStats() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Avg Response</p>
+                <p className="text-sm text-sl-mute">Avg Response</p>
                 <p className="text-2xl font-bold text-blue-400">{avgResponseTime.toFixed(0)}ms</p>
               </div>
               <Clock className="w-8 h-8 text-blue-400" />
@@ -246,11 +246,11 @@ export function ApiStats() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Total Requests</p>
+                <p className="text-sm text-sl-mute">Total Requests</p>
                 <p className="text-2xl font-bold text-purple-400">{totalRequests.toLocaleString()}</p>
               </div>
               <Activity className="w-8 h-8 text-purple-400" />
@@ -258,11 +258,11 @@ export function ApiStats() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-400">Error Rate</p>
+                <p className="text-sm text-sl-mute">Error Rate</p>
                 <p className="text-2xl font-bold text-red-400">
                   {totalRequests > 0 ? ((totalErrors / totalRequests) * 100).toFixed(2) : "0.00"}%
                 </p>
@@ -276,7 +276,7 @@ export function ApiStats() {
       {/* Detailed API Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {metrics.map((metric) => (
-          <Card key={metric.name} className="bg-gray-900/50 border-gray-800">
+          <Card key={metric.name} className="bg-sl-surface/50 border-sl-line">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -293,7 +293,7 @@ export function ApiStats() {
               {/* Response Time */}
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">Response Time</span>
+                  <span className="text-sl-mute">Response Time</span>
                   <span className="font-medium">{metric.responseTime}ms</span>
                 </div>
                 <Progress value={Math.min((metric.responseTime / 1000) * 100, 100)} className="h-2" />
@@ -302,7 +302,7 @@ export function ApiStats() {
               {/* Success Rate */}
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">Success Rate</span>
+                  <span className="text-sl-mute">Success Rate</span>
                   <span className="font-medium">{metric.successRate}%</span>
                 </div>
                 <Progress value={metric.successRate} className="h-2 [&>*]:bg-green-500" />
@@ -311,25 +311,25 @@ export function ApiStats() {
               {/* Uptime */}
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-400">Uptime</span>
+                  <span className="text-sl-mute">Uptime</span>
                   <span className="font-medium">{metric.uptime}%</span>
                 </div>
                 <Progress value={metric.uptime} className="h-2 [&>*]:bg-blue-500" />
               </div>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-700">
+              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-sl-line">
                 <div>
-                  <p className="text-xs text-gray-400">Requests</p>
+                  <p className="text-xs text-sl-mute">Requests</p>
                   <p className="font-semibold">{metric.requestCount.toLocaleString()}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400">Errors</p>
+                  <p className="text-xs text-sl-mute">Errors</p>
                   <p className="font-semibold text-red-400">{metric.errorCount}</p>
                 </div>
               </div>
 
-              <div className="text-xs text-gray-500 pt-2 border-t border-gray-700">
+              <div className="text-xs text-sl-mute pt-2 border-t border-sl-line">
                 Last checked: {metric.lastChecked}
               </div>
             </CardContent>
@@ -338,7 +338,7 @@ export function ApiStats() {
       </div>
 
       {/* Last Update Info */}
-      <div className="text-center text-sm text-gray-400">
+      <div className="text-center text-sm text-sl-mute">
         Last updated: {lastUpdate.toLocaleTimeString()}
         {usingRealData && <span className="ml-2 text-green-400">(Live Data)</span>}
         {!usingRealData && <span className="ml-2 text-yellow-400">(Simulated Data)</span>}

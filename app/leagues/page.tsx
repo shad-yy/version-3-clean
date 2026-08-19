@@ -342,7 +342,7 @@ function LeaguesSkeleton() {
 
 export default function LeaguesPage() {
   return (
-    <main className="min-h-screen bg-[#070710] pt-20">
+    <main className="min-h-screen bg-[var(--sl-ground)] pt-20">
       {/* Fixed ambient background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/3 w-[700px] h-[700px] bg-emerald-500/4 rounded-full blur-[160px]" />

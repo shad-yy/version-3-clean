@@ -69,7 +69,7 @@ export function OptimizedImage({
   const errorFallback = useCallback(
     () => (
       <div
-        className={cn("flex items-center justify-center bg-gray-800 text-gray-400 text-sm", className)}
+        className={cn("flex items-center justify-center bg-sl-raise text-sl-mute text-sm", className)}
         style={width && height ? { width, height } : undefined}
       >
         <span>Image unavailable</span>
@@ -100,10 +100,10 @@ export function OptimizedImage({
     <div ref={imgRef} className={cn("relative overflow-hidden", className)}>
       {isLoading && shouldLoad && (
         <div
-          className="absolute inset-0 bg-gray-800 animate-pulse flex items-center justify-center"
+          className="absolute inset-0 bg-sl-raise animate-pulse flex items-center justify-center"
           style={width && height ? { width, height } : undefined}
         >
-          <div className="w-8 h-8 border-2 border-gray-600 border-t-gray-400 rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-sl-line border-t-gray-400 rounded-full animate-spin" />
         </div>
       )}
 
@@ -129,7 +129,7 @@ export function OptimizedImage({
         />
       )}
 
-      {!shouldLoad && <div className={cn("bg-gray-800 animate-pulse", className)} style={width && height ? { width, height } : undefined} />}
+      {!shouldLoad && <div className={cn("bg-sl-raise animate-pulse", className)} style={width && height ? { width, height } : undefined} />}
     </div>
   )
 }

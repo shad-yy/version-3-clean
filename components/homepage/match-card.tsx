@@ -215,7 +215,7 @@ export function MatchCard() {
                     <>
                         {tab === "results" && currentList.some(m => m.isYesterday) && !currentList.some(m => !m.isYesterday) && (
                             <p className="text-xs text-sl-mute mb-4 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-gray-600 inline-block" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-sl-mute inline-block" />
                                 Yesterday's Results
                             </p>
                         )}

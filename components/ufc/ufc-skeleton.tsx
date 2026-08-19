@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export function UFCSkeleton() {
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+    <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
       {/* Header Skeleton */}
       <div className="text-center space-y-4">
         <Skeleton className="h-16 w-64 mx-auto" />
@@ -24,8 +24,8 @@ export function UFCSkeleton() {
         {/* Content Grid Skeleton */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Card key={i} className="bg-gray-900/50 border-gray-800">
-              <div className="w-full h-48 bg-gray-800 animate-pulse" />
+            <Card key={i} className="bg-sl-surface/50 border-sl-line">
+              <div className="w-full h-48 bg-sl-raise animate-pulse" />
               <CardContent className="p-4 space-y-3">
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-3 w-3/4" />

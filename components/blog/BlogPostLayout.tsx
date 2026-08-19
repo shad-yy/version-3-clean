@@ -69,7 +69,7 @@ export function BlogPostLayout({
         aria-hidden="true"
       />
 
-      <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+      <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
 
         {/* ── Hero header ── */}
         <header

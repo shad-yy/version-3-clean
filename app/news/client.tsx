@@ -60,7 +60,7 @@ function CategoryBadge({ tab }: { tab: Exclude<TabKey, "all"> }) {
 function ArticleMeta({ article }: { article: NewsArticle }) {
   const dateStr = formatDate(article.pubDate)
   return (
-    <div className="flex items-center gap-2 text-xs text-gray-500">
+    <div className="flex items-center gap-2 text-xs text-sl-mute">
       <span className="font-medium text-blue-400">{article.source_name || "News"}</span>
       <span className="flex items-center gap-1">
         <Clock className="w-3 h-3" />
@@ -83,7 +83,7 @@ function ImageOrGradient({
     <div
       className={[
         "relative overflow-hidden",
-        imageUrl ? "bg-gray-900" : "bg-gradient-to-br from-gray-900 via-gray-950 to-black",
+        imageUrl ? "bg-sl-surface" : "bg-gradient-to-br from-gray-900 via-gray-950 to-black",
         className || "",
       ].join(" ")}
     >
@@ -123,7 +123,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
       <FadeIn>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         <div className="mb-8">
-          <p className="text-xs uppercase tracking-widest text-gray-500 border-t border-white/10 pt-4 mb-6">
+          <p className="text-xs uppercase tracking-widest text-sl-mute border-t border-white/10 pt-4 mb-6">
             The Sports Desk
           </p>
           <div className="flex items-end justify-between gap-6 flex-wrap">
@@ -131,7 +131,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
               <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-text-primary mb-2">
                 Latest Sports Headlines
               </h2>
-              <p className="text-sm text-gray-400 leading-relaxed max-w-2xl">
+              <p className="text-sm text-sl-mute leading-relaxed max-w-2xl">
                 Football, transfers, and fight news—curated into a clean newspaper layout.
               </p>
             </div>
@@ -148,7 +148,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
                 "px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 border",
                 activeTab === t.key
                   ? "bg-green-500 text-black border-green-500"
-                  : "bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-white",
+                  : "bg-transparent text-sl-mute border-sl-line hover:border-sl-outline hover:text-white",
               ].join(" ")}
             >
               {t.label}
@@ -157,7 +157,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
         </div>
 
         {!hero ? (
-          <div className="text-center py-20 text-gray-500">
+          <div className="text-center py-20 text-sl-mute">
             <p>No articles found in this category.</p>
           </div>
         ) : (
@@ -180,7 +180,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
                     {hero.title}
                   </h2>
                   {hero.description ? (
-                    <p className="text-sm text-gray-300 leading-relaxed line-clamp-3 max-w-3xl">
+                    <p className="text-sm text-sl-mid leading-relaxed line-clamp-3 max-w-3xl">
                       {hero.description}
                     </p>
                   ) : null}
@@ -214,7 +214,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
                           {a.title}
                         </h3>
                         {a.description ? (
-                          <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
+                          <p className="text-sm text-sl-mute leading-relaxed line-clamp-3">
                             {a.description}
                           </p>
                         ) : null}
@@ -228,7 +228,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
             {/* Newspaper grid */}
             {rest.length > 0 ? (
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 border-t border-white/10 pt-4 mb-6">
+                <p className="text-xs uppercase tracking-widest text-sl-mute border-t border-white/10 pt-4 mb-6">
                   More stories
                 </p>
                 <StaggerIn className="grid grid-cols-1 md:grid-cols-3 gap-x-8">
@@ -243,7 +243,7 @@ export function NewsPageClient({ initialArticles }: NewsPageClientProps) {
                       <h4 className="font-bold tracking-tight text-text-primary leading-snug line-clamp-2 group-hover:text-green-400 transition-colors">
                         {a.title}
                       </h4>
-                      <div className="mt-2 flex items-center justify-between gap-3 text-xs text-gray-500">
+                      <div className="mt-2 flex items-center justify-between gap-3 text-xs text-sl-mute">
                         <span className="truncate">{a.source_name || "News"}</span>
                         <span className="shrink-0">{formatDate(a.pubDate)}</span>
                       </div>

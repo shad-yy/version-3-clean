@@ -13,7 +13,7 @@ interface TeamInfoCardProps {
 
 export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
   return (
-    <Card className="bg-gray-900/50 border-gray-800">
+    <Card className="bg-sl-surface/50 border-sl-line">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Info className="w-5 h-5" />
@@ -24,15 +24,15 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
         {/* Basic Info */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-gray-400">Full Name</span>
+            <span className="text-sl-mute">Full Name</span>
             <span className="text-white font-medium">{team.name}</span>
           </div>
 
           {team.country && (
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Country</span>
+              <span className="text-sl-mute">Country</span>
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-gray-400" />
+                <Globe className="w-4 h-4 text-sl-mute" />
                 <span className="text-white">{team.country}</span>
               </div>
             </div>
@@ -40,9 +40,9 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
 
           {team.founded && (
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Founded</span>
+              <span className="text-sl-mute">Founded</span>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-gray-400" />
+                <Calendar className="w-4 h-4 text-sl-mute" />
                 <span className="text-white">{team.founded}</span>
               </div>
             </div>
@@ -50,7 +50,7 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
 
           {team.league && (
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">League</span>
+              <span className="text-sl-mute">League</span>
               <Badge variant="secondary">{team.league}</Badge>
             </div>
           )}
@@ -59,13 +59,13 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
         {/* Additional Info from TheSportsDB */}
         {additionalInfo && (
           <>
-            <hr className="border-gray-700" />
+            <hr className="border-sl-line" />
             <div className="space-y-3">
               {additionalInfo.strStadium && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Stadium</span>
+                  <span className="text-sl-mute">Stadium</span>
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-400" />
+                    <MapPin className="w-4 h-4 text-sl-mute" />
                     <span className="text-white">{additionalInfo.strStadium}</span>
                   </div>
                 </div>
@@ -73,7 +73,7 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
 
               {additionalInfo.intStadiumCapacity && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Capacity</span>
+                  <span className="text-sl-mute">Capacity</span>
                   <span className="text-white">
                     {Number.parseInt(additionalInfo.intStadiumCapacity).toLocaleString()}
                   </span>
@@ -82,14 +82,14 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
 
               {additionalInfo.strManager && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Manager</span>
+                  <span className="text-sl-mute">Manager</span>
                   <span className="text-white">{additionalInfo.strManager}</span>
                 </div>
               )}
 
               {additionalInfo.strWebsite && (
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-400">Website</span>
+                  <span className="text-sl-mute">Website</span>
                   <a
                     href={`https://${additionalInfo.strWebsite}`}
                     target="_blank"
@@ -107,9 +107,9 @@ export function TeamInfoCard({ team, additionalInfo }: TeamInfoCardProps) {
         {/* Team Colors */}
         {additionalInfo?.strTeamJersey && (
           <>
-            <hr className="border-gray-700" />
+            <hr className="border-sl-line" />
             <div>
-              <h4 className="text-sm font-medium text-gray-400 mb-2">Team Kit</h4>
+              <h4 className="text-sm font-medium text-sl-mute mb-2">Team Kit</h4>
               <OptimizedImage
                 src={additionalInfo.strTeamJersey}
                 alt={`${team.name} kit`}

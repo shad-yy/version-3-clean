@@ -176,7 +176,7 @@ export default async function MatchPage(
   }
 
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text">
       <SchemaMarkup schema={eventSchema} />
       <SchemaMarkup schema={faqSchema} />
 
@@ -271,6 +271,7 @@ export default async function MatchPage(
               initialCountry={rights.initialCountry}
               verifiedDate={rights.verifiedDate}
               competitionName={rights.competitionName}
+              verifiedSummary={rights.verifiedSummary}
             />
           </div>
 

@@ -368,24 +368,24 @@ export function ApiForm() {
               key={key}
               variant="outline"
               onClick={() => handleQuickTest(key)}
-              className="h-auto p-4 flex flex-col items-center gap-2 bg-gray-900/50 border-gray-700 hover:border-gray-600"
+              className="h-auto p-4 flex flex-col items-center gap-2 bg-sl-surface/50 border-sl-line hover:border-sl-line"
             >
               <Icon className={`w-6 h-6 ${api.color}`} />
               <span className="font-medium">{api.name}</span>
-              <span className="text-xs text-gray-400">Quick Test</span>
+              <span className="text-xs text-sl-mute">Quick Test</span>
             </Button>
           )
         })}
       </div>
 
       <Tabs defaultValue="manual" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-gray-800">
+        <TabsList className="grid w-full grid-cols-2 bg-sl-raise">
           <TabsTrigger value="manual">Manual Testing</TabsTrigger>
           <TabsTrigger value="batch">Batch Testing</TabsTrigger>
         </TabsList>
 
         <TabsContent value="manual" className="space-y-6">
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TestTube className="w-5 h-5" />
@@ -438,7 +438,7 @@ export function ApiForm() {
                     value={parameter}
                     onChange={(e) => setParameter(e.target.value)}
                     placeholder={`Enter ${currentMethod.param}`}
-                    className="bg-gray-800 border-gray-700"
+                    className="bg-sl-raise border-sl-line"
                     maxLength={200}
                   />
                 </div>
@@ -453,7 +453,7 @@ export function ApiForm() {
                   value={customEndpoint}
                   onChange={(e) => setCustomEndpoint(e.target.value)}
                   placeholder="https://api.example.com/endpoint"
-                  className="bg-gray-800 border-gray-700"
+                  className="bg-sl-raise border-sl-line"
                   maxLength={500}
                 />
               </div>
@@ -468,7 +468,7 @@ export function ApiForm() {
 
           {/* Test Results */}
           {testResult && (
-            <Card className="bg-gray-900/50 border-gray-800">
+            <Card className="bg-sl-surface/50 border-sl-line">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   {testResult.success ? (
@@ -499,7 +499,7 @@ export function ApiForm() {
                       <Textarea
                         value={JSON.stringify(sanitizeJsonData(testResult.data), null, 2)}
                         readOnly
-                        className="bg-gray-800 border-gray-700 font-mono text-sm h-40"
+                        className="bg-sl-raise border-sl-line font-mono text-sm h-40"
                       />
                     </div>
                   )}
@@ -510,7 +510,7 @@ export function ApiForm() {
         </TabsContent>
 
         <TabsContent value="batch" className="space-y-6">
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TestTube className="w-5 h-5" />
@@ -529,7 +529,7 @@ export function ApiForm() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-400">Run comprehensive tests across all API endpoints to verify system health.</p>
+              <p className="text-sl-mute">Run comprehensive tests across all API endpoints to verify system health.</p>
 
               <Button onClick={handleBatchTest} disabled={isBatchTesting} className="w-full">
                 {isBatchTesting ? (
@@ -542,7 +542,7 @@ export function ApiForm() {
 
               {isBatchTesting && (
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-400">
+                  <div className="flex justify-between text-sm text-sl-mute">
                     <span>Testing Progress</span>
                     <span>{Math.round(batchProgress)}%</span>
                   </div>
@@ -551,24 +551,24 @@ export function ApiForm() {
               )}
 
               {batchResults.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-sl-raise/50 rounded-lg">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-400">{successfulTests}</div>
-                    <div className="text-xs text-gray-400">Successful</div>
+                    <div className="text-xs text-sl-mute">Successful</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-red-400">{failedTests}</div>
-                    <div className="text-xs text-gray-400">Failed</div>
+                    <div className="text-xs text-sl-mute">Failed</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-blue-400">{Math.round(avgResponseTime)}ms</div>
-                    <div className="text-xs text-gray-400">Avg Response</div>
+                    <div className="text-xs text-sl-mute">Avg Response</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-yellow-400">
                       {batchResults.length > 0 ? Math.round((successfulTests / batchResults.length) * 100) : 0}%
                     </div>
-                    <div className="text-xs text-gray-400">Success Rate</div>
+                    <div className="text-xs text-sl-mute">Success Rate</div>
                   </div>
                 </div>
               )}
@@ -576,7 +576,7 @@ export function ApiForm() {
           </Card>
 
           {batchResults.length > 0 && (
-            <Card className="bg-gray-900/50 border-gray-800">
+            <Card className="bg-sl-surface/50 border-sl-line">
               <CardHeader>
                 <CardTitle>Test Results</CardTitle>
               </CardHeader>
@@ -600,7 +600,7 @@ export function ApiForm() {
                           <div className="font-medium text-sm">
                             {result.api} - {result.method}
                           </div>
-                          <div className="text-xs text-gray-400">{result.message}</div>
+                          <div className="text-xs text-sl-mute">{result.message}</div>
                         </div>
                       </div>
                       <Badge variant="secondary" className="text-xs">

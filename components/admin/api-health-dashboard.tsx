@@ -63,7 +63,7 @@ export function ApiHealthDashboard() {
       case "down":
         return "text-red-400 bg-red-500/20 border-red-500/30"
       default:
-        return "text-gray-400 bg-gray-500/20 border-gray-500/30"
+        return "text-sl-mute bg-sl-mute/20 border-sl-outline/30"
     }
   }
 
@@ -104,7 +104,7 @@ export function ApiHealthDashboard() {
           <h3 className="text-lg font-semibold text-red-400 mb-2">
             {isJwtSecretMissing ? "JWT_SECRET Missing" : "Failed to Load API Health"}
           </h3>
-          <p className="text-gray-400 mb-4">
+          <p className="text-sl-mute mb-4">
             {isJwtSecretMissing 
               ? "JWT_SECRET environment variable is required for admin authentication. Please set JWT_SECRET in your environment variables."
               : "Unable to retrieve system health information"
@@ -132,11 +132,11 @@ export function ApiHealthDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white">API Health Dashboard</h2>
-          <p className="text-gray-400">Real-time monitoring of all system APIs</p>
+          <p className="text-sl-mute">Real-time monitoring of all system APIs</p>
         </div>
         <div className="flex items-center gap-3">
           {lastRefresh && (
-            <span className="text-sm text-gray-400">Last updated: {lastRefresh.toLocaleTimeString()}</span>
+            <span className="text-sm text-sl-mute">Last updated: {lastRefresh.toLocaleTimeString()}</span>
           )}
           <Button
             onClick={() => fetchHealth(false)}
@@ -166,19 +166,19 @@ export function ApiHealthDashboard() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-white">{health.metrics.totalRequests}</div>
-              <div className="text-sm text-gray-400">Total Requests</div>
+              <div className="text-sm text-sl-mute">Total Requests</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-400">{health.metrics.successRate.toFixed(1)}%</div>
-              <div className="text-sm text-gray-400">Success Rate</div>
+              <div className="text-sm text-sl-mute">Success Rate</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-400">{health.metrics.averageResponseTime.toFixed(0)}ms</div>
-              <div className="text-sm text-gray-400">Avg Response</div>
+              <div className="text-sm text-sl-mute">Avg Response</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-red-400">{health.metrics.errorRate.toFixed(1)}%</div>
-              <div className="text-sm text-gray-400">Error Rate</div>
+              <div className="text-sm text-sl-mute">Error Rate</div>
             </div>
           </div>
         </CardContent>
@@ -187,7 +187,7 @@ export function ApiHealthDashboard() {
       {/* Individual API Status */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {health.apis.map((api) => (
-          <Card key={api.name} className="bg-gray-900/50 border-gray-800">
+          <Card key={api.name} className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -199,7 +199,7 @@ export function ApiHealthDashboard() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-white">{api.name}</h3>
-                    <p className="text-sm text-gray-400">{api.endpoint}</p>
+                    <p className="text-sm text-sl-mute">{api.endpoint}</p>
                   </div>
                 </div>
                 <Badge className={getStatusColor(api.status)}>{api.status.toUpperCase()}</Badge>
@@ -208,19 +208,19 @@ export function ApiHealthDashboard() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-400">Response Time</span>
+                  <span className="text-sm text-sl-mute">Response Time</span>
                   <span className="font-mono text-sm text-white">{api.responseTime}ms</span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-400">Last Checked</span>
+                  <span className="text-sm text-sl-mute">Last Checked</span>
                   <span className="text-sm text-white">{new Date(api.lastChecked).toLocaleTimeString()}</span>
                 </div>
 
                 {api.responseTime > 0 && (
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm text-gray-400">Performance</span>
+                      <span className="text-sm text-sl-mute">Performance</span>
                       <span className="text-sm text-white">
                         {api.responseTime < 1000
                           ? "Excellent"
@@ -241,7 +241,7 @@ export function ApiHealthDashboard() {
                       <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-red-400">Error</p>
-                        <p className="text-sm text-gray-300">{api.errorMessage}</p>
+                        <p className="text-sm text-sl-mid">{api.errorMessage}</p>
                       </div>
                     </div>
                   </div>
@@ -253,7 +253,7 @@ export function ApiHealthDashboard() {
                       <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-green-400">Details</p>
-                        <div className="text-xs text-gray-300 mt-1">
+                        <div className="text-xs text-sl-mid mt-1">
                           {typeof api.details === "string" ? (
                             <p>{api.details}</p>
                           ) : (
@@ -271,7 +271,7 @@ export function ApiHealthDashboard() {
       </div>
 
       {/* System Metrics Chart */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
@@ -284,7 +284,7 @@ export function ApiHealthDashboard() {
               <h4 className="font-medium text-white mb-3">Success Rate</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-400">Current</span>
+                  <span className="text-sm text-sl-mute">Current</span>
                   <span className="text-sm font-mono text-green-400">{health.metrics.successRate.toFixed(1)}%</span>
                 </div>
                 <Progress value={health.metrics.successRate} className="h-2" />
@@ -295,7 +295,7 @@ export function ApiHealthDashboard() {
               <h4 className="font-medium text-white mb-3">Response Time</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-400">Average</span>
+                  <span className="text-sm text-sl-mute">Average</span>
                   <span className="text-sm font-mono text-blue-400">
                     {health.metrics.averageResponseTime.toFixed(0)}ms
                   </span>
@@ -308,7 +308,7 @@ export function ApiHealthDashboard() {
               <h4 className="font-medium text-white mb-3">Error Rate</h4>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-400">Current</span>
+                  <span className="text-sm text-sl-mute">Current</span>
                   <span className="text-sm font-mono text-red-400">{health.metrics.errorRate.toFixed(1)}%</span>
                 </div>
                 <Progress value={health.metrics.errorRate} className="h-2" />

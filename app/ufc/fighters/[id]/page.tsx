@@ -53,9 +53,9 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
   const finishRate = fighter.stats ? Math.round(((fighter.stats.koTko + fighter.stats.submissions) / fighter.stats.wins) * 100) : 0
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+    <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
       {/* Breadcrumb */}
-      <nav className="flex items-center space-x-2 text-sm text-gray-400">
+      <nav className="flex items-center space-x-2 text-sm text-sl-mute">
         <Link href="/ufc" className="hover:text-white transition-colors">UFC</Link>
         <span>/</span>
         <Link href="/ufc" className="hover:text-white transition-colors">Fighters</Link>
@@ -78,7 +78,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                   className="w-48 h-48 rounded-full object-cover border-4 border-red-500"
                 />
                 {fighter.ranking === "Champion" && (
-                  <div className="absolute -top-2 -right-2 w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center border-4 border-gray-950">
+                  <div className="absolute -top-2 -right-2 w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center border-4 border-sl-line">
                     <Trophy className="w-6 h-6 text-black" />
                   </div>
                 )}
@@ -103,7 +103,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                     >
                       {fighter.ranking === "Champion" ? "Champion" : `#${fighter.ranking}`}
                     </Badge>
-                    <Badge variant="outline" className="text-lg px-4 py-2 border-gray-600">
+                    <Badge variant="outline" className="text-lg px-4 py-2 border-sl-line">
                       {fighter.weightClass}
                     </Badge>
                   </div>
@@ -113,19 +113,19 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-bold text-white">{fighter.record}</div>
-                    <div className="text-sm text-gray-400">Record</div>
+                    <div className="text-sm text-sl-mute">Record</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-green-400">{winPercentage}%</div>
-                    <div className="text-sm text-gray-400">Win Rate</div>
+                    <div className="text-sm text-sl-mute">Win Rate</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-red-400">{finishRate}%</div>
-                    <div className="text-sm text-gray-400">Finish Rate</div>
+                    <div className="text-sm text-sl-mute">Finish Rate</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-blue-400">{fighter.age}</div>
-                    <div className="text-sm text-gray-400">Age</div>
+                    <div className="text-sm text-sl-mute">Age</div>
                   </div>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-8">
           {/* Biography */}
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <User className="w-5 h-5" />
@@ -146,7 +146,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-sl-mid leading-relaxed">
                 {fighter.bio || "No biography available for this fighter."}
               </p>
             </CardContent>
@@ -154,7 +154,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
 
           {/* Fight Statistics */}
           {fighter.stats && (
-            <Card className="bg-gray-900/50 border-gray-800">
+            <Card className="bg-sl-surface/50 border-sl-line">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="w-5 h-5" />
@@ -165,27 +165,27 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-green-400 mb-1">{fighter.stats.wins}</div>
-                    <div className="text-sm text-gray-400">Wins</div>
+                    <div className="text-sm text-sl-mute">Wins</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-red-400 mb-1">{fighter.stats.losses}</div>
-                    <div className="text-sm text-gray-400">Losses</div>
+                    <div className="text-sm text-sl-mute">Losses</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-yellow-400 mb-1">{fighter.stats.draws}</div>
-                    <div className="text-sm text-gray-400">Draws</div>
+                    <div className="text-sm text-sl-mute">Draws</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-orange-400 mb-1">{fighter.stats.koTko}</div>
-                    <div className="text-sm text-gray-400">KO/TKO</div>
+                    <div className="text-sm text-sl-mute">KO/TKO</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-purple-400 mb-1">{fighter.stats.submissions}</div>
-                    <div className="text-sm text-gray-400">Submissions</div>
+                    <div className="text-sm text-sl-mute">Submissions</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-blue-400 mb-1">{fighter.stats.decisions}</div>
-                    <div className="text-sm text-gray-400">Decisions</div>
+                    <div className="text-sm text-sl-mute">Decisions</div>
                   </div>
                 </div>
               </CardContent>
@@ -193,7 +193,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
           )}
 
           {/* Fight History */}
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
@@ -204,10 +204,10 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
               {Array.isArray(fighter.fightHistory) && fighter.fightHistory.length > 0 ? (
                 <div className="space-y-4">
                   {fighter.fightHistory.slice(0, 5).map((fight: { opponent: string; event: string; date: string; result: string; method: string }, index: number) => (
-                    <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-gray-700">
+                    <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-sl-line">
                       <div>
                         <div className="font-semibold text-white">{fight.opponent}</div>
-                        <div className="text-sm text-gray-400">{fight.event} • {fight.date}</div>
+                        <div className="text-sm text-sl-mute">{fight.event} • {fight.date}</div>
                       </div>
                       <div className="text-right">
                         <Badge
@@ -221,15 +221,15 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                         >
                           {fight.result}
                         </Badge>
-                        <div className="text-sm text-gray-400 mt-1">{fight.method}</div>
+                        <div className="text-sm text-sl-mute mt-1">{fight.method}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400">No fight history available</p>
+                  <Calendar className="w-12 h-12 text-sl-dim mx-auto mb-4" />
+                  <p className="text-sl-mute">No fight history available</p>
                 </div>
               )}
             </CardContent>
@@ -239,7 +239,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Physical Stats */}
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Ruler className="w-5 h-5" />
@@ -248,19 +248,19 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between">
-                <span className="text-gray-400">Height:</span>
+                <span className="text-sl-mute">Height:</span>
                 <span className="text-white font-semibold">{fighter.height}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Reach:</span>
+                <span className="text-sl-mute">Reach:</span>
                 <span className="text-white font-semibold">{fighter.reach}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Age:</span>
+                <span className="text-sl-mute">Age:</span>
                 <span className="text-white font-semibold">{fighter.age}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Country:</span>
+                <span className="text-sl-mute">Country:</span>
                 <span className="text-white font-semibold flex items-center gap-2">
                   <MapPin className="w-4 h-4" />
                   {fighter.country}
@@ -270,7 +270,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
           </Card>
 
           {/* Achievements */}
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Award className="w-5 h-5" />
@@ -300,7 +300,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
           </Card>
 
           {/* Quick Actions */}
-          <Card className="bg-gray-900/50 border-gray-800">
+          <Card className="bg-sl-surface/50 border-sl-line">
             <CardHeader>
               <CardTitle>Quick Actions</CardTitle>
             </CardHeader>

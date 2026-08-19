@@ -34,7 +34,7 @@ const FAQS = [
 
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100 pt-28 md:pt-36 pb-16 md:pb-20">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text pt-28 md:pt-36 pb-16 md:pb-20">
       <FadeIn>
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">

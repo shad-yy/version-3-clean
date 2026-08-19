@@ -137,7 +137,7 @@ function InfoView({ date, time, venue, league }: InfoViewProps) {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-[#2a2a3e] rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+        <div className="bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-6 flex flex-col justify-between shadow-lg">
           <div>
             <h4 className="text-sm font-extrabold text-sl-text uppercase tracking-wider mb-2 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -166,7 +166,7 @@ function InfoView({ date, time, venue, league }: InfoViewProps) {
             { t: "No contract latency",   d: "Stream using low-latency feeds optimized for mobile and smart TVs." },
             { t: "Pre-match coverage",    d: "Access deep stats, lineups, and match facts beforehand." },
           ].map((item) => (
-            <div key={item.t} className={`${CARD_BG_50} border border-[#2a2a3e] p-4 rounded-xl`}>
+            <div key={item.t} className={`${CARD_BG_50} border border-[var(--sl-line)] p-4 rounded-xl`}>
               <h5 className="text-xs font-bold text-[var(--sl-amber)] mb-1.5">{item.t}</h5>
               <p className="text-xs text-sl-mid leading-relaxed">{item.d}</p>
             </div>

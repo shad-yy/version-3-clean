@@ -230,7 +230,7 @@ export default function ScoresPageClient() {
   ]
 
   return (
-    <main className="min-h-screen bg-[#070710] pt-20">
+    <main className="min-h-screen bg-[var(--sl-ground)] pt-20">
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/3 w-[600px] h-[400px] bg-blue-500/4 rounded-full blur-[130px]" />

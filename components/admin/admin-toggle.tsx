@@ -128,12 +128,12 @@ export function AdminToggle() {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-gray-800">
+        <Button variant="ghost" size="sm" className="text-sl-mute hover:text-white hover:bg-sl-raise">
           <Shield className="w-4 h-4 mr-1" />
           <span className="hidden sm:inline">Admin</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-gray-900 border-gray-800">
+      <DialogContent className="sm:max-w-md bg-sl-surface border-sl-line">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-white">
             <Settings className="w-5 h-5" />
@@ -142,7 +142,7 @@ export function AdminToggle() {
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium text-gray-300">
+            <label htmlFor="password" className="text-sm font-medium text-sl-mid">
               Admin Password
             </label>
             <Input
@@ -152,7 +152,7 @@ export function AdminToggle() {
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Enter admin password"
-              className="bg-gray-800 border-gray-700 text-white"
+              className="bg-sl-raise border-sl-line text-white"
               autoFocus
             />
           </div>
@@ -160,7 +160,7 @@ export function AdminToggle() {
             <Button
               variant="outline"
               onClick={() => setIsDialogOpen(false)}
-              className="bg-transparent border-gray-700 text-gray-300 hover:bg-gray-800"
+              className="bg-transparent border-sl-line text-sl-mid hover:bg-sl-raise"
             >
               Cancel
             </Button>

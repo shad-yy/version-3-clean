@@ -76,7 +76,7 @@ export function ApiUsageMonitor() {
         <CardContent className="p-8 text-center">
           <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-red-400 mb-2">API Usage Monitor Error</h3>
-          <p className="text-gray-400 mb-4">{error}</p>
+          <p className="text-sl-mute mb-4">{error}</p>
           {error.includes("JWT_SECRET") && (
             <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4 mb-4">
               <p className="text-sm text-yellow-400">
@@ -96,7 +96,7 @@ export function ApiUsageMonitor() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* API Usage Overview */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">API Usage</CardTitle>
           <Activity className="h-4 w-4 text-muted-foreground" />
@@ -111,7 +111,7 @@ export function ApiUsageMonitor() {
       </Card>
 
       {/* Usage Status */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Status</CardTitle>
           <StatusIcon className="h-4 w-4 text-muted-foreground" />
@@ -126,7 +126,7 @@ export function ApiUsageMonitor() {
       </Card>
 
       {/* Cache Information */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Cache</CardTitle>
           <Database className="h-4 w-4 text-muted-foreground" />
@@ -141,7 +141,7 @@ export function ApiUsageMonitor() {
       </Card>
 
       {/* Controls */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Controls</CardTitle>
           <Zap className="h-4 w-4 text-muted-foreground" />

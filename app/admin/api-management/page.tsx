@@ -92,7 +92,7 @@ export default function ApiManagementPage() {
   // Loading state
   if (!mounted || isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+      <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
         <div className="space-y-4">
           <Skeleton className="h-12 w-96" />
           <Skeleton className="h-6 w-64" />
@@ -110,12 +110,12 @@ export default function ApiManagementPage() {
   // Access denied state
   if (!isAdmin) {
     return (
-      <div className="container mx-auto px-4 py-8 bg-gray-950 min-h-screen">
+      <div className="container mx-auto px-4 py-8 bg-sl-ground min-h-screen">
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <Shield className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+            <Shield className="w-16 h-16 text-sl-dim mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
-            <p className="text-gray-400">Administrator privileges required to access this page.</p>
+            <p className="text-sl-mute">Administrator privileges required to access this page.</p>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function ApiManagementPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8 bg-gray-950 min-h-screen">
+    <div className="container mx-auto px-4 py-8 space-y-8 bg-sl-ground min-h-screen">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -134,14 +134,14 @@ export default function ApiManagementPage() {
             </Badge>
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-white">API Management</h1>
-          <p className="text-lg text-gray-400 mt-2">Unified Sports API with intelligent caching and rate limiting</p>
+          <p className="text-lg text-sl-mute mt-2">Unified Sports API with intelligent caching and rate limiting</p>
         </div>
         <div className="flex items-center gap-3">
           <Button
             onClick={testApiConnection}
             disabled={isTesting}
             variant="outline"
-            className="gap-2 border-gray-700 text-gray-300 hover:text-white bg-transparent"
+            className="gap-2 border-sl-line text-sl-mid hover:text-white bg-transparent"
           >
             {isTesting ? (
               <>
@@ -161,7 +161,7 @@ export default function ApiManagementPage() {
       {/* Connection Status */}
       {connectionStatus && (
         <Card
-          className={`bg-gray-900/50 border-gray-800 ${connectionStatus.success ? "border-green-500/30" : "border-red-500/30"}`}
+          className={`bg-sl-surface/50 border-sl-line ${connectionStatus.success ? "border-green-500/30" : "border-red-500/30"}`}
         >
           <CardHeader>
             <CardTitle
@@ -180,13 +180,13 @@ export default function ApiManagementPage() {
                 >
                   {connectionStatus.success ? "Connected" : "Failed"}
                 </Badge>
-                <span className="text-gray-300">{connectionStatus.message}</span>
+                <span className="text-sl-mid">{connectionStatus.message}</span>
               </div>
 
               {connectionStatus.details && (
-                <div className="bg-gray-800/50 p-4 rounded-lg">
+                <div className="bg-sl-raise/50 p-4 rounded-lg">
                   <h4 className="font-semibold mb-2 text-white">Connection Details</h4>
-                  <pre className="text-xs text-gray-300 overflow-x-auto">
+                  <pre className="text-xs text-sl-mid overflow-x-auto">
                     {JSON.stringify(connectionStatus.details, null, 2)}
                   </pre>
                 </div>
@@ -206,7 +206,7 @@ export default function ApiManagementPage() {
             <CardTitle className="text-green-400">Smart Caching</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="text-sm text-gray-300 space-y-2">
+            <ul className="text-sm text-sl-mid space-y-2">
               <li>• Static data cached for 24 hours</li>
               <li>• Semi-static data cached for 6 hours</li>
               <li>• Dynamic data cached for 1 hour</li>
@@ -220,7 +220,7 @@ export default function ApiManagementPage() {
             <CardTitle className="text-blue-400">Rate Limiting</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="text-sm text-gray-300 space-y-2">
+            <ul className="text-sm text-sl-mid space-y-2">
               <li>• ~30 requests per minute (free tier)</li>
               <li>• Intelligent request prioritization</li>
               <li>• Automatic rate limit handling</li>
@@ -234,7 +234,7 @@ export default function ApiManagementPage() {
             <CardTitle className="text-purple-400">Data Coverage</CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="text-sm text-gray-300 space-y-2">
+            <ul className="text-sm text-sl-mid space-y-2">
               <li>• Multi-sport support (Soccer, Motorsport, etc.)</li>
               <li>• Live scores and fixtures</li>
               <li>• Player statistics</li>
@@ -245,7 +245,7 @@ export default function ApiManagementPage() {
       </div>
 
       {/* Optimization Tips */}
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader>
           <CardTitle className="text-white">API Optimization Strategy</CardTitle>
         </CardHeader>
@@ -253,7 +253,7 @@ export default function ApiManagementPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-3 text-green-400">Cache Strategy</h4>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-sl-mid space-y-1">
                 <li>• Leagues and teams: Long-term cache (24h)</li>
                 <li>• Standings and stats: Medium-term cache (6h)</li>
                 <li>• Fixtures and scores: Short-term cache (1h)</li>
@@ -262,7 +262,7 @@ export default function ApiManagementPage() {
             </div>
             <div>
               <h4 className="font-semibold mb-3 text-blue-400">Request Optimization</h4>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-sl-mid space-y-1">
                 <li>• Batch requests when possible</li>
                 <li>• Prioritize popular leagues</li>
                 <li>• Use season-specific caching</li>

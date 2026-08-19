@@ -180,7 +180,7 @@ export function MatchPopup({ match, onClose }: MatchPopupProps) {
                         )}
                         {isLive && (
                             <div className="flex items-center gap-1 bg-red-500/10 border border-red-500/30 rounded-full px-2 py-0.5">
-                                <div className="w-1.5 h-1.5 bg-live-red rounded-full animate-pulse shadow-[0_0_8px_#ff1744]" />
+                                <div className="w-1.5 h-1.5 bg-live-red rounded-full animate-pulse shadow-[0_0_8px_var(--sl-amber)]" />
                                 <span className="text-[10px] uppercase font-bold text-live-red">Live</span>
                             </div>
                         )}

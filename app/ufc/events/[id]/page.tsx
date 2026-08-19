@@ -60,7 +60,7 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
   const venue = header?.competitions?.[0]?.venue?.fullName || ''
   
   return (
-    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100 
+    <div className="min-h-screen bg-[var(--sl-ground)] text-sl-text 
       pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
         

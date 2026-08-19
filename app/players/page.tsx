@@ -83,7 +83,7 @@ async function PlayersList({ searchParams }: { searchParams: PlayersPageProps["s
       <div className="text-center py-16">
         <Users className="w-16 h-16 mx-auto mb-4 text-red-400" />
         <h3 className="text-xl font-semibold mb-2 text-red-400">Error Loading Players</h3>
-        <p className="text-gray-400 mb-4">{error}</p>
+        <p className="text-sl-mute mb-4">{error}</p>
         <Button asChild variant="outline">
           <Link href="/players">Try Again</Link>
         </Button>
@@ -94,9 +94,9 @@ async function PlayersList({ searchParams }: { searchParams: PlayersPageProps["s
   if (players.length === 0) {
     return (
       <div className="text-center py-16">
-        <Users className="w-16 h-16 mx-auto mb-4 text-gray-600" />
+        <Users className="w-16 h-16 mx-auto mb-4 text-sl-dim" />
         <h3 className="text-xl font-semibold mb-2">No Players Found</h3>
-        <p className="text-gray-400">
+        <p className="text-sl-mute">
           {searchParams.search ? `No players found for "${searchParams.search}"` : "No players available at the moment"}
         </p>
       </div>
@@ -120,21 +120,21 @@ export default function PlayersPage({ searchParams }: PlayersPageProps) {
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-4">Football Players</h1>
-        <p className="text-lg text-gray-400">Discover players from the world's top football teams</p>
+        <p className="text-lg text-sl-mute">Discover players from the world's top football teams</p>
       </div>
 
       {/* Search and Filters */}
       <div className="mb-8">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Search */}
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-sl-mute w-5 h-5" />
                 <Input
                   placeholder="Search players..."
                   defaultValue={searchParams.search || ""}
-                  className="pl-12 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                  className="pl-12 bg-sl-raise border-sl-line text-white placeholder-gray-400"
                 />
               </div>
 
@@ -198,7 +198,7 @@ export default function PlayersPage({ searchParams }: PlayersPageProps) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {PLAYER_POSITIONS.filter(p => p.value !== 'all').map((pos) => (
             <Link key={pos.value} href={`/players?position=${pos.value}`}>
-              <Card className="bg-gray-900/50 border-gray-800 hover:bg-gray-800/50 transition-colors text-center p-4">
+              <Card className="bg-sl-surface/50 border-sl-line hover:bg-sl-raise/50 transition-colors text-center p-4">
                 <div className="text-2xl mb-2">
                   <User className="w-8 h-8 mx-auto text-primary" />
                 </div>
@@ -216,7 +216,7 @@ export default function PlayersPage({ searchParams }: PlayersPageProps) {
 
       {/* Browse More */}
       <div className="mt-12 text-center">
-        <Card className="bg-gray-900/50 border-gray-800">
+        <Card className="bg-sl-surface/50 border-sl-line">
           <CardContent className="p-8">
             <h3 className="text-xl font-semibold mb-4">Explore More</h3>
             <div className="flex flex-wrap justify-center gap-4">
