@@ -77,14 +77,14 @@ function GuideCard({ guide }: { guide: Guide }) {
   return (
     <Link
       href={guide.href}
-      className="group flex flex-col rounded-2xl border border-[#2a2a3a] bg-[#12121a] p-5 transition-colors hover:border-[#00e676]/40"
+      className="group flex flex-col rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 transition-colors hover:border-[var(--sl-amber)]/40"
     >
-      <h3 className="text-lg font-bold text-white group-hover:text-[#00e676] transition-colors">
+      <h3 className="text-lg font-bold text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">
         {guide.name}
       </h3>
-      <p className="mt-2 flex-1 text-sm text-gray-400 leading-relaxed">{guide.blurb}</p>
+      <p className="mt-2 flex-1 text-sm text-sl-mute leading-relaxed">{guide.blurb}</p>
       {countries > 0 && (
-        <p className="mt-4 text-xs text-gray-500">
+        <p className="mt-4 text-xs text-sl-mute">
           Broadcast listings verified for {countries}{" "}
           {countries === 1 ? "country" : "countries"}
         </p>
@@ -138,19 +138,19 @@ export default async function WatchIndexPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
       <SchemaMarkup schema={breadcrumb} />
       <SchemaMarkup schema={itemList} />
 
-      <section className="pt-28 md:pt-36 pb-12 px-4 border-b border-[#1a1a2a]">
+      <section className="pt-28 md:pt-36 pb-12 px-4 border-b border-[var(--sl-raise)]">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#00e676]">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[var(--sl-amber)]">
             Where to watch
           </p>
-          <h1 className="mb-4 text-4xl md:text-5xl font-extrabold text-white">
+          <h1 className="mb-4 text-4xl md:text-5xl font-extrabold text-sl-text">
             Competition guides
           </h1>
-          <p className="max-w-2xl text-gray-400 leading-relaxed">
+          <p className="max-w-2xl text-sl-mute leading-relaxed">
             Fixtures, kick-off times, standings and results — plus which service carries
             each competition, country by country. Rights differ by territory, so a guide
             names the broadcaster for the countries we have verified rather than assuming
@@ -166,7 +166,7 @@ export default async function WatchIndexPage() {
           ))}
         </div>
 
-        <p className="mx-auto mt-8 max-w-6xl text-xs text-gray-600">
+        <p className="mx-auto mt-8 max-w-6xl text-xs text-sl-dim">
           Broadcast rights are shown at competition level and change between seasons.
           Individual fixtures can move — always confirm with the broadcaster before
           kick-off.
@@ -174,10 +174,10 @@ export default async function WatchIndexPage() {
       </section>
 
       {titles.length > 0 && (
-        <section className="border-t border-[#1a1a2a] px-4 py-12 md:py-16">
+        <section className="border-t border-[var(--sl-raise)] px-4 py-12 md:py-16">
           <div className="mx-auto max-w-6xl">
-            <h2 className="mb-3 text-2xl md:text-3xl font-bold text-white">Films and series</h2>
-            <p className="mb-8 max-w-2xl text-sm text-gray-400 leading-relaxed">
+            <h2 className="mb-3 text-2xl md:text-3xl font-bold text-sl-text">Films and series</h2>
+            <p className="mb-8 max-w-2xl text-sm text-sl-mute leading-relaxed">
               The same question, asked of film and television: which service carries this,
               where you are. Availability is listed per country, because a title on a
               subscription in one market is a rental in the next and absent from a third.
@@ -188,20 +188,20 @@ export default async function WatchIndexPage() {
                 <Link
                   key={`${t.mediaType}-${t.tmdbId}`}
                   href={`/watch/title/${buildTitleSlug(t.mediaType, t.tmdbId, t.name)}`}
-                  className="group flex flex-col rounded-2xl border border-[#2a2a3a] bg-[#12121a] p-5 transition-colors hover:border-[#00e676]/40"
+                  className="group flex flex-col rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 transition-colors hover:border-[var(--sl-amber)]/40"
                 >
-                  <p className="mb-1 text-[10px] uppercase tracking-wide text-gray-500">
+                  <p className="mb-1 text-[10px] uppercase tracking-wide text-sl-mute">
                     {t.mediaType === "movie" ? "Film" : "Series"}
                     {t.year ? ` · ${t.year}` : ""}
                   </p>
-                  <h3 className="text-lg font-bold text-white transition-colors group-hover:text-[#00e676]">
+                  <h3 className="text-lg font-bold text-sl-text transition-colors group-hover:text-[var(--sl-amber)]">
                     {t.name}
                   </h3>
                 </Link>
               ))}
             </div>
 
-            <p className="mt-8 text-xs text-gray-600">{JUSTWATCH_ATTRIBUTION}.</p>
+            <p className="mt-8 text-xs text-sl-dim">{JUSTWATCH_ATTRIBUTION}.</p>
           </div>
         </section>
       )}

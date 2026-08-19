@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, ExternalLink, Info, MapPin, Trophy, Users } from "lucide-react"
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
-const CARD_BG = "bg-[#181824]"
-const CARD_BG_40 = "bg-[#181824]/40"
-const CARD_BG_30 = "bg-[#181824]/30"
+const CARD_BG = "bg-[var(--sl-raise)]"
+const CARD_BG_40 = "bg-[var(--sl-raise)]/40"
+const CARD_BG_30 = "bg-[var(--sl-raise)]/30"
 
 // ─── Animation variants (hoisted — stable object references across renders) ───
 const TAB_VARIANTS = {
@@ -80,12 +80,12 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-2">
-        <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <Trophy className="w-5 h-5 text-[#00e676]" />
+        <h3 className="text-lg font-bold text-sl-text flex items-center gap-2">
+          <Trophy className="w-5 h-5 text-[var(--sl-amber)]" />
           Standings Table
         </h3>
         {standings.length > 0 && (
-          <div className="hidden sm:flex items-center gap-4 text-xs font-semibold text-gray-400">
+          <div className="hidden sm:flex items-center gap-4 text-xs font-semibold text-sl-mute">
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-emerald-500/20 border border-emerald-500/40" /> CL / Promotion</span>
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-blue-500/20 border border-blue-500/40" /> EL Promotion</span>
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-red-500/20 border border-red-500/40" /> Relegation</span>
@@ -97,7 +97,7 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
         <div className="overflow-x-auto border border-white/5 rounded-xl shadow-lg">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className={`${CARD_BG} border-b border-[#2a2a3e] text-[11px] font-black uppercase text-gray-400 tracking-wider`}>
+              <tr className={`${CARD_BG} border-b border-[#2a2a3e] text-[11px] font-black uppercase text-sl-mute tracking-wider`}>
                 <th className="py-4 px-4 text-center w-12">Pos</th>
                 <th className="py-4 px-4">Team</th>
                 <th className="py-4 px-3 text-center w-12">P</th>
@@ -107,19 +107,19 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
                 <th className="py-4 px-3 text-center w-12 hidden md:table-cell">GF</th>
                 <th className="py-4 px-3 text-center w-12 hidden md:table-cell">GA</th>
                 <th className="py-4 px-3 text-center w-12">GD</th>
-                <th className="py-4 px-4 text-center w-16 bg-[#1f1f2e]/40">Pts</th>
+                <th className="py-4 px-4 text-center w-16 bg-[var(--sl-raise)]/40">Pts</th>
               </tr>
             </thead>
             <tbody>
               {standings.map((team) => {
                 const pos = Number(team.position)
 
-                let zoneClass = "border-b border-white/5 hover:bg-[#181824]/50 transition-colors"
-                let posIndicator = "text-gray-400"
+                let zoneClass = "border-b border-white/5 hover:bg-[var(--sl-raise)]/50 transition-colors"
+                let posIndicator = "text-sl-mute"
 
                 if (pos <= 4 && standings.length > 10) {
                   zoneClass = "border-b border-white/5 hover:bg-emerald-500/5 bg-emerald-500/[0.01] transition-colors"
-                  posIndicator = "text-[#00e676] bg-emerald-500/10 rounded-lg px-2 py-0.5"
+                  posIndicator = "text-[var(--sl-amber)] bg-emerald-500/10 rounded-lg px-2 py-0.5"
                 } else if ((pos === 5 || pos === 6) && standings.length > 10) {
                   zoneClass = "border-b border-white/5 hover:bg-blue-500/5 bg-blue-500/[0.01] transition-colors"
                   posIndicator = "text-blue-400 bg-blue-500/10 rounded-lg px-2 py-0.5"
@@ -137,25 +137,25 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
                       <span className={posIndicator}>{team.position}</span>
                     </td>
                     <td className="py-4 px-4">
-                      <Link href={`/teams/${team.teamId}`} className="flex items-center space-x-3 group hover:text-[#00e676] transition-colors">
+                      <Link href={`/teams/${team.teamId}`} className="flex items-center space-x-3 group hover:text-[var(--sl-amber)] transition-colors">
                         <div className={`w-6 h-6 rounded-full ${CARD_BG} border border-white/5 flex items-center justify-center p-0.5 flex-shrink-0`}>
                           {team.teamLogo ? (
                             <img src={team.teamLogo} alt={`${team.team} crest`} className="w-full h-full object-contain" loading="lazy" />
                           ) : (
-                            <span className="text-[9px] font-bold text-gray-500">{team.team.substring(0, 2).toUpperCase()}</span>
+                            <span className="text-[9px] font-bold text-sl-mute">{team.team.substring(0, 2).toUpperCase()}</span>
                           )}
                         </div>
-                        <span className="font-bold text-sm text-white group-hover:text-[#00e676] transition-colors">{team.team}</span>
+                        <span className="font-bold text-sm text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">{team.team}</span>
                       </Link>
                     </td>
-                    <td className="py-4 px-3 text-center text-sm font-semibold text-gray-300">{team.played}</td>
-                    <td className="py-4 px-3 text-center text-sm text-gray-400">{team.won}</td>
-                    <td className="py-4 px-3 text-center text-sm text-gray-400">{team.drawn}</td>
-                    <td className="py-4 px-3 text-center text-sm text-gray-400">{team.lost}</td>
-                    <td className="py-4 px-3 text-center text-sm text-gray-500 hidden md:table-cell">{team.goalsFor}</td>
-                    <td className="py-4 px-3 text-center text-sm text-gray-500 hidden md:table-cell">{team.goalsAgainst}</td>
-                    <td className="py-4 px-3 text-center text-sm font-semibold text-gray-400">{team.goalDifference}</td>
-                    <td className="py-4 px-4 text-center text-sm font-black text-white bg-[#1f1f2e]/20">{team.points}</td>
+                    <td className="py-4 px-3 text-center text-sm font-semibold text-sl-mid">{team.played}</td>
+                    <td className="py-4 px-3 text-center text-sm text-sl-mute">{team.won}</td>
+                    <td className="py-4 px-3 text-center text-sm text-sl-mute">{team.drawn}</td>
+                    <td className="py-4 px-3 text-center text-sm text-sl-mute">{team.lost}</td>
+                    <td className="py-4 px-3 text-center text-sm text-sl-mute hidden md:table-cell">{team.goalsFor}</td>
+                    <td className="py-4 px-3 text-center text-sm text-sl-mute hidden md:table-cell">{team.goalsAgainst}</td>
+                    <td className="py-4 px-3 text-center text-sm font-semibold text-sl-mute">{team.goalDifference}</td>
+                    <td className="py-4 px-4 text-center text-sm font-black text-sl-text bg-[var(--sl-raise)]/20">{team.points}</td>
                   </tr>
                 )
               })}
@@ -164,7 +164,7 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
         </div>
       ) : (
         <div className={`text-center py-16 ${CARD_BG_30} border border-white/5 rounded-2xl`}>
-          <p className="text-gray-400 text-sm">No standings data currently available for this league.</p>
+          <p className="text-sl-mute text-sm">No standings data currently available for this league.</p>
         </div>
       )}
     </div>
@@ -174,8 +174,8 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
 function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-        <Calendar className="w-5 h-5 text-[#00e676]" />
+      <h3 className="text-lg font-bold text-sl-text mb-6 flex items-center gap-2">
+        <Calendar className="w-5 h-5 text-[var(--sl-amber)]" />
         Upcoming Fixtures
       </h3>
 
@@ -184,7 +184,7 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
           {fixtures.map((fixture) => (
             <div
               key={fixture.id}
-              className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-5 hover:border-[#00e676]/30 transition-all group relative overflow-hidden`}
+              className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-5 hover:border-[var(--sl-amber)]/30 transition-all group relative overflow-hidden`}
             >
               {fixture.isLive && <div className="absolute top-0 left-0 right-0 h-0.5 bg-red-500" />}
 
@@ -195,14 +195,14 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
                     { name: fixture.awayTeam, logo: fixture.awayLogo },
                   ].map(({ name, logo }) => (
                     <div key={name} className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#1e1e2d] border border-white/5 flex items-center justify-center p-1.5">
+                      <div className="w-8 h-8 rounded-full bg-[var(--sl-raise)] border border-white/5 flex items-center justify-center p-1.5">
                         {logo ? (
                           <img src={logo} alt="" className="w-full h-full object-contain" loading="lazy" />
                         ) : (
-                          <span className="text-[10px] font-bold text-gray-400">{name.substring(0, 2).toUpperCase()}</span>
+                          <span className="text-[10px] font-bold text-sl-mute">{name.substring(0, 2).toUpperCase()}</span>
                         )}
                       </div>
-                      <span className="font-bold text-sm text-white group-hover:text-[#00e676] transition-colors">{name}</span>
+                      <span className="font-bold text-sm text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">{name}</span>
                     </div>
                   ))}
                 </div>
@@ -211,17 +211,17 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
                   <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded ${
                     fixture.isLive
                       ? "bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse"
-                      : "bg-white/5 text-gray-400"
+                      : "bg-white/5 text-sl-mute"
                   }`}>
                     {fixture.status || "Upcoming"}
                   </span>
-                  <p className="text-xs text-gray-300 font-bold">{fixture.date}</p>
-                  <p className="text-[10px] text-gray-500">{fixture.time}</p>
+                  <p className="text-xs text-sl-mid font-bold">{fixture.date}</p>
+                  <p className="text-[10px] text-sl-mute">{fixture.time}</p>
                 </div>
               </div>
 
               {fixture.venue && (
-                <p className="text-[10px] text-gray-500 mt-4 pt-3 border-t border-white/5">
+                <p className="text-[10px] text-sl-mute mt-4 pt-3 border-t border-white/5">
                   <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{fixture.venue}</span>
                 </p>
               )}
@@ -229,7 +229,7 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
               <div className="mt-4 pt-3 border-t border-white/5 flex justify-end">
                 <Link
                   href={fixture.isLive ? `/watch` : `/match/${fixture.id}`}
-                  className="inline-flex items-center gap-1 text-[10px] font-black uppercase text-[#00e676] hover:underline"
+                  className="inline-flex items-center gap-1 text-[10px] font-black uppercase text-[var(--sl-amber)] hover:underline"
                 >
                   Match Center &rarr;
                 </Link>
@@ -239,7 +239,7 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
         </div>
       ) : (
         <div className={`text-center py-16 ${CARD_BG_30} border border-white/5 rounded-2xl`}>
-          <p className="text-gray-400 text-sm">No upcoming fixtures scheduled.</p>
+          <p className="text-sl-mute text-sm">No upcoming fixtures scheduled.</p>
         </div>
       )}
     </div>
@@ -249,8 +249,8 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
 function TeamsTab({ teams }: { teams: Team[] }) {
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-        <Users className="w-5 h-5 text-[#00e676]" />
+      <h3 className="text-lg font-bold text-sl-text mb-6 flex items-center gap-2">
+        <Users className="w-5 h-5 text-[var(--sl-amber)]" />
         Participating Teams
       </h3>
 
@@ -258,18 +258,18 @@ function TeamsTab({ teams }: { teams: Team[] }) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {teams.map((team) => (
             <Link key={team.id} href={`/teams/${team.id}`}>
-              <div className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-4 flex flex-col items-center text-center hover:border-[#00e676]/30 transition-all hover:scale-[1.03] group h-full justify-between`}>
-                <div className="w-16 h-16 rounded-full bg-[#1e1e2d] border border-white/5 flex items-center justify-center p-2.5 mb-3 group-hover:scale-105 transition-transform">
+              <div className={`${CARD_BG_40} border border-[#2a2a3e] rounded-xl p-4 flex flex-col items-center text-center hover:border-[var(--sl-amber)]/30 transition-all hover:scale-[1.03] group h-full justify-between`}>
+                <div className="w-16 h-16 rounded-full bg-[var(--sl-raise)] border border-white/5 flex items-center justify-center p-2.5 mb-3 group-hover:scale-105 transition-transform">
                   {team.logo ? (
                     <img src={team.logo} alt={team.name} className="w-full h-full object-contain" loading="lazy" />
                   ) : (
-                    <div className="text-xl font-black text-gray-500">{team.name.charAt(0)}</div>
+                    <div className="text-xl font-black text-sl-mute">{team.name.charAt(0)}</div>
                   )}
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm text-white group-hover:text-[#00e676] transition-colors line-clamp-1">{team.name}</h4>
-                  <p className="text-[10px] text-gray-400 mt-0.5">{team.country}</p>
-                  {team.founded && <p className="text-[9px] text-gray-500 mt-1">Est. {team.founded}</p>}
+                  <h4 className="font-bold text-sm text-sl-text group-hover:text-[var(--sl-amber)] transition-colors line-clamp-1">{team.name}</h4>
+                  <p className="text-[10px] text-sl-mute mt-0.5">{team.country}</p>
+                  {team.founded && <p className="text-[9px] text-sl-mute mt-1">Est. {team.founded}</p>}
                 </div>
               </div>
             </Link>
@@ -277,7 +277,7 @@ function TeamsTab({ teams }: { teams: Team[] }) {
         </div>
       ) : (
         <div className={`text-center py-16 ${CARD_BG_30} border border-white/5 rounded-2xl`}>
-          <p className="text-gray-400 text-sm">No team information available.</p>
+          <p className="text-sl-mute text-sm">No team information available.</p>
         </div>
       )}
     </div>
@@ -287,8 +287,8 @@ function TeamsTab({ teams }: { teams: Team[] }) {
 function InfoTab({ league }: { league: League }) {
   return (
     <div className="space-y-6">
-      <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-        <Info className="w-5 h-5 text-[#00e676]" />
+      <h3 className="text-lg font-bold text-sl-text mb-6 flex items-center gap-2">
+        <Info className="w-5 h-5 text-[var(--sl-amber)]" />
         League Overview
       </h3>
 
@@ -302,18 +302,18 @@ function InfoTab({ league }: { league: League }) {
             ...(league.formedYear ? [{ label: "Founded", value: league.formedYear }] : []),
           ].map(({ label, value }, i, arr) => (
             <div key={label} className={`flex justify-between py-2 ${i < arr.length - 1 ? "border-b border-white/5" : ""}`}>
-              <span className="text-gray-400">{label}</span>
-              <span className="font-bold text-white">{value}</span>
+              <span className="text-sl-mute">{label}</span>
+              <span className="font-bold text-sl-text">{value}</span>
             </div>
           ))}
         </div>
 
         <div className={`md:col-span-2 ${CARD_BG_40} border border-white/5 rounded-xl p-5`}>
-          <h4 className="font-bold text-white text-sm mb-3">About the Competition</h4>
+          <h4 className="font-bold text-sl-text text-sm mb-3">About the Competition</h4>
           {league.description ? (
-            <p className="text-xs text-gray-300 leading-relaxed whitespace-pre-line">{league.description}</p>
+            <p className="text-xs text-sl-mid leading-relaxed whitespace-pre-line">{league.description}</p>
           ) : (
-            <p className="text-xs text-gray-400 italic">No descriptive information is available for this competition.</p>
+            <p className="text-xs text-sl-mute italic">No descriptive information is available for this competition.</p>
           )}
         </div>
       </div>
@@ -348,42 +348,42 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* League Header Banner */}
-      <div className="relative rounded-2xl overflow-hidden border border-[#1b1b2f] bg-[#0d0d14] p-6 md:p-10 shadow-2xl">
+      <div className="relative rounded-2xl overflow-hidden border border-[var(--sl-raise)] bg-[var(--sl-ground)] p-6 md:p-10 shadow-2xl">
         <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-60 h-60 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 text-center md:text-left">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-[#1a1a28] to-[#12121d] border border-white/10 flex items-center justify-center p-3 shadow-xl flex-shrink-0 backdrop-blur-sm">
+          <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-white/10 flex items-center justify-center p-3 shadow-xl flex-shrink-0 backdrop-blur-sm">
             {league.logo ? (
               <img src={league.logo} alt={league.name} className="w-full h-full object-contain" loading="lazy" />
             ) : (
-              <div className="text-3xl font-black text-white">{league.name.charAt(0)}</div>
+              <div className="text-3xl font-black text-sl-text">{league.name.charAt(0)}</div>
             )}
           </div>
 
           <div className="flex-1 space-y-4">
             <div>
-              <p className="text-xs font-bold text-[#00e676] uppercase tracking-[0.25em] mb-1">
+              <p className="text-xs font-bold text-[var(--sl-amber)] uppercase tracking-[0.25em] mb-1">
                 {league.sport} &bull; {league.country}
               </p>
-              <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white">{league.name}</h1>
+              <h1 className="text-3xl md:text-5xl font-black tracking-tight text-sl-text">{league.name}</h1>
             </div>
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[#00e676]">Official Stats</span>
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[var(--sl-amber)]">Official Stats</span>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">{league.type || "League"}</span>
               {league.formedYear && (
-                <span className="text-xs text-gray-400 font-semibold px-3 py-1 rounded-full bg-white/5">Est. {league.formedYear}</span>
+                <span className="text-xs text-sl-mute font-semibold px-3 py-1 rounded-full bg-white/5">Est. {league.formedYear}</span>
               )}
             </div>
           </div>
 
-          <div className="w-full md:w-auto self-center md:self-auto bg-gradient-to-br from-[#1a1a28] to-[#12121d] border border-[#2a2a3e] rounded-2xl p-5 md:min-w-[240px] text-center shadow-lg">
-            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Live Streaming</h4>
-            <p className="text-xs text-gray-300 mb-4">Stream all matches in 4K UHD.</p>
+          <div className="w-full md:w-auto self-center md:self-auto bg-gradient-to-br from-[var(--sl-raise)] to-[var(--sl-surface)] border border-[#2a2a3e] rounded-2xl p-5 md:min-w-[240px] text-center shadow-lg">
+            <h4 className="text-xs font-bold text-sl-mute uppercase tracking-widest mb-2">Live Streaming</h4>
+            <p className="text-xs text-sl-mid mb-4">Stream all matches in 4K UHD.</p>
             <Link
               href={watchHref}
-              className="w-full inline-flex items-center justify-center gap-1.5 bg-[#00e676] text-black font-extrabold text-xs py-3 px-4 rounded-xl hover:bg-[#00ff87] transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(0,230,118,0.2)]"
+              className="w-full inline-flex items-center justify-center gap-1.5 bg-[var(--sl-amber)] text-black font-extrabold text-xs py-3 px-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(0,230,118,0.2)]"
             >
               Watch League Live <ExternalLink className="w-3.5 h-3.5" />
             </Link>
@@ -392,7 +392,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
       </div>
 
       {/* Pill Tabs Selector */}
-      <div className="flex bg-[#12121a]/95 border border-[#1a1a2a] p-1.5 rounded-xl overflow-x-auto scrollbar-none gap-1.5 max-w-xl mx-auto backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+      <div className="flex bg-[var(--sl-surface)]/95 border border-[var(--sl-raise)] p-1.5 rounded-xl overflow-x-auto scrollbar-none gap-1.5 max-w-xl mx-auto backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -402,8 +402,8 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all duration-300 whitespace-nowrap flex-1 ${
                 isActive
-                  ? "bg-gradient-to-r from-emerald-500 to-[#00e676] text-black shadow-[0_0_15px_rgba(0,230,118,0.25)]"
-                  : "text-gray-400 hover:text-white hover:bg-white/5"
+                  ? "bg-gradient-to-r from-emerald-500 to-[var(--sl-amber)] text-black shadow-[0_0_15px_rgba(0,230,118,0.25)]"
+                  : "text-sl-mute hover:text-sl-text hover:bg-white/5"
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -422,7 +422,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
           animate="animate"
           exit="exit"
           transition={TAB_TRANSITION}
-          className="bg-gradient-to-br from-[#12121a] via-[#12121a] to-[#0d0d14] border border-[#1b1b2f] rounded-2xl p-6 md:p-8 shadow-2xl relative"
+          className="bg-gradient-to-br from-[var(--sl-surface)] via-[var(--sl-surface)] to-[var(--sl-ground)] border border-[var(--sl-raise)] rounded-2xl p-6 md:p-8 shadow-2xl relative"
         >
           {activeTab === "standings" && <StandingsTab standings={standings} />}
           {activeTab === "fixtures"  && <FixturesTab  fixtures={fixtures} />}

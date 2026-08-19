@@ -69,17 +69,17 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
       {/* Section header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-extrabold text-white">
+          <h2 className="text-2xl font-extrabold text-sl-text">
             Trending Sports News
           </h2>
-          <p className="text-gray-500 text-sm mt-0.5">
+          <p className="text-sl-mute text-sm mt-0.5">
             Stay updated with the latest stories
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Link
             href="/news"
-            className="text-xs font-semibold text-[#00e676] hover:underline mr-2 hidden sm:block"
+            className="text-xs font-semibold text-[var(--sl-amber)] hover:underline mr-2 hidden sm:block"
           >
             View All News →
           </Link>
@@ -89,8 +89,8 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
             disabled={!canScrollPrev}
             className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
               canScrollPrev
-                ? 'border-[#2a2a3a] hover:border-[#00e676]/40 text-white cursor-pointer'
-                : 'border-[#1a1a2a] text-gray-700 cursor-not-allowed'
+                ? 'border-[var(--sl-line)] hover:border-[var(--sl-amber)]/40 text-sl-text cursor-pointer'
+                : 'border-[var(--sl-raise)] text-sl-dim cursor-not-allowed'
             }`}
             aria-label="Previous news"
           >
@@ -102,8 +102,8 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
             disabled={!canScrollNext}
             className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all ${
               canScrollNext
-                ? 'border-[#2a2a3a] hover:border-[#00e676]/40 text-white cursor-pointer'
-                : 'border-[#1a1a2a] text-gray-700 cursor-not-allowed'
+                ? 'border-[var(--sl-line)] hover:border-[var(--sl-amber)]/40 text-sl-text cursor-pointer'
+                : 'border-[var(--sl-raise)] text-sl-dim cursor-not-allowed'
             }`}
             aria-label="Next news"
           >
@@ -146,9 +146,9 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
             const isExternal = articleHref.startsWith('http')
 
             const cardContent = (
-              <div className="block bg-[#12121a] border border-[#2a2a3a] rounded-2xl overflow-hidden hover:border-[#00e676]/30 transition-all duration-200 h-full">
+              <div className="block bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl overflow-hidden hover:border-[var(--sl-amber)]/30 transition-all duration-200 h-full">
                 {/* Image — fixed height prevents CLS */}
-                <div className="relative h-44 bg-[#0a0a0f] overflow-hidden">
+                <div className="relative h-44 bg-[var(--sl-ground)] overflow-hidden">
                   {img ? (
                     <img
                       src={img}
@@ -163,28 +163,28 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
                       }}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#12121a]">
+                    <div className="w-full h-full flex items-center justify-center bg-[var(--sl-surface)]">
                       <Newspaper className="w-10 h-10 opacity-20" aria-hidden="true" />
                     </div>
                   )}
                   {/* Category badge */}
-                  <span className="absolute top-3 left-3 bg-[#00e676] text-black text-[10px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-[var(--sl-amber)] text-black text-[10px] font-extrabold uppercase tracking-wide px-2.5 py-1 rounded-full">
                     {cat}
                   </span>
                 </div>
 
                 {/* Card body */}
                 <div className="p-4">
-                  <div className="flex items-center justify-between mb-2 text-[11px] text-gray-500">
+                  <div className="flex items-center justify-between mb-2 text-[11px] text-sl-mute">
                     <span className="font-semibold uppercase tracking-wide truncate max-w-[120px]">
                       {source}
                     </span>
                     {date && <span>{date}</span>}
                   </div>
-                  <h3 className="font-bold text-white text-sm leading-snug line-clamp-3 mb-3 group-hover:text-[#00e676] transition-colors">
+                  <h3 className="font-bold text-sl-text text-sm leading-snug line-clamp-3 mb-3 group-hover:text-[var(--sl-amber)] transition-colors">
                     {article.title}
                   </h3>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-gray-500 group-hover:text-[#00e676] transition-colors">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-sl-mute group-hover:text-[var(--sl-amber)] transition-colors">
                     Read Article
                     <ExternalLink className="w-3 h-3" />
                   </span>
@@ -219,7 +219,7 @@ export function NewsCarousel({ articles }: NewsCarouselProps) {
 
       {/* Mobile "View All" */}
       <div className="text-center mt-4 sm:hidden">
-        <Link href="/news" className="text-xs font-semibold text-[#00e676]">
+        <Link href="/news" className="text-xs font-semibold text-[var(--sl-amber)]">
           View All News →
         </Link>
       </div>

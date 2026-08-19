@@ -81,7 +81,7 @@ export function EventsList({
 
   if (loading) {
     return (
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader>
           <Skeleton className="h-6 w-40" />
         </CardHeader>
@@ -97,7 +97,7 @@ export function EventsList({
   }
 
   return (
-    <Card className="bg-gray-900/50 border-gray-800">
+    <Card className="bg-sl-surface/50 border-sl-line">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export function EventsList({
             size="sm"
             onClick={fetchEvents}
             disabled={loading}
-            className="text-gray-400 hover:text-white"
+            className="text-sl-mute hover:text-sl-text"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </Button>
@@ -120,7 +120,7 @@ export function EventsList({
         {error ? (
           <div className="text-center py-8">
             <div className="text-red-400 mb-2">Failed to load events</div>
-            <p className="text-sm text-gray-400 mb-4">
+            <p className="text-sm text-sl-mute mb-4">
               {error.includes("Rate limit")
                 ? "Data temporarily unavailable, please refresh later."
                 : error}
@@ -130,7 +130,7 @@ export function EventsList({
             </Button>
           </div>
         ) : events.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-sl-mute">
             <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>Data temporarily unavailable, please refresh later.</p>
           </div>
@@ -140,13 +140,13 @@ export function EventsList({
               <Link
                 key={event.id}
                 href={`/events/${event.id}`}
-                className="block hover:bg-gray-800/50 rounded-lg p-4 transition-colors border border-gray-800/50"
+                className="block hover:bg-sl-raise/50 rounded-lg p-4 transition-colors border border-sl-line/50"
               >
                 <div className="flex items-center justify-between mb-3">
                   <Badge variant="secondary" className="text-xs">
                     {event.league}
                   </Badge>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <div className="flex items-center gap-2 text-xs text-sl-mute">
                     <Clock className="w-3 h-3" />
                     {formatDateTime(event.date, event.time)}
                   </div>
@@ -165,28 +165,28 @@ export function EventsList({
                       />
                     )}
                     <div>
-                      <div className="font-medium text-white">{event.homeTeam}</div>
-                      <div className="text-xs text-gray-400">Home</div>
+                      <div className="font-medium text-sl-text">{event.homeTeam}</div>
+                      <div className="text-xs text-sl-mute">Home</div>
                     </div>
                   </div>
 
                   {/* Score/Status */}
                   <div className="text-center px-4">
                     {event.homeScore !== null && event.awayScore !== null ? (
-                      <div className="text-lg font-bold text-white">
+                      <div className="text-lg font-bold text-sl-text">
                         {event.homeScore} - {event.awayScore}
                       </div>
                     ) : (
-                      <div className="text-sm text-gray-400">{event.time}</div>
+                      <div className="text-sm text-sl-mute">{event.time}</div>
                     )}
-                    <div className="text-xs text-gray-500 mt-1">{event.status}</div>
+                    <div className="text-xs text-sl-mute mt-1">{event.status}</div>
                   </div>
 
                   {/* Away Team */}
                   <div className="flex items-center gap-3 flex-1 justify-end">
                     <div className="text-right">
-                      <div className="font-medium text-white">{event.awayTeam}</div>
-                      <div className="text-xs text-gray-400">Away</div>
+                      <div className="font-medium text-sl-text">{event.awayTeam}</div>
+                      <div className="text-xs text-sl-mute">Away</div>
                     </div>
                     {event.awayLogo && (
                       <OptimizedImage
@@ -201,7 +201,7 @@ export function EventsList({
                 </div>
 
                 {event.venue && (
-                  <div className="flex items-center gap-2 mt-3 text-xs text-gray-400">
+                  <div className="flex items-center gap-2 mt-3 text-xs text-sl-mute">
                     <MapPin className="w-3 h-3" />
                     {event.venue}
                   </div>

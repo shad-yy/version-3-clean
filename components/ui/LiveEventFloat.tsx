@@ -115,8 +115,8 @@ export function LiveEventFloat() {
           className={`
             relative overflow-hidden rounded-2xl border shadow-2xl backdrop-blur-md
             ${isLive
-              ? "bg-gradient-to-br from-red-950/90 to-[#0a0a0f]/95 border-red-800/50 shadow-red-900/30"
-              : "bg-gradient-to-br from-[#0d1a0d]/90 to-[#0a0a0f]/95 border-[#00e676]/20 shadow-green-900/20"
+              ? "bg-gradient-to-br from-red-950/90 to-[var(--sl-ground)]/95 border-red-800/50 shadow-red-900/30"
+              : "bg-gradient-to-br from-[#0d1a0d]/90 to-[var(--sl-ground)]/95 border-[var(--sl-amber)]/20 shadow-green-900/20"
             }
           `}
         >
@@ -124,7 +124,7 @@ export function LiveEventFloat() {
           <button
             onClick={() => setDismissed(true)}
             className="absolute top-2 right-2 w-6 h-6 rounded-full
-              bg-white/5 hover:bg-white/10 text-gray-500 hover:text-gray-300
+              bg-white/5 hover:bg-white/10 text-sl-mute hover:text-sl-mid
               flex items-center justify-center text-xs transition-colors z-10"
             aria-label="Dismiss live event indicator"
           >
@@ -147,26 +147,26 @@ export function LiveEventFloat() {
               ) : (
                 <span className="flex items-center gap-1.5">
                   <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-60" />
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00e676]" />
+                    <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-[var(--sl-amber)] opacity-60" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--sl-amber)]" />
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#00e676]">
+                  <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[var(--sl-amber)]">
                     Coming Up
                   </span>
                 </span>
               )}
-              <span className="text-[10px] text-gray-600 font-medium">
+              <span className="text-[10px] text-sl-dim font-medium">
                 World Cup 2026
               </span>
             </div>
 
             {/* Match name */}
-            <p className="text-white font-extrabold text-sm leading-tight mb-1">
+            <p className="text-sl-text font-extrabold text-sm leading-tight mb-1">
               {match.fixture.name}
             </p>
 
             {/* Status line */}
-            <p className="text-gray-400 text-xs mb-3">
+            <p className="text-sl-mute text-xs mb-3">
               {isLive
                 ? `Live on ${match.fixture.channel}`
                 : `${formatCountdown(match.minutesUntil)} — ${match.fixture.channel}`}
@@ -179,8 +179,8 @@ export function LiveEventFloat() {
                 block w-full text-center font-bold text-xs py-2.5 rounded-xl
                 transition-all touch-manipulation
                 ${isLive
-                  ? "bg-red-500 hover:bg-red-400 text-white"
-                  : "bg-[#00e676] hover:bg-[#00ff87] text-black"
+                  ? "bg-red-500 hover:bg-red-400 text-sl-text"
+                  : "bg-[var(--sl-amber)] hover:bg-[var(--sl-amber-hover)] text-black"
                 }
               `}
             >
@@ -195,8 +195,8 @@ export function LiveEventFloat() {
             }`}
             style={{
               background: isLive
-                ? "linear-gradient(135deg, transparent 40%, #ff1744 100%)"
-                : "linear-gradient(135deg, transparent 40%, #00e676 100%)",
+                ? "linear-gradient(135deg, transparent 40%, var(--sl-amber) 100%)"
+                : "linear-gradient(135deg, transparent 40%, var(--sl-amber) 100%)",
             }}
           />
         </div>

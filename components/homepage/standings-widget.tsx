@@ -53,11 +53,11 @@ export const StandingsWidget = memo(function StandingsWidget({
     if (position <= 4) return "text-green-400" // Champions League
     if (position <= 6) return "text-blue-400" // Europa League
     if (position >= 18) return "text-red-400" // Relegation
-    return "text-gray-400"
+    return "text-sl-mute"
   }, [])
 
   const getFormIcon = useCallback((form?: string, index?: number) => {
-    if (!form || index === undefined) return <Minus className="w-3 h-3 text-gray-500" />
+    if (!form || index === undefined) return <Minus className="w-3 h-3 text-sl-mute" />
 
     const result = form[index]
     const normalize = (r: string) => {
@@ -75,7 +75,7 @@ export const StandingsWidget = memo(function StandingsWidget({
       case "D":
         return <Minus className="w-3 h-3 text-yellow-400" />
       default:
-        return <Minus className="w-3 h-3 text-gray-500" />
+        return <Minus className="w-3 h-3 text-sl-mute" />
     }
   }, [])
 
@@ -89,7 +89,7 @@ export const StandingsWidget = memo(function StandingsWidget({
 
   const loadingSkeleton = useMemo(
     () => (
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader>
           <Skeleton className="h-6 w-40" />
         </CardHeader>
@@ -110,7 +110,7 @@ export const StandingsWidget = memo(function StandingsWidget({
   }
 
   return (
-    <Card className="bg-gray-900/50 border-gray-800">
+    <Card className="bg-sl-surface/50 border-sl-line">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
@@ -122,7 +122,7 @@ export const StandingsWidget = memo(function StandingsWidget({
             size="sm"
             onClick={fetchStandings}
             disabled={loading}
-            className="text-gray-400 hover:text-white"
+            className="text-sl-mute hover:text-sl-text"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </Button>
@@ -133,20 +133,20 @@ export const StandingsWidget = memo(function StandingsWidget({
         {error ? (
           <div className="text-center py-8">
             <div className="text-red-400 mb-2">Failed to load standings</div>
-            <p className="text-sm text-gray-400 mb-4">{error}</p>
+            <p className="text-sm text-sl-mute mb-4">{error}</p>
             <Button onClick={fetchStandings} variant="outline" size="sm">
               Try Again
             </Button>
           </div>
         ) : processedStandings.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-sl-mute">
             <Trophy className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>Data temporarily unavailable, please refresh later.</p>
           </div>
         ) : (
           <>
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-2 text-xs text-gray-400 font-medium mb-3 px-2">
+            <div className="grid grid-cols-12 gap-2 text-xs text-sl-mute font-medium mb-3 px-2">
               <div className="col-span-1">#</div>
               <div className="col-span-5">Team</div>
               <div className="col-span-1 text-center">P</div>
@@ -163,7 +163,7 @@ export const StandingsWidget = memo(function StandingsWidget({
                 <Link
                   key={team.teamId}
                   href={`/teams/${team.teamId}`}
-                  className="grid grid-cols-12 gap-2 items-center p-2 hover:bg-gray-800/50 rounded-lg transition-colors"
+                  className="grid grid-cols-12 gap-2 items-center p-2 hover:bg-sl-raise/50 rounded-lg transition-colors"
                 >
                   <div className={`col-span-1 text-sm font-bold ${getPositionColor(team.position)}`}>
                     {team.position}
@@ -177,10 +177,10 @@ export const StandingsWidget = memo(function StandingsWidget({
                       height={20}
                       className="rounded-full bg-white p-0.5 flex-shrink-0"
                     />
-                    <span className="text-sm font-medium text-white truncate">{team.team}</span>
+                    <span className="text-sm font-medium text-sl-text truncate">{team.team}</span>
                   </div>
 
-                  <div className="col-span-1 text-center text-sm text-gray-300">{team.played}</div>
+                  <div className="col-span-1 text-center text-sm text-sl-mid">{team.played}</div>
 
                   <div className="col-span-1 text-center text-sm text-green-400">{team.won}</div>
 
@@ -193,22 +193,22 @@ export const StandingsWidget = memo(function StandingsWidget({
                         ? "text-green-400"
                         : team.goalDifference < 0
                           ? "text-red-400"
-                          : "text-gray-400"
+                          : "text-sl-mute"
                       }`}
                   >
                     {team.goalDifference > 0 ? "+" : ""}
                     {team.goalDifference}
                   </div>
 
-                  <div className="col-span-1 text-center text-sm font-bold text-white">{team.points}</div>
+                  <div className="col-span-1 text-center text-sm font-bold text-sl-text">{team.points}</div>
                 </Link>
               ))}
             </div>
 
             {/* Form indicators */}
             {topTeamsForm.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-gray-800">
-                <h4 className="text-xs text-gray-400 mb-2">Recent Form (Last 5 games)</h4>
+              <div className="mt-4 pt-4 border-t border-sl-line">
+                <h4 className="text-xs text-sl-mute mb-2">Recent Form (Last 5 games)</h4>
                 <div className="space-y-2">
                   {topTeamsForm.map((team) => (
                     <div key={team.teamId} className="flex items-center justify-between">
@@ -220,7 +220,7 @@ export const StandingsWidget = memo(function StandingsWidget({
                           height={16}
                           className="rounded-full bg-white p-0.5"
                         />
-                        <span className="text-xs text-gray-300 truncate max-w-20">{team.team}</span>
+                        <span className="text-xs text-sl-mid truncate max-w-20">{team.team}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         {team.form

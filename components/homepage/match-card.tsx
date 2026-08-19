@@ -214,7 +214,7 @@ export function MatchCard() {
                 ) : currentList.length > 0 ? (
                     <>
                         {tab === "results" && currentList.some(m => m.isYesterday) && !currentList.some(m => !m.isYesterday) && (
-                            <p className="text-xs text-gray-500 mb-4 flex items-center gap-2">
+                            <p className="text-xs text-sl-mute mb-4 flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-gray-600 inline-block" />
                                 Yesterday's Results
                             </p>
@@ -283,11 +283,11 @@ export function MatchCard() {
                                                                 loading="lazy"
                                                                 onError={(e) => {
                                                                     const t = e.target as HTMLImageElement; t.style.display = 'none'
-                                                                    if (t.parentElement) { t.parentElement.innerHTML = `<span class="text-[8px] font-bold text-white">${getTeamInitials(match.strHomeTeam)}</span>`; t.parentElement.style.backgroundColor = getBgColor(match.strHomeTeam) }
+                                                                    if (t.parentElement) { t.parentElement.innerHTML = `<span class="text-[8px] font-bold text-sl-text">${getTeamInitials(match.strHomeTeam)}</span>`; t.parentElement.style.backgroundColor = getBgColor(match.strHomeTeam) }
                                                                 }}
                                                             />
                                                         ) : (
-                                                            <span className="text-[8px] font-bold text-white">{getTeamInitials(match.strHomeTeam)}</span>
+                                                            <span className="text-[8px] font-bold text-sl-text">{getTeamInitials(match.strHomeTeam)}</span>
                                                         )}
                                                     </div>
                                                     <span className="text-xs mt-1 line-clamp-2 max-w-[80px] sm:max-w-[120px] md:max-w-none leading-tight text-text-primary font-semibold">
@@ -304,12 +304,12 @@ export function MatchCard() {
                                                             <span className="text-lg font-black text-text-primary">{match.intAwayScore ?? '-'}</span>
                                                         </div>
                                                     ) : (
-                                                        <span className="text-xs text-gray-500">VS</span>
+                                                        <span className="text-xs text-sl-mute">VS</span>
                                                     )}
-                                                    <span className="text-xs text-gray-400">{formattedTime}</span>
+                                                    <span className="text-xs text-sl-mute">{formattedTime}</span>
                                                     {isLive && (
                                                         <div className="flex items-center gap-1 mt-0.5">
-                                                            <div className="w-1.5 h-1.5 bg-live-red rounded-full animate-pulse shadow-[0_0_8px_#ff1744]" />
+                                                            <div className="w-1.5 h-1.5 bg-live-red rounded-full animate-pulse shadow-[0_0_8px_var(--sl-amber)]" />
                                                             <span className="text-[9px] uppercase font-bold text-live-red">Live</span>
                                                         </div>
                                                     )}
@@ -331,11 +331,11 @@ export function MatchCard() {
                                                                 loading="lazy"
                                                                 onError={(e) => {
                                                                     const t = e.target as HTMLImageElement; t.style.display = 'none'
-                                                                    if (t.parentElement) { t.parentElement.innerHTML = `<span class="text-[8px] font-bold text-white">${getTeamInitials(match.strAwayTeam)}</span>`; t.parentElement.style.backgroundColor = getBgColor(match.strAwayTeam) }
+                                                                    if (t.parentElement) { t.parentElement.innerHTML = `<span class="text-[8px] font-bold text-sl-text">${getTeamInitials(match.strAwayTeam)}</span>`; t.parentElement.style.backgroundColor = getBgColor(match.strAwayTeam) }
                                                                 }}
                                                             />
                                                         ) : (
-                                                            <span className="text-[8px] font-bold text-white">{getTeamInitials(match.strAwayTeam)}</span>
+                                                            <span className="text-[8px] font-bold text-sl-text">{getTeamInitials(match.strAwayTeam)}</span>
                                                         )}
                                                     </div>
                                                     <span className="text-xs mt-1 line-clamp-2 max-w-[80px] sm:max-w-[120px] md:max-w-none leading-tight text-text-primary font-semibold">
@@ -355,7 +355,7 @@ export function MatchCard() {
                                                 </Link>
                                                 <Link href={`/match/${match.idEvent}`}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="text-xs text-gray-500 hover:text-[#00e676] transition-colors block text-center"
+                                                    className="text-xs text-sl-mute hover:text-[var(--sl-amber)] transition-colors block text-center"
                                                 >
                                                     Match preview & how to watch
                                                 </Link>
@@ -368,8 +368,8 @@ export function MatchCard() {
                     </div>
 
                     {/* Other Live Sport */}
-                    <div className="mt-6 pt-6 border-t border-[#2a2a3a]">
-                      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">
+                    <div className="mt-6 pt-6 border-t border-[var(--sl-line)]">
+                      <h3 className="text-sm font-bold text-sl-mute uppercase tracking-widest mb-4">
                         More Live Sport
                       </h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -388,15 +388,15 @@ export function MatchCard() {
                           },
                         ].map(s => (
                           <Link key={s.sport} href={s.href}
-                            className="flex items-center gap-3 bg-[#12121a] border border-[#2a2a3a] hover:border-[#00e676]/30 rounded-xl p-3 transition-all group">
+                            className="flex items-center gap-3 bg-[var(--sl-surface)] border border-[var(--sl-line)] hover:border-[var(--sl-amber)]/30 rounded-xl p-3 transition-all group">
                             <Image src={s.icon} alt={s.sport}
                               width={32} height={32}
                               className="w-8 h-8 object-contain" loading="lazy" />
                             <div>
-                              <p className="text-white font-bold text-xs group-hover:text-[#00e676] transition-colors">
+                              <p className="text-sl-text font-bold text-xs group-hover:text-[var(--sl-amber)] transition-colors">
                                 {s.sport}
                               </p>
-                              <p className="text-gray-600 text-[10px]">
+                              <p className="text-sl-dim text-[10px]">
                                 {s.desc}
                               </p>
                             </div>

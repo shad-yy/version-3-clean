@@ -122,11 +122,11 @@ export default async function WatchLeaguePage({ params }: Props) {
     const FormPill = ({ result }: { result: string }) => {
         const colors: Record<string, string> = {
             W: 'bg-green-500 text-black',
-            D: 'bg-gray-500 text-white',
-            L: 'bg-red-500 text-white'
+            D: 'bg-gray-500 text-sl-text',
+            L: 'bg-red-500 text-sl-text'
         }
         return (
-            <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-white'}`}>
+            <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-sl-text'}`}>
                 {result}
             </span>
         )
@@ -194,7 +194,7 @@ export default async function WatchLeaguePage({ params }: Props) {
     }
 
     return (
-        <div className="min-h-screen bg-gray-950 text-gray-100">
+        <div className="min-h-screen bg-sl-ground text-gray-100">
             <SchemaMarkup schema={sportsOrgSchema} />
             <SchemaMarkup schema={breadcrumbSchema} />
 
@@ -203,7 +203,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                 <section
                     className="pt-28 md:pt-36 pb-16 text-center px-4 border-b"
                     style={{
-                        background: `linear-gradient(135deg, ${theme.primary} 0%, #0a0a0f 100%)`,
+                        background: `linear-gradient(135deg, ${theme.primary} 0%, var(--sl-ground) 100%)`,
                         borderColor: theme.secondary,
                     }}
                 >
@@ -220,7 +220,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                         <h1 className="text-4xl md:text-6xl font-extrabold mb-4 md:mb-6">
                             {theme.heroText}
                         </h1>
-                        <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+                        <p className="text-xl text-sl-mid max-w-2xl mx-auto mb-10">
                             Track live match scores, team lineups, table standings, and official TV channel broadcast schedules for every {theme.name} fixture this season.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -234,7 +234,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                             </ShimmerButton>
                             <Link
                                 href="/leagues"
-                                className="bg-[#00e676] text-black font-extrabold px-10 py-5 rounded-xl text-lg hover:bg-[#00ff87] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)] touch-manipulation w-full sm:w-auto text-center"
+                                className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-5 rounded-xl text-lg hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)] touch-manipulation w-full sm:w-auto text-center"
                             >
                                 Explore League Standings →
                             </Link>
@@ -250,7 +250,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                     {/* SEO Content Block */}
                     <FadeIn direction="up">
                         <section className="prose prose-invert prose-lg max-w-none">
-                            <h2 className="text-3xl font-bold text-white mb-8 md:mb-12">Official Broadcast & Live Schedule Guide</h2>
+                            <h2 className="text-3xl font-bold text-sl-text mb-8 md:mb-12">Official Broadcast & Live Schedule Guide</h2>
                             <p className="max-w-2xl">
                                 Following {theme.name} requires staying updated on match schedules, official TV broadcast networks, and team form. Smart Live TV provides real-time telemetry, live scores, and verified television network listings across major regions.
                             </p>
@@ -266,29 +266,29 @@ export default async function WatchLeaguePage({ params }: Props) {
                                 )}
                             </p>
 
-                            <div className="my-10 p-6 border border-gray-800 rounded-2xl bg-gray-900/50">
-                                <h3 className="text-2xl font-bold text-white mb-6">Explore Competition Hubs</h3>
+                            <div className="my-10 p-6 border border-sl-line rounded-2xl bg-sl-surface/50">
+                                <h3 className="text-2xl font-bold text-sl-text mb-6">Explore Competition Hubs</h3>
                                 <p className="mb-4">Navigate to live match hubs and telemetry pages:</p>
                                 <div className="flex flex-wrap gap-4">
-                                    <Link href="/scores" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-medium text-white border border-gray-700 transition">
+                                    <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         Live Scores
                                     </Link>
-                                    <Link href="/leagues" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-medium text-white border border-gray-700 transition">
+                                    <Link href="/leagues" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         All Leagues
                                     </Link>
-                                    <Link href="/news" className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-medium text-white border border-gray-700 transition">
+                                    <Link href="/news" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         Sports News
                                     </Link>
                                 </div>
                             </div>
 
-                            <div className="my-10 p-6 border border-gray-800 rounded-2xl bg-gray-900/50">
-                                <h3 className="text-2xl font-bold text-white mb-6">Other Top Football Leagues</h3>
+                            <div className="my-10 p-6 border border-sl-line rounded-2xl bg-sl-surface/50">
+                                <h3 className="text-2xl font-bold text-sl-text mb-6">Other Top Football Leagues</h3>
                                 <div className="flex flex-wrap gap-4">
                                     {Object.entries(LEAGUES)
                                         .filter(([s]) => s !== params.slug)
                                         .map(([s, l]) => (
-                                            <Link key={s} href={`/watch/${s}`} className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm font-medium text-white border border-gray-700 transition">
+                                            <Link key={s} href={`/watch/${s}`} className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                                 {l.name}
                                             </Link>
                                         ))}
@@ -298,23 +298,23 @@ export default async function WatchLeaguePage({ params }: Props) {
                     </FadeIn>
 
                     {/* Upcoming Matches */}
-                    <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
-                        <h2 className="text-2xl font-bold text-white mb-8 md:mb-12">Upcoming {theme.name} Fixtures</h2>
+                    <section className="py-16 md:py-20 border-t border-[var(--sl-line)]">
+                        <h2 className="text-2xl font-bold text-sl-text mb-8 md:mb-12">Upcoming {theme.name} Fixtures</h2>
                         {fixtures.length > 0 ? (
                             <StaggerIn className="space-y-6">
                                 {fixtures.map((match: any) => (
-                                    <div key={match.id} className="bg-gray-900 p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-gray-700 transition">
+                                    <div key={match.id} className="bg-sl-surface p-6 rounded-2xl border border-sl-line flex flex-col md:flex-row items-center justify-between gap-6 hover:border-sl-line transition">
                                         <div className="flex items-center gap-6 w-full md:w-auto flex-1">
                                             <div className="flex flex-col items-center w-24">
                                                 <img src={safeBadge(match.homeLogo)} alt={match.homeTeam} width={48} height={48} className="w-12 h-12 object-contain mb-2" loading="lazy" />
-                                                <span className="text-xs text-center font-bold text-gray-300">{match.homeTeam}</span>
+                                                <span className="text-xs text-center font-bold text-sl-mid">{match.homeTeam}</span>
                                             </div>
-                                            <div className="text-center px-4 text-sm text-gray-500 font-bold">
+                                            <div className="text-center px-4 text-sm text-sl-mute font-bold">
                                                 VS<br /><span className="text-xs font-normal">{formatMatchDate(match.date)}</span>
                                             </div>
                                             <div className="flex flex-col items-center w-24">
                                                 <img src={safeBadge(match.awayLogo)} alt={match.awayTeam} width={48} height={48} className="w-12 h-12 object-contain mb-2" loading="lazy" />
-                                                <span className="text-xs text-center font-bold text-gray-300">{match.awayTeam}</span>
+                                                <span className="text-xs text-center font-bold text-sl-mid">{match.awayTeam}</span>
                                             </div>
                                         </div>
                                         <ShimmerButton
@@ -329,7 +329,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                                 ))}
                             </StaggerIn>
                         ) : (
-                            <p className="text-gray-500 p-6 bg-gray-900 rounded-xl border border-gray-800 text-center">No upcoming fixtures scheduled right now.</p>
+                            <p className="text-sl-mute p-6 bg-sl-surface rounded-xl border border-sl-line text-center">No upcoming fixtures scheduled right now.</p>
                         )}
                     </section>
 
@@ -360,9 +360,9 @@ export default async function WatchLeaguePage({ params }: Props) {
 
                 {/* Right Column: Standings Sidebar */}
                 <div className="lg:col-span-1">
-                    <div className="sticky top-24 bg-gray-900 rounded-3xl border border-gray-800 overflow-hidden">
-                        <div className="p-4 border-b bg-gray-800/50" style={{ borderColor: theme.secondary }}>
-                            <h3 className="text-lg font-bold text-white">Live {theme.name} Table</h3>
+                    <div className="sticky top-24 bg-sl-surface rounded-3xl border border-sl-line overflow-hidden">
+                        <div className="p-4 border-b bg-sl-raise/50" style={{ borderColor: theme.secondary }}>
+                            <h3 className="text-lg font-bold text-sl-text">Live {theme.name} Table</h3>
                         </div>
 
                         <div className="overflow-x-auto">
@@ -379,38 +379,38 @@ export default async function WatchLeaguePage({ params }: Props) {
                                         <th className="py-2 px-2 text-center w-8 hidden md:table-cell">GA</th>
                                         <th className="py-2 px-2 text-center w-8 hidden md:table-cell">GD</th>
                                         <th className="py-2 px-2 text-center">Form</th>
-                                        <th className="py-2 px-2 text-center w-10 text-white">Pts</th>
+                                        <th className="py-2 px-2 text-center w-10 text-sl-text">Pts</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {standings.slice(0, 10).map((team: any, i: number) => (
                                         <tr
                                             key={team.teamId || i}
-                                            className={`border-b border-gray-800/60 hover:bg-gray-800/50 transition-colors even:bg-white/[0.02]`}
+                                            className={`border-b border-sl-line/60 hover:bg-sl-raise/50 transition-colors even:bg-white/[0.02]`}
                                         >
-                                            <td className="py-2 px-2 text-center font-bold text-gray-500">{team.position}</td>
+                                            <td className="py-2 px-2 text-center font-bold text-sl-mute">{team.position}</td>
                                             <td className="py-2 px-2">
                                                 <div className={`flex items-center gap-2 pl-2 ${getDescriptionBorder(team.description)}`}>
                                                     <img src={safeBadge(team.teamLogo)} alt={team.team} width={20} height={20} className="w-5 h-5 object-contain" loading="lazy" />
                                                     <span className="font-semibold text-gray-200 line-clamp-1 flex-1">{team.team}</span>
                                                 </div>
                                             </td>
-                                            <td className="py-2 px-2 text-center text-gray-500">{team.played}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500">{team.won}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500">{team.drawn}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500">{team.lost}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500 hidden md:table-cell">{team.goalsFor}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500 hidden md:table-cell">{team.goalsAgainst}</td>
-                                            <td className="py-2 px-2 text-center text-gray-500 hidden md:table-cell">{team.goalDifference}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute">{team.played}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute">{team.won}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute">{team.drawn}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute">{team.lost}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute hidden md:table-cell">{team.goalsFor}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute hidden md:table-cell">{team.goalsAgainst}</td>
+                                            <td className="py-2 px-2 text-center text-sl-mute hidden md:table-cell">{team.goalDifference}</td>
                                             <td className="py-2 px-2 text-center">{renderForm(team.form)}</td>
-                                            <td className="py-2 px-2 text-center font-bold text-white">{team.points}</td>
+                                            <td className="py-2 px-2 text-center font-bold text-sl-text">{team.points}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
 
-                        <div className="p-4 border-t border-gray-800 bg-gray-800/20 text-center">
+                        <div className="p-4 border-t border-sl-line bg-sl-raise/20 text-center">
                             <Link href="/leagues" className="text-green-500 hover:text-green-400 font-bold text-sm">View full table &amp; all teams →</Link>
                         </div>
                     </div>
@@ -419,14 +419,14 @@ export default async function WatchLeaguePage({ params }: Props) {
 
             {/* Bottom CTA */}
             <FadeIn direction="up">
-                <section className="py-16 md:py-20 text-center px-4 border-t" style={{ borderColor: theme.secondary, background: `linear-gradient(180deg, #0a0a0f 0%, ${theme.primary}33 100%)` }}>
+                <section className="py-16 md:py-20 text-center px-4 border-t" style={{ borderColor: theme.secondary, background: `linear-gradient(180deg, var(--sl-ground) 0%, ${theme.primary}33 100%)` }}>
                     <div className="container mx-auto max-w-3xl">
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Smart Live TV Telemetry</h2>
-                        <p className="text-gray-400 text-lg mb-8">Real-time match updates, team stats, and verified global TV channel guides.</p>
+                        <h2 className="text-3xl md:text-5xl font-bold text-sl-text mb-4">Smart Live TV Telemetry</h2>
+                        <p className="text-sl-mute text-lg mb-8">Real-time match updates, team stats, and verified global TV channel guides.</p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link
                                 href="/scores"
-                                className="px-10 py-5 text-xl rounded-xl font-bold bg-[#00e676] text-black hover:bg-[#00ff87] transition-all w-full sm:w-auto text-center shadow-[0_0_20px_rgba(0,230,118,0.3)]"
+                                className="px-10 py-5 text-xl rounded-xl font-bold bg-[var(--sl-amber)] text-black hover:bg-[var(--sl-amber-hover)] transition-all w-full sm:w-auto text-center shadow-[0_0_20px_rgba(0,230,118,0.3)]"
                             >
                                 Explore Live Scores Hub →
                             </Link>
@@ -436,17 +436,17 @@ export default async function WatchLeaguePage({ params }: Props) {
             </FadeIn>
 
       {/* Mobile Sticky CTA — md:hidden */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[#0a0a0f]/95 backdrop-blur-md border-t border-[#2a2a3a] p-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[var(--sl-ground)]/95 backdrop-blur-md border-t border-[var(--sl-line)] p-4">
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/scores"
-            className="bg-[#00e676] text-black font-bold text-base py-4 rounded-2xl text-center touch-manipulation active:scale-95 transition-transform cta-button"
+            className="bg-[var(--sl-amber)] text-black font-bold text-base py-4 rounded-2xl text-center touch-manipulation active:scale-95 transition-transform cta-button"
           >
             Live Scores
           </Link>
           <Link
             href="/leagues"
-            className="bg-[#12121a] border border-[#2a2a3a] text-white font-bold text-base py-4 rounded-2xl text-center touch-manipulation active:scale-95 transition-transform cta-button"
+            className="bg-[var(--sl-surface)] border border-[var(--sl-line)] text-sl-text font-bold text-base py-4 rounded-2xl text-center touch-manipulation active:scale-95 transition-transform cta-button"
           >
             Leagues
           </Link>

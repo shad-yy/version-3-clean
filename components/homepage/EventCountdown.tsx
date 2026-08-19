@@ -198,7 +198,7 @@ export function EventCountdown() {
 
   return (
     <div className="bg-gradient-to-r from-[#1a0000] 
-      via-[#0d0d14] to-[#001a00] border-y border-[#2a2a3a] 
+      via-[var(--sl-ground)] to-[#001a00] border-y border-[var(--sl-line)] 
       py-4 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between 
@@ -214,11 +214,11 @@ export function EventCountdown() {
               className="w-8 h-8 object-contain"
             />
             <div>
-              <p className="text-[10px] font-bold text-gray-500 
+              <p className="text-[10px] font-bold text-sl-mute 
                 uppercase tracking-widest">
                 {upcomingEvent.sport} — Coming Soon
               </p>
-              <p className="text-white font-extrabold text-sm">
+              <p className="text-sl-text font-extrabold text-sm">
                 {upcomingEvent.name}
               </p>
             </div>
@@ -233,15 +233,15 @@ export function EventCountdown() {
               { value: timeLeft.seconds, label: 'Sec' },
             ].map(({ value, label }) => (
               <div key={label} className="text-center">
-                <div className="bg-[#12121a] border 
-                  border-[#2a2a3a] rounded-xl px-3 py-1.5 
+                <div className="bg-[var(--sl-surface)] border 
+                  border-[var(--sl-line)] rounded-xl px-3 py-1.5 
                   min-w-[48px]">
-                  <span className="text-white font-extrabold 
+                  <span className="text-sl-text font-extrabold 
                     text-xl tabular-nums">
                     {pad(value)}
                   </span>
                 </div>
-                <span className="text-[10px] text-gray-600 
+                <span className="text-[10px] text-sl-dim 
                   font-medium mt-0.5 block">
                   {label}
                 </span>
@@ -251,9 +251,9 @@ export function EventCountdown() {
 
           {/* CTA */}
           <Link href={upcomingEvent.href}
-            className="flex-shrink-0 bg-[#00e676] 
+            className="flex-shrink-0 bg-[var(--sl-amber)] 
               text-black font-bold text-xs px-5 py-2.5 
-              rounded-xl hover:bg-[#00ff87] transition-all 
+              rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all 
               touch-manipulation hidden sm:block">
             TV Guide →
           </Link>

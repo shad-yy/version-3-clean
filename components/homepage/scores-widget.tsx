@@ -72,9 +72,9 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
   }, [fetchFixtures])
 
   const getStatusColor = useCallback((status: string) => {
-    if (status.includes("Finished") || status.includes("Full Time")) return "bg-green-500 text-white"
-    if (status.includes("Scheduled") || status.includes("Not Started")) return "bg-blue-500 text-white"
-    return "bg-gray-500 text-white"
+    if (status.includes("Finished") || status.includes("Full Time")) return "bg-green-500 text-sl-text"
+    if (status.includes("Scheduled") || status.includes("Not Started")) return "bg-blue-500 text-sl-text"
+    return "bg-gray-500 text-sl-text"
   }, [])
 
   const formatScore = useCallback((homeScore: number | null, awayScore: number | null) => {
@@ -88,7 +88,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
 
   const loadingSkeleton = useMemo(
     () => (
-      <Card className="bg-gray-900/50 border-gray-800">
+      <Card className="bg-sl-surface/50 border-sl-line">
         <CardHeader>
           <Skeleton className="h-6 w-32" />
         </CardHeader>
@@ -109,7 +109,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
   }
 
   return (
-    <Card className="bg-gray-900/50 border-gray-800">
+    <Card className="bg-sl-surface/50 border-sl-line">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
             size="sm"
             onClick={fetchFixtures}
             disabled={loading}
-            className="text-gray-400 hover:text-white"
+            className="text-sl-mute hover:text-sl-text"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </Button>
@@ -163,13 +163,13 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
         {error ? (
           <div className="text-center py-8">
             <div className="text-red-400 mb-2">Failed to load fixtures</div>
-            <p className="text-sm text-gray-400 mb-4">{error}</p>
+            <p className="text-sm text-sl-mute mb-4">{error}</p>
             <Button onClick={fetchFixtures} variant="outline" size="sm">
               Try Again
             </Button>
           </div>
         ) : processedFixtures.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-sl-mute">
             <Clock className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p>{activeTab === "today" ? "No matches today" : `No ${activeTab} matches found`}</p>
           </div>
@@ -179,7 +179,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
               <Link
                 key={fixture.id}
                 href={`/events/${fixture.id}`}
-                className="block hover:bg-gray-800/50 rounded-lg p-3 transition-colors"
+                className="block hover:bg-sl-raise/50 rounded-lg p-3 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   {/* Teams */}
@@ -194,14 +194,14 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
                           className="rounded-full bg-white p-0.5"
                         />
                       )}
-                      <span className="font-medium text-white truncate">{fixture.homeTeam}</span>
+                      <span className="font-medium text-sl-text truncate">{fixture.homeTeam}</span>
                     </div>
                   </div>
 
                   {/* Score/Time */}
                   <div className="flex items-center gap-3 px-4">
                     <div className="text-center">
-                      <div className="text-lg font-bold text-white">
+                      <div className="text-lg font-bold text-sl-text">
                         {formatScore(fixture.homeScore, fixture.awayScore)}
                       </div>
                       <Badge className={`text-xs ${getStatusColor(fixture.status)}`}>
@@ -213,7 +213,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
                   {/* Away Team */}
                   <div className="flex items-center gap-3 flex-1 justify-end">
                     <div className="flex items-center gap-2 min-w-0 flex-1 justify-end">
-                      <span className="font-medium text-white truncate text-right">{fixture.awayTeam}</span>
+                      <span className="font-medium text-sl-text truncate text-right">{fixture.awayTeam}</span>
                       {fixture.awayLogo && (
                         <OptimizedImage
                           src={fixture.awayLogo}
@@ -228,7 +228,7 @@ export const ScoresWidget = memo(function ScoresWidget({ leagueId, maxResults = 
                 </div>
 
                 {/* Match Info */}
-                <div className="flex items-center justify-between mt-2 text-xs text-gray-400">
+                <div className="flex items-center justify-between mt-2 text-xs text-sl-mute">
                   <span>{fixture.league}</span>
                   <div className="flex items-center gap-2">
                     {fixture.venue && (

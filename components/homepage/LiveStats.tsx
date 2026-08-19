@@ -31,9 +31,9 @@ export function LiveStats() {
 
   return (
     <div className="flex items-center justify-center gap-2
-      bg-[#12121a] border border-[#2a2a3a] rounded-full
+      bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-full
       px-4 py-2 overflow-hidden max-w-sm mx-auto">
-      <span className="w-1.5 h-1.5 rounded-full bg-[#00e676]
+      <span className="w-1.5 h-1.5 rounded-full bg-[var(--sl-amber)]
         flex-shrink-0 animate-pulse" />
       <div className="h-4 overflow-hidden relative flex-1">
         {mounted ? (
@@ -44,14 +44,14 @@ export function LiveStats() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -12, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-[11px] text-gray-300 text-center
+              className="text-[11px] text-sl-mid text-center
               font-medium whitespace-nowrap"
             >
               {STATS[index]}
             </motion.p>
           </AnimatePresence>
         ) : (
-          <p className="text-[11px] text-gray-300 text-center font-medium whitespace-nowrap">
+          <p className="text-[11px] text-sl-mid text-center font-medium whitespace-nowrap">
             {STATS[0]}
           </p>
         )}

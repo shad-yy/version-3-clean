@@ -132,11 +132,11 @@ export function DynamicSEOContent({
 
       {/* Upcoming fixtures with "how to watch" context */}
       {fixtures.length > 0 && (
-        <section className="py-16 border-t border-[#2a2a3a]">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+        <section className="py-16 border-t border-[var(--sl-line)]">
+          <h2 className="text-2xl md:text-3xl font-bold text-sl-text mb-3">
             How to Watch Upcoming {leagueName} Matches
           </h2>
-          <p className="text-gray-400 text-sm mb-8 max-w-2xl">
+          <p className="text-sl-mute text-sm mb-8 max-w-2xl">
             Confirmed kick-off times and the official UK broadcaster for
             each upcoming {leagueName} fixture. Times are shown in UK local
             time and may be changed by the competition organiser.
@@ -160,21 +160,21 @@ export function DynamicSEOContent({
               return (
                 <div key={match.id}
                   className="flex items-center justify-between 
-                    bg-[#12121a] border border-[#2a2a3a] 
+                    bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                     rounded-xl px-5 py-4 
-                    hover:border-[#00e676]/30 transition-all">
+                    hover:border-[var(--sl-amber)]/30 transition-all">
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-white text-sm">
+                    <p className="font-semibold text-sl-text text-sm">
                       {match.homeTeam} vs {match.awayTeam}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-sl-mute mt-0.5">
                       {matchDate}
                       {match.venue && ` · ${match.venue}`}
                     </p>
                   </div>
                   <Link
                     href={`/match/${match.id}`}
-                    className="text-xs font-semibold text-[#00e676] 
+                    className="text-xs font-semibold text-[var(--sl-amber)] 
                       hover:underline flex-shrink-0 ml-4"
                   >
                     How to watch →
@@ -188,19 +188,19 @@ export function DynamicSEOContent({
 
       {/* Dynamic FAQ — visible and schema-backed */}
       {dynamicFAQs.length > 0 && (
-        <section className="py-16 border-t border-[#2a2a3a]">
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
+        <section className="py-16 border-t border-[var(--sl-line)]">
+          <h2 className="text-2xl md:text-3xl font-bold text-sl-text mb-8">
             {leagueName} — Common Questions
           </h2>
           <div className="space-y-4 max-w-3xl">
             {dynamicFAQs.map(faq => (
               <div key={faq.question}
-                className="bg-[#12121a] border border-[#2a2a3a] 
+                className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                   rounded-2xl p-5">
-                <h3 className="font-bold text-white text-sm mb-2">
+                <h3 className="font-bold text-sl-text text-sm mb-2">
                   {faq.question}
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-sl-mute text-sm leading-relaxed">
                   {faq.answer}
                 </p>
               </div>

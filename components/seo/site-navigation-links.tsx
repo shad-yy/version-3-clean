@@ -18,10 +18,10 @@ export function SiteNavigationLinks() {
   return (
     <section
       aria-label="Quick links"
-      className="py-8 bg-[#0a0a0f]/80 border-t border-[#1a1a2a]"
+      className="py-8 bg-[var(--sl-ground)]/80 border-t border-[var(--sl-raise)]"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-600 mb-4">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-sl-dim mb-4">
           Quick Links
         </p>
         <nav aria-label="Site quick links" className="flex flex-wrap gap-x-1.5 gap-y-1.5">
@@ -29,12 +29,12 @@ export function SiteNavigationLinks() {
             <span key={link.href} className="inline-flex items-center">
               <Link
                 href={link.href}
-                className="text-xs text-gray-500 hover:text-[#00e676] transition-colors font-medium"
+                className="text-xs text-sl-mute hover:text-[var(--sl-amber)] transition-colors font-medium"
               >
                 {link.label}
               </Link>
               {i < QUICK_LINKS.length - 1 && (
-                <span className="text-gray-700 ml-1.5" aria-hidden="true">·</span>
+                <span className="text-sl-dim ml-1.5" aria-hidden="true">·</span>
               )}
             </span>
           ))}

@@ -121,22 +121,22 @@ function formatTime(dateStr: string, timeStr: string): string {
 function SpotlightSkeleton({ featured = false }: { featured?: boolean }) {
   return (
     <div
-      className={`relative rounded-2xl overflow-hidden border border-[#1a1a2a] bg-[#12121a] ${
+      className={`relative rounded-2xl overflow-hidden border border-[var(--sl-raise)] bg-[var(--sl-surface)] ${
         featured ? 'md:col-span-2 md:row-span-2 min-h-[320px] md:min-h-[400px]' : 'min-h-[200px] md:min-h-[200px]'
       }`}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[var(--sl-ground)] via-[var(--sl-ground)]/60 to-transparent" />
       <div className="absolute inset-0 animate-pulse">
-        <div className="absolute top-4 left-4 w-20 h-6 rounded-full bg-gray-800" />
-        <div className="absolute top-4 right-4 w-6 h-6 rounded bg-gray-800" />
+        <div className="absolute top-4 left-4 w-20 h-6 rounded-full bg-sl-raise" />
+        <div className="absolute top-4 right-4 w-6 h-6 rounded bg-sl-raise" />
         <div className="absolute bottom-4 left-4 right-4">
           <div className="flex items-center justify-center gap-6 mb-4">
-            <div className="w-12 h-12 rounded-full bg-gray-800" />
-            <div className="w-8 h-4 rounded bg-gray-800" />
-            <div className="w-12 h-12 rounded-full bg-gray-800" />
+            <div className="w-12 h-12 rounded-full bg-sl-raise" />
+            <div className="w-8 h-4 rounded bg-sl-raise" />
+            <div className="w-12 h-12 rounded-full bg-sl-raise" />
           </div>
-          <div className="h-4 w-48 mx-auto rounded bg-gray-800 mb-2" />
-          <div className="h-3 w-32 mx-auto rounded bg-gray-800" />
+          <div className="h-4 w-48 mx-auto rounded bg-sl-raise mb-2" />
+          <div className="h-3 w-32 mx-auto rounded bg-sl-raise" />
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@ function SpotlightCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`spotlight-card group relative rounded-2xl overflow-hidden border border-[#1a1a2a] cursor-pointer transition-all duration-500 ${
+      className={`spotlight-card group relative rounded-2xl overflow-hidden border border-[var(--sl-raise)] cursor-pointer transition-all duration-500 ${
         featured
           ? 'md:col-span-2 md:row-span-2 min-h-[280px] md:min-h-[380px]'
           : 'min-h-[180px] md:min-h-[200px]'
@@ -185,10 +185,10 @@ function SpotlightCard({
               (e.target as HTMLImageElement).style.display = 'none'
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/70 to-[#0a0a0f]/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--sl-ground)] via-[var(--sl-ground)]/70 to-[var(--sl-ground)]/30" />
         </>
       ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#12121a] via-[#1a1a24] to-[#0a0a0f]">
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--sl-surface)] via-[var(--sl-raise)] to-[var(--sl-ground)]">
           {/* Abstract pattern for cards without images */}
           <div className="absolute inset-0 opacity-[0.03]" style={{
             backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
@@ -215,7 +215,7 @@ function SpotlightCard({
                 loading="lazy"
               />
             )}
-            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate max-w-[120px]">
+            <span className="text-[10px] font-bold text-sl-mute uppercase tracking-wider truncate max-w-[120px]">
               {event.strLeague}
             </span>
           </div>
@@ -238,7 +238,7 @@ function SpotlightCard({
             {/* Home Team */}
             <div className="flex flex-col items-center">
               <div
-                className={`${featured ? 'w-14 h-14 md:w-16 md:h-16' : 'w-10 h-10'} rounded-full bg-[#1a1a24]/80 border border-white/10 flex items-center justify-center overflow-hidden backdrop-blur-sm`}
+                className={`${featured ? 'w-14 h-14 md:w-16 md:h-16' : 'w-10 h-10'} rounded-full bg-[var(--sl-raise)]/80 border border-white/10 flex items-center justify-center overflow-hidden backdrop-blur-sm`}
                 style={{ backgroundColor: !homeBadge ? getBgColor(event.strHomeTeam) : undefined }}
               >
                 {homeBadge ? (
@@ -251,16 +251,16 @@ function SpotlightCard({
                       const t = e.target as HTMLImageElement
                       t.style.display = 'none'
                       if (t.parentElement) {
-                        t.parentElement.innerHTML = `<span class="text-[10px] font-bold text-white">${getTeamInitials(event.strHomeTeam)}</span>`
+                        t.parentElement.innerHTML = `<span class="text-[10px] font-bold text-sl-text">${getTeamInitials(event.strHomeTeam)}</span>`
                         t.parentElement.style.backgroundColor = getBgColor(event.strHomeTeam)
                       }
                     }}
                   />
                 ) : (
-                  <span className="text-[10px] font-bold text-white">{getTeamInitials(event.strHomeTeam)}</span>
+                  <span className="text-[10px] font-bold text-sl-text">{getTeamInitials(event.strHomeTeam)}</span>
                 )}
               </div>
-              <span className={`${featured ? 'text-xs md:text-sm' : 'text-[10px]'} text-white font-bold mt-1.5 text-center max-w-[80px] md:max-w-[100px] truncate`}>
+              <span className={`${featured ? 'text-xs md:text-sm' : 'text-[10px]'} text-sl-text font-bold mt-1.5 text-center max-w-[80px] md:max-w-[100px] truncate`}>
                 {event.strHomeTeam}
               </span>
             </div>
@@ -269,20 +269,20 @@ function SpotlightCard({
             <div className="flex flex-col items-center">
               {event.eventStatus === 'live' && event.intHomeScore !== null ? (
                 <div className="flex items-center gap-2">
-                  <span className={`${featured ? 'text-2xl md:text-3xl' : 'text-xl'} font-black text-white`}>{event.intHomeScore}</span>
-                  <span className="text-gray-500 font-bold">-</span>
-                  <span className={`${featured ? 'text-2xl md:text-3xl' : 'text-xl'} font-black text-white`}>{event.intAwayScore}</span>
+                  <span className={`${featured ? 'text-2xl md:text-3xl' : 'text-xl'} font-black text-sl-text`}>{event.intHomeScore}</span>
+                  <span className="text-sl-mute font-bold">-</span>
+                  <span className={`${featured ? 'text-2xl md:text-3xl' : 'text-xl'} font-black text-sl-text`}>{event.intAwayScore}</span>
                 </div>
               ) : (
-                <span className={`${featured ? 'text-sm md:text-base' : 'text-xs'} text-gray-500 font-bold`}>VS</span>
+                <span className={`${featured ? 'text-sm md:text-base' : 'text-xs'} text-sl-mute font-bold`}>VS</span>
               )}
-              <span className="text-[10px] text-gray-500 mt-0.5">{kickoffTime}</span>
+              <span className="text-[10px] text-sl-mute mt-0.5">{kickoffTime}</span>
             </div>
 
             {/* Away Team */}
             <div className="flex flex-col items-center">
               <div
-                className={`${featured ? 'w-14 h-14 md:w-16 md:h-16' : 'w-10 h-10'} rounded-full bg-[#1a1a24]/80 border border-white/10 flex items-center justify-center overflow-hidden backdrop-blur-sm`}
+                className={`${featured ? 'w-14 h-14 md:w-16 md:h-16' : 'w-10 h-10'} rounded-full bg-[var(--sl-raise)]/80 border border-white/10 flex items-center justify-center overflow-hidden backdrop-blur-sm`}
                 style={{ backgroundColor: !awayBadge ? getBgColor(event.strAwayTeam) : undefined }}
               >
                 {awayBadge ? (
@@ -295,16 +295,16 @@ function SpotlightCard({
                       const t = e.target as HTMLImageElement
                       t.style.display = 'none'
                       if (t.parentElement) {
-                        t.parentElement.innerHTML = `<span class="text-[10px] font-bold text-white">${getTeamInitials(event.strAwayTeam)}</span>`
+                        t.parentElement.innerHTML = `<span class="text-[10px] font-bold text-sl-text">${getTeamInitials(event.strAwayTeam)}</span>`
                         t.parentElement.style.backgroundColor = getBgColor(event.strAwayTeam)
                       }
                     }}
                   />
                 ) : (
-                  <span className="text-[10px] font-bold text-white">{getTeamInitials(event.strAwayTeam)}</span>
+                  <span className="text-[10px] font-bold text-sl-text">{getTeamInitials(event.strAwayTeam)}</span>
                 )}
               </div>
-              <span className={`${featured ? 'text-xs md:text-sm' : 'text-[10px]'} text-white font-bold mt-1.5 text-center max-w-[80px] md:max-w-[100px] truncate`}>
+              <span className={`${featured ? 'text-xs md:text-sm' : 'text-[10px]'} text-sl-text font-bold mt-1.5 text-center max-w-[80px] md:max-w-[100px] truncate`}>
                 {event.strAwayTeam}
               </span>
             </div>
@@ -312,7 +312,7 @@ function SpotlightCard({
 
           {/* Venue */}
           {featured && event.strVenue && (
-            <p className="text-center text-[10px] text-gray-500 mb-3 truncate">
+            <p className="text-center text-[10px] text-sl-mute mb-3 truncate">
               <span className="inline-flex items-center gap-1.5 justify-center"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{event.strVenue}</span>
             </p>
           )}
@@ -367,7 +367,7 @@ export function SpotlightEvents() {
   const secondary = events.slice(1, 3)
 
   return (
-    <section className="relative py-12 md:py-16 bg-[#0a0a0f] overflow-hidden">
+    <section className="relative py-12 md:py-16 bg-[var(--sl-ground)] overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px]" />
@@ -387,13 +387,13 @@ export function SpotlightEvents() {
                 Spotlight
               </span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-sl-text tracking-tight">
               What&apos;s Hot Right Now
             </h2>
           </div>
           <Link
             href="/scores"
-            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors font-medium"
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-sl-mute hover:text-sl-text transition-colors font-medium"
           >
             All Fixtures
             <ArrowRight className="w-4 h-4" />
@@ -425,7 +425,7 @@ export function SpotlightEvents() {
         <div className="mt-6 text-center sm:hidden">
           <Link
             href="/scores"
-            className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors font-medium"
+            className="inline-flex items-center gap-1.5 text-sm text-sl-mute hover:text-sl-text transition-colors font-medium"
           >
             See All Fixtures
             <ArrowRight className="w-4 h-4" />

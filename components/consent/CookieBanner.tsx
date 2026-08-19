@@ -72,20 +72,20 @@ export function CookieBanner() {
         className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6
           md:bottom-6 md:left-6 md:right-auto md:max-w-md"
       >
-        <div className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl
+        <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl
           p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
           <div className="flex items-start gap-3 mb-4">
-            <Cookie className="w-5 h-5 flex-shrink-0 text-[#00e676]" aria-hidden="true" />
+            <Cookie className="w-5 h-5 flex-shrink-0 text-[var(--sl-amber)]" aria-hidden="true" />
             <div>
-              <h3 className="font-bold text-white text-sm mb-1">
+              <h3 className="font-bold text-sl-text text-sm mb-1">
                 We use cookies
               </h3>
-              <p className="text-gray-400 text-xs leading-relaxed">
+              <p className="text-sl-mute text-xs leading-relaxed">
                 We use analytics cookies to understand how you use our site 
                 and improve your experience. We never sell your data.
                 {" "}
                 <Link href="/privacy" 
-                  className="text-[#00e676] hover:underline">
+                  className="text-[var(--sl-amber)] hover:underline">
                   Privacy Policy
                 </Link>
               </p>
@@ -95,8 +95,8 @@ export function CookieBanner() {
             <button
               onClick={handleDecline}
               className="flex-1 py-2.5 rounded-xl text-xs font-bold
-                border border-[#2a2a3a] hover:border-[#00e676]/40
-                text-gray-400 hover:text-white transition-all
+                border border-[var(--sl-line)] hover:border-[var(--sl-amber)]/40
+                text-sl-mute hover:text-sl-text transition-all
                 touch-manipulation"
             >
               Decline
@@ -104,7 +104,7 @@ export function CookieBanner() {
             <button
               onClick={handleAccept}
               className="flex-1 py-2.5 rounded-xl text-xs font-bold
-                bg-[#00e676] hover:bg-[#00ff87] text-black
+                bg-[var(--sl-amber)] hover:bg-[var(--sl-amber-hover)] text-black
                 transition-all touch-manipulation"
             >
               Accept All

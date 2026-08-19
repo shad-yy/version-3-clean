@@ -56,15 +56,15 @@ function CompetitionCard({
   animate: boolean
 }) {
   return (
-    <article className="flex-1 min-w-0 rounded-2xl border border-[#2a2a3a] bg-[#12121a] p-5 md:p-6">
+    <article className="flex-1 min-w-0 rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 md:p-6">
       <header className="mb-5">
         <div className="flex items-baseline justify-between gap-3 mb-1">
-          <h3 className="text-lg font-bold text-white truncate">{competition.name}</h3>
-          <span className="shrink-0 text-[10px] uppercase tracking-wider text-gray-500">
+          <h3 className="text-lg font-bold text-sl-text truncate">{competition.name}</h3>
+          <span className="shrink-0 text-[10px] uppercase tracking-wider text-sl-mute">
             {competition.sampleFixture}
           </span>
         </div>
-        <p className="text-xs text-gray-500">Same match. Different country. Different channel.</p>
+        <p className="text-xs text-sl-mute">Same match. Different country. Different channel.</p>
       </header>
 
       <ul className="space-y-2">
@@ -79,15 +79,15 @@ function CompetitionCard({
               className={[
                 "flex items-center gap-3 rounded-xl border px-3 py-3 transition-all duration-500 motion-reduce:transition-none",
                 isActive
-                  ? "border-[#00e676]/50 bg-[#00e676]/[0.07] shadow-[0_0_24px_-8px_rgba(0,230,118,0.5)]"
+                  ? "border-[var(--sl-amber)]/50 bg-[var(--sl-amber)]/[0.07] shadow-[0_0_24px_-8px_rgba(0,230,118,0.5)]"
                   : "border-transparent bg-white/[0.02]",
               ].join(" ")}
             >
               <span className="min-w-0 flex-1">
-                <span className="block text-sm font-semibold text-white truncate">
+                <span className="block text-sm font-semibold text-sl-text truncate">
                   {listing.broadcaster}
                 </span>
-                <span className="block text-xs text-gray-500 truncate">
+                <span className="block text-xs text-sl-mute truncate">
                   {listing.countryName}
                   {listing.streamingOn ? ` · ${listing.streamingOn}` : ""}
                 </span>
@@ -97,7 +97,7 @@ function CompetitionCard({
                 <span
                   className={[
                     "shrink-0 rounded-lg px-2.5 py-1 font-mono text-xs tabular-nums transition-colors duration-500 motion-reduce:transition-none",
-                    isActive ? "bg-[#00e676] text-black font-bold" : "bg-white/5 text-gray-400",
+                    isActive ? "bg-[var(--sl-amber)] text-black font-bold" : "bg-white/5 text-sl-mute",
                   ].join(" ")}
                 >
                   {localTime}
@@ -110,7 +110,7 @@ function CompetitionCard({
 
       <Link
         href={competition.href}
-        className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#00e676] hover:text-[#00ff87] transition-colors"
+        className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--sl-amber)] hover:text-[var(--sl-amber-hover)] transition-colors"
       >
         {competition.name} TV guide
         <span aria-hidden="true">→</span>
@@ -149,20 +149,20 @@ export function BroadcastResolver({
   return (
     <section
       aria-labelledby="broadcast-resolver-heading"
-      className="py-16 md:py-20 border-t border-[#1a1a2a] bg-[#0a0a0f]"
+      className="py-16 md:py-20 border-t border-[var(--sl-raise)] bg-[var(--sl-ground)]"
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="max-w-2xl mb-10">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#00e676] mb-3">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--sl-amber)] mb-3">
             Where to watch
           </p>
           <h2
             id="broadcast-resolver-heading"
-            className="text-3xl md:text-4xl font-extrabold text-white mb-3"
+            className="text-3xl md:text-4xl font-extrabold text-sl-text mb-3"
           >
             The match is on. But on what channel, where you are?
           </h2>
-          <p className="text-gray-400 leading-relaxed">
+          <p className="text-sl-mute leading-relaxed">
             Scores are everywhere. The harder question is which broadcaster holds the rights in
             your country, and what time it actually kicks off locally. That is what we publish —
             for every competition we cover.
@@ -180,7 +180,7 @@ export function BroadcastResolver({
           ))}
         </div>
 
-        <p className="mt-6 text-xs text-gray-600">
+        <p className="mt-6 text-xs text-sl-dim">
           Broadcast rights shown at competition level and checked against the rights holders.
           Individual fixtures can move — always confirm with the broadcaster before kick-off.
         </p>

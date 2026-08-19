@@ -69,12 +69,12 @@ function safeParseSportsDBDate(date: string, time?: string): Date | null {
 const FormPill = ({ result }: { result: string }) => {
   const colors: Record<string, string> = {
     W: 'bg-green-500 text-black',
-    D: 'bg-gray-500 text-white',
-    L: 'bg-red-500 text-white',
+    D: 'bg-gray-500 text-sl-text',
+    L: 'bg-red-500 text-sl-text',
   }
   return (
     <span
-      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-white'
+      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || 'bg-gray-700 text-sl-text'
         }`}
     >
       {result}
@@ -147,7 +147,7 @@ export default async function ChampionsLeaguePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
       <SchemaMarkup schema={faqSchema} />
       <SchemaMarkup schema={breadcrumbSchema} />
 
@@ -156,7 +156,7 @@ export default async function ChampionsLeaguePage() {
         <section
           className="pt-28 md:pt-36 pb-16 text-center px-4 border-b"
           style={{
-            background: 'linear-gradient(135deg, #001a4e 0%, #0a0a0f 100%)',
+            background: 'linear-gradient(135deg, #001a4e 0%, var(--sl-ground) 100%)',
             borderColor: '#c8a951',
           }}
         >
@@ -172,18 +172,18 @@ export default async function ChampionsLeaguePage() {
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 md:mb-6">The Greatest Club Competition on Earth</h1>
             {nextFixture ? (
-              <p className="text-gray-300 text-sm md:text-base mb-10">
+              <p className="text-sl-mid text-sm md:text-base mb-10">
                 Next fixture:{' '}
-                <span className="text-white font-bold">
+                <span className="text-sl-text font-bold">
                   {nextFixture.strEvent || `${nextFixture.strHomeTeam} vs ${nextFixture.strAwayTeam}`}
                 </span>{' '}
                 —{' '}
-                <span className="text-gray-300">
+                <span className="text-sl-mid">
                   {nextFixture.dateEvent ? safeParseSportsDBDate(nextFixture.dateEvent)?.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : 'TBA'}
                 </span>
               </p>
             ) : (
-              <p className="text-gray-300 text-sm md:text-base mb-10">Next fixture: TBA</p>
+              <p className="text-sl-mid text-sm md:text-base mb-10">Next fixture: TBA</p>
             )}
             <ShimmerButton
               href="/scores"
@@ -202,18 +202,18 @@ export default async function ChampionsLeaguePage() {
           {/* UPCOMING MATCHES */}
           {upcomingMatches.length > 0 && (
             <section className="pb-16 md:pb-20">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-sl-text mb-6">
                 Upcoming Matches
               </h2>
               <div className="space-y-3">
                 {upcomingMatches.map(match => (
                   <div key={match.id}
-                    className="bg-[#12121a] border border-[#2a2a3a] 
+                    className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                       rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="flex items-center gap-2 flex-1 
                         justify-end">
-                        <span className="text-white font-semibold text-sm 
+                        <span className="text-sl-text font-semibold text-sm 
                           text-right truncate max-w-[120px]">
                           {match.homeTeam.name}
                         </span>
@@ -223,10 +223,10 @@ export default async function ChampionsLeaguePage() {
                           className="w-6 h-6 object-contain" loading="lazy" />
                       </div>
                       <div className="text-center px-3 flex-shrink-0">
-                        <span className="font-extrabold text-white text-lg">
+                        <span className="font-extrabold text-sl-text text-lg">
                           v
                         </span>
-                        <p className="text-[10px] text-gray-600 mt-0.5">
+                        <p className="text-[10px] text-sl-dim mt-0.5">
                           {new Date(match.utcDate).toLocaleDateString('en-GB', {
                             weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
                           })}
@@ -237,7 +237,7 @@ export default async function ChampionsLeaguePage() {
                           alt={match.awayTeam.name}
                           width={24} height={24}
                           className="w-6 h-6 object-contain" loading="lazy" />
-                        <span className="text-white font-semibold text-sm 
+                        <span className="text-sl-text font-semibold text-sm 
                           truncate max-w-[120px]">
                           {match.awayTeam.name}
                         </span>
@@ -252,18 +252,18 @@ export default async function ChampionsLeaguePage() {
           {/* RECENT RESULTS (football-data) */}
           {recentResults.length > 0 && (
             <section className="pb-16 md:pb-20">
-              <h2 className="text-2xl font-bold text-white mb-6">
+              <h2 className="text-2xl font-bold text-sl-text mb-6">
                 Recent Results
               </h2>
               <div className="space-y-3">
                 {recentResults.map(match => (
                   <div key={match.id}
-                    className="bg-[#12121a] border border-[#2a2a3a] 
+                    className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                       rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4 flex-1">
                       <div className="flex items-center gap-2 flex-1 
                         justify-end">
-                        <span className="text-white font-semibold text-sm 
+                        <span className="text-sl-text font-semibold text-sm 
                           text-right truncate max-w-[120px]">
                           {match.homeTeam.name}
                         </span>
@@ -273,12 +273,12 @@ export default async function ChampionsLeaguePage() {
                           className="w-6 h-6 object-contain" loading="lazy" />
                       </div>
                       <div className="text-center px-3 flex-shrink-0">
-                        <span className="font-extrabold text-white text-lg">
+                        <span className="font-extrabold text-sl-text text-lg">
                           {match.score.fullTime.home ?? '-'}
                           {' — '}
                           {match.score.fullTime.away ?? '-'}
                         </span>
-                        <p className="text-[10px] text-gray-600 mt-0.5">
+                        <p className="text-[10px] text-sl-dim mt-0.5">
                           {new Date(match.utcDate).toLocaleDateString('en-GB', {
                             weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
                           })}
@@ -289,7 +289,7 @@ export default async function ChampionsLeaguePage() {
                           alt={match.awayTeam.name}
                           width={24} height={24}
                           className="w-6 h-6 object-contain" loading="lazy" />
-                        <span className="text-white font-semibold text-sm 
+                        <span className="text-sl-text font-semibold text-sm 
                           truncate max-w-[120px]">
                           {match.awayTeam.name}
                         </span>
@@ -306,7 +306,7 @@ export default async function ChampionsLeaguePage() {
             <FadeIn direction="up">
               <section className="pb-16 md:pb-20">
                 <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Standings</h2>
-              <div className="bg-gray-950/60 rounded-2xl border border-gray-800 overflow-hidden">
+              <div className="bg-sl-ground/60 rounded-2xl border border-sl-line overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className="sticky top-0 z-10" style={{ backgroundColor: '#0f1118' }}>
@@ -319,7 +319,7 @@ export default async function ChampionsLeaguePage() {
                         <th className="py-3 px-3 text-center w-10">L</th>
                         <th className="py-3 px-3 text-center w-10">GD</th>
                         <th className="py-3 px-3 text-center">Form</th>
-                        <th className="py-3 px-3 text-center w-12 text-white">Pts</th>
+                        <th className="py-3 px-3 text-center w-12 text-sl-text">Pts</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -335,9 +335,9 @@ export default async function ChampionsLeaguePage() {
                         return (
                           <tr
                             key={`${t.idTeam || t.strTeam || idx}`}
-                            className="border-b border-gray-800/60 hover:bg-gray-900/40 transition-colors even:bg-white/[0.02]"
+                            className="border-b border-sl-line/60 hover:bg-sl-surface/40 transition-colors even:bg-white/[0.02]"
                           >
-                            <td className="py-3 px-3 text-center text-gray-400 font-bold">{rank}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute font-bold">{rank}</td>
                             <td className="py-3 px-3">
                               <div
                                 className={`flex items-center gap-3 pl-3 ${top8 ? 'border-l-2' : ''}`}
@@ -349,16 +349,16 @@ export default async function ChampionsLeaguePage() {
                                   width={24} height={24}
                                   className="w-6 h-6 object-contain" loading="lazy"
                                 />
-                                <span className="font-bold text-white line-clamp-1">{t.strTeam}</span>
+                                <span className="font-bold text-sl-text line-clamp-1">{t.strTeam}</span>
                               </div>
                             </td>
-                            <td className="py-3 px-3 text-center text-gray-400">{played}</td>
-                            <td className="py-3 px-3 text-center text-gray-400">{win}</td>
-                            <td className="py-3 px-3 text-center text-gray-400">{draw}</td>
-                            <td className="py-3 px-3 text-center text-gray-400">{loss}</td>
-                            <td className="py-3 px-3 text-center text-gray-400">{gd}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute">{played}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute">{win}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute">{draw}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute">{loss}</td>
+                            <td className="py-3 px-3 text-center text-sl-mute">{gd}</td>
                             <td className="py-3 px-3 text-center">{renderForm(t.strForm)}</td>
-                            <td className="py-3 px-3 text-center font-extrabold text-white">{pts}</td>
+                            <td className="py-3 px-3 text-center font-extrabold text-sl-text">{pts}</td>
                           </tr>
                         )
                       })}
@@ -371,11 +371,11 @@ export default async function ChampionsLeaguePage() {
           ) : (
             <FadeIn direction="up">
               <section className="pb-16 md:pb-20">
-              <div className="bg-gray-950/60 rounded-2xl border border-gray-800 p-8 text-center">
-                <p className="text-gray-400 text-sm mb-2">
+              <div className="bg-sl-ground/60 rounded-2xl border border-sl-line p-8 text-center">
+                <p className="text-sl-mute text-sm mb-2">
                   Live group standings are available to verified league data partners.
                 </p>
-                <p className="text-white font-bold text-lg mb-4">
+                <p className="text-sl-text font-bold text-lg mb-4">
                   2025–26 UEFA Champions League
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-6">
@@ -385,9 +385,9 @@ export default async function ChampionsLeaguePage() {
                     { round: 'Final', date: '30 May 2026 · Munich' },
                     { round: 'Current Stage', date: 'Semi-Finals' },
                   ].map(item => (
-                    <div key={item.round} className="bg-gray-900 rounded-xl p-3 border border-gray-700">
-                      <div className="text-gray-400 text-xs mb-1">{item.round}</div>
-                      <div className="text-white font-bold text-sm">{item.date}</div>
+                    <div key={item.round} className="bg-sl-surface rounded-xl p-3 border border-sl-line">
+                      <div className="text-sl-mute text-xs mb-1">{item.round}</div>
+                      <div className="text-sl-text font-bold text-sm">{item.date}</div>
                     </div>
                   ))}
                 </div>
@@ -403,7 +403,7 @@ export default async function ChampionsLeaguePage() {
 
           {/* UCL GREATEST MOMENTS */}
           <FadeIn direction="up">
-            <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
+            <section className="py-16 md:py-20 border-t border-[var(--sl-line)]">
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">UCL Greatest Moments</h2>
               <StaggerIn className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
@@ -426,12 +426,12 @@ export default async function ChampionsLeaguePage() {
                     'Messi scored twice as Barcelona put on a tactical masterclass. Widely regarded as the greatest UCL final performance ever.',
                 },
               ].map((c) => (
-                <div key={c.title} className="bg-gray-950/60 rounded-2xl border border-gray-800 p-6">
+                <div key={c.title} className="bg-sl-ground/60 rounded-2xl border border-sl-line p-6">
                   <div className="border-b pb-3 mb-3" style={{ borderColor: '#c8a951' }}>
-                    <h3 className="font-extrabold text-white">{c.title}</h3>
-                    <p className="text-xs text-gray-400 mt-1">{c.subtitle}</p>
+                    <h3 className="font-extrabold text-sl-text">{c.title}</h3>
+                    <p className="text-xs text-sl-mute mt-1">{c.subtitle}</p>
                   </div>
-                  <p className="text-sm text-gray-300 leading-relaxed">{c.body}</p>
+                  <p className="text-sm text-sl-mid leading-relaxed">{c.body}</p>
                 </div>
               ))}
               </StaggerIn>
@@ -440,7 +440,7 @@ export default async function ChampionsLeaguePage() {
 
           {/* HOW TO FOLLOW */}
           <FadeIn direction="up">
-            <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
+            <section className="py-16 md:py-20 border-t border-[var(--sl-line)]">
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Matchday Coverage</h2>
               <StaggerIn className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
@@ -448,12 +448,12 @@ export default async function ChampionsLeaguePage() {
                 { n: 2, title: 'Inspect Standings', body: 'View live updated group stage tables and goal difference.' },
                 { n: 3, title: 'Broadcast Listings', body: 'Find official television networks carrying each fixture globally.' },
               ].map((s) => (
-                <div key={s.n} className="bg-gray-950/60 rounded-2xl border border-gray-800 p-6">
+                <div key={s.n} className="bg-sl-ground/60 rounded-2xl border border-sl-line p-6">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center font-extrabold text-black mb-4" style={{ backgroundColor: '#c8a951' }}>
                     {s.n}
                   </div>
-                  <h3 className="font-bold text-white mb-2">{s.title}</h3>
-                  <p className="text-sm text-gray-400">{s.body}</p>
+                  <h3 className="font-bold text-sl-text mb-2">{s.title}</h3>
+                  <p className="text-sm text-sl-mute">{s.body}</p>
                 </div>
               ))}
               </StaggerIn>
@@ -462,13 +462,13 @@ export default async function ChampionsLeaguePage() {
 
           {/* FAQ */}
           <FadeIn direction="up">
-            <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
+            <section className="py-16 md:py-20 border-t border-[var(--sl-line)]">
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">FAQ</h2>
               <StaggerIn className="space-y-6">
               {faqs.map((f) => (
-                <div key={f.question} className="bg-gray-950/60 rounded-2xl border border-gray-800 p-6">
-                  <h3 className="font-bold text-white mb-2">{f.question}</h3>
-                  <p className="text-sm text-gray-400">{f.answer}</p>
+                <div key={f.question} className="bg-sl-ground/60 rounded-2xl border border-sl-line p-6">
+                  <h3 className="font-bold text-sl-text mb-2">{f.question}</h3>
+                  <p className="text-sm text-sl-mute">{f.answer}</p>
                 </div>
               ))}
               </StaggerIn>
@@ -478,10 +478,10 @@ export default async function ChampionsLeaguePage() {
 
         {/* Right Column CTA */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 bg-gray-950/60 rounded-3xl border border-gray-800 overflow-hidden">
+          <div className="sticky top-24 bg-sl-ground/60 rounded-3xl border border-sl-line overflow-hidden">
             <div className="p-6 border-b" style={{ borderColor: '#c8a951' }}>
-              <h3 className="text-lg font-extrabold text-white">Tonight&apos;s Champions League</h3>
-              <p className="text-sm text-gray-400 mt-2">
+              <h3 className="text-lg font-extrabold text-sl-text">Tonight&apos;s Champions League</h3>
+              <p className="text-sm text-sl-mute mt-2">
                 Live scores, confirmed kick-off times and the official UK broadcaster for every match.
               </p>
             </div>

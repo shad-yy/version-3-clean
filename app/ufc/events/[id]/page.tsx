@@ -60,13 +60,13 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
   const venue = header?.competitions?.[0]?.venue?.fullName || ''
   
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100 
       pt-28 pb-20 px-4">
       <div className="max-w-4xl mx-auto">
         
         <Link href="/ufc"
-          className="inline-flex items-center gap-2 text-gray-500 
-            hover:text-white text-sm mb-8 transition-colors">
+          className="inline-flex items-center gap-2 text-sl-mute 
+            hover:text-sl-text text-sm mb-8 transition-colors">
           ← Back to UFC
         </Link>
 
@@ -74,10 +74,10 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
           <>
             <div className="mb-8">
               <h1 className="text-3xl md:text-4xl font-extrabold 
-                text-white mb-4">
+                text-sl-text mb-4">
                 {eventName}
               </h1>
-              <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+              <div className="flex flex-wrap gap-4 text-sm text-sl-mute">
                 {date && (
                   <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{formatLongDate(date)}</span>
                 )}
@@ -87,7 +87,7 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
 
             {fights.length > 0 && (
               <section className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6">
+                <h2 className="text-2xl font-bold text-sl-text mb-6">
                   Fight Card
                 </h2>
                 <div className="space-y-4">
@@ -97,36 +97,36 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
                     const note = comp.notes?.[0]?.headline
                     return (
                       <div key={i} 
-                        className="bg-[#12121a] border border-[#2a2a3a] 
+                        className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                           rounded-2xl p-5">
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex-1 text-center">
-                            <p className="font-bold text-white">
+                            <p className="font-bold text-sl-text">
                               {c0?.athlete?.displayName || 
                                c0?.team?.displayName || 'TBA'}
                             </p>
                             {c0?.score && (
-                              <p className="text-[#00e676] font-extrabold 
+                              <p className="text-[var(--sl-amber)] font-extrabold 
                                 text-2xl mt-1">{c0.score}</p>
                             )}
                           </div>
-                          <div className="text-gray-600 font-bold px-4">
+                          <div className="text-sl-dim font-bold px-4">
                             VS
                           </div>
                           <div className="flex-1 text-center">
-                            <p className="font-bold text-white">
+                            <p className="font-bold text-sl-text">
                               {c1?.athlete?.displayName || 
                                c1?.team?.displayName || 'TBA'}
                             </p>
                             {c1?.score && (
-                              <p className="text-[#00e676] font-extrabold 
+                              <p className="text-[var(--sl-amber)] font-extrabold 
                                 text-2xl mt-1">{c1.score}</p>
                             )}
                           </div>
                         </div>
                         {note && (
-                          <p className="text-xs text-gray-500 text-center mt-3 
-                            border-t border-[#2a2a3a] pt-3">
+                          <p className="text-xs text-sl-mute text-center mt-3 
+                            border-t border-[var(--sl-line)] pt-3">
                             {note}
                           </p>
                         )}
@@ -142,38 +142,38 @@ export default async function UFCEventPage({ params }: { params: { id: string } 
             <Image src="/leagues/ufc.png" alt="UFC"
               width={64} height={64}
               className="object-contain mx-auto mb-6 opacity-50" />
-            <h1 className="text-2xl font-extrabold text-white mb-3">
+            <h1 className="text-2xl font-extrabold text-sl-text mb-3">
               UFC Event Details Loading
             </h1>
-            <p className="text-gray-400 mb-8 max-w-md mx-auto">
+            <p className="text-sl-mute mb-8 max-w-md mx-auto">
               Fight card details are being loaded. 
               Browse all upcoming UFC events below.
             </p>
             <Link href="/ufc"
               className="inline-flex items-center gap-2 
-                bg-[#00e676] text-black font-bold px-8 py-3.5 
+                bg-[var(--sl-amber)] text-black font-bold px-8 py-3.5 
                 rounded-xl text-sm">
               View All UFC Events →
             </Link>
           </div>
         )}
 
-        <div className="bg-[#12121a] border border-[#2a2a3a] 
+        <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
           rounded-2xl p-6 text-center mt-8">
-          <h3 className="font-bold text-white mb-2">
+          <h3 className="font-bold text-sl-text mb-2">
             Follow Every UFC Event
           </h3>
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-sl-mute text-sm mb-4">
             Full fight cards, fighter records and UK start times for every card.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link href="/ufc"
-              className="bg-[#00e676] text-black font-bold 
+              className="bg-[var(--sl-amber)] text-black font-bold 
                 px-6 py-3 rounded-xl text-sm">
               UFC Schedule →
             </Link>
             <Link href="/news"
-              className="border border-[#2a2a3a] text-gray-300 
+              className="border border-[var(--sl-line)] text-sl-mid 
                 font-bold px-6 py-3 rounded-xl text-sm">
               MMA News
             </Link>

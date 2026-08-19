@@ -46,7 +46,7 @@ function TeamBadge({ logoUrl, teamName }: { logoUrl?: string | null; teamName: s
                     onError={() => setImgOk(false)}
                 />
             ) : (
-                <span className="text-[10px] font-bold text-white">{getTeamInitials(teamName)}</span>
+                <span className="text-[10px] font-bold text-sl-text">{getTeamInitials(teamName)}</span>
             )}
         </div>
     )
@@ -91,12 +91,12 @@ export function LeagueTables() {
     const FormPill = ({ result }: { result: string }) => {
         const colors: Record<string, string> = {
             W: "bg-green-500 text-black",
-            D: "bg-gray-500 text-white",
-            L: "bg-red-500 text-white",
+            D: "bg-gray-500 text-sl-text",
+            L: "bg-red-500 text-sl-text",
         }
         return (
             <span
-                className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || "bg-gray-700 text-white"
+                className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${colors[result] || "bg-gray-700 text-sl-text"
                     }`}
             >
                 {result}
@@ -179,7 +179,7 @@ export function LeagueTables() {
                 {/* Table Content */}
                 <div className="bg-surface rounded-2xl border border-border overflow-hidden mb-8 shadow-xl relative">
                     {!loading && standings.length > 0 && (
-                        <div className="md:hidden absolute right-3 top-3 bg-black/80 backdrop-blur-sm border border-[#2a2a3a] text-[10px] font-bold text-[#00e676] px-2.5 py-1 rounded-full animate-pulse z-20 pointer-events-none flex items-center gap-1">
+                        <div className="md:hidden absolute right-3 top-3 bg-black/80 backdrop-blur-sm border border-[var(--sl-line)] text-[10px] font-bold text-[var(--sl-amber)] px-2.5 py-1 rounded-full animate-pulse z-20 pointer-events-none flex items-center gap-1">
                             Swipe Table <span>→</span>
                         </div>
                     )}

@@ -126,7 +126,7 @@ export function HeroSection() {
   const showVideo = canPlayVideo && !videoError
 
   return (
-    <section className="relative w-full min-h-[600px] md:min-h-[700px] overflow-hidden bg-[#0a0a0f] flex flex-col items-center justify-center">
+    <section className="relative w-full min-h-[600px] md:min-h-[700px] overflow-hidden bg-[var(--sl-ground)] flex flex-col items-center justify-center">
       {/* ─── Dynamic backgrounds — only render after client hydration to prevent SSR mismatch ─── */}
       {mounted && (
         <>
@@ -195,11 +195,11 @@ export function HeroSection() {
       {/* ─── Cinematic Gradient Overlays ─── */}
       <div className="absolute inset-0 z-[1] pointer-events-none">
         {/* Primary left-to-right readability gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f]/95 via-[#0a0a0f]/75 to-[#0a0a0f]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--sl-ground)]/95 via-[var(--sl-ground)]/75 to-[var(--sl-ground)]/50" />
         {/* Bottom fade for seamless section transition */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--sl-ground)] via-[var(--sl-ground)]/30 to-transparent" />
         {/* Top fade for header integration */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--sl-ground)]/70 via-transparent to-transparent" />
         {/* Cinematic vignette */}
         <div className="absolute inset-0" style={{
           background: 'radial-gradient(ellipse at 30% 50%, transparent 40%, rgba(10,10,15,0.6) 100%)'
@@ -210,7 +210,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30 z-[2]" />
 
       {/* Animated ambient glow particles */}
-      <div className="absolute top-[20%] left-[10%] w-32 h-32 bg-[#00e676]/15 rounded-full blur-[60px] animate-pulse-slow z-[2]" />
+      <div className="absolute top-[20%] left-[10%] w-32 h-32 bg-[var(--sl-amber)]/15 rounded-full blur-[60px] animate-pulse-slow z-[2]" />
       <div className="absolute bottom-[30%] right-[10%] w-40 h-40 bg-blue-500/10 rounded-full blur-[80px] animate-pulse-slow z-[2]" style={{ animationDelay: '1s' }} />
 
       {/* ─── Content ─── */}
@@ -220,24 +220,24 @@ export function HeroSection() {
           {/* LEFT COLUMN (60%) */}
           <div className="flex-1 lg:max-w-[60%] flex flex-col items-start text-left space-y-8">
             <div
-              className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md border border-[#00e676]/30 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide"
+              className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-md border border-[var(--sl-amber)]/30 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e676]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--sl-amber)] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--sl-amber)]" />
               </span>
-              <span className="text-white/90">Live Match Center & Broadcast Directory</span>
+              <span className="text-sl-text/90">Live Match Center & Broadcast Directory</span>
             </div>
 
             <h1
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-lg hero-speakable"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-sl-text leading-[1.1] drop-shadow-lg hero-speakable"
             >
               Live Sports Scores, Fixtures & <br className="hidden sm:inline" />
-              <span className="text-[#00e676]">Global Broadcast Guide</span>
+              <span className="text-[var(--sl-amber)]">Global Broadcast Guide</span>
             </h1>
 
             <p
-              className="text-base sm:text-lg md:text-xl text-gray-300 max-w-xl font-normal leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-sl-mid max-w-xl font-normal leading-relaxed"
             >
               Track real-time scores, lineups, standings, and match schedules for Premier League, Champions League, La Liga, UFC, F1, and NBA. Find official broadcast channels worldwide.
             </p>
@@ -270,15 +270,15 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.45 }}
-              className="pt-2 w-full flex flex-wrap items-center justify-start gap-x-4 gap-y-3 text-xs sm:text-sm lg:text-base text-gray-400 font-semibold"
+              className="pt-2 w-full flex flex-wrap items-center justify-start gap-x-4 gap-y-3 text-xs sm:text-sm lg:text-base text-sl-mute font-semibold"
             >
-              <span className="flex items-center gap-1.5 text-gray-300"><Check className="w-4 h-4 text-[#00e676]" strokeWidth={3} /> Real-Time Telemetry</span>
-              <span className="hidden sm:inline text-gray-600">|</span>
-              <span className="flex items-center gap-1.5 text-gray-300"><Check className="w-4 h-4 text-[#00e676]" strokeWidth={3} /> Official Broadcast Networks</span>
-              <span className="hidden sm:inline text-gray-600">|</span>
-              <span className="flex items-center gap-1.5 text-gray-300"><Check className="w-4 h-4 text-[#00e676]" strokeWidth={3} /> Verified Fixtures</span>
-              <span className="hidden lg:inline text-gray-600">|</span>
-              <span className="flex items-center gap-1.5 text-gray-300"><Check className="w-4 h-4 text-[#00e676]" strokeWidth={3} /> Instant Updates</span>
+              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Real-Time Telemetry</span>
+              <span className="hidden sm:inline text-sl-dim">|</span>
+              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Official Broadcast Networks</span>
+              <span className="hidden sm:inline text-sl-dim">|</span>
+              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Verified Fixtures</span>
+              <span className="hidden lg:inline text-sl-dim">|</span>
+              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Instant Updates</span>
             </motion.div>
           </div>
 
@@ -291,10 +291,10 @@ export function HeroSection() {
               className="w-full max-w-sm bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-6 shadow-2xl lg:rotate-[-2deg]"
             >
               <div className="flex items-center justify-between mb-5">
-                <span className="text-sm font-semibold text-gray-400 uppercase tracking-widest">Platform Highlights</span>
+                <span className="text-sm font-semibold text-sl-mute uppercase tracking-widest">Platform Highlights</span>
                 <span className="flex h-3 w-3 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1744] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#ff1744]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--sl-amber)] opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[var(--sl-amber)]" />
                 </span>
               </div>
 
@@ -306,8 +306,8 @@ export function HeroSection() {
                   { value: 'Official', label: 'UK TV Listings' },
                 ].map(stat => (
                   <div key={stat.value} className="bg-white/5 rounded-lg p-3 border border-white/5">
-                    <div className="text-2xl font-black text-[#00e676] leading-none">{stat.value}</div>
-                    <div className="text-[11px] text-gray-500 font-medium mt-0.5">{stat.label}</div>
+                    <div className="text-2xl font-black text-[var(--sl-amber)] leading-none">{stat.value}</div>
+                    <div className="text-[11px] text-sl-mute font-medium mt-0.5">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -319,8 +319,8 @@ export function HeroSection() {
                     { src: '/leagues/ufc.png', alt: 'UFC' },
                     { src: '/leagues/champions-league.png', alt: 'Champions League' },
                   ].map((league, i) => (
-                    <div key={i} className="w-10 h-10 rounded-full bg-[#1a1a24] border-2 border-black/50 flex items-center justify-center p-1.5 relative flex-shrink-0">
-                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#ff1744] rounded-full border-2 border-[#0a0a0f] z-10" />
+                    <div key={i} className="w-10 h-10 rounded-full bg-[var(--sl-raise)] border-2 border-black/50 flex items-center justify-center p-1.5 relative flex-shrink-0">
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[var(--sl-amber)] rounded-full border-2 border-[var(--sl-ground)] z-10" />
                       <img
                         src={league.src}
                         alt={league.alt}
@@ -331,14 +331,14 @@ export function HeroSection() {
                     </div>
                   ))}
                 </div>
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <span className="text-xs font-bold text-sl-mute uppercase tracking-wider">
                   Covered on Smart Live TV
                 </span>
               </div>
             </motion.div>
 
-            <div className="mt-8 flex items-center gap-3 bg-black/30 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full text-xs sm:text-sm text-gray-400">
-              <span className="w-2 h-2 rounded-full bg-[#00e676] animate-pulse" />
+            <div className="mt-8 flex items-center gap-3 bg-black/30 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full text-xs sm:text-sm text-sl-mute">
+              <span className="w-2 h-2 rounded-full bg-[var(--sl-amber)] animate-pulse" />
               <span>
                 Live Telemetry · Instant Lineups & Odds · Official Broadcast Networks
               </span>
@@ -356,7 +356,7 @@ export function HeroSection() {
               onClick={() => setCurrentImageIndex(i)}
               className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                 i === currentImageIndex % heroImages.length
-                  ? 'bg-[#00e676] w-4'
+                  ? 'bg-[var(--sl-amber)] w-4'
                   : 'bg-white/20 hover:bg-white/40'
               }`}
               aria-label={`Show image ${i + 1}`}

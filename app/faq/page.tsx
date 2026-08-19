@@ -34,29 +34,29 @@ const FAQS = [
 
 export default function FaqPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100 pt-28 md:pt-36 pb-16 md:pb-20">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100 pt-28 md:pt-36 pb-16 md:pb-20">
       <FadeIn>
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">Frequently Asked Questions</h1>
-          <p className="text-gray-400 text-lg">Everything you need to know about Smart Live TV sports hub.</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-sl-text mb-4">Frequently Asked Questions</h1>
+          <p className="text-sl-mute text-lg">Everything you need to know about Smart Live TV sports hub.</p>
         </div>
 
-        <div className="bg-[#12121a] rounded-3xl p-6 md:p-10 border border-[#2a2a3a] space-y-6">
+        <div className="bg-[var(--sl-surface)] rounded-3xl p-6 md:p-10 border border-[var(--sl-line)] space-y-6">
           {FAQS.map((faq, i) => (
-            <div key={i} className="border-b border-[#2a2a3a] pb-6 last:border-b-0 last:pb-0">
-              <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
+            <div key={i} className="border-b border-[var(--sl-line)] pb-6 last:border-b-0 last:pb-0">
+              <h3 className="text-lg font-bold text-sl-text mb-2">{faq.q}</h3>
+              <p className="text-sl-mute text-sm leading-relaxed">{faq.a}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Need further assistance?</h2>
-          <p className="text-gray-400 mb-6">Contact our support team anytime.</p>
+          <h2 className="text-2xl font-bold text-sl-text mb-4">Need further assistance?</h2>
+          <p className="text-sl-mute mb-6">Contact our support team anytime.</p>
           <Link
             href="/contact"
-            className="inline-block bg-[#00e676] hover:bg-[#00ff87] text-black font-extrabold px-8 py-3 rounded-xl text-base shadow-[0_0_20px_rgba(0,230,118,0.3)] transition-all"
+            className="inline-block bg-[var(--sl-amber)] hover:bg-[var(--sl-amber-hover)] text-black font-extrabold px-8 py-3 rounded-xl text-base shadow-[0_0_20px_rgba(0,230,118,0.3)] transition-all"
           >
             Contact Support
           </Link>

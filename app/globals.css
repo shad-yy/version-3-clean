@@ -260,15 +260,15 @@ a:hover {
   }
 
   .dark {
-    --background: #0a0a0f;
-    --surface: #12121a;
-    --surface-elevated: #1a1a24;
-    --border: #2a2a3a;
-    --accent-primary: #00e676;
+    --background: var(--sl-ground);
+    --surface: var(--sl-surface);
+    --surface-elevated: var(--sl-raise);
+    --border: var(--sl-line);
+    --accent-primary: var(--sl-amber);
     --accent-secondary: #1565c0;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0b0;
-    --text-muted: #606070;
+    --text-primary: var(--sl-text);
+    --text-secondary: var(--sl-mid);
+    --text-muted: var(--sl-mute);
     --live-red: #ff1744;
     --success: #00e676;
 

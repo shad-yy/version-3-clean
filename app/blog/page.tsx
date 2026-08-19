@@ -35,7 +35,7 @@ export default function BlogIndexPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background pt-28 md:pt-36 pb-16 md:pb-20">
+    <main className="min-h-screen bg-sl-ground pt-28 md:pt-36 pb-16 md:pb-20">
       <SchemaMarkup schema={breadcrumbSchema} />
 
       <FadeIn>
@@ -59,16 +59,16 @@ export default function BlogIndexPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <StaggerIn className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {featuredPosts.map((post) => (
-              <article key={post.slug} className="bg-[#12121a] border border-white/10 rounded-2xl p-8">
+              <article key={post.slug} className="bg-[var(--sl-surface)] border border-white/10 rounded-2xl p-8">
                 <div className="space-y-4">
                   <span
                     className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${categoryClasses[post.category]}`}
                   >
                     {post.category}
                   </span>
-                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-white">{post.title}</h2>
-                  <p className="text-sm text-gray-400 line-clamp-2">{post.description}</p>
-                  <p className="text-sm text-gray-500">
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-sl-text">{post.title}</h2>
+                  <p className="text-sm text-sl-mute line-clamp-2">{post.description}</p>
+                  <p className="text-sm text-sl-mute">
                     {post.readTime} min read • {new Date(post.publishedAt).toLocaleDateString()}
                   </p>
                   <Link href={`/blog/${post.slug}`} className="text-green-400 hover:text-green-300 font-semibold">
@@ -83,20 +83,20 @@ export default function BlogIndexPage() {
       </FadeIn>
 
       <FadeIn direction="up">
-      <section className="py-16 md:py-20 border-t border-[#2a2a3a]">
+      <section className="py-16 md:py-20 border-t border-[var(--sl-line)]">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <StaggerIn className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {regularPosts.map((post) => (
-              <article key={post.slug} className="bg-[#12121a] border border-white/10 rounded-2xl p-6">
+              <article key={post.slug} className="bg-[var(--sl-surface)] border border-white/10 rounded-2xl p-6">
                 <div className="space-y-4">
                   <span
                     className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${categoryClasses[post.category]}`}
                   >
                     {post.category}
                   </span>
-                  <h2 className="text-xl font-bold tracking-tight text-white">{post.title}</h2>
-                  <p className="text-sm text-gray-400 line-clamp-2">{post.description}</p>
-                  <p className="text-sm text-gray-500">
+                  <h2 className="text-xl font-bold tracking-tight text-sl-text">{post.title}</h2>
+                  <p className="text-sm text-sl-mute line-clamp-2">{post.description}</p>
+                  <p className="text-sm text-sl-mute">
                     {post.readTime} min read • {new Date(post.publishedAt).toLocaleDateString()}
                   </p>
                   <Link href={`/blog/${post.slug}`} className="text-green-400 hover:text-green-300 font-semibold">

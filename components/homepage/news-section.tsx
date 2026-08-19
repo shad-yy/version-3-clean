@@ -66,12 +66,12 @@ export function NewsSection({ maxArticles = 10 }: NewsSectionProps) {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e676] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e676]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--sl-amber)] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--sl-amber)]" />
               </span>
-              <span className="text-[#00e676] font-bold text-xs uppercase tracking-widest">Live Feed</span>
+              <span className="text-[var(--sl-amber)] font-bold text-xs uppercase tracking-widest">Live Feed</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-sl-text">
               Trending Sports News
             </h2>
           </div>
@@ -80,13 +80,13 @@ export function NewsSection({ maxArticles = 10 }: NewsSectionProps) {
           {[1,2,3,4].map(i => (
             <div key={i}
               className="flex-none w-[280px] sm:w-[320px] 
-                bg-[#12121a] border border-[#2a2a3a] 
+                bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                 rounded-2xl overflow-hidden">
-              <div className="h-44 bg-[#0a0a0f] animate-pulse" />
+              <div className="h-44 bg-[var(--sl-ground)] animate-pulse" />
               <div className="p-4 space-y-3">
-                <div className="h-3 w-20 bg-[#1a1a24] rounded animate-pulse" />
-                <div className="h-4 w-full bg-[#1a1a24] rounded animate-pulse" />
-                <div className="h-4 w-3/4 bg-[#1a1a24] rounded animate-pulse" />
+                <div className="h-3 w-20 bg-[var(--sl-raise)] rounded animate-pulse" />
+                <div className="h-4 w-full bg-[var(--sl-raise)] rounded animate-pulse" />
+                <div className="h-4 w-3/4 bg-[var(--sl-raise)] rounded animate-pulse" />
               </div>
             </div>
           ))}

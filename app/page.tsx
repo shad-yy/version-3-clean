@@ -110,7 +110,7 @@ export default async function HomePage() {
       <SpotlightEvents />
 
       {/* ─── 2. NEWS (above match cards) ─── */}
-      <section className="py-12 md:py-16 bg-[#0a0a0f] border-t border-[#1a1a2a] relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-[var(--sl-ground)] border-t border-[var(--sl-raise)] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/8 via-transparent to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <ScrollReveal>

@@ -72,14 +72,14 @@ const cardVariants = {
 
 export function ServicePillars() {
   return (
-    <section className="relative py-6 md:py-8 bg-[#0a0a0f] border-t border-[#1a1a2a]">
+    <section className="relative py-6 md:py-8 bg-[var(--sl-ground)] border-t border-[var(--sl-raise)]">
       {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-[#0d0d14] to-[#0a0a0f] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--sl-ground)] via-[var(--sl-ground)] to-[var(--sl-ground)] pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
         {/* Section label */}
         <div className="text-center mb-6">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sl-mute">
             Everything in One Place
           </p>
         </div>
@@ -98,7 +98,7 @@ export function ServicePillars() {
                 <Link
                   href={pillar.href}
                   className={`group relative flex flex-col items-center text-center p-6 rounded-xl 
-                    border border-[#1a1a2a] bg-[#12121a]/80 backdrop-blur-sm 
+                    border border-[var(--sl-raise)] bg-[var(--sl-surface)]/80 backdrop-blur-sm 
                     transition-all duration-300 
                     ${pillar.borderHover} 
                     hover:-translate-y-1 hover:shadow-xl ${pillar.glowColor}
@@ -108,24 +108,24 @@ export function ServicePillars() {
                   <div className={`absolute inset-0 rounded-xl bg-gradient-to-b ${pillar.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
                   {/* Icon */}
-                  <div className={`relative z-10 w-12 h-12 rounded-xl bg-[#1a1a24] border border-[#2a2a3a] flex items-center justify-center mb-4 group-hover:border-opacity-50 group-hover:scale-110 transition-all duration-300 ${pillar.iconColor}`}>
+                  <div className={`relative z-10 w-12 h-12 rounded-xl bg-[var(--sl-raise)] border border-[var(--sl-line)] flex items-center justify-center mb-4 group-hover:border-opacity-50 group-hover:scale-110 transition-all duration-300 ${pillar.iconColor}`}>
                     <Icon className="w-6 h-6" strokeWidth={1.5} />
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10">
-                    <h3 className="text-white font-bold text-lg mb-1">
+                    <h3 className="text-sl-text font-bold text-lg mb-1">
                       {pillar.title}
                     </h3>
                     <p className={`text-sm font-semibold ${pillar.subtitleColor} mb-2`}>
                       {pillar.subtitle}
                     </p>
-                    <p className="text-xs text-gray-500 leading-relaxed mb-4">
+                    <p className="text-xs text-sl-mute leading-relaxed mb-4">
                       {pillar.description}
                     </p>
 
                     {/* CTA */}
-                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-400 group-hover:text-white transition-colors">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-sl-mute group-hover:text-sl-text transition-colors">
                       {pillar.cta}
                       <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                     </span>

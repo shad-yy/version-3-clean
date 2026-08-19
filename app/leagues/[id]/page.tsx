@@ -96,8 +96,8 @@ async function LeagueContent({ leagueId }: { leagueId: string }) {
     return (
       <div className="min-h-[40vh] flex items-center justify-center">
         <div className="text-center space-y-3">
-          <p className="text-gray-400 text-sm">Failed to load league information.</p>
-          <p className="text-gray-500 text-xs">Please try again later.</p>
+          <p className="text-sl-mute text-sm">Failed to load league information.</p>
+          <p className="text-sl-mute text-xs">Please try again later.</p>
         </div>
       </div>
     )
@@ -108,11 +108,11 @@ function LeagueLoading() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 px-4 py-8 animate-pulse">
       {/* Banner skeleton */}
-      <div className="h-44 rounded-2xl bg-[#12121a] border border-[#1b1b2f]" />
+      <div className="h-44 rounded-2xl bg-[var(--sl-surface)] border border-[var(--sl-raise)]" />
       {/* Tabs skeleton */}
-      <div className="h-14 max-w-xl mx-auto rounded-xl bg-[#12121a] border border-[#1a1a2a]" />
+      <div className="h-14 max-w-xl mx-auto rounded-xl bg-[var(--sl-surface)] border border-[var(--sl-raise)]" />
       {/* Content skeleton */}
-      <div className="h-96 rounded-2xl bg-[#12121a] border border-[#1b1b2f]" />
+      <div className="h-96 rounded-2xl bg-[var(--sl-surface)] border border-[var(--sl-raise)]" />
     </div>
   )
 }
@@ -132,7 +132,7 @@ export default async function LeaguePage({ params }: LeaguePageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a0a0f] py-8 px-4 md:px-6 lg:px-8">
+    <main className="min-h-screen bg-[var(--sl-ground)] py-8 px-4 md:px-6 lg:px-8">
       {/* Ambient background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/4 rounded-full blur-[140px]" />

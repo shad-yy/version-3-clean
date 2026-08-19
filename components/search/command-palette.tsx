@@ -162,29 +162,29 @@ export function CommandPalette() {
         rel={result.external ? 'noopener noreferrer' : undefined}
         className={`flex items-center gap-3 px-4 py-3 rounded-xl 
           transition-colors cursor-pointer group
-          ${isActive ? 'bg-[#00e676]/10' : 'hover:bg-white/[0.04]'}`}
+          ${isActive ? 'bg-[var(--sl-amber)]/10' : 'hover:bg-white/[0.04]'}`}
         onMouseEnter={() => setActiveIdx(idx)}
       >
         {/* Icon */}
         <div className={`w-8 h-8 rounded-lg flex items-center 
           justify-center flex-shrink-0 overflow-hidden
-          ${isImg ? 'bg-[#12121a] border border-[#2a2a3a] p-1.5' : ''}`}>
+          ${isImg ? 'bg-[var(--sl-surface)] border border-[var(--sl-line)] p-1.5' : ''}`}>
           {isImg ? (
             <img src={result.icon as string} alt="" 
               className="w-full h-full object-contain" loading="lazy" />
           ) : IconComponent ? (
-            <IconComponent className="w-4 h-4 text-gray-400" />
+            <IconComponent className="w-4 h-4 text-sl-mute" />
           ) : null}
         </div>
 
         {/* Text */}
         <div className="flex-1 min-w-0">
           <p className={`text-sm font-semibold truncate
-            ${isActive ? 'text-white' : 'text-gray-200'}`}>
+            ${isActive ? 'text-sl-text' : 'text-gray-200'}`}>
             {result.title}
           </p>
           {result.subtitle && (
-            <p className="text-xs text-gray-500 truncate mt-0.5">
+            <p className="text-xs text-sl-mute truncate mt-0.5">
               {result.subtitle}
             </p>
           )}
@@ -192,15 +192,15 @@ export function CommandPalette() {
 
         {/* Badge */}
         {result.badge && (
-          <span className="text-[10px] font-bold bg-[#00e676]/10 
-            text-[#00e676] border border-[#00e676]/20 px-2 py-0.5 
+          <span className="text-[10px] font-bold bg-[var(--sl-amber)]/10 
+            text-[var(--sl-amber)] border border-[var(--sl-amber)]/20 px-2 py-0.5 
             rounded-full flex-shrink-0">
             {result.badge}
           </span>
         )}
 
         {result.external && (
-          <ExternalLink className="w-3 h-3 text-gray-600 flex-shrink-0" />
+          <ExternalLink className="w-3 h-3 text-sl-dim flex-shrink-0" />
         )}
       </Link>
     )
@@ -213,17 +213,17 @@ export function CommandPalette() {
       {/* Search trigger in header */}
       <button
         onClick={openPalette}
-        className="flex items-center gap-2 bg-[#12121a] border 
-          border-[#2a2a3a] hover:border-[#00e676]/30 rounded-lg 
-          px-3 py-2 text-sm text-gray-500 hover:text-gray-300 
+        className="flex items-center gap-2 bg-[var(--sl-surface)] border 
+          border-[var(--sl-line)] hover:border-[var(--sl-amber)]/30 rounded-lg 
+          px-3 py-2 text-sm text-sl-mute hover:text-sl-mid 
           transition-all min-w-[140px] md:min-w-[180px]"
         aria-label="Search"
       >
         <Search className="w-4 h-4 flex-shrink-0" />
         <span className="flex-1 text-left text-xs">Search...</span>
         <kbd className="hidden sm:inline-flex items-center gap-1 
-          bg-[#0a0a0f] border border-[#2a2a3a] rounded px-1.5 
-          py-0.5 text-[10px] text-gray-600 font-mono">
+          bg-[var(--sl-ground)] border border-[var(--sl-line)] rounded px-1.5 
+          py-0.5 text-[10px] text-sl-dim font-mono">
           {mounted && isMac ? "⌘K" : "Ctrl K"}
         </kbd>
       </button>
@@ -255,14 +255,14 @@ export function CommandPalette() {
                 z-[100] w-full max-w-lg px-4"
               style={{ willChange: 'transform, opacity' }}
             >
-              <div className="bg-[#0d0d14] border border-[#2a2a3a] 
+              <div className="bg-[var(--sl-ground)] border border-[var(--sl-line)] 
                 rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.7)] 
                 overflow-hidden">
 
                 {/* Input */}
                 <div className="flex items-center gap-3 px-4 py-4 
-                  border-b border-[#2a2a3a]">
-                  <Search className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                  border-b border-[var(--sl-line)]">
+                  <Search className="w-5 h-5 text-sl-mute flex-shrink-0" />
                   <input
                     ref={inputRef}
                     type="text"
@@ -272,18 +272,18 @@ export function CommandPalette() {
                       setQuery(e.target.value)
                       setActiveIdx(0)
                     }}
-                    className="flex-1 bg-transparent text-white text-sm 
-                      outline-none placeholder:text-gray-600"
+                    className="flex-1 bg-transparent text-sl-text text-sm 
+                      outline-none placeholder:text-sl-dim"
                   />
                   {query && (
                     <button onClick={() => setQuery('')}
-                      className="text-gray-600 hover:text-gray-400">
+                      className="text-sl-dim hover:text-sl-mute">
                       <X className="w-4 h-4" />
                     </button>
                   )}
                   <button onClick={closePalette}
-                    className="text-gray-600 hover:text-gray-400 
-                      border border-[#2a2a3a] rounded px-2 py-1 
+                    className="text-sl-dim hover:text-sl-mute 
+                      border border-[var(--sl-line)] rounded px-2 py-1 
                       text-[10px] font-mono ml-1">
                     Esc
                   </button>
@@ -295,14 +295,14 @@ export function CommandPalette() {
                   className="overflow-y-auto max-h-[60vh] p-2"
                 >
                   {flatResults.length === 0 ? (
-                    <div className="py-12 text-center text-gray-600 text-sm">
+                    <div className="py-12 text-center text-sl-dim text-sm">
                       No results for "{query}"
                     </div>
                   ) : (
                     Object.entries(grouped).map(([type, results]) => (
                       <div key={type} className="mb-2">
                         {/* Group label */}
-                        <p className="text-[10px] font-bold text-gray-600 
+                        <p className="text-[10px] font-bold text-sl-dim 
                           uppercase tracking-widest px-4 py-2">
                           {TYPE_LABELS[type] || type}
                         </p>
@@ -322,8 +322,8 @@ export function CommandPalette() {
                 </div>
 
                 {/* Footer hint */}
-                <div className="border-t border-[#2a2a3a] px-4 py-2.5 
-                  flex items-center gap-4 text-[10px] text-gray-600">
+                <div className="border-t border-[var(--sl-line)] px-4 py-2.5 
+                  flex items-center gap-4 text-[10px] text-sl-dim">
                   <span>↑↓ Navigate</span>
                   <span>↵ Select</span>
                   <span>Esc Close</span>

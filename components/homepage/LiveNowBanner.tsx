@@ -59,10 +59,10 @@ export function LiveNowBanner() {
   }, [mounted])
 
   return (
-    <div className="bg-gradient-to-r from-[#0d0d14] via-[#0f0f1a] to-[#0d0d14] border-y border-[#1a1a2a] 
+    <div className="bg-gradient-to-r from-[var(--sl-ground)] via-[var(--sl-panel)] to-[var(--sl-ground)] border-y border-[var(--sl-raise)] 
       py-4 overflow-hidden relative">
       {/* Subtle animated gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#00e676]/3 via-transparent to-[#00e676]/3 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--sl-amber)]/3 via-transparent to-[var(--sl-amber)]/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="flex items-center gap-4 sm:gap-6">
@@ -71,17 +71,17 @@ export function LiveNowBanner() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex 
-                h-full w-full rounded-full bg-[#ff1744] opacity-75"/>
+                h-full w-full rounded-full bg-[var(--sl-amber)] opacity-75"/>
               <span className="relative inline-flex rounded-full 
-                h-2.5 w-2.5 bg-[#ff1744]"/>
+                h-2.5 w-2.5 bg-[var(--sl-amber)]"/>
             </span>
-            <span className="text-[#ff1744] font-extrabold 
+            <span className="text-[var(--sl-amber)] font-extrabold 
               text-xs uppercase tracking-widest">
               Live
             </span>
           </div>
 
-          <div className="h-5 w-px bg-[#2a2a3a]" />
+          <div className="h-5 w-px bg-[var(--sl-line)]" />
 
           {/* Rotating content */}
           <div className="flex-1 overflow-hidden h-7 relative">
@@ -104,12 +104,12 @@ export function LiveNowBanner() {
                   />
                   <Link
                     href={ALWAYS_ON[current].href}
-                    className="text-white font-bold text-sm 
-                      hover:text-[#00e676] transition-colors"
+                    className="text-sl-text font-bold text-sm 
+                      hover:text-[var(--sl-amber)] transition-colors"
                   >
                     {ALWAYS_ON[current].title}
                   </Link>
-                  <span className="text-gray-500 text-xs hidden sm:block">
+                  <span className="text-sl-mute text-xs hidden sm:block">
                     — {ALWAYS_ON[current].sub}
                   </span>
                 </motion.div>
@@ -125,11 +125,11 @@ export function LiveNowBanner() {
                 />
                 <Link
                   href={ALWAYS_ON[0].href}
-                  className="text-white font-bold text-sm hover:text-[#00e676] transition-colors"
+                  className="text-sl-text font-bold text-sm hover:text-[var(--sl-amber)] transition-colors"
                 >
                   {ALWAYS_ON[0].title}
                 </Link>
-                <span className="text-gray-500 text-xs hidden sm:block">
+                <span className="text-sl-mute text-xs hidden sm:block">
                   — {ALWAYS_ON[0].sub}
                 </span>
               </div>
@@ -144,8 +144,8 @@ export function LiveNowBanner() {
                 onClick={() => setCurrent(i)}
                 className={`h-1.5 rounded-full transition-all duration-300
                   ${i === current 
-                    ? 'bg-[#00e676] w-4' 
-                    : 'bg-[#2a2a3a] w-1.5 hover:bg-[#3a3a4a]'
+                    ? 'bg-[var(--sl-amber)] w-4' 
+                    : 'bg-[var(--sl-line)] w-1.5 hover:bg-[#3a3a4a]'
                   }`}
                 aria-label={`Show ${ALWAYS_ON[i].title}`}
               />
@@ -155,8 +155,8 @@ export function LiveNowBanner() {
           {/* CTA */}
           <Link href="/watch/premier-league"
             className="hidden sm:flex flex-shrink-0 items-center 
-              gap-1.5 bg-[#00e676] text-black font-bold text-xs 
-              px-5 py-2 rounded-lg hover:bg-[#00ff87] 
+              gap-1.5 bg-[var(--sl-amber)] text-black font-bold text-xs 
+              px-5 py-2 rounded-lg hover:bg-[var(--sl-amber-hover)] 
               transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,230,118,0.3)] touch-manipulation">
             TV Guide
             <ArrowRight className="w-3.5 h-3.5" />

@@ -17,19 +17,19 @@ export default function WatchError({
 
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center gap-6 px-4 text-center">
-      <AlertTriangle className="w-12 h-12 text-[#00e676]" aria-hidden="true" />
-      <h2 className="text-2xl font-bold text-white">Broadcast guide temporarily unavailable</h2>
-      <p className="text-gray-400 max-w-md">
+      <AlertTriangle className="w-12 h-12 text-[var(--sl-amber)]" aria-hidden="true" />
+      <h2 className="text-2xl font-bold text-sl-text">Broadcast guide temporarily unavailable</h2>
+      <p className="text-sl-mute max-w-md">
         Data temporarily unavailable. This is usually a temporary issue — try refreshing or check back in a moment.
       </p>
       <div className="flex gap-3">
         <button
           onClick={reset}
-          className="px-6 py-3 bg-[#00e676] text-black font-bold rounded-xl hover:bg-[#00ff87] transition-colors"
+          className="px-6 py-3 bg-[var(--sl-amber)] text-black font-bold rounded-xl hover:bg-[var(--sl-amber-hover)] transition-colors"
         >
           Try again
         </button>
-        <Link href="/" className="px-6 py-3 border border-border text-gray-300 rounded-xl hover:bg-surface transition-colors">
+        <Link href="/" className="px-6 py-3 border border-sl-line text-sl-mid rounded-xl hover:bg-surface transition-colors">
           Go home
         </Link>
       </div>

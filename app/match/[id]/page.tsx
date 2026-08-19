@@ -176,13 +176,13 @@ export default async function MatchPage(
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
       <SchemaMarkup schema={eventSchema} />
       <SchemaMarkup schema={faqSchema} />
 
       {/* Hero */}
       <section 
-        className="relative pt-32 pb-20 px-4 text-center border-b border-[#1a1a2a] overflow-hidden bg-[#0d0d14]"
+        className="relative pt-32 pb-20 px-4 text-center border-b border-[var(--sl-raise)] overflow-hidden bg-[var(--sl-ground)]"
       >
         {/* Background Event Image Overlay */}
         {match.strThumb && (
@@ -192,41 +192,41 @@ export default async function MatchPage(
               alt="" 
               className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none" loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/80 via-[#0d0d14]/95 to-[#0a0a0f]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--sl-ground)]/80 via-[var(--sl-ground)]/95 to-[var(--sl-ground)]" />
           </>
         )}
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <p className="text-xs font-bold text-[#00e676] uppercase tracking-[0.2em] mb-4 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+          <p className="text-xs font-bold text-[var(--sl-amber)] uppercase tracking-[0.2em] mb-4 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
             {league}
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 my-6 w-full">
             {/* Home Team Badge & Name */}
             <div className="flex flex-col items-center flex-1">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#1a1a24]/80 border border-white/10 flex items-center justify-center p-2 backdrop-blur-sm shadow-xl">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[var(--sl-raise)]/80 border border-white/10 flex items-center justify-center p-2 backdrop-blur-sm shadow-xl">
                 {homeTeamBadge ? (
                   <img src={homeTeamBadge} alt={homeTeam} className="w-full h-full object-contain" loading="lazy" />
                 ) : (
-                  <span className="text-xl font-bold text-gray-400">{homeTeam.substring(0, 3).toUpperCase()}</span>
+                  <span className="text-xl font-bold text-sl-mute">{homeTeam.substring(0, 3).toUpperCase()}</span>
                 )}
               </div>
-              <h2 className="text-xl md:text-2xl font-black text-white mt-3 text-center">{homeTeam}</h2>
+              <h2 className="text-xl md:text-2xl font-black text-sl-text mt-3 text-center">{homeTeam}</h2>
             </div>
 
             {/* Score or VS */}
             <div className="flex flex-col items-center justify-center">
               {isCompleted && match.intHomeScore !== null ? (
-                <div className="text-4xl md:text-6xl font-black text-white tracking-widest bg-white/5 border border-white/5 px-6 py-3 rounded-2xl">
+                <div className="text-4xl md:text-6xl font-black text-sl-text tracking-widest bg-white/5 border border-white/5 px-6 py-3 rounded-2xl">
                   {match.intHomeScore} - {match.intAwayScore}
                 </div>
               ) : (
-                <div className="text-2xl md:text-3xl font-black text-gray-500 bg-white/5 border border-white/5 px-5 py-2.5 rounded-xl tracking-wider">
+                <div className="text-2xl md:text-3xl font-black text-sl-mute bg-white/5 border border-white/5 px-5 py-2.5 rounded-xl tracking-wider">
                   VS
                 </div>
               )}
               {match.strStatus && (
-                <span className="text-xs text-[#00e676] font-bold uppercase tracking-wider mt-2.5">
+                <span className="text-xs text-[var(--sl-amber)] font-bold uppercase tracking-wider mt-2.5">
                   {match.strStatus}
                 </span>
               )}
@@ -234,18 +234,18 @@ export default async function MatchPage(
 
             {/* Away Team Badge & Name */}
             <div className="flex flex-col items-center flex-1">
-              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#1a1a24]/80 border border-white/10 flex items-center justify-center p-2 backdrop-blur-sm shadow-xl">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[var(--sl-raise)]/80 border border-white/10 flex items-center justify-center p-2 backdrop-blur-sm shadow-xl">
                 {awayTeamBadge ? (
                   <img src={awayTeamBadge} alt={awayTeam} className="w-full h-full object-contain" loading="lazy" />
                 ) : (
-                  <span className="text-xl font-bold text-gray-400">{awayTeam.substring(0, 3).toUpperCase()}</span>
+                  <span className="text-xl font-bold text-sl-mute">{awayTeam.substring(0, 3).toUpperCase()}</span>
                 )}
               </div>
-              <h2 className="text-xl md:text-2xl font-black text-white mt-3 text-center">{awayTeam}</h2>
+              <h2 className="text-xl md:text-2xl font-black text-sl-text mt-3 text-center">{awayTeam}</h2>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-6 text-gray-400 text-sm mb-8 flex-wrap">
+          <div className="flex items-center justify-center gap-6 text-sl-mute text-sm mb-8 flex-wrap">
             <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{date}</span>
             {match.strTime && (
               <span className="inline-flex items-center gap-1.5">
@@ -270,11 +270,11 @@ export default async function MatchPage(
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
                 href={watchHref}
-                className="bg-[#00e676] text-black font-extrabold px-8 py-4 rounded-xl text-base hover:bg-[#00ff87] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)]"
+                className="bg-[var(--sl-amber)] text-black font-extrabold px-8 py-4 rounded-xl text-base hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)]"
               >
                 Where to Watch →
               </Link>
-              <Link href="/scores" className="border border-[#2a2a3a] hover:border-[#00e676]/30 text-gray-300 font-bold px-8 py-4 rounded-xl text-base bg-white/5">
+              <Link href="/scores" className="border border-[var(--sl-line)] hover:border-[var(--sl-amber)]/30 text-sl-mid font-bold px-8 py-4 rounded-xl text-base bg-white/5">
                 Live Scores
               </Link>
             </div>
@@ -283,7 +283,7 @@ export default async function MatchPage(
       </section>
 
       {/* Tabs / Match Center Section */}
-      <section className="bg-[#0a0a0f] border-b border-[#1a1a2a]">
+      <section className="bg-[var(--sl-ground)] border-b border-[var(--sl-raise)]">
         <MatchTabs
           homeTeam={homeTeam}
           awayTeam={awayTeam}
@@ -304,14 +304,14 @@ export default async function MatchPage(
 
       {/* How to Watch */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-white mb-6">
+        <h2 className="text-2xl font-bold text-sl-text mb-6">
           How to Watch {homeTeam} vs {awayTeam} Live
         </h2>
-        <div className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-6 mb-6">
-          <p className="text-gray-300 leading-relaxed">
-            <strong className="text-white">{homeTeam} vs {awayTeam}</strong>
+        <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-6 mb-6">
+          <p className="text-sl-mid leading-relaxed">
+            <strong className="text-sl-text">{homeTeam} vs {awayTeam}</strong>
             {' '}is covered by the official UK rights holders for the{' '}
-            <Link href={watchHref} className="text-[#00e676] hover:underline font-semibold">
+            <Link href={watchHref} className="text-[var(--sl-amber)] hover:underline font-semibold">
               {league}
             </Link>
             . Our broadcast guide lists which channel is showing this fixture,
@@ -326,27 +326,27 @@ export default async function MatchPage(
             { n: '2', t: 'Find the Official Broadcaster', d: 'See which UK rights holder is showing this fixture live.' },
             { n: '3', t: 'Follow Live', d: `Track ${homeTeam} vs ${awayTeam} scores, lineups and stats here.` },
           ].map(s => (
-            <div key={s.n} className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-5">
-              <div className="w-8 h-8 rounded-full bg-[#00e676] text-black font-extrabold text-sm flex items-center justify-center mb-3">
+            <div key={s.n} className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-5">
+              <div className="w-8 h-8 rounded-full bg-[var(--sl-amber)] text-black font-extrabold text-sm flex items-center justify-center mb-3">
                 {s.n}
               </div>
-              <h3 className="font-bold text-white mb-1 text-sm">{s.t}</h3>
-              <p className="text-gray-400 text-xs">{s.d}</p>
+              <h3 className="font-bold text-sl-text mb-1 text-sm">{s.t}</h3>
+              <p className="text-sl-mute text-xs">{s.d}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* FAQ visible section (matches schema) */}
-      <section className="py-16 px-4 max-w-4xl mx-auto border-t border-[#2a2a3a]">
-        <h2 className="text-2xl font-bold text-white mb-6">
+      <section className="py-16 px-4 max-w-4xl mx-auto border-t border-[var(--sl-line)]">
+        <h2 className="text-2xl font-bold text-sl-text mb-6">
           Frequently Asked Questions
         </h2>
         <div className="space-y-4">
           {faqSchema.mainEntity.map(f => (
-            <div key={f.name} className="bg-[#12121a] border border-[#2a2a3a] rounded-2xl p-5">
-              <h3 className="font-bold text-white text-sm mb-2">{f.name}</h3>
-              <p className="text-gray-400 text-sm">
+            <div key={f.name} className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-5">
+              <h3 className="font-bold text-sl-text text-sm mb-2">{f.name}</h3>
+              <p className="text-sl-mute text-sm">
                 {f.acceptedAnswer.text}
               </p>
             </div>
@@ -355,30 +355,30 @@ export default async function MatchPage(
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-20 px-4 text-center border-t border-[#00e676]/10" style={{ background: 'linear-gradient(to bottom, #0a0a0f, rgba(0,230,118,0.03))' }}>
-        <h2 className="text-3xl font-extrabold text-white mb-3">
+      <section className="py-20 px-4 text-center border-t border-[var(--sl-amber)]/10" style={{ background: 'linear-gradient(to bottom, var(--sl-ground), rgba(0,230,118,0.03))' }}>
+        <h2 className="text-3xl font-extrabold text-sl-text mb-3">
           Follow Every {league} Match
         </h2>
-        <p className="text-gray-400 mb-8">
+        <p className="text-sl-mute mb-8">
           Live scores, fixtures, standings and official UK broadcast listings.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
-          <Link href="/scores" className="bg-[#00e676] text-black font-extrabold px-10 py-4 rounded-xl hover:bg-[#00ff87] transition-all">
+          <Link href="/scores" className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all">
             View Live Scores →
           </Link>
-          <Link href={watchHref} className="border border-[#2a2a3a] hover:border-[#00e676]/30 text-gray-300 font-bold px-10 py-4 rounded-xl">
+          <Link href={watchHref} className="border border-[var(--sl-line)] hover:border-[var(--sl-amber)]/30 text-sl-mid font-bold px-10 py-4 rounded-xl">
             View All {league} Matches
           </Link>
         </div>
       </section>
 
       {/* Mobile sticky */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[#0a0a0f]/95 backdrop-blur border-t border-[#2a2a3a] p-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[var(--sl-ground)]/95 backdrop-blur border-t border-[var(--sl-line)] p-4">
         <div className="grid grid-cols-2 gap-3">
-          <Link href="/scores" className="bg-[#00e676] text-black font-bold text-sm py-4 rounded-2xl text-center touch-manipulation">
+          <Link href="/scores" className="bg-[var(--sl-amber)] text-black font-bold text-sm py-4 rounded-2xl text-center touch-manipulation">
             Live Scores
           </Link>
-          <Link href={watchHref} className="border border-[#2a2a3a] text-gray-300 font-bold text-sm py-4 rounded-2xl text-center">
+          <Link href={watchHref} className="border border-[var(--sl-line)] text-sl-mid font-bold text-sm py-4 rounded-2xl text-center">
             TV Guide
           </Link>
         </div>

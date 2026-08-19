@@ -23,7 +23,7 @@ export function RecentPosts() {
   }
 
   return (
-    <section className="py-20 md:py-28 bg-[#050508] border-t border-[#1a1a24] relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-[var(--sl-ground)] border-t border-[var(--sl-raise)] relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/8 rounded-full blur-[120px] pointer-events-none" />
@@ -41,7 +41,7 @@ export function RecentPosts() {
               From The Sports Blog
             </span>
           </h2>
-          <p className="text-gray-400 text-lg leading-relaxed max-w-2xl mx-auto">
+          <p className="text-sl-mute text-lg leading-relaxed max-w-2xl mx-auto">
             Stay informed with our streaming guides, money-saving tips, and tournament analysis.
           </p>
         </div>
@@ -59,7 +59,7 @@ export function RecentPosts() {
             return (
               <article 
                 key={post.slug}
-                className="group relative bg-gradient-to-b from-[#0d0d14] to-[#08080d] border border-[#1f1f2e] rounded-2xl overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] flex flex-col"
+                className="group relative bg-gradient-to-b from-[var(--sl-ground)] to-[#08080d] border border-[var(--sl-raise)] rounded-2xl overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] flex flex-col"
               >
                 {/* Top accent line */}
                 <div className={`h-1 w-full bg-gradient-to-r ${badge.color} opacity-60 group-hover:opacity-100 transition-opacity`} />
@@ -71,7 +71,7 @@ export function RecentPosts() {
                     <span className={`px-3 py-1 rounded-full text-[11px] font-bold border ${badge.bg} ${badge.text} uppercase tracking-wider`}>
                       {badge.label}
                     </span>
-                    <div className="flex items-center gap-1.5 text-gray-500">
+                    <div className="flex items-center gap-1.5 text-sl-mute">
                       <Clock className="w-3 h-3" />
                       <span className="text-[11px] font-medium">{post.readTime} min read</span>
                     </div>
@@ -79,19 +79,19 @@ export function RecentPosts() {
 
                   {/* Title */}
                   <Link href={`/blog/${post.slug}`} className="block mb-4">
-                    <h3 className="text-lg lg:text-xl font-bold text-white leading-snug group-hover:text-blue-400 transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-lg lg:text-xl font-bold text-sl-text leading-snug group-hover:text-blue-400 transition-colors duration-300 line-clamp-2">
                       {post.title}
                     </h3>
                   </Link>
 
                   {/* Description */}
-                  <p className="text-gray-400 text-sm line-clamp-3 leading-relaxed flex-grow">
+                  <p className="text-sl-mute text-sm line-clamp-3 leading-relaxed flex-grow">
                     {post.description}
                   </p>
 
                   {/* Footer */}
-                  <div className="mt-6 pt-5 border-t border-[#1a1a26]/80 flex items-center justify-between">
-                    <time className="text-[11px] text-gray-500 font-medium">{formattedDate}</time>
+                  <div className="mt-6 pt-5 border-t border-[var(--sl-raise)]/80 flex items-center justify-between">
+                    <time className="text-[11px] text-sl-mute font-medium">{formattedDate}</time>
                     <Link 
                       href={`/blog/${post.slug}`}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-400 group-hover:text-blue-300 transition-all duration-300"
@@ -113,7 +113,7 @@ export function RecentPosts() {
         <div className="text-center mt-14">
           <Link 
             href="/blog"
-            className="group/btn inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[#2a2a3a] hover:border-blue-500/40 rounded-xl text-sm font-bold text-gray-300 hover:text-white bg-[#0a0a0f] hover:bg-[#12121a] transition-all duration-300 shadow-lg hover:shadow-blue-500/5"
+            className="group/btn inline-flex items-center justify-center gap-2 px-8 py-3.5 border border-[var(--sl-line)] hover:border-blue-500/40 rounded-xl text-sm font-bold text-sl-mid hover:text-sl-text bg-[var(--sl-ground)] hover:bg-[var(--sl-surface)] transition-all duration-300 shadow-lg hover:shadow-blue-500/5"
           >
             Browse All Articles
             <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" />

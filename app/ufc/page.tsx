@@ -99,15 +99,15 @@ async function UFCContent() {
   })
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-gray-100">
+    <div className="min-h-screen bg-[var(--sl-ground)] text-gray-100">
       <SchemaMarkup schema={breadcrumbSchema} />
       <SchemaMarkup schema={faqSchema} />
 
       {/* Hero */}
       <section className="pt-28 md:pt-36 pb-16 px-4 
-        text-center border-b border-[#2a2a3a]"
+        text-center border-b border-[var(--sl-line)]"
         style={{
-          background: 'linear-gradient(135deg, #1a0000 0%, #0a0a0f 100%)',
+          background: 'linear-gradient(135deg, #1a0000 0%, var(--sl-ground) 100%)',
         }}
       >
         <div className="max-w-4xl mx-auto">
@@ -121,24 +121,24 @@ async function UFCContent() {
             />
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold 
-            text-white mb-4">
+            text-sl-text mb-4">
             UFC Schedule, Fight Cards &amp; Rankings
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-sl-mute text-lg max-w-2xl mx-auto mb-8">
             Upcoming events, full fight cards, fighter records and divisional
             rankings — with UK start times and the official broadcaster for
             every card.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="#upcoming-events"
-              className="bg-[#00e676] text-black font-extrabold
-                px-8 py-4 rounded-xl text-base hover:bg-[#00ff87]
+              className="bg-[var(--sl-amber)] text-black font-extrabold
+                px-8 py-4 rounded-xl text-base hover:bg-[var(--sl-amber-hover)]
                 transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)]">
               View Upcoming Events ↓
             </Link>
             <Link href="/scores"
-              className="border border-[#2a2a3a] hover:border-[#00e676]/40
-                text-gray-300 font-bold px-8 py-4 rounded-xl text-base">
+              className="border border-[var(--sl-line)] hover:border-[var(--sl-amber)]/40
+                text-sl-mid font-bold px-8 py-4 rounded-xl text-base">
               Live Scores
             </Link>
           </div>
@@ -151,7 +151,7 @@ async function UFCContent() {
         {/* Upcoming Events */}
         <section id="upcoming-events" className="scroll-mt-28">
           <h2 className="text-2xl md:text-3xl font-bold 
-            text-white mb-8">
+            text-sl-text mb-8">
             Upcoming UFC Events
           </h2>
           {validUpcoming.length > 0 ? (
@@ -161,27 +161,27 @@ async function UFCContent() {
                 <Link
                   key={event.id}
                   href={`/ufc/events/${event.id}`}
-                  className="bg-[#12121a] border border-[#2a2a3a] 
+                  className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                     rounded-2xl overflow-hidden 
-                    hover:border-[#00e676]/30 transition-all group"
+                    hover:border-[var(--sl-amber)]/30 transition-all group"
                 >
                   <div className="h-1.5 bg-gradient-to-r 
-                    from-[#ff1744] to-[#ff6b35]" />
+                    from-[var(--sl-amber)] to-[#ff6b35]" />
                   <div className="p-5">
                     <span className="inline-flex items-center gap-1.5 
-                      bg-[#ff1744]/10 text-[#ff1744] text-[10px] 
+                      bg-[var(--sl-amber)]/10 text-[var(--sl-amber)] text-[10px] 
                       font-extrabold uppercase tracking-wide 
                       px-2.5 py-1 rounded-full mb-3">
                       <span className="w-1.5 h-1.5 rounded-full 
-                        bg-[#ff1744] animate-pulse" />
+                        bg-[var(--sl-amber)] animate-pulse" />
                       Upcoming
                     </span>
-                    <h3 className="font-extrabold text-white mb-3 
-                      group-hover:text-[#00e676] transition-colors 
+                    <h3 className="font-extrabold text-sl-text mb-3 
+                      group-hover:text-[var(--sl-amber)] transition-colors 
                       leading-tight">
                       {event.name}
                     </h3>
-                    <div className="space-y-1.5 text-sm text-gray-500">
+                    <div className="space-y-1.5 text-sm text-sl-mute">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 flex-shrink-0" />
                         <span>{safeDateFormat(event.date)}</span>
@@ -197,7 +197,7 @@ async function UFCContent() {
                     </div>
                     {event.mainEvent && (
                       <p className="mt-3 text-xs font-semibold 
-                        text-gray-400 border-t border-[#2a2a3a] pt-3">
+                        text-sl-mute border-t border-[var(--sl-line)] pt-3">
                         Main Event: {event.mainEvent}
                       </p>
                     )}
@@ -206,15 +206,15 @@ async function UFCContent() {
               ))}
             </div>
           ) : (
-            <div className="bg-[#12121a] border border-[#2a2a3a] 
+            <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
               rounded-2xl p-10 text-center">
               <Image src="/leagues/ufc.png" alt="UFC"
                 width={48} height={48}
                 className="object-contain mx-auto mb-4 opacity-40" />
-              <h3 className="font-bold text-white mb-2">
+              <h3 className="font-bold text-sl-text mb-2">
                 Next Event Being Scheduled
               </h3>
-              <p className="text-gray-500 text-sm max-w-sm mx-auto">
+              <p className="text-sl-mute text-sm max-w-sm mx-auto">
                 The next UFC event details will appear here once the card
                 and date are confirmed by the promotion.
               </p>
@@ -224,9 +224,9 @@ async function UFCContent() {
 
         {/* Recent Results — only show if we have them */}
         {validRecent.length > 0 && (
-          <section className="border-t border-[#2a2a3a] pt-16">
+          <section className="border-t border-[var(--sl-line)] pt-16">
             <h2 className="text-2xl md:text-3xl font-bold 
-              text-white mb-8">
+              text-sl-text mb-8">
               Recent Results
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 
@@ -235,23 +235,23 @@ async function UFCContent() {
                 <Link
                   key={event.id}
                   href={`/ufc/events/${event.id}`}
-                  className="bg-[#12121a] border border-[#2a2a3a] 
+                  className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                     rounded-2xl overflow-hidden 
-                    hover:border-[#00e676]/30 transition-all group"
+                    hover:border-[var(--sl-amber)]/30 transition-all group"
                 >
-                  <div className="h-1.5 bg-[#2a2a3a]" />
+                  <div className="h-1.5 bg-[var(--sl-line)]" />
                   <div className="p-5">
-                    <span className="inline-block bg-gray-800 
-                      text-gray-400 text-[10px] font-bold uppercase 
+                    <span className="inline-block bg-sl-raise 
+                      text-sl-mute text-[10px] font-bold uppercase 
                       tracking-wide px-2.5 py-1 rounded-full mb-3">
                       Completed
                     </span>
-                    <h3 className="font-extrabold text-white mb-3 
-                      group-hover:text-[#00e676] transition-colors 
+                    <h3 className="font-extrabold text-sl-text mb-3 
+                      group-hover:text-[var(--sl-amber)] transition-colors 
                       leading-tight">
                       {event.name}
                     </h3>
-                    <div className="space-y-1.5 text-sm text-gray-500">
+                    <div className="space-y-1.5 text-sm text-sl-mute">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 flex-shrink-0" />
                         <span>{safeDateFormat(event.date)}</span>
@@ -273,19 +273,19 @@ async function UFCContent() {
         )}
 
         {/* FAQ */}
-        <section className="border-t border-[#2a2a3a] pt-16">
-          <h2 className="text-2xl font-bold text-white mb-6">
+        <section className="border-t border-[var(--sl-line)] pt-16">
+          <h2 className="text-2xl font-bold text-sl-text mb-6">
             Frequently Asked Questions
           </h2>
           <div className="space-y-4 max-w-3xl">
             {faqSchema.mainEntity.map((f: any) => (
               <div key={f.name}
-                className="bg-[#12121a] border border-[#2a2a3a] 
+                className="bg-[var(--sl-surface)] border border-[var(--sl-line)] 
                   rounded-2xl p-5">
-                <h3 className="font-bold text-white text-sm mb-2">
+                <h3 className="font-bold text-sl-text text-sm mb-2">
                   {f.name}
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-sl-mute text-sm leading-relaxed">
                   {f.acceptedAnswer.text}
                 </p>
               </div>
@@ -294,24 +294,24 @@ async function UFCContent() {
         </section>
 
         {/* Bottom CTA */}
-        <section className="border-t border-[#00e676]/10 pt-16 
+        <section className="border-t border-[var(--sl-amber)]/10 pt-16 
           text-center">
-          <h2 className="text-3xl font-extrabold text-white mb-3">
+          <h2 className="text-3xl font-extrabold text-sl-text mb-3">
             Follow Every UFC Fight Night
           </h2>
-          <p className="text-gray-400 mb-8">
+          <p className="text-sl-mute mb-8">
             Fight cards, fighter records, divisional rankings and UK start times.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/scores"
-              className="bg-[#00e676] text-black font-extrabold
-                px-10 py-4 rounded-xl hover:bg-[#00ff87] transition-all">
+              className="bg-[var(--sl-amber)] text-black font-extrabold
+                px-10 py-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all">
               Live Scores →
             </Link>
             <Link href="/news"
-              className="border border-[#2a2a3a] text-gray-300
+              className="border border-[var(--sl-line)] text-sl-mid
                 font-bold px-10 py-4 rounded-xl
-                hover:border-[#00e676]/30 transition-all">
+                hover:border-[var(--sl-amber)]/30 transition-all">
               MMA News
             </Link>
           </div>
@@ -320,17 +320,17 @@ async function UFCContent() {
 
       {/* Mobile sticky */}
       <div className="fixed bottom-0 left-0 right-0 z-50 
-        md:hidden bg-[#0a0a0f]/95 backdrop-blur-sm 
-        border-t border-[#2a2a3a] p-4">
+        md:hidden bg-[var(--sl-ground)]/95 backdrop-blur-sm 
+        border-t border-[var(--sl-line)] p-4">
         <div className="grid grid-cols-2 gap-3">
           <Link href="#upcoming-events"
-            className="bg-[#00e676] text-black font-bold
+            className="bg-[var(--sl-amber)] text-black font-bold
               text-sm py-4 rounded-2xl text-center
               touch-manipulation active:scale-[0.98]">
             Events
           </Link>
           <Link href="/scores"
-            className="border border-[#2a2a3a] text-gray-300
+            className="border border-[var(--sl-line)] text-sl-mid
               font-bold text-sm py-4 rounded-2xl text-center
               touch-manipulation">
             Live Scores
