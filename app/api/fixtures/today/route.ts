@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { swrGet } from "@/lib/cache"
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -22,7 +23,19 @@ function mapEvent(e: any) {
     }
 }
 
-export async function GET() {
+/**
+ * Today's fixtures.
+ *
+ * TTL is 90 seconds. This route issues three upstream calls and is requested by every
+ * homepage visitor, so uncached it put 3 TheSportsDB requests on the wire per view --
+ * against a 30/min free tier that a handful of concurrent readers would exhaust.
+ *
+ * swrGet also serves stale data while we are rate-limited, so a burst degrades to
+ * slightly old fixtures rather than to an empty page.
+ */
+const TTL_SECONDS = 90
+
+async function buildPayload() {
     try {
         // Get today AND tomorrow in UTC to catch timezone edge cases
         const now = new Date()
@@ -96,19 +109,29 @@ export async function GET() {
           } catch {}
         }
 
-        return NextResponse.json({
+        return {
           upcoming,
           events: upcoming, // backwards compat
           results: finalResults,
           label: upcoming.length > 0 ? 'today' : 'upcoming',
           count: upcoming.length,
-        }, {
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate',
-          }
-        })
+        }
     } catch (error) {
         console.error(`[Fixtures Today API] Error:`, error)
-        return NextResponse.json({ events: [], upcoming: [], results: [], label: "error", count: 0 })
+        return { events: [], upcoming: [], results: [], label: "error", count: 0 }
     }
+}
+
+export async function GET() {
+    // Keyed by UTC date so the cache turns over naturally at midnight rather than
+    // serving yesterday's fixtures into the new day.
+    const key = `fixtures:today:${new Date().toISOString().slice(0, 10)}`
+    const payload = await swrGet(key, buildPayload, TTL_SECONDS)
+
+    return NextResponse.json(payload, {
+        headers: {
+            // Let the CDN hold it too. The upstream budget is the scarce resource.
+            'Cache-Control': `public, s-maxage=${TTL_SECONDS}, stale-while-revalidate=600`,
+        },
+    })
 }

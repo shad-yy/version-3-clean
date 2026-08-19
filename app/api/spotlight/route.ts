@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { swrGet } from "@/lib/cache"
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -106,7 +107,18 @@ function formatCountdown(event: any): string {
   return `${Math.floor(hoursUntil / 24)}d`
 }
 
-export async function GET() {
+/**
+ * Homepage spotlight.
+ *
+ * Three upstream calls on every homepage view. The response already advertised
+ * s-maxage=120 to the CDN, but nothing cached it server-side, so every cold edge and
+ * every dev request went straight to TheSportsDB.
+ *
+ * 120s matches the CDN hint so the two layers agree.
+ */
+const TTL_SECONDS = 120
+
+async function buildPayload() {
   try {
     const now = new Date()
     const todayUTC = now.toISOString().split('T')[0]
@@ -196,23 +208,30 @@ export async function GET() {
       .filter(Boolean)
       .slice(0, 5)
 
-    return NextResponse.json({
+    return {
       spotlight,
       heroImages,
       count: spotlight.length,
       generated: new Date().toISOString(),
-    }, {
-      headers: {
-        'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=60',
-      }
-    })
+    }
   } catch (error) {
     console.error('[Spotlight API] Error:', error)
-    return NextResponse.json({
+    return {
       spotlight: [],
       heroImages: [],
       count: 0,
       generated: new Date().toISOString(),
-    })
+    }
   }
+}
+
+export async function GET() {
+  const key = `spotlight:${new Date().toISOString().slice(0, 10)}`
+  const payload = await swrGet(key, buildPayload, TTL_SECONDS)
+
+  return NextResponse.json(payload, {
+    headers: {
+      'Cache-Control': `public, s-maxage=${TTL_SECONDS}, stale-while-revalidate=600`,
+    },
+  })
 }

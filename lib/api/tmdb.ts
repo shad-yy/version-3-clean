@@ -348,6 +348,33 @@ export async function getTrendingTitles(limit = 20): Promise<TitleDetails[]> {
     .slice(0, limit)
 }
 
+/**
+ * Search films and series by name.
+ *
+ * Uses `/search/multi`, which also returns people — filtered out here, because a person
+ * has no availability and would be an unanswerable row in a "where can I watch this"
+ * result list.
+ *
+ * Cached on the availability TTL rather than the reference TTL: a search for a title
+ * released this week should start returning it quickly.
+ */
+export async function searchTitles(query: string, limit = 10): Promise<TitleDetails[]> {
+  const trimmed = query.trim()
+  if (!trimmed) return []
+
+  const data = await tmdbFetch<{ results?: TmdbTitleRaw[] }>(
+    `/search/multi?query=${encodeURIComponent(trimmed)}&include_adult=false`,
+    TTL_AVAILABILITY,
+  )
+  if (!data?.results) return []
+
+  return data.results
+    .filter((r) => r.media_type === "movie" || r.media_type === "tv")
+    .map((r) => mapTitle(r, r.media_type as MediaType))
+    .filter((t) => t.name)
+    .slice(0, limit)
+}
+
 /* --------------------------------------------------------------------------- slugs */
 
 /**
