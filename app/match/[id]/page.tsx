@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { RightsPanel } from '@/components/sightline/rights-panel'
+import { resolveRights } from '@/lib/data/resolve-rights'
+import { getViewerCountry } from '@/lib/geo/country'
+import { formatLongDate } from '@/lib/utils/datetime'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { ENV } from '@/lib/config/env'
 import { theSportsDB } from '@/lib/api/the-sports-db'
@@ -42,11 +46,9 @@ function safeDateFormat(dateStr: string): string {
   if (parts.length !== 3) return 'TBA'
   const [y, m, d] = parts
   if (y < 2020 || y > 2030) return 'TBA'
-  return new Date(Date.UTC(y, m-1, d))
-    .toLocaleDateString('en-GB', {
-      weekday: 'long', day: 'numeric',
-      month: 'long', year: 'numeric'
-    })
+  // Was toLocaleDateString('en-GB', ...) -- British formatting for every visitor on
+  // Earth. formatLongDate uses the region-neutral default and is SSR-safe.
+  return formatLongDate(new Date(Date.UTC(y, m - 1, d)))
 }
 
 export async function generateMetadata(
@@ -81,6 +83,7 @@ export default async function MatchPage(
   const league = match.strLeague
   const date = safeDateFormat(match.dateEvent)
   const venue = match.strVenue || ''
+  const rights = resolveRights(league, getViewerCountry())
   const isCompleted = ['match finished', 'ft', 'finished', 'aet'].some(s => match.strStatus?.toLowerCase()?.includes(s))
   
   // Determine watch page for this league
@@ -105,7 +108,7 @@ export default async function MatchPage(
     '@context': 'https://schema.org',
     '@type': 'SportsEvent',
     name: `${homeTeam} vs ${awayTeam}`,
-    description: `${homeTeam} vs ${awayTeam}, a ${league} fixture. Live score, lineups, match statistics and official UK broadcast listing.`,
+    description: `${homeTeam} vs ${awayTeam}, a ${league} fixture. Live score, lineups, match statistics, and the broadcaster for each country we have verified.`,
     startDate: startIso,
     endDate: endIso,
     eventStatus: 'https://schema.org/EventScheduled',
@@ -251,6 +254,16 @@ export default async function MatchPage(
               </span>
             )}
             {venue && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4 shrink-0" aria-hidden="true" />{venue}</span>}
+          </div>
+
+          {/* Where it is shown -- the answer this whole site exists to give. */}
+          <div className="mx-auto mb-10 max-w-[820px] text-left">
+            <RightsPanel
+              countries={rights.countries}
+              initialCountry={rights.initialCountry}
+              verifiedDate={rights.verifiedDate}
+              competitionName={rights.competitionName}
+            />
           </div>
 
           {!isCompleted && (
