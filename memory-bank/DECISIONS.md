@@ -1015,3 +1015,67 @@ The four mitigations recorded earlier still apply — source URL required, cross
 against our own store, broadcaster names only ever from `broadcast-rights.ts`, and a kill
 switch. They are cheaper to keep than to re-argue, and they remain useful with a human
 gate rather than redundant.
+
+
+---
+
+## 2026-08-19 — Positioning correction: not a scores site, and the answer-page strategy
+
+**Owner correction, acted on.** The site is not a live-scores product. Scores are a
+commodity owned by ESPN, the BBC and FlashScore; competing there is a fight we lose. The
+traffic worth having is people searching *"where to watch <trending thing>"*.
+
+`/scores` is therefore reframed from "Live scores" to **"What is on now"** — the
+broadcaster is the headline of every row and the score is a detail within it. Nav and
+footer relabelled so the page does not promise a product we are not trying to be.
+
+**Recorded because it is a positioning choice, not a data limit:** live scores *are*
+available. TheSportsDB's v1 `livescore.php` works on the free key and returned a live La
+Liga fixture during this check; only the v2 endpoint requires Premium. We are choosing not
+to lead with them.
+
+### The answer-page strategy
+
+`/where-to-watch/[country]` added — the other axis of the product's question. The title
+page answers "where can I watch X" globally with a per-country breakdown; this picks a
+country and answers what we can tell you there.
+
+It is the most honest page on the site by construction: scoped to one place, a country
+with no verified sports rights says so at the top rather than burying it. Germany renders
+real film and television services and an explicit "we have not verified any sports
+broadcasters in Germany"; the United Kingdom renders Sky Sports and TNT Sports with
+"verified by hand".
+
+**Only hand-verified countries go in the sitemap.** Every other country renders on
+request and answers honestly, but a sitemap entry is a claim that a page is worth
+crawling, and a page whose sport section reads "we have not checked this country" is not
+one to invite Google to index at scale. The footer's "By country" column is derived from
+the same verified set, so it cannot advertise coverage we do not hold.
+
+---
+
+## 2026-08-19 — RapidAPI removed; the leaked key was live and doing nothing
+
+The owner recalled that `RAPIDAPI_MMA_KEY` had been removed and UFC data came from
+elsewhere. Half right, and the half that was wrong mattered.
+
+UFC data does come from ESPN. But the key was still set, still referenced, and
+`lib/api/ufc.ts` still called RapidAPI as **step 1** of both fallback chains.
+
+Why it never contributed: every path the client calls returns
+`{"message":"Endpoint '/events' does not exist"}`. That is RapidAPI's gateway answering,
+not an auth rejection — which also proves the key authenticates, because an invalid key
+returns 401 with "not subscribed". So the integration was dead code holding a **live,
+billable** credential.
+
+Fingerprints confirmed the key in `.env.local` was byte-identical to the one hardcoded in
+the deleted debug route and still present in git history. Public, live, and useless.
+
+Removed the client, both call sites, the env accessor and the value. Zero RapidAPI
+references remain. **Rotation is still worth doing** — the key is public and billable —
+but nothing in this codebase depends on it now.
+
+Also fixed a real bug found during the check: the upstream reports in-play states as
+period codes (`1H`, `2H`, `HT`, `ET`), and the page trusted only its own `isLive` flag,
+which is not set for them. A match in its first half rendered as though it had not
+kicked off.

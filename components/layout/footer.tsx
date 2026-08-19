@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { JUSTWATCH_ATTRIBUTION } from "@/lib/api/tmdb"
+import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
+import { countryName } from "@/lib/geo/country"
 
 /**
  * Site footer, on the Sightline palette.
@@ -43,6 +45,19 @@ const COLUMNS = [
     ],
   },
   {
+    title: "By country",
+    links: [
+      // Derived from the countries we have actually verified, so the footer cannot
+      // advertise coverage we do not hold.
+      ...[
+        ...new Set(COMPETITION_RIGHTS.flatMap((c) => c.listings.map((l) => l.country))),
+      ].map((code) => ({
+        name: countryName(code),
+        href: `/where-to-watch/${code.toLowerCase()}`,
+      })),
+    ],
+  },
+  {
     title: "About",
     links: [
       { name: "About", href: "/about" },
@@ -52,7 +67,7 @@ const COLUMNS = [
       { name: "Terms", href: "/terms" },
     ],
   },
-] as const
+]
 
 export function Footer() {
   const year = new Date().getFullYear()
@@ -60,7 +75,7 @@ export function Footer() {
   return (
     <footer className="border-t border-sl-line bg-sl-panel">
       <div className="mx-auto max-w-[1280px] px-[18px] py-12 lg:px-20 lg:py-[46px]">
-        <div className="grid grid-cols-2 gap-8 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
           <div className="col-span-2 lg:col-span-1">
             <p className="mb-3 text-[17px] font-semibold tracking-[-0.022em] text-sl-text">
               {SITE_NAME}

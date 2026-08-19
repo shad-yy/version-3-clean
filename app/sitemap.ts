@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next"
 import { BLOG_POSTS } from "@/lib/blog/posts"
 import { PRODUCTION_SITE_URL } from '@/lib/config/site-url'
+import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
 
 
 // Bumped only when the static content of these pages actually changes. Using build
@@ -13,8 +14,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Genuinely daily-changing pages keep a live timestamp.
   const now = new Date().toISOString()
 
+  /*
+   * "Where to watch in <country>" pages.
+   *
+   * Only the countries we have hand-verified sports rights for are listed. Every other
+   * country renders on request and answers honestly, but a sitemap entry is a claim that
+   * a page is worth crawling -- and a page whose sport section reads "we have not checked
+   * this country" is not one we should be inviting Google to index at scale.
+   */
+  const verifiedCountries = [
+    ...new Set(COMPETITION_RIGHTS.flatMap((c) => c.listings.map((l) => l.country.toLowerCase()))),
+  ]
+
   return [
     { url: `${baseUrl}/`, priority: 1.0, changeFrequency: 'daily', lastModified: now },
+    ...verifiedCountries.map((code) => ({
+      url: `${baseUrl}/where-to-watch/${code}`,
+      priority: 0.9,
+      changeFrequency: 'daily' as const,
+      lastModified: now,
+    })),
+    { url: `${baseUrl}/watch/title`, priority: 0.9, changeFrequency: 'daily' as const, lastModified: now },
     { url: `${baseUrl}/scores`, priority: 0.95, changeFrequency: 'hourly' as const, lastModified: now },
     { url: `${baseUrl}/leagues`, priority: 0.9, changeFrequency: 'daily' as const, lastModified: now },
     { url: `${baseUrl}/teams`, priority: 0.8, changeFrequency: 'weekly' as const, lastModified: now },
