@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ChevronDown, Search } from "lucide-react"
 import { REGION_ORDER, type RegionName } from "@/lib/geo/regions"
 import { CoverageRibbon } from "@/components/sightline/coverage-ribbon"
+import { WorldMap } from "@/components/sightline/world-map"
 import {
   LANES,
   type CountryAvailabilityView,
@@ -233,6 +234,17 @@ export function AvailabilityExplorer({
       />
 
       <div className="mx-auto max-w-[1280px] px-[18px] py-10 lg:px-10">
+        {/* Map and list share the same state: clicking a country here opens its
+            continent and row below, so the two are one control rather than two views. */}
+        <div className="mb-8">
+          <WorldMap
+            countries={countries}
+            hoveredCode={hoveredCode}
+            onHoverCountry={setHoveredCode}
+            onSelectCountry={selectCountry}
+          />
+        </div>
+
         <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
           <div className="relative w-full sm:w-[250px]">
             <Search
