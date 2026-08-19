@@ -56,7 +56,7 @@ export function generateSportsEventSchema({
         "@context": "https://schema.org",
         "@type": "SportsEvent",
         name,
-        description: `${name} — ${league} fixture. Live score, lineups, match statistics and the official UK broadcast listing.`,
+        description: `${name} — ${league} fixture. Live score, lineups, match statistics, and where it is shown by country.`,
         eventStatus: "https://schema.org/EventScheduled",
         eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
         homeTeam: { "@type": "SportsTeam", name: homeTeam },

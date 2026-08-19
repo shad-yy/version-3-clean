@@ -4,8 +4,8 @@ import { StaggerIn } from "@/components/ui/stagger-in"
 import { SUPPORT_EMAIL } from '@/lib/config/site-url'
 
 export const metadata: Metadata = {
-  title: 'Contact Smart Live TV | Sports Data & Support',
-  description: 'Contact the Smart Live TV editorial and technical team about broadcast guides, live score data, or platform issues.',
+  title: 'Contact Sightline | Sports Data & Support',
+  description: 'Contact the Sightline editorial and technical team about broadcast guides, live score data, or platform issues.',
 }
 
 export default function ContactPage() {
@@ -16,7 +16,7 @@ export default function ContactPage() {
         <div className="container mx-auto max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 md:mb-6">Contact Us</h1>
           <p className="text-sl-mid text-lg mb-8 md:mb-12">
-            Have a question about our live sports telemetry, match schedules, or broadcast guides? Reach out to our team below.
+            Have a question about our live scores and fixtures, match schedules, or broadcast guides? Reach out to our team below.
           </p>
           <StaggerIn className="space-y-6">
             <div className="bg-sl-surface rounded-2xl border border-sl-line p-6">

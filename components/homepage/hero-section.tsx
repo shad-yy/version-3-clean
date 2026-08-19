@@ -272,7 +272,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.45 }}
               className="pt-2 w-full flex flex-wrap items-center justify-start gap-x-4 gap-y-3 text-xs sm:text-sm lg:text-base text-sl-mute font-semibold"
             >
-              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Real-Time Telemetry</span>
+              <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Real-time scores</span>
               <span className="hidden sm:inline text-sl-dim">|</span>
               <span className="flex items-center gap-1.5 text-sl-mid"><Check className="w-4 h-4 text-[var(--sl-amber)]" strokeWidth={3} /> Official Broadcast Networks</span>
               <span className="hidden sm:inline text-sl-dim">|</span>
@@ -332,7 +332,7 @@ export function HeroSection() {
                   ))}
                 </div>
                 <span className="text-xs font-bold text-sl-mute uppercase tracking-wider">
-                  Covered on Smart Live TV
+                  Covered on Sightline
                 </span>
               </div>
             </motion.div>
@@ -340,7 +340,7 @@ export function HeroSection() {
             <div className="mt-8 flex items-center gap-3 bg-black/30 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full text-xs sm:text-sm text-sl-mute">
               <span className="w-2 h-2 rounded-full bg-[var(--sl-amber)] animate-pulse" />
               <span>
-                Live Telemetry · Instant Lineups & Odds · Official Broadcast Networks
+                Live Live data · Instant Lineups & Odds · Official Broadcast Networks
               </span>
             </div>
           </div>

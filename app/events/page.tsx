@@ -15,9 +15,9 @@ import { MotionWrapper } from "@/components/ui/motion-wrapper"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: "Sports Fixtures & Results Calendar | Smart Live TV",
+  title: "Sports Fixtures & Results Calendar | Sightline",
   description:
-    "Full fixture calendar and results archive across football, UFC and Formula 1, with kick-off times and official UK broadcast listings.",
+    "Full fixture calendar and results archive across football, UFC and Formula 1, with kick-off times and the broadcaster for each country we have verified.",
   alternates: { canonical: `${ENV.BASE_URL}/events` },
 }
 

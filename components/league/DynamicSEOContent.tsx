@@ -93,11 +93,11 @@ export function DynamicSEOContent({
   const dynamicFAQs = [
     nextMatch && {
       question: `When is the next ${leagueName} match?`,
-      answer: `The next ${leagueName} match is ${nextMatch.homeTeam} vs ${nextMatch.awayTeam} on ${new Date(nextMatch.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}. View live score updates, match stats, and TV schedules on Smart Live TV.`,
+      answer: `The next ${leagueName} match is ${nextMatch.homeTeam} vs ${nextMatch.awayTeam} on ${new Date(nextMatch.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}. View live score updates, match stats, and TV schedules on Sightline.`,
     },
     topTeam && {
       question: `Who is top of the ${leagueName} table?`,
-      answer: `As of ${today}, ${topTeam.team} leads ${leagueName} with ${topTeam.points} points from ${topTeam.played} games (${topTeam.won}W ${topTeam.drawn}D ${topTeam.lost}L). Follow real-time standings and team stats on Smart Live TV.`,
+      answer: `As of ${today}, ${topTeam.team} leads ${leagueName} with ${topTeam.points} points from ${topTeam.played} games (${topTeam.won}W ${topTeam.drawn}D ${topTeam.lost}L). Follow real-time standings and team stats on Sightline.`,
     },
     // No broadcaster FAQ here. This component renders for every league, so a single
     // templated answer asserted UK rights holders for La Liga, Serie A, Bundesliga and
@@ -137,7 +137,7 @@ export function DynamicSEOContent({
             How to Watch Upcoming {leagueName} Matches
           </h2>
           <p className="text-sl-mute text-sm mb-8 max-w-2xl">
-            Confirmed kick-off times and the official UK broadcaster for
+            Confirmed kick-off times and the broadcaster we have verified for
             each upcoming {leagueName} fixture. Times are shown in UK local
             time and may be changed by the competition organiser.
           </p>

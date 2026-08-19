@@ -24,7 +24,7 @@ import {
  */
 
 export const metadata: Metadata = {
-  title: "Where to Watch — Competition Guides | Smart Live TV",
+  title: "Where to Watch — Competition Guides | Sightline",
   description:
     "Fixtures, standings and broadcast listings for football, Formula 1 and UFC. Find which service carries each competition in your country.",
   alternates: { canonical: `${ENV.BASE_URL}/watch` },

@@ -4,8 +4,8 @@ import { FadeIn } from "@/components/ui/fade-in"
 import { SUPPORT_EMAIL } from '@/lib/config/site-url'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Smart Live TV',
-  description: 'Smart Live TV terms of service — the rules for using our live sports scores, fixtures and official broadcast listings.',
+  title: 'Terms of Service | Sightline',
+  description: 'Sightline terms of service — the rules for using our live sports scores, fixtures and official broadcast listings.',
   alternates: { canonical: `${ENV.BASE_URL}/terms` },
 }
 
@@ -20,7 +20,7 @@ export default function TermsPage() {
         <div className="space-y-8 text-sl-mid leading-relaxed">
           <section>
             <h2 className="text-xl font-bold text-sl-text mb-3">1. Service Description</h2>
-            <p>Smart Live TV is a free, information-only service. We publish live sports
+            <p>Sightline is a free, information-only service. We publish live sports
             scores, fixture schedules, league standings, team and player statistics, and
             listings of the official television broadcasters that hold the rights to each
             event. We do not sell, resell, or provide access to any television or streaming

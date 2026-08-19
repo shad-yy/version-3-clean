@@ -11,20 +11,20 @@ import { getUEFAMatches, getUEFAResults, UEFA_COMPETITIONS } from '@/lib/api/foo
 import { getCurrentSeason } from '@/lib/api/unified-sports-api'
 
 export const metadata: Metadata = {
-  title: 'UEFA Champions League Live Scores & Fixtures | Smart Live TV',
+  title: 'UEFA Champions League Live Scores & Fixtures | Sightline',
   description:
     'Follow UEFA Champions League live scores, upcoming matchday fixtures, group standings, and official TV broadcast schedules.',
   alternates: {
     canonical: `${ENV.BASE_URL}/watch/champions-league`,
   },
   openGraph: {
-    title: 'UEFA Champions League Live Scores & Fixtures | Smart Live TV',
+    title: 'UEFA Champions League Live Scores & Fixtures | Sightline',
     description: 'Follow UEFA Champions League live scores, upcoming matchday fixtures, group standings, and official TV broadcast schedules.',
-    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Smart Live TV' }],
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Sightline' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'UEFA Champions League Live Scores & Fixtures | Smart Live TV',
+    title: 'UEFA Champions League Live Scores & Fixtures | Sightline',
     images: ['/og-default.png'],
   },
 }
@@ -121,7 +121,7 @@ export default async function ChampionsLeaguePage() {
     {
       question: 'Where can I check Champions League live scores?',
       answer:
-        'Smart Live TV updates all UEFA Champions League matchday scores, live stats, and group tables in real time.',
+        'Sightline updates all UEFA Champions League matchday scores, live stats, and group tables in real time.',
     },
     {
       question: 'Which networks broadcast UEFA Champions League?',
@@ -444,7 +444,7 @@ export default async function ChampionsLeaguePage() {
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Matchday Coverage</h2>
               <StaggerIn className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { n: 1, title: 'Check Live Scores', body: 'Follow real-time telemetry updates and goal notifications.' },
+                { n: 1, title: 'Check Live Scores', body: 'Follow real-time scores updates and goal notifications.' },
                 { n: 2, title: 'Inspect Standings', body: 'View live updated group stage tables and goal difference.' },
                 { n: 3, title: 'Broadcast Listings', body: 'Find official television networks carrying each fixture globally.' },
               ].map((s) => (
@@ -482,7 +482,7 @@ export default async function ChampionsLeaguePage() {
             <div className="p-6 border-b" style={{ borderColor: '#c8a951' }}>
               <h3 className="text-lg font-extrabold text-sl-text">Tonight&apos;s Champions League</h3>
               <p className="text-sm text-sl-mute mt-2">
-                Live scores, confirmed kick-off times and the official UK broadcaster for every match.
+                Live scores, confirmed kick-off times, and the broadcaster for each country we have verified.
               </p>
             </div>
             <div className="p-6">

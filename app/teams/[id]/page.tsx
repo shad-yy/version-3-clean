@@ -19,18 +19,18 @@ export async function generateMetadata({ params }: TeamPageProps): Promise<Metad
     const team = await unifiedSportsAPI.getTeam(params.id)
     if (!team) {
       return {
-        title: "Team Not Found - Smart Live TV",
+        title: "Team Not Found - Sightline",
         description: "The requested team could not be found.",
       }
     }
 
     return {
-      title: `${team.name} - Smart Live TV`,
+      title: `${team.name} - Sightline`,
       description: `Get the latest information about ${team.name}, including roster, schedule, and team statistics.`,
     }
   } catch (error) {
     return {
-      title: "Team - Smart Live TV",
+      title: "Team - Sightline",
       description: "Team information and statistics.",
     }
   }

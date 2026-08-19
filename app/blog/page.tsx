@@ -7,7 +7,7 @@ import { FadeIn } from "@/components/ui/fade-in"
 import { StaggerIn } from "@/components/ui/stagger-in"
 
 export const metadata: Metadata = {
-  title: "Sports Guides, Fixtures & TV Listings | Smart Live TV",
+  title: "Sports Guides, Fixtures & TV Listings | Sightline",
   description:
     "Editorial guides to football, UFC and Formula 1 — kick-off times, competition formats, how broadcast rights work, and which official broadcaster carries each event in the countries we have verified.",
   alternates: { canonical: `${ENV.BASE_URL}/blog` },

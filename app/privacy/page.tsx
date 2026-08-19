@@ -5,8 +5,8 @@ import { FadeIn } from "@/components/ui/fade-in"
 import { SUPPORT_EMAIL } from '@/lib/config/site-url'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Smart Live TV',
-  description: 'Smart Live TV privacy policy — how we collect, use and protect your personal data under UK GDPR.',
+  title: 'Privacy Policy | Sightline',
+  description: 'Sightline privacy policy — how we collect, use and protect your personal data under UK GDPR.',
   alternates: { canonical: `${ENV.BASE_URL}/privacy` },
 }
 

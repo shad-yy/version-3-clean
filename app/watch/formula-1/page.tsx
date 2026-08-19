@@ -12,8 +12,8 @@ import { Calendar, Flag, MapPin, Trophy } from "lucide-react"
 import { formatDate } from "@/lib/utils/datetime"
 
 export const metadata: Metadata = {
-  title: 'F1 2026 Race Calendar & UK TV Guide | Smart Live TV',
-  description: 'The full 2026 Formula 1 calendar — race dates, session times, circuit details and the official UK broadcaster for every round.',
+  title: 'F1 2026 Race Calendar & TV Guide | Sightline',
+  description: 'The full 2026 Formula 1 calendar — race dates, session times, circuit details, and the broadcaster for each country we have verified.',
   alternates: { canonical: `${ENV.BASE_URL}/watch/formula-1` },
 }
 
@@ -51,7 +51,7 @@ export default async function Formula1Page() {
       answer: 'Partly. Channel 4 broadcasts a selection of races live each season free-to-air, and shows highlights of every round. For the full calendar, Sky Sports F1 is the only UK route, available on Sky, Virgin Media or a NOW Sports pass.',
     },
     {
-      // This answer previously read "Smart Live TV works worldwide with no regional
+      // This answer previously read "Sightline works worldwide with no regional
       // restrictions or VPN required. Stream every F1 race from anywhere in the world."
       // Two separate problems: it advertised a streaming service this site is not, and
       // "no VPN required" is one of the phrases the build guard exists to block — the
@@ -100,7 +100,7 @@ export default async function Formula1Page() {
             )}
             <p className="text-sl-mid text-lg md:text-xl mb-10 max-w-2xl mx-auto">
               The full 2026 Formula 1 calendar — race dates, session times, circuit details
-              and the official UK broadcaster for every round.
+              and the broadcaster we have verified for every round.
             </p>
             <ShimmerButton
               href="#race-calendar"
@@ -357,7 +357,7 @@ export default async function Formula1Page() {
                   does not exist here. The panel links to scores, not to a player. */}
               <h3 className="text-lg font-extrabold text-sl-text">This Weekend&apos;s Race</h3>
               <p className="text-sm text-sl-mute mt-2">
-                Session times, circuit information and the UK broadcaster for every round.
+                Session times and circuit information for every round. Formula 1 broadcast rights are not among the competitions we have verified, so we name no channel for it.
               </p>
             </div>
             <div className="p-6">

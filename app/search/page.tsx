@@ -151,6 +151,13 @@ export default function SearchPage({
       <SchemaMarkup schema={breadcrumb} />
 
       <div className="mx-auto max-w-[1280px] px-[18px] py-10 lg:px-10">
+        {/* Every page needs exactly one h1 naming its subject. This page had none, so
+            crawlers and screen readers had nothing identifying what it is. Visually
+            hidden because the search field itself already reads as the page's purpose,
+            and a visible duplicate heading would be noise. */}
+        <h1 className="sr-only">
+          {query ? `Search results for ${query}` : "Search"}
+        </h1>
         <div className="mb-8">
           <HeroSearch countryText={countryText} />
         </div>

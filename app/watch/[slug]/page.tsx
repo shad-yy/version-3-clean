@@ -53,7 +53,7 @@ const LEAGUE_TITLES: Record<string, string> = {
     'la-liga':        'La Liga Live Scores & Official TV Guide',
     'bundesliga':     'Bundesliga Live Scores & Match Schedule',
     'serie-a':        'Serie A Live Scores & Broadcast Schedule',
-    'ligue-1':        'Ligue 1 Live Scores & Match Telemetry',
+    'ligue-1':        'Ligue 1 Live Scores & Live match data',
     'champions-league': 'UEFA Champions League Scores & TV Guide',
 }
 
@@ -76,7 +76,7 @@ export function generateMetadata({ params }: Props): Metadata {
     const league = LEAGUES[params.slug as LeagueSlug]
     if (!league) return { title: 'League Not Found' }
 
-    let title = `${league.name} Live Scores & Broadcast Guide | Smart Live TV`
+    let title = `${league.name} Live Scores & Broadcast Guide | Sightline`
     let description = `Follow real-time scores, upcoming matchday fixtures, team standings, and official TV broadcast guides for ${league.name}.`
 
     if (params.slug === 'premier-league') {
@@ -94,7 +94,7 @@ export function generateMetadata({ params }: Props): Metadata {
             title,
             description,
             type: 'website',
-            images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Smart Live TV' }],
+            images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Sightline' }],
         },
         twitter: {
             card: 'summary_large_image',
@@ -252,10 +252,10 @@ export default async function WatchLeaguePage({ params }: Props) {
                         <section className="prose prose-invert prose-lg max-w-none">
                             <h2 className="text-3xl font-bold text-sl-text mb-8 md:mb-12">Official Broadcast & Live Schedule Guide</h2>
                             <p className="max-w-2xl">
-                                Following {theme.name} requires staying updated on match schedules, official TV broadcast networks, and team form. Smart Live TV provides real-time telemetry, live scores, and verified television network listings across major regions.
+                                Following {theme.name} requires staying updated on match schedules, official TV broadcast networks, and team form. Sightline provides real-time scores, live scores, and verified television network listings across major regions.
                             </p>
                             <p className="max-w-2xl">
-                                Whether you are following live match updates, analyzing team statistics, or searching for official TV channels in the UK and worldwide, our live score platform delivers up-to-second telemetry on desktop and mobile devices.
+                                Whether you are following live match updates, analyzing team statistics, or searching for official TV channels in the UK and worldwide, our live score platform delivers up-to-second live data on desktop and mobile devices.
                             </p>
                             <p className="max-w-2xl">
                                 Check real-time match stats and standings on our{' '}
@@ -268,7 +268,7 @@ export default async function WatchLeaguePage({ params }: Props) {
 
                             <div className="my-10 p-6 border border-sl-line rounded-2xl bg-sl-surface/50">
                                 <h3 className="text-2xl font-bold text-sl-text mb-6">Explore Competition Hubs</h3>
-                                <p className="mb-4">Navigate to live match hubs and telemetry pages:</p>
+                                <p className="mb-4">Navigate to live match hubs and live data pages:</p>
                                 <div className="flex flex-wrap gap-4">
                                     <Link href="/scores" className="px-4 py-2 bg-sl-raise hover:bg-gray-700 rounded-lg text-sm font-medium text-sl-text border border-sl-line transition">
                                         Live Scores
@@ -323,7 +323,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                                             leagueColor={theme.secondary}
                                             className="px-6 py-3 text-sm rounded-lg whitespace-nowrap w-full md:w-auto"
                                         >
-                                            Match Center & Telemetry →
+                                            Match Center & Live data →
                                         </ShimmerButton>
                                     </div>
                                 ))}
@@ -421,7 +421,7 @@ export default async function WatchLeaguePage({ params }: Props) {
             <FadeIn direction="up">
                 <section className="py-16 md:py-20 text-center px-4 border-t" style={{ borderColor: theme.secondary, background: `linear-gradient(180deg, var(--sl-ground) 0%, ${theme.primary}33 100%)` }}>
                     <div className="container mx-auto max-w-3xl">
-                        <h2 className="text-3xl md:text-5xl font-bold text-sl-text mb-4">Smart Live TV Telemetry</h2>
+                        <h2 className="text-3xl md:text-5xl font-bold text-sl-text mb-4">Sightline Live data</h2>
                         <p className="text-sl-mute text-lg mb-8">Real-time match updates, team stats, and verified global TV channel guides.</p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link

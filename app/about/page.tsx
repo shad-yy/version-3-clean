@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { FadeIn } from "@/components/ui/fade-in"
 
 export const metadata: Metadata = {
-  title: 'About Smart Live TV | Real-Time Sports Hub',
-  description: 'Smart Live TV is a live sports telemetry and official TV broadcast directory hub covering Premier League, Champions League, UFC, F1, and global sports.',
+  title: 'About Sightline',
+  description: 'Sightline is a live scores and fixtures and official TV broadcast directory hub covering Premier League, Champions League, UFC, F1, and global sports.',
 }
 
 export default function AboutPage() {
@@ -13,16 +13,16 @@ export default function AboutPage() {
       <FadeIn>
       <section className="pt-28 md:pt-36 pb-16 md:pb-20 px-4 border-b border-[var(--sl-line)]">
         <div className="container mx-auto max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 md:mb-6">About Smart Live TV</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 md:mb-6">About Sightline</h1>
           <p className="text-sl-mid text-lg leading-relaxed mb-4">
-            Smart Live TV is a digital sports hub providing real-time live match scores, team statistics, league tables, and official TV broadcast schedules for football fans worldwide.
+            Sightline is a digital sports hub providing real-time live match scores, team statistics, league tables, and official TV broadcast schedules for football fans worldwide.
           </p>
           <p className="text-sl-mid text-lg leading-relaxed mb-8">
             Whether following the Premier League, UEFA Champions League, La Liga, UFC Fight Nights, or Formula 1 Grands Prix, our platform delivers accurate data and official viewing directories.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {[
-              { stat: '60s', label: 'Real-time telemetry update interval' },
+              { stat: '60s', label: 'Real-time live data update interval' },
               { stat: '50+', label: 'Global leagues and tournaments tracked' },
               { stat: '100%', label: 'Official TV & streaming listings' },
             ].map(item => (

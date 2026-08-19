@@ -28,7 +28,7 @@ const STATIC_RESULTS: SearchResult[] = [
   { type: 'sport', title: 'Formula 1', subtitle: 'Every race live', href: '/watch/formula-1', icon: '/leagues/formula-1.png' },
   { type: 'sport', title: 'UFC / MMA', subtitle: 'Fight nights', href: '/ufc', icon: '/leagues/ufc.png' },
   // Pages
-  { type: 'page', title: 'Live Scores', subtitle: 'Real-time match telemetry', href: '/scores', icon: Tv },
+  { type: 'page', title: 'Live Scores', subtitle: 'Real-time live match data', href: '/scores', icon: Tv },
   { type: 'page', title: 'League Tables', subtitle: 'Standings & form guides', href: '/leagues', icon: Newspaper },
   { type: 'page', title: 'News', subtitle: 'Latest sports headlines', href: '/news', icon: Newspaper },
   { type: 'page', title: 'Blog', subtitle: 'Sports analysis & broadcast guides', href: '/blog', icon: BookOpen },

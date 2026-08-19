@@ -4,7 +4,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { ENV } from '@/lib/config/env'
 
 export const metadata: Metadata = {
-  title: 'World Cup 2026 Results & Broadcast Archive | Smart Live TV',
+  title: 'World Cup 2026 Results & Broadcast Archive | Sightline',
   description: 'Spain beat Argentina 4-1 in the 2026 FIFA World Cup final on 19 July 2026. Full results archive, plus the Premier League 2026-27 start date and UK broadcast listings.',
   alternates: {
     canonical: `${ENV.BASE_URL}/watch/world-cup-2026`,
@@ -49,7 +49,7 @@ const faqSchema = {
       name: 'How can I watch the Premier League 2026-27 live?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The Premier League 2026-27 season starts on 21 August 2026. In the UK, televised fixtures are split between Sky Sports, TNT Sports and Amazon Prime Video, which streams one dedicated December matchweek. Smart Live TV publishes the full fixture list, kick-off times and the official broadcaster for every match.',
+        text: 'The Premier League 2026-27 season starts on 21 August 2026. In the UK, televised fixtures are split between Sky Sports, TNT Sports and Amazon Prime Video, which streams one dedicated December matchweek. Sightline publishes the full fixture list, kick-off times and the official broadcaster for every match.',
       },
     },
   ],
@@ -210,7 +210,7 @@ export default function WorldCup2026Page() {
           </h2>
           <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-6 md:p-8">
             {/*
-              This paragraph used to end: "Smart Live TV includes all broadcast channels
+              This paragraph used to end: "Sightline includes all broadcast channels
               — Sky Sports Main Event, Sky Sports Premier League, TNT Sports 1 and
               international feeds — so you never miss a fixture." An explicit claim to
               carry those channels, which this site does not: it transmits no video and

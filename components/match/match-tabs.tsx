@@ -159,7 +159,7 @@ function InfoView({ date, time, venue, league }: InfoViewProps) {
       </div>
 
       <div className="border-t border-[var(--sl-raise)] pt-6">
-        <h4 className="font-bold text-sl-text text-sm mb-4">Why watch on Smart Live TV?</h4>
+        <h4 className="font-bold text-sl-text text-sm mb-4">Why watch on Sightline?</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { t: "Multi-screen viewing",  d: "Watch up to 4 matches simultaneously in a single browser window." },

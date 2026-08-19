@@ -13,17 +13,17 @@ export async function generateMetadata({ params }: PlayerPageProps): Promise<Met
     const player = await unifiedSportsAPI.getPlayer(id)
     if (!player) {
       return {
-        title: "Player Not Found - Smart Live TV",
+        title: "Player Not Found - Sightline",
         description: "The requested player could not be found.",
       }
     }
     return {
-      title: `${player.name} - Smart Live TV`,
+      title: `${player.name} - Sightline`,
       description: `Get the latest information about ${player.name}, including stats, team information, and career highlights.`,
     }
   } catch {
     return {
-      title: "Player - Smart Live TV",
+      title: "Player - Sightline",
       description: "Player information and statistics.",
     }
   }

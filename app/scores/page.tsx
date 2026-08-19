@@ -6,7 +6,7 @@ import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { ENV } from "@/lib/config/env"
 
 export const metadata: Metadata = {
-  title: "Live Scores & Results – Football Matches | Smart Live TV",
+  title: "Live Scores & Results – Football Matches | Sightline",
   description:
     "Real-time football scores, live match updates, and recent results from Premier League, La Liga, Bundesliga, Serie A, and Ligue 1.",
   keywords: "live scores, football scores, Premier League scores, La Liga results, real-time football",

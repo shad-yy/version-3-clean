@@ -4,19 +4,19 @@ import { ENV } from '@/lib/config/env'
 import { FadeIn } from "@/components/ui/fade-in"
 
 export const metadata: Metadata = {
-  title: 'Sports Telemetry & Fixture FAQ | Smart Live TV',
-  description: 'Frequently asked questions about live sports scores, match schedules, league standings, and broadcast listings on Smart Live TV.',
+  title: 'Scores, Fixtures & Where to Watch — FAQ | Sightline',
+  description: 'Frequently asked questions about live sports scores, match schedules, league standings, and broadcast listings on Sightline.',
   alternates: { canonical: `${ENV.BASE_URL}/faq` },
 }
 
 const FAQS = [
   {
-    q: "What is Smart Live TV?",
-    a: "Smart Live TV is a live sports telemetry and official TV broadcast directory hub providing real-time scores, match schedules, league standings, and channel listings for Premier League, Champions League, UFC, Formula 1, and more."
+    q: "What is Sightline?",
+    a: "Sightline is a live scores and fixtures and official TV broadcast directory hub providing real-time scores, match schedules, league standings, and channel listings for Premier League, Champions League, UFC, Formula 1, and more."
   },
   {
     q: "How fast are scores updated?",
-    a: "Live match scores and telemetry events are refreshed automatically every 60 seconds directly from official sports data providers."
+    a: "Live match scores and live data events are refreshed automatically every 60 seconds directly from official sports data providers."
   },
   {
     q: "What leagues and competitions are covered?",
@@ -39,7 +39,7 @@ export default function FaqPage() {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-sl-text mb-4">Frequently Asked Questions</h1>
-          <p className="text-sl-mute text-lg">Everything you need to know about Smart Live TV sports hub.</p>
+          <p className="text-sl-mute text-lg">Everything you need to know about Sightline sports hub.</p>
         </div>
 
         <div className="bg-[var(--sl-surface)] rounded-3xl p-6 md:p-10 border border-[var(--sl-line)] space-y-6">

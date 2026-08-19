@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { PLAYER_POSITIONS } from "@/lib/config"
 
 export const metadata: Metadata = {
-  title: "Football Players — Profiles & Season Stats | Smart Live TV",
+  title: "Football Players — Profiles & Season Stats | Sightline",
   description:
     "Player profiles with appearances, goals, assists and career history for squads across the Premier League, La Liga, Serie A and more.",
   alternates: { canonical: `${ENV.BASE_URL}/players` },

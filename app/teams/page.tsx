@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { POPULAR_LEAGUE_IDS, QUICK_LEAGUE_FILTERS } from "@/lib/config"
 
 export const metadata: Metadata = {
-  title: "Football Teams — Squads, Stats & Fixtures | Smart Live TV",
+  title: "Football Teams — Squads, Stats & Fixtures | Sightline",
   description:
     "Browse football club profiles with current squads, season statistics, recent results and upcoming fixtures across Europe's major leagues.",
   alternates: { canonical: `${ENV.BASE_URL}/teams` },

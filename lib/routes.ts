@@ -44,7 +44,7 @@ export const NAVIGATION_ROUTES = [
 // Route metadata for SEO and navigation
 export const ROUTE_METADATA = {
   [ROUTES.HOME]: {
-    title: "Smart Live TV - Sports Hub",
+    title: "Sightline",
     description: "Your ultimate destination for live sports scores, news, and updates",
   },
   [ROUTES.SCORES]: {
@@ -98,7 +98,7 @@ export function isValidRoute(path: string): boolean {
 export function getRouteMetadata(path: string) {
   return (
     ROUTE_METADATA[path as keyof typeof ROUTE_METADATA] || {
-      title: "Smart Live TV",
+      title: "Sightline",
       description: "Sports Hub",
     }
   )

@@ -6,7 +6,7 @@ import { unifiedSportsAPI, type UnifiedLeague } from "@/lib/api/unified-sports-a
 import { OptimizedImage } from "@/components/ui/optimized-image"
 
 export const metadata: Metadata = {
-  title: "Football Leagues – Live Standings & Fixtures | Smart Live TV",
+  title: "Football Leagues – Live Standings & Fixtures | Sightline",
   description:
     "Explore the world's top football leagues: Premier League, La Liga, Bundesliga, Serie A, Ligue 1. Live standings, fixtures, and full match coverage.",
 }

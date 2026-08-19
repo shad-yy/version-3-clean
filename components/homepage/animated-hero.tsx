@@ -30,7 +30,7 @@ export function AnimatedHero() {
         }}
       >
         <div className="text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white opacity-100 mb-6" style={{ color: '#ffffff', opacity: 1, visibility: 'visible' }}>Smart Live TV</h1>
+          <h1 className="text-5xl md:text-7xl font-bold text-white opacity-100 mb-6" style={{ color: '#ffffff', opacity: 1, visibility: 'visible' }}>Sightline</h1>
         </div>
       </div>
     )

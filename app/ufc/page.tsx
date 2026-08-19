@@ -9,8 +9,8 @@ import { Calendar, MapPin, ArrowLeft } from 'lucide-react'
 import { getUpcomingEvents, getPastEvents } from '@/lib/api/ufc'
 
 export const metadata: Metadata = {
-  title: 'UFC Schedule, Fight Cards & Rankings | Smart Live TV',
-  description: 'Upcoming UFC events, full fight cards, fighter records and divisional rankings, plus official UK broadcast listings for every card.',
+  title: 'UFC Schedule, Fight Cards & Rankings | Sightline',
+  description: 'Upcoming UFC events, full fight cards, fighter records and divisional rankings, plus where each card is shown in the countries we have verified.',
   alternates: { canonical: `${ENV.BASE_URL}/ufc` },
 }
 
@@ -47,7 +47,7 @@ const faqSchema = {
       name: 'Are all UFC events pay-per-view in the UK?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No. UFC Fight Night cards are included with a TNT Sports subscription in the UK. Numbered events such as UFC 300 are sold separately as pay-per-view through discovery+. Smart Live TV publishes the full schedule and which category each event falls into.',
+        text: 'No. UFC Fight Night cards are included with a TNT Sports subscription in the UK. Numbered events such as UFC 300 are sold separately as pay-per-view through discovery+. Sightline publishes the full schedule and which category each event falls into.',
       },
     },
     {
@@ -55,7 +55,7 @@ const faqSchema = {
       name: 'Which channel shows UFC in the UK?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'TNT Sports holds the UK broadcast rights for the UFC, with streaming through discovery+. Prelims are often shown on UFC Fight Pass. Smart Live TV lists the broadcaster and UK start time for every card.',
+        text: 'TNT Sports holds the UK broadcast rights for the UFC, with streaming through discovery+. Prelims are often shown on UFC Fight Pass. Sightline lists the broadcaster and UK start time for every card.',
       },
     },
     {
@@ -63,7 +63,7 @@ const faqSchema = {
       name: 'What time do UFC events start in the UK?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'UFC cards held in the United States usually begin in the early hours of Sunday morning UK time, with prelims from around 11pm and the main card from 3am. Cards staged in Abu Dhabi or Europe fall in UK prime time instead. Smart Live TV lists the confirmed UK start time for prelims and main card on every event page.',
+        text: 'UFC cards held in the United States usually begin in the early hours of Sunday morning UK time, with prelims from around 11pm and the main card from 3am. Cards staged in Abu Dhabi or Europe fall in UK prime time instead. Sightline lists the confirmed UK start time for prelims and main card on every event page.',
       },
     },
   ],

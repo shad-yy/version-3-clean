@@ -27,7 +27,7 @@ async function getEventData(id: string) {
 
 function EventLoadingSkeleton() {
   return (
-    <main className="min-h-screen bg-[#070710] pt-20">
+    <main className="min-h-screen bg-sl-ground pt-20">
       <div className="container mx-auto px-4 py-10 max-w-4xl">
         <Skeleton className="h-4 w-24 mb-8 bg-white/5" />
         <div className="rounded-3xl border border-white/10 bg-white/3 p-8 mb-6 animate-pulse">
@@ -212,7 +212,14 @@ export default async function EventPage({ params }: EventPageProps) {
   const formattedDate = formatEventDate(unifiedEvent.date, unifiedEvent.time)
 
   return (
-    <main className="min-h-screen bg-[#070710] pt-20">
+    <main className="min-h-screen bg-sl-ground pt-20">
+      {/* The fixture was only ever expressed as two separate h2s, so the document had
+          no h1 and nothing named its subject. Hidden visually because the scoreboard
+          below presents it far more clearly than a line of text would. */}
+      <h1 className="sr-only">
+        {unifiedEvent.homeTeam} v {unifiedEvent.awayTeam}
+        {unifiedEvent.league ? ` — ${unifiedEvent.league}` : ""}
+      </h1>
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/3 w-[600px] h-[500px] bg-blue-500/4 rounded-full blur-[140px]" />
@@ -345,7 +352,7 @@ export async function generateMetadata({ params }: EventPageProps) {
 
   if (!eventData?.unifiedEvent) {
     return {
-      title: "Event Not Found - Smart Live TV",
+      title: "Event Not Found - Sightline",
       description: "The requested event could not be found.",
     }
   }
@@ -353,8 +360,8 @@ export async function generateMetadata({ params }: EventPageProps) {
   const { unifiedEvent } = eventData
 
   return {
-    title: `${unifiedEvent.homeTeam} vs ${unifiedEvent.awayTeam} – ${unifiedEvent.league} | Smart Live TV`,
-    description: `Live coverage and match details for ${unifiedEvent.homeTeam} vs ${unifiedEvent.awayTeam} in ${unifiedEvent.league}. Watch live on Smart Live TV.`,
+    title: `${unifiedEvent.homeTeam} vs ${unifiedEvent.awayTeam} – ${unifiedEvent.league} | Sightline`,
+    description: `Live coverage and match details for ${unifiedEvent.homeTeam} vs ${unifiedEvent.awayTeam} in ${unifiedEvent.league}. Watch live on Sightline.`,
     openGraph: {
       title: `${unifiedEvent.homeTeam} vs ${unifiedEvent.awayTeam}`,
       description: `${unifiedEvent.league} match details and live coverage`,

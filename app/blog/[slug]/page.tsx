@@ -52,7 +52,7 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
     }
   }
 
-  const title = post.metaTitle || `${post.title} | Smart Live TV`
+  const title = post.metaTitle || `${post.title} | Sightline`
 
   return {
     title,
@@ -64,7 +64,7 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
       title,
       description: post.description,
       type: "article",
-      images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Smart Live TV' }],
+      images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Sightline' }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -91,7 +91,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     dateModified,
     author: {
       "@type": "Organization",
-      name: "Smart Live TV",
+      name: "Sightline",
     },
     publisher: {
       '@id': `${ENV.BASE_URL}/#organization`,

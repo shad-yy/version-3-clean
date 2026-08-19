@@ -17,23 +17,23 @@ export async function generateMetadata({ params }: LeaguePageProps): Promise<Met
 
     if (!league) {
       return {
-        title: "League Not Found - Smart Live TV",
+        title: "League Not Found - Sightline",
         description: "The requested league could not be found.",
       }
     }
 
     return {
-      title: `${league.name} - Standings, Fixtures & Teams | Smart Live TV`,
-      description: `Follow ${league.name}: live standings, upcoming fixtures, team stats, and full match coverage. Stream ${league.name} live on Smart Live TV.`,
+      title: `${league.name} - Standings, Fixtures & Teams | Sightline`,
+      description: `Follow ${league.name}: live standings, upcoming fixtures, team stats, and full match coverage. Stream ${league.name} live on Sightline.`,
       openGraph: {
-        title: `${league.name} - Smart Live TV`,
+        title: `${league.name} - Sightline`,
         description: `Live scores, standings and fixtures for ${league.name}.`,
         images: league.logo ? [{ url: league.logo }] : [],
       },
     }
   } catch {
     return {
-      title: "League - Smart Live TV",
+      title: "League - Sightline",
       description: "League information and statistics.",
     }
   }

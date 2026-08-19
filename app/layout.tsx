@@ -48,7 +48,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(PRODUCTION_SITE_URL),
   title: {
-    default: "Smart Live TV",
+    default: "Sightline",
     template: "%s",
   },
   description:
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en",
     siteName: "SmartLiveTV",
-    title: "Smart Live TV — Live Sports Scores & Global Broadcast Guide",
+    title: "Sightline — where can I watch it?",
     description:
       "Real-time live sports scores, match schedules, league standings, team stats, and official broadcast guides for Premier League, Champions League, UFC, F1, and more.",
     images: [
@@ -65,14 +65,14 @@ export const metadata: Metadata = {
         url: "/og-default.png",
         width: 1200,
         height: 630,
-        alt: "Smart Live TV",
+        alt: "Sightline",
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@smartlivetv',
-    title: 'Smart Live TV — Real-Time Sports Scores & Broadcast Guide',
+    site: '@sightline',
+    title: 'Sightline — where can I watch it?',
     description: 'Real-time live sports scores, match schedules, league standings, team stats, and official broadcast guides for Premier League, Champions League, UFC, F1, and more.',
     images: ['/og-default.png'],
   },

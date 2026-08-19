@@ -55,7 +55,7 @@ export function BlogPostLayout({
     year: 'numeric',
   })
 
-  const initials = author === 'Smart Live TV' ? 'SL' : author
+  const initials = author === 'Sightline' ? 'SL' : author
     .split(' ')
     .map((n) => n[0])
     .join('')
@@ -160,7 +160,7 @@ export function BlogPostLayout({
               {/* CTA card */}
               <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-5">
                 <p className="text-xs font-bold text-sl-mute uppercase tracking-wide mb-3">
-                  Live Telemetry
+                  Live Live data
                 </p>
                 <p className="text-sl-text font-bold text-sm mb-1">Scores &amp; Fixtures</p>
                 <p className="text-sl-mute text-xs mb-4 leading-relaxed">

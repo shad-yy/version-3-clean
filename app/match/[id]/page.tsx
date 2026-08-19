@@ -59,7 +59,7 @@ export async function generateMetadata(
   
   const match = data.match
   const title = `${match.strHomeTeam} vs ${match.strAwayTeam} — Live Score & TV Guide`
-  const desc = `${match.strHomeTeam} vs ${match.strAwayTeam} in the ${match.strLeague}: kick-off time, live score, lineups, and the official UK broadcaster showing the match.`
+  const desc = `${match.strHomeTeam} vs ${match.strAwayTeam} in the ${match.strLeague}: kick-off time, live score, lineups, and where the match is shown by country.`
   
   return {
     title,
@@ -245,6 +245,14 @@ export default async function MatchPage(
             </div>
           </div>
 
+          {/* The fixture is the page's subject, but it was only ever expressed as two
+              separate h2s -- so the document had no h1 and nothing stated what the page
+              was about. Hidden visually because the scoreboard above already presents
+              it far more clearly than a line of text could. */}
+          <h1 className="sr-only">
+            {homeTeam} v {awayTeam} — {league}
+          </h1>
+
           <div className="flex items-center justify-center gap-6 text-sl-mute text-sm mb-8 flex-wrap">
             <span className="inline-flex items-center gap-1.5"><Calendar className="w-4 h-4 shrink-0" aria-hidden="true" />{date}</span>
             {match.strTime && (
@@ -360,7 +368,7 @@ export default async function MatchPage(
           Follow Every {league} Match
         </h2>
         <p className="text-sl-mute mb-8">
-          Live scores, fixtures, standings and official UK broadcast listings.
+          Live scores, fixtures, standings and broadcast listings for the countries we have verified.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <Link href="/scores" className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all">

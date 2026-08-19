@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Watch UEFA Europa League Live | Sports Data Hub',
     description: 'UEFA Europa League fixtures, league phase table and results — with confirmed UK kick-off times and the official TNT Sports broadcast listing for every match.',
-    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Smart Live TV' }],
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Sightline' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -548,7 +548,7 @@ export default async function EuropaLeaguePage() {
             <div className="p-6 border-b" style={{ borderColor: '#f97316' }}>
               <h3 className="text-lg font-extrabold text-sl-text">Tonight&apos;s Europa League</h3>
               <p className="text-sm text-sl-mute mt-2">
-                Live scores, confirmed kick-off times and the official UK broadcaster for every match.
+                Live scores, confirmed kick-off times, and the broadcaster for each country we have verified.
               </p>
             </div>
             <div className="p-6">
