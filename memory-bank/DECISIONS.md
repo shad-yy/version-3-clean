@@ -885,3 +885,64 @@ All 17 header and footer links return 200.
 **R5 migration surface measured:** 18 large blocks still render legacy grounds
 (`#0a0a0f`, `#12121a`) against 2 on the Sightline ground. Tracked as a number rather than
 an impression.
+
+
+---
+
+## 2026-08-19 — Discovery dock: BLOCKED on a data source, not on effort
+
+The "just checked" dock (handoff §1.6) is specified in detail and is not built. This is a
+conflict raised under rule 5f rather than a gap left by accident.
+
+**The dock's content rule is explicit:** items are things *re-verified in the last 24
+hours where an offer exists in the viewer's country* — and design opinion 6 states that
+discovery is ordered by **freshness of verification, never popularity or payment**. The
+footnote saying so is called out as part of the design.
+
+**We have no verification feed.** Film and television availability comes from TMDB, which
+returns no `checkedAt` at any level — confirmed against the live API. Hand-verified sports
+rights carry one date per competition, currently `2026-07-31` for both, so there is no
+stream of "things verified in the last 24 hours" to order by.
+
+**Building it from trending or popularity would directly violate design opinion 6** — the
+one thing that opinion exists to forbid. Filling it with plausible-looking items would
+violate rule 1.
+
+**Options for the owner:**
+
+1. **Leave it out** until a verification log exists. The homepage is coherent without it.
+2. **Build the verification log first** — record a timestamp each time a human confirms a
+   rights listing, then the dock becomes real and genuinely differentiating.
+3. **Re-scope the dock** to "recently added to the site", which is true and sourceable,
+   and adjust the copy so it no longer claims verification freshness.
+
+Recommendation is 2, then 1 in the meantime. The dock is one of the strongest ideas in
+the handoff precisely because freshness-of-verification is a claim nobody else can make —
+which is exactly why it should not ship backed by popularity data.
+
+---
+
+## 2026-08-19 — Sightline implementation, pass 2
+
+**Availability page** (§5) — coverage ribbon, four continent groups, five-slot matrix,
+filter, rows expanding in place. All counts derived from the provider response.
+
+**Search results** (§3) — one list mixing sport and film/TV; type carried by the 2px
+accent and lead column, never a badge.
+
+**Match page** (§4) — rights panel with country pills, verified listings as logo-slot
+cards with a mono date, and the unverified state in the **same panel geometry**.
+
+**Rights ledger** (§1.3) — replaced the old broadcast resolver, which led with United
+Kingdom in both example rows and read as a coverage claim rather than a coverage limit.
+Renders "2 competitions · 4 countries · last checked July 31, 2026", every value derived.
+
+**Live now** (§1.4) — three fixtures with the broadcaster for the reader's country, or an
+explicit "Not verified in <country>" where we hold nothing.
+
+**A global CSS defect found along the way.** `button { padding: .5rem 1rem; border; background }`
+applied unconditionally to every button on the site under a "fallbacks" comment. It floored
+every ribbon tick at 16px, collapsing 0, 1 and 2 offer kinds into one height and destroying
+the encoding for exactly the low-coverage countries the ribbon exists to reveal. Worth
+recording that the first diagnosis was wrong — an empty button's line box — and only
+reading the computed style showed 8px of padding from a rule 300 lines away.

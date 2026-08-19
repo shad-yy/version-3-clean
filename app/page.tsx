@@ -7,7 +7,8 @@ import { Hero } from "@/components/sightline/hero"
 import { LiveNowBanner } from '@/components/homepage/LiveNowBanner'
 import { EventCountdown } from '@/components/homepage/EventCountdown'
 import { MatchCard } from "@/components/homepage/match-card"
-import { BroadcastResolver } from "@/components/homepage/broadcast-resolver"
+import { RightsLedger } from "@/components/sightline/rights-ledger"
+import { LiveNow } from "@/components/sightline/live-now"
 import dynamic from "next/dynamic"
 
 const ServicePillars = dynamic(() => import("@/components/homepage/service-pillars").then(mod => ({ default: mod.ServicePillars })))
@@ -96,8 +97,14 @@ export default async function HomePage() {
       {/* Service Pillars (clarity strip) */}
       <ServicePillars />
 
-      {/* Where to watch — the differentiator, stated plainly and server-rendered */}
-      <BroadcastResolver />
+      {/* The ledger: what we have verified, and plainly what we have not.
+          Replaces the old broadcast resolver, which led with United Kingdom in both
+          example rows and read as a coverage claim rather than a coverage limit. */}
+      <RightsLedger />
+
+      {/* Live now: three fixtures with the broadcaster for the reader's own
+          country, or an explicit "not verified" where we hold nothing. */}
+      <LiveNow />
 
       {/* Spotlight Events (wow section) */}
       <SpotlightEvents />
