@@ -43,10 +43,11 @@ A rule is not "done" until the proving command returns zero.
 | R1 | No emoji in shipped code | **Done** | Wide-range codepoint scan over `app components lib scripts` returns 0 |
 | R2 | No IPTV / streaming-claim phrases in source | **Done, enforced at build** | `assertSourceCompliant()` in `scripts/generate-posts.js`; verified by injection |
 | R3 | Animations must never hide content | **Done for the two wrappers** | `ScrollReveal`, `FadeIn` rewritten to `whileInView`; all homepage sections at opacity 1 |
+| R8 | Sightline handoff conformance | **In progress** | Tokens, type, header, hero, footer, Film & TV index done. Remaining: ledger panel, live-now block, results, match page, availability page, discovery dock |
 | R4 | Invalid ids must return 404, not 200 | **Done** | All 8 invalid routes return 404, all 14 valid routes 200, verified on a production server |
-| R5 | Semantic tokens, no raw hex | **Not started** | ~604 hex + 953 default greys vs ~188 tokens |
-| R6 | No single-market (UK) copy or config | **Partial** | Root layout and formatters done; **6 competition pages + ~30 formatters remain** |
-| R7 | Film/TV must be discoverable | **Partial** | `/watch` links to titles; **header nav still has no entry** |
+| R5 | Semantic tokens, no raw hex | **In progress** | Sightline `--sl-*` scale live. Header, hero, footer, `/watch/title` migrated. **18 large blocks still on legacy grounds** (measured in-browser) |
+| R6 | No single-market (UK) copy or config | **Partial** | Root layout, formatters, hero, header, footer done. Country now resolved per viewer. **6 competition pages + ~30 formatters remain** |
+| R7 | Film/TV must be discoverable | **Done** | In the header nav, its own index at `/watch/title`, and a footer column. All links 200. |
 
 ---
 
@@ -95,7 +96,7 @@ Proof, on a production server:
      /players  /about  /faq  /contact
 ```
 
-### F2 — Film and TV are effectively invisible
+### F2 — Film and TV are effectively invisible — RESOLVED
 
 The owner could not find them, and was right. `/watch/title/[slug]` works and `/watch` links
 to it, but:

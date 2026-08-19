@@ -803,3 +803,85 @@ Replaced with 48 bytes from `crypto.randomBytes`, base64url-encoded (64 characte
 `.env.local` — which is gitignored, so the value never enters version control. **The same
 variable must be set in the Vercel project before deployment**; `middleware.ts` throws when
 it is missing in production, which is the correct behaviour.
+
+
+---
+
+## 2026-08-19 — Sightline handoff: four conflicts resolved, one owner correction
+
+**Owner confirmed the name is Sightline** (the handoff ships under it) and resolved all
+four conflicts in favour of the recommendations. Vercel is the deployment target.
+
+### The four conflicts
+
+1. **Ledger date.** Design copy said `last checked 14 AUG 2026`; the data says
+   **2026-07-31**. Counts and dates are now derived from
+   `lib/data/broadcast-rights.ts`, never hardcoded. Rule 1 outranks the handoff — a
+   hardcoded date would be a fabricated verification claim.
+2. **`checkedAt` for film and television does not exist.** Verified against the live API:
+   a TMDB country entry contains only `ads, buy, flatrate, link, rent`. No date field
+   anywhere. Verification language is therefore reserved for hand-checked sports rights;
+   film and TV carry no "verified" date, because calling a provider fetch "hand-verified"
+   is exactly the fabrication this project forbids and would hollow out design opinion 3.
+3. **Prices.** TMDB returns no price field on any provider. The price line is omitted
+   rather than invented. Owner's instruction: "let's not include what's not in the
+   response but let's make what's there look visually enough."
+4. **Provider links.** TMDB supplies a TMDB landing link per country, not a deep link to
+   the service. The design sentence promising each name links to "that service's own
+   page" is adjusted, because linking a service name somewhere that is not the service
+   breaks the promise the sentence makes.
+
+### The correction the owner asked for
+
+The owner asked to use "every country we can have its data from the response of the APIs"
+and said to stop them if that was wrong. It is right for film and television and wrong
+for sport, and the distinction matters:
+
+- **Film and TV is automatically global.** TMDB returns availability for every country it
+  has — **139**, confirmed live — and `getWatchProviders` already returns all of them
+  unfiltered. The country selector and the hero count are both derived from that endpoint,
+  so coverage grows on its own when the provider adds a market.
+- **Sports broadcast rights are in no API at all.** TheSportsDB's TV endpoint was queried
+  directly and returned **one row, country "International"**. There is no per-country
+  sports rights feed available to this project. The four verified countries are
+  hand-checked, and reaching a fifth is research, not code.
+
+That asymmetry is not a defect to engineer around — it is the thing the design's ledger
+panel and design opinion 7 exist to state honestly.
+
+### Country resolution
+
+Order: explicit cookie choice, then Vercel's `x-vercel-ip-country` edge header, then
+**null**. The fallback is deliberately not a country. Defaulting to GB or US would answer
+a global question with one market's answer, which is the defect this rebuild exists to
+remove. Null renders as "your country" — grammatical, and honest that we do not know.
+A cookie rather than localStorage because country must be known during the server render,
+or the first paint answers for the wrong place.
+
+---
+
+## 2026-08-19 — Sightline implementation, pass 1
+
+Tokens added as `--sl-*` and mapped into Tailwind as an `sl` scale, namespaced so routes
+migrate one at a time rather than repainting every unmigrated page at once. Typography
+switched to Archivo and IBM Plex Mono. Map dependencies installed and the Natural Earth
+topology vendored to `public/geo/` rather than fetched from a CDN, since the CSP blocks
+external hosts.
+
+**Header, hero, footer and the Film & TV index rebuilt.** The hero replaced an inventory
+list headline that never mentioned film or television and omitted search entirely, despite
+lookup being the whole interaction model; it now leads with the user's question and
+carries the country as a live control inside the headline.
+
+**F2 is closed.** Film & TV now appears in the header nav, has a real index at
+`/watch/title`, and has its own footer column. Previously it was reachable only from the
+middle of one page.
+
+**Verified by computed style in a browser, not by curl** — header 62px on
+`rgba(11,13,17,.94)`, h1 62px in `#e8e5de`, Archivo body, Plex Mono eyebrow reading its
+139-country figure from the live API, search field present at 62px, footer on `#0f1216`.
+All 17 header and footer links return 200.
+
+**R5 migration surface measured:** 18 large blocks still render legacy grounds
+(`#0a0a0f`, `#12121a`) against 2 on the Sightline ground. Tracked as a number rather than
+an impression.
