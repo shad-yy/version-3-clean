@@ -131,12 +131,21 @@ button {
   padding-right: 1rem;
 }
 
-/* Button fallbacks */
+/*
+ * Buttons.
+ *
+ * This block used to set `padding: .5rem 1rem`, a 1px #333 border and a #1a1a1a
+ * background on EVERY button on the site. It was labelled a fallback, but nothing gated
+ * it -- it applied unconditionally, so every styled button had to out-specify it, and
+ * any button smaller than its padding silently inflated to fit.
+ *
+ * That was not theoretical: it floored every coverage-ribbon tick at 16px, collapsing
+ * 0, 1 and 2 offer kinds into one identical height and destroying the encoding for
+ * exactly the low-coverage countries the ribbon exists to reveal.
+ *
+ * Tailwind's preflight already resets button appearance. Components style themselves.
+ */
 button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #333;
-  background: #1a1a1a;
-  color: #fff;
   cursor: pointer;
 }
 
