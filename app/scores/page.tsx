@@ -18,22 +18,26 @@ import {
 } from "@/components/sightline/page-shell"
 
 /**
- * Live scores, rebuilt in Sightline.
+ * "What is on now" — deliberately not a live-scores page.
  *
  * The old page was a client component that fetched on mount, held tab state, and
  * rendered a card grid — so the scores were invisible to a crawler and the page had
  * nothing to say until JavaScript ran.
  *
- * This renders on the server. More importantly it answers the site's actual question
- * rather than only showing a score: each row carries the broadcaster for the reader's own
- * country, or says plainly that we have not verified one.
+ * This renders on the server. More importantly, **the score is not the point**. Scores
+ * are a commodity owned by ESPN, the BBC and FlashScore, and competing with them there is
+ * a fight we lose. What nobody answers well is "it is on — where do I watch it", so the
+ * broadcaster is the headline of every row and the score is a detail within it.
+ *
+ * Naming matters here too: the page is "what is on now", not "live scores", so it does
+ * not promise a product we are not trying to be.
  */
 
 export const revalidate = 90
 
-const TITLE = "Live scores"
+const TITLE = "What is on now"
 const DESCRIPTION =
-  "Live football scores and today's fixtures, with the broadcaster showing each match in your country where we have verified one."
+  "What is being shown right now and where to watch it. Today's matches with the broadcaster carrying each one in your country, where we have verified it."
 
 export const metadata: Metadata = {
   title: `${TITLE} | ${SITE_NAME}`,
@@ -70,11 +74,22 @@ async function getMatches(): Promise<Match[]> {
   }
 }
 
-/** "NS" and friends are API codes, not something to show a reader. */
+/**
+ * Turns an API status code into something a reader understands.
+ *
+ * The upstream reports in-play states as period codes -- "1H", "2H", "HT", "ET" -- and
+ * the previous check only trusted its own `isLive` flag, which is not set for them. A
+ * match in its first half was being shown as though it had not started.
+ */
+const IN_PLAY = new Set(["1H", "2H", "HT", "ET", "P", "BT", "LIVE"])
+const FINISHED = new Set(["FT", "AET", "PEN", "MATCH FINISHED", "AWD", "WO"])
+
 function statusLabel(m: Match): { lead: string; live: boolean } {
-  const s = (m.status || "").toUpperCase()
-  if (m.isLive) return { lead: s === "NS" ? "LIVE" : s, live: true }
-  if (["FT", "AET", "PEN", "MATCH FINISHED"].includes(s)) return { lead: "FT", live: false }
+  const s = (m.status || "").toUpperCase().trim()
+  if (m.isLive || IN_PLAY.has(s)) {
+    return { lead: s === "HT" ? "HT" : s === "NS" ? "LIVE" : s, live: true }
+  }
+  if (FINISHED.has(s)) return { lead: "FT", live: false }
   return { lead: "", live: false }
 }
 
@@ -93,8 +108,8 @@ async function ScoresList() {
     )
   }
 
-  const live = matches.filter((m) => m.isLive)
-  const rest = matches.filter((m) => !m.isLive)
+  const live = matches.filter((m) => statusLabel(m).live)
+  const rest = matches.filter((m) => !statusLabel(m).live)
 
   const render = (list: Match[]) => (
     <RowList>
@@ -188,9 +203,9 @@ export default function ScoresPage() {
     <PageShell>
       <SchemaMarkup schema={breadcrumb} />
       <PageHeader
-        eyebrow="Live scores"
+        eyebrow="On now"
         title="What is on right now"
-        intro={`Scores as they happen, and who is showing each match in ${countryText} where we have verified a broadcaster.`}
+        intro={`Matches under way and starting soon, and who is showing them in ${countryText} where we have verified a broadcaster.`}
       />
       <Suspense
         fallback={

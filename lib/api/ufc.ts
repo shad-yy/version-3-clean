@@ -255,119 +255,12 @@ function setCachedData<T>(key: string, data: T): void {
 }
 
 export async function getUpcomingEvents(): Promise<UFCEvent[]> {
-  // 1. Try RapidAPI MMA first (most reliable for UFC data)
-  try {
-    const { getUpcomingMMAEvents } = await import('./mma-rapidapi')
-    const events = await getUpcomingMMAEvents()
-    if (events.length > 0) {
-      return events.map(e => {
-        const mainFight = e.fights?.find(f => f.isMainEvent)
-        return {
-          id: String(e.id),
-          name: e.name,
-          date: e.date,
-          location: e.venue || e.location || 'TBA',
-          status: 'Upcoming' as const,
-          image: '/leagues/ufc.png',
-          mainEvent: mainFight
-            ? `${mainFight.fighter1} vs ${mainFight.fighter2}`
-            : e.name,
-          fights: (e.fights || []).map(f => ({
-            id: String(f.id),
-            fighter1: { name: f.fighter1 },
-            fighter2: { name: f.fighter2 },
-            weightClass: f.weightClass || '',
-            isMainEvent: f.isMainEvent || false,
-            isTitleFight: false,
-            cardSegment: f.isMainEvent ? 'Main Card' : 'Main Card',
-          })),
-        }
-      })
-    }
-  } catch {
-    // fall through to ESPN
-  }
-
-  // 2. Fallback: ESPN API
-  try {
-    const { getUFCEvents } = await import('./espn')
-    const { upcoming } = await getUFCEvents()
-    if (upcoming.length > 0) {
-      return upcoming.map(e => ({
-        id: e.id,
-        name: e.name || e.shortName || 'UFC Event',
-        date: e.date,
-        location: e.competitions?.[0]?.venue?.fullName
-          || e.competitions?.[0]?.venue?.address?.city
-          || 'TBA',
-        status: 'Upcoming' as const,
-        image: e.links?.find((l: any) => l.rel?.includes('desktop'))?.href
-          || '/leagues/ufc.png',
-        mainEvent: e.competitions?.[0]?.notes?.[0]?.headline || e.name,
-        fights: [],
-      }))
-    }
-  } catch {
-    // fall through to mock
-  }
 
   // 3. Final fallback: mock data
   return mockUpcomingEvents
 }
 
 export async function getPastEvents(): Promise<UFCEvent[]> {
-  // 1. Try RapidAPI MMA first
-  try {
-    const { getRecentMMAResults } = await import('./mma-rapidapi')
-    const events = await getRecentMMAResults()
-    if (events.length > 0) {
-      return events.map(e => {
-        const mainFight = e.fights?.find(f => f.isMainEvent)
-        return {
-          id: String(e.id),
-          name: e.name,
-          date: e.date,
-          location: e.location || 'TBA',
-          status: 'Past' as const,
-          image: '/leagues/ufc.png',
-          mainEvent: mainFight
-            ? `${mainFight.fighter1} vs ${mainFight.fighter2}`
-            : e.name,
-          fights: (e.fights || []).map(f => ({
-            id: String(f.id),
-            fighter1: { name: f.fighter1 },
-            fighter2: { name: f.fighter2 },
-            weightClass: f.weightClass || '',
-            isMainEvent: f.isMainEvent || false,
-            isTitleFight: false,
-            cardSegment: 'Main Card',
-          })),
-        }
-      })
-    }
-  } catch {
-    // fall through to ESPN
-  }
-
-  // 2. Fallback: ESPN API
-  try {
-    const { getUFCEvents } = await import('./espn')
-    const { recent } = await getUFCEvents()
-    if (recent.length > 0) {
-      return recent.slice(0, 6).map(e => ({
-        id: e.id,
-        name: e.name || 'UFC Event',
-        date: e.date,
-        location: e.competitions?.[0]?.venue?.fullName || 'TBA',
-        status: 'Past' as const,
-        image: '/leagues/ufc.png',
-        mainEvent: e.competitions?.[0]?.notes?.[0]?.headline || e.name,
-        fights: [],
-      }))
-    }
-  } catch {
-    // fall through to mock
-  }
 
   // 3. Final fallback: mock data
   return mockPastEvents

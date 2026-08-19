@@ -32,9 +32,6 @@ export const ENV = {
   get BASE_URL() {
     return resolveSiteUrl()
   },
-  get RAPIDAPI_MMA_KEY() {
-    return process.env.RAPIDAPI_MMA_KEY || ""
-  },
   get FOOTBALL_DATA_KEY() {
     return process.env.FOOTBALL_DATA_API_KEY || ''
   },

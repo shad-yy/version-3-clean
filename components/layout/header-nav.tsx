@@ -16,7 +16,7 @@ import { CountrySelect, type CountryOption } from "@/components/sightline/countr
  */
 
 const NAV = [
-  { name: "Live scores", href: "/scores" },
+  { name: "On now", href: "/scores" },
   { name: "Fixtures", href: "/events" },
   { name: "Film & TV", href: "/watch/title" },
   { name: "Guides", href: "/watch" },

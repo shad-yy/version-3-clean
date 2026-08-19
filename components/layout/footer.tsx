@@ -18,7 +18,7 @@ const COLUMNS = [
   {
     title: "Sport",
     links: [
-      { name: "Live scores", href: "/scores" },
+      { name: "On now", href: "/scores" },
       { name: "Fixtures", href: "/events" },
       { name: "League tables", href: "/leagues" },
       { name: "Teams", href: "/teams" },
