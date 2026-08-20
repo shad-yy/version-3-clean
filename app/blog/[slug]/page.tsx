@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import DOMPurify from "isomorphic-dompurify"
+import sanitizeHtml from "sanitize-html"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 import { BLOG_POSTS } from "@/lib/blog/posts"
 import { ENV } from "@/lib/config/env"
@@ -154,8 +154,32 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         tags={categoryTagMap[post.category] ?? []}
       >
         {/* Article HTML rendered inside prose-blog styles from the layout */}
-        {/* DOMPurify sanitizes HTML to prevent XSS — safe to render */}
-        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+        {/*
+          Sanitised before rendering. `sanitize-html` rather than isomorphic-dompurify:
+          the latter pulls in jsdom, whose `default-stylesheet.css` asset is not emitted
+          into the server bundle, and the build died collecting page data for this route.
+          A previous commit replaced DOMPurify elsewhere for exactly this reason and missed
+          this file.
+
+          The allowlist is deliberately wider than the library default — the default drops
+          headings, images and tables, which is most of what an article is made of.
+        */}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(post.content, {
+              allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                "img", "h1", "h2", "figure", "figcaption",
+              ]),
+              allowedAttributes: {
+                ...sanitizeHtml.defaults.allowedAttributes,
+                img: ["src", "alt", "title", "width", "height", "loading"],
+                "*": ["class", "id"],
+              },
+              // Block every scheme that can execute, javascript: above all.
+              allowedSchemes: ["http", "https", "mailto"],
+            }),
+          }}
+        />
       </BlogPostLayout>
     </>
   )
