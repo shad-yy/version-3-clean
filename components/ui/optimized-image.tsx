@@ -1,8 +1,36 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
+
+/**
+ * `next/image` with a graceful failure state.
+ *
+ * ## The deadlock this used to have
+ *
+ * The previous version gated rendering behind `shouldLoad`, set by an IntersectionObserver
+ * watching the wrapper element with `threshold: 0.1`:
+ *
+ * ```
+ * const [shouldLoad, setShouldLoad] = useState(!lazy || priority)   // false by default
+ * ...
+ * {shouldLoad && <Image ... />}
+ * ```
+ *
+ * The wrapper's only real content is the image the flag gates. With nothing inside, the
+ * wrapper collapses to zero height, so it can never present 10% of itself to the observer,
+ * so the flag never flips, so the image never renders — and the wrapper stays empty. **The
+ * element was waiting for a size that only the element could produce.**
+ *
+ * The result was silent: markup rendered, layout looked intentional, and every team logo
+ * and player photo on the site was simply absent. It survived because nothing errors — an
+ * image that is never requested cannot fail.
+ *
+ * The observer is gone. `next/image` does lazy loading natively, at the browser level,
+ * with no JavaScript and no state to deadlock. `priority` opts an image out for
+ * above-the-fold artwork, which is the same control the old `lazy` prop was reaching for.
+ */
 
 interface OptimizedImageProps {
   src: string
@@ -16,6 +44,7 @@ interface OptimizedImageProps {
   fill?: boolean
   placeholder?: "blur" | "empty"
   blurDataURL?: string
+  /** @deprecated Native lazy loading is the default; pass `priority` to opt out. */
   lazy?: boolean
   fallback?: string
 }
@@ -32,104 +61,46 @@ export function OptimizedImage({
   fill = false,
   placeholder = "empty",
   blurDataURL,
-  lazy = true,
   fallback = "/placeholder-logo.svg",
   ...props
 }: OptimizedImageProps) {
-  const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
-  const [shouldLoad, setShouldLoad] = useState(!lazy || priority)
-  const imgRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (!lazy || priority || shouldLoad) return
+  const resolved =
+    !src || src.includes("placeholder.svg") || src === "/placeholder-logo.svg" ? fallback : src
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShouldLoad(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: "50px", // Load images 50px before they come into view
-        threshold: 0.1,
-      },
-    )
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [lazy, priority, shouldLoad])
-
-  const errorFallback = useCallback(
-    () => (
+  if (hasError || !resolved) {
+    return (
       <div
-        className={cn("flex items-center justify-center bg-sl-raise text-sl-mute text-sm", className)}
+        className={cn(
+          "flex items-center justify-center bg-sl-raise text-[10px] uppercase tracking-[.08em] text-sl-dim",
+          className,
+        )}
         style={width && height ? { width, height } : undefined}
-      >
-        <span>Image unavailable</span>
-      </div>
-    ),
-    [className, width, height],
-  )
-
-  const getOptimizedSrc = useCallback((originalSrc: string) => {
-    if (!originalSrc || originalSrc.includes("placeholder.svg") || originalSrc === "/placeholder-logo.svg") {
-      return fallback
-    }
-
-    // For external URLs, return as-is (Next.js Image will handle optimization)
-    if (originalSrc.startsWith("http")) {
-      return originalSrc
-    }
-
-    // For local images, ensure they exist or fallback
-    return originalSrc || fallback
-  }, [fallback])
-
-  if (hasError) {
-    return errorFallback()
+        aria-hidden="true"
+      />
+    )
   }
 
   return (
-    <div ref={imgRef} className={cn("relative overflow-hidden", className)}>
-      {isLoading && shouldLoad && (
-        <div
-          className="absolute inset-0 bg-sl-raise animate-pulse flex items-center justify-center"
-          style={width && height ? { width, height } : undefined}
-        >
-          <div className="w-8 h-8 border-2 border-sl-line border-t-gray-400 rounded-full animate-spin" />
-        </div>
-      )}
-
-      {shouldLoad && (
-        <Image
-          src={getOptimizedSrc(src) || "/placeholder.svg"}
-          unoptimized={typeof src === 'string' && src.startsWith('http')}
-          alt={alt}
-          {...(fill ? {} : { width, height })}
-          priority={priority}
-          quality={quality}
-          sizes={sizes}
-          fill={fill}
-          placeholder={placeholder}
-          blurDataURL={blurDataURL}
-          className={cn("transition-opacity duration-300", isLoading ? "opacity-0" : "opacity-100", className)}
-          onLoad={() => setIsLoading(false)}
-          onError={() => {
-            setIsLoading(false)
-            setHasError(true)
-          }}
-          {...props}
-        />
-      )}
-
-      {!shouldLoad && <div className={cn("bg-sl-raise animate-pulse", className)} style={width && height ? { width, height } : undefined} />}
-    </div>
+    <Image
+      src={resolved}
+      // Remote hosts not covered by next.config's remotePatterns would throw at render and
+      // take the whole page with them, so third-party URLs bypass the optimiser.
+      unoptimized={resolved.startsWith("http")}
+      alt={alt}
+      {...(fill ? {} : { width, height })}
+      priority={priority}
+      // Native browser lazy loading. No observer, nothing to deadlock.
+      loading={priority ? undefined : "lazy"}
+      quality={quality}
+      sizes={sizes}
+      fill={fill}
+      placeholder={placeholder}
+      blurDataURL={blurDataURL}
+      className={className}
+      onError={() => setHasError(true)}
+      {...props}
+    />
   )
 }

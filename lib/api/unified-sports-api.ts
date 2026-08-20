@@ -59,6 +59,8 @@ export interface UnifiedTeam {
   id: string
   name: string
   logo: string
+  /** Wide promotional artwork, if the provider has any. */
+  fanart?: string
   country: string
   league?: string
   founded?: number
@@ -151,8 +153,22 @@ class UnifiedSportsAPI {
     return {
       id: team.idTeam,
       name: team.strTeam,
-      // Use API images only - prefer badge, then logo, then fanart
-      logo: team.strTeamBadge || team.strTeamLogo || team.strTeamFanart1 || "",
+      /*
+       * Current field names first, legacy second.
+       *
+       * The endpoint renamed `strTeamBadge` to `strBadge`, so this resolved to "" for
+       * every team on the site -- silently, because an empty string is a valid value and
+       * the header simply rendered its placeholder. Both are read so the mapping keeps
+       * working whichever generation a cached response came from.
+       */
+      logo:
+        team.strBadge ||
+        team.strLogo ||
+        team.strTeamBadge ||
+        team.strTeamLogo ||
+        "",
+      /** Wide artwork, for use as a page backdrop rather than a picture. */
+      fanart: team.strFanart1 || team.strFanart2 || team.strBanner || undefined,
       country: team.strCountry || "Unknown",
       league: team.strLeague,
       founded: team.intFormedYear ? Number.parseInt(team.intFormedYear.toString()) : undefined,

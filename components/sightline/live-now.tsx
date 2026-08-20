@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { TeamBadge } from "@/components/sightline/team-badge"
+import { EventBackdrop } from "@/components/sightline/event-backdrop"
 import { ENV } from "@/lib/config/env"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { resolveRights } from "@/lib/data/resolve-rights"
@@ -30,6 +31,8 @@ interface Fixture {
   // Returned on the fixture itself, so crests cost no extra request.
   strHomeTeamBadge?: string | null
   strAwayTeamBadge?: string | null
+  /** Event still, used as a backdrop rather than a picture. */
+  artwork?: string | null
 }
 
 async function getFixtures(): Promise<Fixture[]> {
@@ -86,8 +89,9 @@ export async function LiveNow() {
               <Link
                 key={f.idEvent}
                 href={`/match/${f.idEvent}`}
-                className="flex items-center gap-4 border-b border-sl-hair px-4 py-3.5 transition-colors duration-[.16s] last:border-b-0 hover:bg-sl-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
+                className="relative flex items-center gap-4 overflow-hidden border-b border-sl-hair px-4 py-3.5 transition-colors duration-[.16s] last:border-b-0 hover:bg-sl-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
               >
+                <EventBackdrop src={f.artwork} />
                 <span className="w-[54px] shrink-0 font-mono text-[11px] tracking-[.06em] text-sl-amber">
                   {f.strTime ? (
                     <LocalTime value={`${f.strDate}T${f.strTime.split("+")[0]}Z`} />

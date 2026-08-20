@@ -483,6 +483,21 @@ export interface SportsDbTeam {
   strInstagram?: string
   strDescriptionEN?: string
   strCountry?: string
+  /*
+   * TheSportsDB dropped the `strTeam` prefix on the team lookup endpoint: it now returns
+   * `strBadge`, `strLogo` and `strFanart1`-`4`. The old names are kept because the *event*
+   * payload still uses `strHomeTeamBadge` / `strAwayTeamBadge`, so both generations are
+   * live at once depending on which endpoint the data came from.
+   *
+   * Reading only the old names is why every team logo on the site was an empty string.
+   */
+  strBadge?: string
+  strLogo?: string
+  strFanart1?: string
+  strFanart2?: string
+  strFanart3?: string
+  strFanart4?: string
+  strBanner?: string
   strTeamBadge?: string
   strTeamJersey?: string
   strTeamLogo?: string

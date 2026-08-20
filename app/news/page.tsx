@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
+import { RemoteThumb } from "@/components/sightline/remote-thumb"
 import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
 interface Article {
   article_id: string
   title: string
+  image_url?: string | null
   link: string
   description?: string
   pubDate?: string
@@ -85,6 +87,9 @@ async function NewsList() {
           <Row
             key={a.article_id}
             href={a.link}
+            // News is the one surface where the image is the story. Every article in a
+            // sample of five carried one, from five different publisher CDNs.
+            thumb={<RemoteThumb src={a.image_url} width={72} height={54} />}
             lead={a.pubDate ? formatDate(a.pubDate.replace(" ", "T") + "Z") : undefined}
             leadSub={a.source_name?.slice(0, 16)}
             title={a.title}

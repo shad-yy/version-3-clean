@@ -19,6 +19,10 @@ function mapEvent(e: any) {
         strDate: e.dateEvent || e.strDate || "",
         strLeague: e.strLeague,
         strLeagueBadge: e.strLeagueBadge ?? null,
+        // Event artwork, dropped here until now -- which is why the homepage rail had no
+        // backdrops while /events did. strThumb is the widest and most consistently
+        // populated of the three; poster and banner are the fallbacks.
+        artwork: e.strThumb ?? e.strPoster ?? e.strBanner ?? null,
         strStatus: e.strStatus || e.strResult || "Scheduled",
     }
 }

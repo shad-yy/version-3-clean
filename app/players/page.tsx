@@ -14,6 +14,7 @@ import {
   EmptyState,
   RowSkeleton,
 } from "@/components/sightline/page-shell"
+import { PersonThumb } from "@/components/sightline/person-thumb"
 
 /**
  * Players index, rebuilt in Sightline.
@@ -76,6 +77,7 @@ async function PlayerList({ search, team }: { search?: string; team?: string }) 
             key={p.id}
             href={`/players/${p.id}`}
             accent="sport"
+            thumb={<PersonThumb src={p.photo} name={p.name} size="md" />}
             /* UnifiedPlayer carries no squad number, so the lead column shows position
                -- the next most useful thing to sort a squad by in your head. Inventing a
                number would be exactly the kind of plausible filler rule 1 forbids. */
