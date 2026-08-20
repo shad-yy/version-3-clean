@@ -102,6 +102,62 @@ domain (all testing was localhost) · `full-audit.mjs` (Playwright browsers not 
 
 ## 3. Trouble Registry & Historical Error Logs
 
+### T-DEPS-01 — `ERR_PNPM_OUTDATED_LOCKFILE` on Vercel (2026-08-20)
+
+**Symptom.** Vercel: `Cannot install with "frozen-lockfile" because pnpm-lock.yaml is not
+up to date with package.json`.
+
+**Cause.** `package.json` declared **twelve dependencies as `"latest"`**. That is a moving
+target: the lockfile is stale the moment any of them publishes. Regenerating the lockfile
+"fixes" it for a day or two and it returns.
+
+**Permanent fix.** Every dependency carries a real version. **Never `"latest"`, never
+`"*"`.** Two of the twelve were security-relevant and must never float: `bcryptjs`
+(password hashing) and `jose` (JWT).
+
+**Diagnostic trap that cost time:** `pnpm install` on Windows opens an interactive prompt
+("modules directory will be removed — proceed?") and, when its answer is swallowed, exits
+**0 without doing the work**. That produced a confident, wrong "the lockfile is in sync".
+**Always run pnpm checks with `CI=true`**, which is what Vercel does:
+
+```bash
+CI=true pnpm install --frozen-lockfile
+```
+
+Also note `--frozen-lockfile --lockfile-only` together is contradictory and exits 1 even
+when everything is fine. Use `--frozen-lockfile` alone to reproduce Vercel.
+
+### T-DEPS-02 — `MODULE_NOT_FOUND` for a package that is in the lockfile
+
+**Symptom.** Build fails at "Collecting page data" with `Cannot find module 'undici'` /
+`Cannot find module 'geojson'`, even though the package appears in `pnpm-lock.yaml`.
+
+**Cause.** pnpm's strict `node_modules` layout does **not hoist transitive dependencies to
+the top level**. Anything the code imports directly — or that `next.config.mjs` lists in
+`config.externals`, since webpack then leaves it to be `require`d at runtime — must be a
+**declared** dependency. It works locally only while a previous flatter install lingers,
+and fails on the clean install Vercel performs.
+
+**Permanent fix.** If source imports it, or externals name it, declare it. `cheerio` was
+declared and worked; `undici` sat beside it in the same externals array undeclared and did
+not.
+
+### T-BUILD-03 — jsdom breaks the server build (recurrence)
+
+**Symptom.** `ENOENT ... .next/server/browser/default-stylesheet.css`, failing page data
+collection.
+
+**Cause.** `isomorphic-dompurify` depends on jsdom, whose CSS asset is not emitted into the
+server bundle.
+
+**Permanent fix.** Use `sanitize-html` — pure JS, no jsdom. **This had already been fixed
+once** in commit `0d4f306` and survived in `app/blog/[slug]/page.tsx`. When replacing a
+library for a build reason, grep the whole tree for the old import before calling it done.
+Keep the sanitiser: it guards a `dangerouslySetInnerHTML`. `sanitize-html`'s default
+allowlist drops headings, images and tables, so an article needs a widened list.
+
+
+
 ### ⚠️ Bug 1: "self is not defined" during `npm run build`
 *   **Symptoms**: Next.js server bundling fails at "Collecting page data" with `ReferenceError: self is not defined`.
 *   **Root Cause**: Certain code dependencies or Webpack runtime blocks query `self` while running in Node.
