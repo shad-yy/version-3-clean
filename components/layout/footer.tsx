@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Logo } from "@/components/sightline/logo"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { DATA_ATTRIBUTION } from "@/lib/api/tmdb"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
@@ -77,9 +78,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1280px] px-[18px] py-12 lg:px-20 lg:py-[46px]">
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
           <div className="col-span-2 lg:col-span-1">
-            <p className="mb-3 text-[17px] font-semibold tracking-[-0.022em] text-sl-text">
-              {SITE_NAME}
-            </p>
+            <Logo className="mb-3" />
             <p className="max-w-[280px] text-[13px] leading-[1.55] text-sl-mute">
               Where can I watch this, from where I am — for sport, film and television.
             </p>

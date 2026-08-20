@@ -100,6 +100,7 @@ export function Row({
   lead,
   leadSub,
   thumb,
+  backdrop,
   title,
   meta,
   right,
@@ -117,6 +118,11 @@ export function Row({
    * changes shape depending on whether a poster exists reads as broken.
    */
   thumb?: React.ReactNode
+  /**
+   * Full-bleed artwork behind the row. Sits under the content, never over it — the row
+   * has to stay readable whatever the image happens to be.
+   */
+  backdrop?: React.ReactNode
   title: string
   meta?: string
   right?: string
@@ -135,6 +141,7 @@ export function Row({
 
   const inner = (
     <>
+      {backdrop}
       {thumb}
       {(lead || leadSub) && (
         <div className="w-[76px] shrink-0 sm:w-[104px]">
@@ -175,7 +182,7 @@ export function Row({
   )
 
   const classes = cn(
-    "group flex items-center gap-4 border-b border-sl-hair px-4 py-4 last:border-b-0",
+    "group relative overflow-hidden flex items-center gap-4 border-b border-sl-hair px-4 py-4 last:border-b-0",
     "transition-colors duration-[.16s]",
     href && "hover:bg-sl-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60",
   )

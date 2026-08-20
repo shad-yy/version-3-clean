@@ -19,6 +19,16 @@ export function getCurrentSeason(year?: number, now: Date = new Date()): string 
 }
 
 // Safely append /tiny to a TheSportsDB image URL without double-appending
+/**
+ * Append TheSportsDB's size suffix to a **badge or crest** URL.
+ *
+ * The API serves `/tiny`, `/small`, `/medium`, `/large` and `/preview` variants of badge
+ * artwork. `/tiny` is right for the 18-32px crests this app renders in lists.
+ *
+ * **Do not use this for event artwork.** `strThumb`, `strPoster` and `strBanner` are
+ * full-size promotional images used as backdrops; asking for a tiny variant of one gives a
+ * blurred backdrop at best.
+ */
 function safeBadgeUrl(url: string | undefined | null): string | undefined {
   if (!url) return undefined
   if (/\/(tiny|small|medium|large|preview)$/.test(url)) return url
@@ -82,6 +92,13 @@ export interface UnifiedFixture {
   league: string
   homeLogo?: string | null
   awayLogo?: string | null
+  /**
+   * Event artwork, used as a backdrop rather than a picture.
+   *
+   * Returned on the fixture itself, so it costs nothing extra. Frequently absent outside
+   * the major competitions, which is why every consumer treats it as optional.
+   */
+  artwork?: string | null
   isLive: boolean
 }
 
@@ -202,6 +219,10 @@ class UnifiedSportsAPI {
       time: eventTime,
       venue: event.strVenue,
       league: event.strLeague,
+      // NOT safeBadgeUrl: that appends TheSportsDB's "/tiny" size suffix, which is right
+      // for a 24px crest and wrong for a full-bleed backdrop. Event artwork is used at its
+      // published size.
+      artwork: event.strThumb || event.strPoster || null,
       homeLogo,
       awayLogo,
       isLive: status === "Live" || status === "HT" || status === "1H" || status === "2H",
@@ -228,6 +249,10 @@ class UnifiedSportsAPI {
       time: eventTime,
       venue: event.strVenue,
       league: event.strLeague,
+      // Same artwork the async mapper carries. This is the path /events actually uses --
+      // the two mappers had drifted, so the field existed on the type and was populated on
+      // only one of them.
+      artwork: event.strThumb || event.strPoster || null,
       homeLogo: safeBadgeUrl(event.strHomeTeamBadge),
       awayLogo: safeBadgeUrl(event.strAwayTeamBadge),
       isLive: status === "Live" || status === "HT" || status === "1H" || status === "2H",

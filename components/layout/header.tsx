@@ -2,6 +2,7 @@ import Link from "next/link"
 import { getViewerCountry } from "@/lib/geo/country"
 import { getSelectableCountries } from "@/lib/geo/countries"
 import { SITE_NAME } from "@/lib/config/site-url"
+import { Logo } from "@/components/sightline/logo"
 import { HeaderNav } from "@/components/layout/header-nav"
 
 /**
@@ -26,11 +27,17 @@ export async function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-[62px] border-b border-sl-line bg-[rgba(11,13,17,.94)] backdrop-blur-[9px]">
       <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-[18px] lg:px-10">
+        {/*
+          The mark from the design file, not a text wordmark. The header had been setting
+          SITE_NAME in uppercase, which is neither the lockup nor the casing the design
+          draws -- §1d sets "Sightline" in sentence case beside the aperture mark.
+        */}
         <Link
           href="/"
-          className="shrink-0 text-[15px] font-semibold uppercase tracking-[.08em] text-sl-text transition-colors duration-[.16s] hover:text-sl-amber-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60 rounded-[5px]"
+          aria-label={`${SITE_NAME} — home`}
+          className="shrink-0 rounded-[5px] transition-colors duration-[.16s] hover:text-sl-amber-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
         >
-          {SITE_NAME}
+          <Logo />
         </Link>
 
         <HeaderNav countries={countries} country={country} />

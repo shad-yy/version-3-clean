@@ -6,6 +6,7 @@ import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { TeamBadge } from "@/components/sightline/team-badge"
+import { EventBackdrop } from "@/components/sightline/event-backdrop"
 import { resolveRights } from "@/lib/data/resolve-rights"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { LocalTime } from "@/components/ui/local-time"
@@ -110,6 +111,9 @@ async function FixtureList() {
                   key={f.id}
                   href={`/match/${f.id}`}
                   accent="sport"
+                  // Event artwork, held far back. Present on major fixtures, absent on
+                  // most others -- the row must look deliberate either way.
+                  backdrop={<EventBackdrop src={f.artwork} />}
                   // Both crests, overlapped slightly so the pair reads as one fixture
                   // rather than two unrelated marks.
                   thumb={

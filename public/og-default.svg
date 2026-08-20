@@ -1,5 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0a0a0f"/>
-  <text x="600" y="300" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="96" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Smart Live TV</text>
-  <text x="600" y="420" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="600" fill="#00e676" text-anchor="middle" dominant-baseline="middle">Where to watch, wherever you are</text>
+  <rect width="1200" height="630" fill="#0b0d11"/>
+
+  <!-- The aperture mark, design/sightline/Sightline.dc.html 1d option ii. Two brackets
+       and a point. No play triangle and no television: the design rejects both. -->
+  <g transform="translate(600 232) scale(4.6) translate(-12 -12)"
+     fill="none" stroke="#e8e5de" stroke-width="2.2"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4 3 12l5 8"/>
+    <path d="m16 4 5 8-5 8"/>
+    <circle cx="12" cy="12" r="2.4" fill="#f0a63c" stroke="none"/>
+  </g>
+
+  <text x="600" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="82" font-weight="600" letter-spacing="-1.6" fill="#e8e5de" text-anchor="middle" dominant-baseline="middle">Sightline</text>
+  <text x="600" y="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="34" font-weight="400" fill="#8c92a0" text-anchor="middle" dominant-baseline="middle">Where to watch, wherever you are</text>
+  <rect x="546" y="516" width="108" height="3" rx="1.5" fill="#f0a63c"/>
 </svg>

@@ -905,11 +905,33 @@ a {
  * `.image-loading` rule sweeps gray-800/700, which belongs to no palette this site has.
  */
 .sl-shimmer {
+  /*
+   * The highlight is a translucent white wash, not a jump between two surface tokens.
+   *
+   * The first version swept --sl-surface (#14171d) to --sl-raise (#1b1f27): about seven
+   * points of lightness on a dark ground, which is invisible in practice. A skeleton
+   * nobody can see is the same as no skeleton, and worse than none, because it reads as a
+   * frozen empty box.
+   *
+   * The wash sits on top of the surface fill instead, so the peak is genuinely lighter
+   * while every colour underneath stays on-palette.
+   */
+  position: relative;
+  background-color: var(--sl-surface);
+  overflow: hidden;
+}
+
+.sl-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: linear-gradient(
     90deg,
-    var(--sl-surface) 0%,
-    var(--sl-raise) 50%,
-    var(--sl-surface) 100%
+    transparent 0%,
+    rgba(232, 229, 222, 0.07) 45%,
+    rgba(232, 229, 222, 0.11) 50%,
+    rgba(232, 229, 222, 0.07) 55%,
+    transparent 100%
   );
   background-size: 680px 100%;
   background-repeat: no-repeat;
@@ -995,10 +1017,9 @@ html[data-navigating] body {
 
   /* A looping sweep is exactly what reduced-motion is asking us not to do. The element
      keeps a flat surface fill so the placeholder is still visible. */
-  .sl-shimmer {
+  .sl-shimmer::after {
     animation: none;
     background-image: none;
-    background-color: var(--sl-surface);
   }
 
   [style*="sheetUp"] {

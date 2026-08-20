@@ -21,7 +21,10 @@ import { writeFileSync, readFileSync } from 'fs'
  * Regenerate with: node scripts/generate-og.mjs
  */
 
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Smart Live TV'
+// Defaulted to 'Smart Live TV' until 2026-08-20, which is why the shipped PNG carried the
+// previous project's name on every social and search preview on the domain. The brand is
+// the default now; the env var only overrides it.
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'Sightline'
 const TAGLINE = process.env.NEXT_PUBLIC_OG_TAGLINE || 'Where to watch, wherever you are'
 
 const FONT_STACK =
@@ -37,9 +40,21 @@ function escapeXml(value) {
 }
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#0a0a0f"/>
-  <text x="600" y="300" font-family="${FONT_STACK}" font-size="96" font-weight="bold" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">${escapeXml(SITE_NAME)}</text>
-  <text x="600" y="420" font-family="${FONT_STACK}" font-size="44" font-weight="600" fill="#00e676" text-anchor="middle" dominant-baseline="middle">${escapeXml(TAGLINE)}</text>
+  <rect width="1200" height="630" fill="#0b0d11"/>
+
+  <!-- The aperture mark, design/sightline/Sightline.dc.html 1d option ii. Two brackets
+       and a point. No play triangle and no television: the design rejects both. -->
+  <g transform="translate(600 232) scale(4.6) translate(-12 -12)"
+     fill="none" stroke="#e8e5de" stroke-width="2.2"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 4 3 12l5 8"/>
+    <path d="m16 4 5 8-5 8"/>
+    <circle cx="12" cy="12" r="2.4" fill="#f0a63c" stroke="none"/>
+  </g>
+
+  <text x="600" y="392" font-family="${FONT_STACK}" font-size="82" font-weight="600" letter-spacing="-1.6" fill="#e8e5de" text-anchor="middle" dominant-baseline="middle">${escapeXml(SITE_NAME)}</text>
+  <text x="600" y="470" font-family="${FONT_STACK}" font-size="34" font-weight="400" fill="#8c92a0" text-anchor="middle" dominant-baseline="middle">${escapeXml(TAGLINE)}</text>
+  <rect x="546" y="516" width="108" height="3" rx="1.5" fill="#f0a63c"/>
 </svg>
 `
 

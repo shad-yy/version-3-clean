@@ -11,6 +11,7 @@ import { theSportsDB } from '@/lib/api/the-sports-db'
 import { MatchTabs } from '@/components/match/match-tabs'
 import { Calendar, Clock, MapPin } from "lucide-react"
 import { LocalTime } from "@/components/ui/local-time"
+import { EventBackdrop } from "@/components/sightline/event-backdrop"
 
 async function getMatchData(id: string) {
   try {
@@ -184,17 +185,13 @@ export default async function MatchPage(
       <section 
         className="relative pt-32 pb-20 px-4 text-center border-b border-[var(--sl-raise)] overflow-hidden bg-[var(--sl-ground)]"
       >
-        {/* Background Event Image Overlay */}
-        {match.strThumb && (
-          <>
-            <img 
-              src={match.strThumb} 
-              alt="" 
-              className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none" loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--sl-ground)]/80 via-[var(--sl-ground)]/95 to-[var(--sl-ground)]" />
-          </>
-        )}
+        {/*
+          Was a raw <img> plus a hand-rolled gradient, which skipped the image pipeline
+          entirely — no webp/avif, no srcset, and a full-bleed hero is the most expensive
+          image on the page to get wrong. Same treatment, optimised, and shared with the
+          fixture rows so the two cannot drift apart.
+        */}
+        <EventBackdrop src={match.strThumb ?? match.strPoster} intensity="hero" priority />
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
           <p className="text-xs font-bold text-[var(--sl-amber)] uppercase tracking-[0.2em] mb-4 bg-sl-amber/10 border border-sl-amber/20 px-3 py-1 rounded-full">

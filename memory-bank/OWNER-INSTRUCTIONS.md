@@ -323,6 +323,44 @@ Optimisation is part of the task, not a follow-up ticket. A task reported comple
 
 ---
 
+## 5i. Every image an API returns must be used somewhere.
+
+**If a response carries artwork and the page renders none, that is lost data.** The site is
+a reference product, and a wall of text is the fastest way to lose a reader who came to
+find one fact. Text serves models and standards; imagery is what keeps a person on the
+page. Both are required, and neither is decoration.
+
+The artwork is already paid for — it arrives inside responses the app fetches anyway, so
+rendering it costs one more optimised request, not one more API call.
+
+**What the providers actually return** (audited 2026-08-20):
+
+| Entity | Fields |
+|---|---|
+| Event | `strThumb`, `strPoster`, `strBanner`, `strHomeTeamBadge`, `strAwayTeamBadge`, `strLeagueBadge` |
+| Team | `strBadge`, `strLogo`, `strBanner`, `strFanart1`–`strFanart4` |
+| League | `strBadge`, `strLogo`, `strPoster`, `strBanner`, `strTrophy`, `strFanart1`–`4` |
+| Player | `strThumb`, `strCutout` |
+| TMDB | `poster_path`, `backdrop_path`, provider logos |
+| ESPN | league logo, fighter country flags |
+
+**Rules:**
+
+*   **Declare the field before blaming the API.** Several of these rendered nothing purely
+    because the TypeScript interface never listed them — the data was in the response the
+    whole time.
+*   **Everything goes through `next/image`.** A raw `<img>` skips webp/avif, srcset and the
+    30-day optimised cache. Three separate places were doing this.
+*   **Know which URL variant you want.** TheSportsDB serves `/tiny`, `/small`, `/medium`,
+    `/large` suffixes on *badges*. Never apply them to event artwork.
+*   **Artwork is a backdrop, not a picture**, unless the design says otherwise. Broadcast
+    stills are busy and high-contrast; behind text they need low opacity *and* a scrim
+    across the whole element, not a one-sided fade.
+*   **Always design the absent case.** Provider coverage is uneven — a lettermark or a
+    designed blank, never a gap or a broken image, or the list reads as a failed load.
+
+---
+
 ## 6. Suggest improvements — with evidence.
 
 The owner wants proactive proposals, not silent execution.
