@@ -6,8 +6,8 @@ import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
+import { PosterThumb } from "@/components/sightline/poster-thumb"
 import {
-  JUSTWATCH_ATTRIBUTION,
   buildTitleSlug,
   getAvailableRegions,
   getTrendingTitles,
@@ -46,16 +46,19 @@ function TitleCard({ title }: { title: TitleDetails }) {
   return (
     <Link
       href={`/watch/title/${buildTitleSlug(title.mediaType, title.tmdbId, title.name)}`}
-      className="group flex flex-col rounded-[7px] border border-sl-line bg-sl-surface p-4 transition-colors duration-[.16s] hover:border-sl-outline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
+      className="group flex gap-3.5 rounded-[7px] border border-sl-line bg-sl-surface p-4 transition-colors duration-[.16s] hover:border-sl-outline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
     >
-      {/* Blue is the film/TV accent. Amber would be wrong here -- it means live sport. */}
-      <p className="mb-1.5 font-mono text-[10.5px] uppercase tracking-[.14em] text-sl-blue">
-        {title.mediaType === "movie" ? "Film" : "Series"}
-        {title.year ? ` · ${title.year}` : ""}
-      </p>
-      <h3 className="text-[15px] font-medium leading-tight text-sl-text transition-colors duration-[.16s] group-hover:text-sl-blue">
-        {title.name}
-      </h3>
+      <PosterThumb path={title.posterPath} size="md" />
+      <div className="flex min-w-0 flex-col">
+        {/* Blue is the film/TV accent. Amber would be wrong here -- it means live sport. */}
+        <p className="mb-1.5 font-mono text-[10.5px] uppercase tracking-[.14em] text-sl-blue">
+          {title.mediaType === "movie" ? "Film" : "Series"}
+          {title.year ? ` · ${title.year}` : ""}
+        </p>
+        <h3 className="text-[15px] font-medium leading-tight text-sl-text transition-colors duration-[.16s] group-hover:text-sl-blue">
+          {title.name}
+        </h3>
+      </div>
     </Link>
   )
 }
@@ -160,10 +163,6 @@ export default function FilmAndTvIndexPage() {
             </p>
           </div>
         )}
-
-        <p className="mt-10 font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mute">
-          {JUSTWATCH_ATTRIBUTION}
-        </p>
       </div>
     </main>
   )

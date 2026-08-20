@@ -79,6 +79,7 @@ const FALLBACK_ARTICLES: NewsArticle[] = [
   },
 ]
 
+import { swrGet } from "@/lib/cache"
 import { ENV } from "@/lib/config/env"
 
 export async function getLatestSportsNews(
@@ -94,21 +95,38 @@ export async function getLatestSportsNews(
 
   // Free plan: size must be 1-10
   const safeSize = Math.min(Math.max(1, size), 10)
-  const cacheKey = `news:sports:v5:${safeSize}`
+  const cacheKey = `news:sports:v6:${safeSize}:${query}`
 
-  // Check module-level cache first (6 hour TTL)
-  const cached = newsCache.get(cacheKey)
-  if (cached && Date.now() < cached.expires) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[NewsAPI] Cache hit — returning cached articles')
-    }
-    return cached.data
-  }
+  /*
+   * Shared cache, not the module-level Map this used to rely on.
+   *
+   * The old path combined `cache: 'no-store'` with a one-hour in-process Map. In-process
+   * means per-serverless-instance: the first visitor to reach a cold instance paid the
+   * full upstream round trip, and so did the first visitor to reach the *next* instance,
+   * and the next. The cache existed but almost nobody hit it.
+   *
+   * `swrGet` is Redis-backed, so one visitor's slow request warms it for everyone, and it
+   * serves stale content while revalidating in the background — meaning a reader never
+   * waits on the upstream again once anything has been cached, even after the TTL passes.
+   *
+   * The fetcher throws on any non-success so a failure is never written to the cache.
+   * Caching a fallback would pin the placeholder articles in Redis for the full TTL, which
+   * is far worse than a slow retry.
+   */
+  return swrGet<NewsArticle[]>(cacheKey, () => fetchNewsUpstream(query, safeSize), NEWS_TTL)
+    .catch(() => FALLBACK_ARTICLES)
+}
+
+/** Time news stays fresh before a background refresh. Headlines are not breaking data. */
+const NEWS_TTL = 6 * 60 * 60 // 6 hours
+
+async function fetchNewsUpstream(query: string, safeSize: number): Promise<NewsArticle[]> {
+  const apiKey = ENV.NEWS_API_KEY
 
   const params = new URLSearchParams({
-    apikey: ENV.NEWS_API_KEY || '',
+    apikey: apiKey || '',
     language: 'en',
-    size: '10',
+    size: String(safeSize),
     q: query,
   })
 
@@ -139,41 +157,36 @@ export async function getLatestSportsNews(
 
     if (response.status === 401 || response.status === 403) {
       console.error('[NewsAPI] Unauthorized — check NEWS_API_KEY in .env.local')
-      return FALLBACK_ARTICLES
+      throw new Error('news: unauthorised')
     }
 
     if (response.status === 429) {
       console.error('[NewsAPI] Rate limit hit — using mock data')
-      return FALLBACK_ARTICLES
+      throw new Error('news: rate limited')
     }
 
     if (!response.ok) {
       console.error(`[NewsAPI] Request failed with status ${response.status} — using mock data`)
-      return FALLBACK_ARTICLES
+      throw new Error(`news: HTTP ${response.status}`)
     }
 
     const data = await response.json()
 
     if (data.status !== 'success' || !Array.isArray(data.results) || data.results.length === 0) {
       console.warn('[NewsAPI] Empty or error response — using mock data')
-      return FALLBACK_ARTICLES
+      throw new Error('news: empty response')
     }
 
     if (process.env.NODE_ENV !== 'production') {
       console.log(`[NewsAPI] Success — got ${data.results.length} articles`)
     }
 
-    // Store in module-level cache for 6 hours
-    newsCache.set(cacheKey, {
-      data: data.results as NewsArticle[],
-      expires: Date.now() + 3600 * 1000, // 1 hour in-process cache (no-store bypasses Vercel cache)
-    })
-
     return data.results as NewsArticle[]
 
   } catch (error) {
     console.error('[NewsAPI] Network error:', error)
-    return FALLBACK_ARTICLES
+    // Rethrown so swrGet does not persist a failure. The caller substitutes fallbacks.
+    throw error
   }
 }
 

@@ -2,6 +2,16 @@ import { NextResponse } from "next/server"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { withCache } from "@/lib/cache/redis"
 
+/*
+ * Next 14 statically caches a GET route handler that reads neither `request` nor any
+ * dynamic function -- it is rendered once at build and served unchanged forever. This
+ * route returns live data, so without an explicit revalidate it would freeze at whatever
+ * the upstream happened to return during the build.
+ *
+ * A table changes only when a match finishes.
+ */
+export const revalidate = 3600
+
 const VALID_LEAGUE_IDS = ["4328", "4335", "4331", "4332", "4334"]
 
 // Cache standings for 30 minutes — results don't change that often

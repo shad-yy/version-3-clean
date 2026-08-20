@@ -211,6 +211,21 @@ const nextConfig = {
         destination: '/watch/premier-league',
         permanent: true,
       },
+      // Two blog posts were removed on 2026-08-20 for running the old reseller
+      // funnel -- price pain, then a cheaper route out. Both were nominally about
+      // watching the Premier League, and that question still has a live answer, so
+      // they point at the rewritten guide rather than dead-ending. The destination
+      // answers the reader's actual question without the sales argument.
+      {
+        source: '/blog/sky-sports-price-increase-2026-alternatives',
+        destination: '/blog/watch-premier-league-2026-27-live-channels-streaming',
+        permanent: true,
+      },
+      {
+        source: '/blog/sky-sports-tnt-prime-cost-premier-league-2026-27',
+        destination: '/blog/watch-premier-league-2026-27-live-channels-streaming',
+        permanent: true,
+      },
       // NOTE: /buy, /pricing and /free-trial previously 301'd to
       // smartlivetv-store.com. That domain is not part of the plan any more —
       // the commercial store lives on smartlivetv.co.uk in a separate repo — and

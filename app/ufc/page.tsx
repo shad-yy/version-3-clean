@@ -133,7 +133,7 @@ async function UFCContent() {
             <Link href="#upcoming-events"
               className="bg-[var(--sl-amber)] text-black font-extrabold
                 px-8 py-4 rounded-xl text-base hover:bg-[var(--sl-amber-hover)]
-                transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)]">
+                transition-all">
               View Upcoming Events ↓
             </Link>
             <Link href="/scores"

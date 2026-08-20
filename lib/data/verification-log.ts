@@ -167,3 +167,67 @@ export function recentEntries(days: number): VerificationEntry[] {
 export function checkedCountries(): string[] {
   return [...new Set(VERIFICATION_LOG.map((e) => e.country))].sort()
 }
+
+/* --------------------------------------------------------- discovery dock feed */
+
+/**
+ * What the "just checked" dock shows.
+ *
+ * Two filters, both from the design and both load-bearing (design opinion 6):
+ *
+ *  1. **Re-verified within the window** — freshness of verification, never popularity
+ *     and never payment. This is the only ordering the dock is allowed to use.
+ *  2. **Only where we hold an offer in the viewer's country** — telling someone we
+ *     re-checked Australia is not useful to a reader in France.
+ *
+ * Returns an empty array when nothing qualifies, which is the common case at a low
+ * verification cadence. The dock must render nothing at all in that case rather than
+ * announce "0 things verified", which would be worse than absent.
+ */
+export interface DockItem {
+  /** Stable key. */
+  id: string
+  /** Competition or title name. */
+  title: string
+  /** Mono lead — a kick-off time or a year. */
+  lead: string
+  /** Uppercase mono sub-label. */
+  sub: string
+  /** Where it is shown. */
+  where: string
+  /** ISO date-time of the check. */
+  checkedAt: string
+  kind: "sport" | "film-tv"
+  /** Where a click goes. */
+  href: string
+}
+
+export function dockItemsFor(
+  country: string | null,
+  competitions: { id: string; name: string; href: string }[],
+  withinDays = 1,
+): DockItem[] {
+  if (!country) return []
+
+  return recentEntries(withinDays)
+    .filter((e) => e.country === country.toUpperCase())
+    // A withdrawal is a real event but not something to promote as "just checked" —
+    // the dock exists to surface things a reader can now go and watch.
+    .filter((e) => e.action !== "removed")
+    .map((e) => {
+      const competition = competitions.find((c) => c.id === e.competition)
+      return {
+        id: `${e.competition}-${e.country}-${e.at}`,
+        title: competition?.name ?? e.competition,
+        // The footer already carries the date. Repeating it as the lead put the same
+        // string on the card twice, so the lead states what happened instead -- which is
+        // the more useful half of the entry and is still nothing but recorded fact.
+        lead: e.action === "added" ? "Newly added" : "Re-checked",
+        sub: "Sport",
+        where: e.broadcaster,
+        checkedAt: e.at,
+        kind: "sport" as const,
+        href: competition?.href ?? "/watch",
+      }
+    })
+}

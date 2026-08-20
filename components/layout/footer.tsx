@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { SITE_NAME } from "@/lib/config/site-url"
-import { JUSTWATCH_ATTRIBUTION } from "@/lib/api/tmdb"
+import { DATA_ATTRIBUTION } from "@/lib/api/tmdb"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
 import { countryName } from "@/lib/geo/country"
 
@@ -118,7 +118,7 @@ export function Footer() {
               &copy; {year} {SITE_NAME}
             </p>
             <p className="font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-dim">
-              {JUSTWATCH_ATTRIBUTION}
+              {DATA_ATTRIBUTION}
             </p>
           </div>
         </div>

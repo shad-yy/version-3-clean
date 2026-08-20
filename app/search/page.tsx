@@ -77,6 +77,7 @@ async function filmRows(query: string): Promise<ResultRowData[]> {
     leadSub: t.mediaType === "movie" ? "Film" : "Series",
     title: t.name,
     meta: t.genres.slice(0, 3).join(" · "),
+    posterPath: t.posterPath,
   }))
 }
 

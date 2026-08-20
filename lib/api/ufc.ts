@@ -1,4 +1,5 @@
 import type { UFCEvent, UFCFighter } from "@/lib/types"
+import { getUFCCalendar, getUFCEvents } from "@/lib/api/espn"
 
 // Current realistic UFC data (updated as of 2024)
 const mockUpcomingEvents: UFCEvent[] = []
@@ -254,16 +255,72 @@ function setCachedData<T>(key: string, data: T): void {
   cache.set(key, { data, timestamp: Date.now() })
 }
 
-export async function getUpcomingEvents(): Promise<UFCEvent[]> {
-
-  // 3. Final fallback: mock data
-  return mockUpcomingEvents
+/** The "<Fighter> vs. <Fighter>" half of a UFC card title, when the title has one. */
+function mainEventFromName(name: string): string | undefined {
+  const colon = name.indexOf(":")
+  if (colon === -1) return undefined
+  const tail = name.slice(colon + 1).trim()
+  return /vs\.?/i.test(tail) ? tail : undefined
 }
 
-export async function getPastEvents(): Promise<UFCEvent[]> {
+/**
+ * Scheduled UFC events, soonest first.
+ *
+ * Returned an empty array for some time: the RapidAPI client that used to fill it was
+ * removed as dead code, and the ESPN scoreboard beside it only ever carries the current
+ * day. The upcoming schedule was in the same response the whole time, under
+ * `leagues[0].calendar` -- 18 events on the day this was fixed -- so no new credential or
+ * provider was needed to restore it.
+ *
+ * `location` and `fights` stay empty. ESPN does not publish a venue or a card for an
+ * event until it is close, and a plausible guess at either is worse than a blank field on
+ * a site whose premise is that its listings are checked.
+ */
+export async function getUpcomingEvents(): Promise<UFCEvent[]> {
+  try {
+    const calendar = await getUFCCalendar(8)
+    return calendar.map((event) => ({
+      id: event.id,
+      name: event.name,
+      date: event.startDate,
+      location: "",
+      status: "Upcoming" as const,
+      // UFC names its cards "<Event>: <Fighter> vs. <Fighter>", so the main event is read
+      // from the title rather than sourced separately.
+      //
+      // Requiring "vs" matters: Contender Series cards are named
+      // "...: Season 10, Week 3", and a looser split labelled "Season 10, Week 3" as the
+      // main event. Absent is correct there -- ESPN does not publish those bouts in
+      // advance, and a week number dressed up as a fight is a small lie.
+      mainEvent: mainEventFromName(event.name),
+    }))
+  } catch {
+    // An empty schedule renders as "nothing we can confirm", which is accurate when the
+    // upstream is unreachable. Never a placeholder card.
+    return []
+  }
+}
 
-  // 3. Final fallback: mock data
-  return mockPastEvents
+/**
+ * Recently completed events.
+ *
+ * Sourced from the scoreboard's own `events` array via `getUFCEvents()`, which is the only
+ * place completed cards appear. Shares the cached upstream response with the function
+ * above.
+ */
+export async function getPastEvents(): Promise<UFCEvent[]> {
+  try {
+    const { recent } = await getUFCEvents()
+    return recent.map((event) => ({
+      id: String(event.id),
+      name: event.name ?? "",
+      date: event.date ?? "",
+      location: event.competitions?.[0]?.venue?.fullName ?? "",
+      status: "Past" as const,
+    }))
+  } catch {
+    return []
+  }
 }
 
 export async function getRankings(): Promise<UFCFighter[]> {
@@ -354,7 +411,33 @@ export async function getEvent(id: string): Promise<UFCEvent> {
       console.warn(`[UFC API] Scraper failed for event ${id}, trying fallback`)
     }
 
-    // Fallback to mock data
+    /*
+     * Fall back to the scheduled calendar.
+     *
+     * Without this, every upcoming event 404s. The scraper only covers what it can reach,
+     * ESPN's `summary` endpoint returns 404 for an event that has not happened yet, and
+     * the mock arrays beneath are empty -- so the homepage rail linked eight real events
+     * to eight dead pages.
+     *
+     * The calendar knows the name and the date, which is enough for a page that answers
+     * "when is it". The card is absent because the upstream does not publish one in
+     * advance, not because we failed to fetch it.
+     */
+    const scheduled = await getUFCCalendar(64)
+    const fromCalendar = scheduled.find((e) => e.id === id)
+    if (fromCalendar) {
+      const event: UFCEvent = {
+        id: fromCalendar.id,
+        name: fromCalendar.name,
+        date: fromCalendar.startDate,
+        location: "",
+        status: "Upcoming",
+        mainEvent: mainEventFromName(fromCalendar.name),
+      }
+      setCachedData(cacheKey, event)
+      return event
+    }
+
     const allEvents = [...mockUpcomingEvents, ...mockPastEvents]
     const event = allEvents.find((event) => event.id === id)
 

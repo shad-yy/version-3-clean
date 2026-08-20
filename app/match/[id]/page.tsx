@@ -197,7 +197,7 @@ export default async function MatchPage(
         )}
 
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-          <p className="text-xs font-bold text-[var(--sl-amber)] uppercase tracking-[0.2em] mb-4 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+          <p className="text-xs font-bold text-[var(--sl-amber)] uppercase tracking-[0.2em] mb-4 bg-sl-amber/10 border border-sl-amber/20 px-3 py-1 rounded-full">
             {league}
           </p>
 
@@ -279,7 +279,7 @@ export default async function MatchPage(
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
                 href={watchHref}
-                className="bg-[var(--sl-amber)] text-black font-extrabold px-8 py-4 rounded-xl text-base hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)]"
+                className="bg-[var(--sl-amber)] text-black font-extrabold px-8 py-4 rounded-xl text-base hover:bg-[var(--sl-amber-hover)] transition-all"
               >
                 Where to Watch →
               </Link>
@@ -317,22 +317,30 @@ export default async function MatchPage(
           How to Watch {homeTeam} vs {awayTeam} Live
         </h2>
         <div className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-6 mb-6">
+          {/*
+            This paragraph used to assert that the fixture was "covered by the official UK
+            rights holders", on every match page, whatever the competition and wherever
+            the reader was. It contradicted the rights panel directly above it, which has
+            resolved the viewer's own country all along.
+          */}
           <p className="text-sl-mid leading-relaxed">
-            <strong className="text-sl-text">{homeTeam} vs {awayTeam}</strong>
-            {' '}is covered by the official UK rights holders for the{' '}
+            Broadcast rights for the{' '}
             <Link href={watchHref} className="text-[var(--sl-amber)] hover:underline font-semibold">
               {league}
             </Link>
-            . Our broadcast guide lists which channel is showing this fixture,
-            the confirmed kick-off time, and where highlights are available
-            afterwards.
+            {' '}are sold separately in each country, so the channel showing{' '}
+            <strong className="text-sl-text">{homeTeam} vs {awayTeam}</strong> depends on
+            where you are watching it. The panel above lists every country we have
+            verified for this competition
+            {rights.verifiedDate ? ', each with the date a person last confirmed it' : ''}
+            . Where a country is missing, we have not checked it rather than guessed.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { n: '1', t: 'Check the Kick-Off Time', d: 'Confirm the local start time and competition round shown above.' },
-            { n: '2', t: 'Find the Official Broadcaster', d: 'See which UK rights holder is showing this fixture live.' },
+            { n: '2', t: 'Find the Broadcaster', d: 'Pick your country in the rights panel to see who holds the rights where you are.' },
             { n: '3', t: 'Follow Live', d: `Track ${homeTeam} vs ${awayTeam} scores, lineups and stats here.` },
           ].map(s => (
             <div key={s.n} className="bg-[var(--sl-surface)] border border-[var(--sl-line)] rounded-2xl p-5">
@@ -364,7 +372,7 @@ export default async function MatchPage(
       </section>
 
       {/* Bottom CTA */}
-      <section className="py-20 px-4 text-center border-t border-[var(--sl-amber)]/10" style={{ background: 'linear-gradient(to bottom, var(--sl-ground), rgba(0,230,118,0.03))' }}>
+      <section className="py-20 px-4 text-center border-t border-[var(--sl-amber)]/10" style={{ background: 'linear-gradient(to bottom, var(--sl-ground), rgba(240, 166, 60, 0.03))' }}>
         <h2 className="text-3xl font-extrabold text-sl-text mb-3">
           Follow Every {league} Match
         </h2>

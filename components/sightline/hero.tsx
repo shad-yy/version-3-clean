@@ -49,7 +49,9 @@ export async function Hero() {
             variant="inline"
             className="inline-block align-baseline"
           />
-          <span> ?</span>
+          {/* No leading space: the question mark closes the sentence tight against the
+              country name, or the headline reads "United Kingdom ?". */}
+          <span>?</span>
         </h1>
 
         <p className="mb-8 max-w-[620px] text-[15px] leading-[1.55] text-sl-mid lg:text-[17px]">

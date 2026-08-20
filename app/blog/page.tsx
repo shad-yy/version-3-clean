@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 }
 
 const categoryClasses: Record<string, string> = {
-  "how-to": "bg-green-500/20 text-green-300 border border-green-500/30",
-  guides: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
-  news: "bg-orange-500/20 text-orange-300 border border-orange-500/30",
-  comparison: "bg-purple-500/20 text-purple-300 border border-purple-500/30",
+  "how-to": "bg-sl-surface text-sl-mid border border-sl-line",
+  guides: "bg-sl-surface text-sl-mid border border-sl-line",
+  news: "bg-sl-surface text-sl-mid border border-sl-line",
+  comparison: "bg-sl-surface text-sl-mid border border-sl-line",
 }
 
 export default function BlogIndexPage() {
@@ -71,7 +71,7 @@ export default function BlogIndexPage() {
                   <p className="text-sm text-sl-mute">
                     {post.readTime} min read • {new Date(post.publishedAt).toLocaleDateString()}
                   </p>
-                  <Link href={`/blog/${post.slug}`} className="text-green-400 hover:text-green-300 font-semibold">
+                  <Link href={`/blog/${post.slug}`} className="text-sl-amber hover:text-sl-amber-hover font-semibold">
                     Read Article →
                   </Link>
                 </div>
@@ -99,7 +99,7 @@ export default function BlogIndexPage() {
                   <p className="text-sm text-sl-mute">
                     {post.readTime} min read • {new Date(post.publishedAt).toLocaleDateString()}
                   </p>
-                  <Link href={`/blog/${post.slug}`} className="text-green-400 hover:text-green-300 font-semibold">
+                  <Link href={`/blog/${post.slug}`} className="text-sl-amber hover:text-sl-amber-hover font-semibold">
                     Read Article →
                   </Link>
                 </div>

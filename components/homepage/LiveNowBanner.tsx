@@ -157,7 +157,7 @@ export function LiveNowBanner() {
             className="hidden sm:flex flex-shrink-0 items-center 
               gap-1.5 bg-[var(--sl-amber)] text-black font-bold text-xs 
               px-5 py-2 rounded-lg hover:bg-[var(--sl-amber-hover)] 
-              transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,230,118,0.3)] touch-manipulation">
+              transition-all duration-300 touch-manipulation">
             TV Guide
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>

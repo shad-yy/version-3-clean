@@ -184,3 +184,128 @@ absent. Every URL currently emitted resolves.
 
 Once the film/TV vertical is public, decide whether trending title pages belong in the
 sitemap — they change weekly, so a churning sitemap is a real cost against little gain.
+
+---
+
+## 2026-08-20 — Correction: the token migration was reported complete while 93 references remained
+
+I previously reported the Sightline token migration finished with "zero legacy remaining".
+That was wrong, and the way it was wrong is worth recording so the same check is not
+trusted again.
+
+**What I verified:** hex literals inside Tailwind class strings (`bg-[#00e676]`).
+**What I did not verify, and what was still live:**
+
+| Form | Count | Why the check missed it |
+|---|---|---|
+| `#00e676` | 15 | inside `globals.css` rulesets, not class strings |
+| `rgba(0,230,118,…)` | 17 | rgba literal — the hex grep could not match it |
+| `emerald-*` | 29 | Tailwind named colour, no literal to grep |
+| `green-*` | 32 | same |
+
+The visible consequences: **every blog article rendered its links and inline code in the
+old IPTV green**, and thirteen buttons across the site carried a green glow shadow — which
+the handoff forbids twice over, once on colour and once because it permits exactly one
+shadow in the entire system (the discovery dock).
+
+**The lesson is about the grep, not the colours.** A palette can be abandoned in at least
+four syntaxes, and searching for one of them proves nothing about the other three. The
+check that actually works is the inverse: enumerate the colours the design *permits* and
+find everything that is not one of them.
+
+### Dead subsystems removed while fixing it
+
+Each was confirmed to have zero importers before deletion:
+
+*   **`lib/utils/sport-themes.ts`** — a per-sport palette (green/emerald football, etc.).
+*   **`components/sport-theme-provider.tsx`** — wrapped the entire app in `layout.tsx` and
+    did nothing except read a stale `sport-theme` key from `localStorage` and apply a
+    `theme-*` class from it. Worse than inert: those classes were the malformed ones below,
+    so a leftover value from the old site would have applied a broken theme.
+*   **83 lines of `.theme-ufc/football/basketball/tennis` CSS** — unreachable once the
+    provider went, and broken from the start: they defined HSL triplets while
+    `tailwind.config.ts` maps the same variables with no `hsl()` wrapper.
+*   **`.gradient-text`** (blue→purple→green) and **`.match-status.*`** — both dead, and
+    `.match-status` was a second status palette contradicting the one `/scores` uses.
+*   **`components/ui/progress.tsx`** and **`getPopularityColor()`** — no consumers.
+
+Left in place deliberately: the `success` variant in `components/ui/toast.tsx`. Green means
+success in a toast by universal convention, and that file is live shadcn infrastructure
+rather than old-design residue.
+
+---
+
+## 2026-08-20 — The FAQ page was the most inaccurate page on the site
+
+Rewritten as `/faq` "Help and questions", on the Sightline shell, and reorganised around
+what a reader is trying to do rather than around topics. Four separate problems, and each
+one had been sitting on a page whose entire job is to explain how the site works:
+
+*   **It opened by calling the site "a live scores and fixtures hub".** The owner has said
+    plainly that this is not a scores product. The page contradicted the positioning on
+    its first line.
+*   **"Refreshed automatically every 60 seconds."** Nothing in the codebase refreshes on
+    that interval — the real figures are 6 hours for film and television availability,
+    days for reference data, and by-hand for broadcast rights. A number with no source, on
+    a site whose premise is that its numbers have sources.
+*   **"Broadcast listings reference the official UK rights holders."** The single most
+    limiting sentence available to a site built on per-country answers.
+*   **"Contact our support team anytime."** There is no support team.
+
+The replacement leads with the questions people actually arrive stuck on — why a match is
+not shown in their country, why the channel changed since last season, why kick-off times
+look wrong — and links each to the explainer that already covers it, which is also the
+cheapest way to keep a reader on the site.
+
+Its FAQ schema carries only the four questions whose answers are self-contained. A
+question whose real answer is "it depends on your country" makes a bad rich result: Google
+would index it as a flat claim and read it back to the people it is wrong for.
+
+### Every match page asserted UK rights
+
+`app/match/[id]/page.tsx` told every reader, for every competition, that the fixture was
+"covered by the official UK rights holders" — and a step captioned "See which UK rights
+holder is showing this fixture live".
+
+The page had been calling `resolveRights(league, getViewerCountry())` the whole time and
+rendering a country-aware panel directly above the paragraph that contradicted it. The
+prose was a leftover that had outlived its data. It now describes rights as sold per
+country, points at the panel, and says where a country is missing we have not checked it.
+
+**Left alone deliberately:** `app/watch/world-cup-2026/page.tsx` also says "UK rights
+holder", but it says so as an explicit label inside a section about the Premier League,
+where it is accurate and country-qualified. Honest scoping is not the same defect as an
+unqualified global claim.
+
+---
+
+## 2026-08-20 — A fabricated scoreline was live, in structured data, for a month
+
+`/watch/world-cup-2026` published the 2026 World Cup final as **Spain 4–1 Argentina** and
+called Spain champions "for the fifth time". Both were false. Verified against two
+independent sources:
+
+*   The final was **Spain 1–0 Argentina, after extra time**, Ferran Torres scoring in the
+    106th minute.
+*   It was Spain's **second** world title, their first since 2010.
+
+Everything else on the page was right — Spain did win, against Argentina, on 19 July 2026
+at MetLife Stadium. **That mixture is what made it dangerous.** A page that is wrong about
+everything gets caught. A page that is right about the winner, the opponent, the date and
+the venue, and wrong only about the score, reads as authoritative.
+
+**What gave it away was internal contradiction, not the score.** "Fifth time" is
+impossible on its face — Spain had one title before this tournament, so no result in 2026
+could make it five. The falsifiable claim exposed the unfalsifiable one sitting next to it.
+
+The scoreline was not merely displayed. It was in the page title, the OpenGraph
+description, the `FAQPage` answer and the `SportsEvent` schema with a declared `winner` —
+four separate machine-readable assertions handed to search engines and answer engines as
+fact, on a site whose entire premise is that its facts are checked.
+
+**The generalisable lesson:** this content long predates the current work and was never
+verified because nothing on the page invited verification — no source, no checked-date, no
+provenance of any kind. The broadcast listings have a verification log precisely so this
+cannot happen to them. Editorial claims about real-world events have no equivalent, and
+this is what that gap costs. **Any page asserting a result, a record or a statistic needs
+a source recorded next to it, or it needs to not make the claim.**

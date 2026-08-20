@@ -164,17 +164,3 @@ export const PLAYER_POSITIONS = [
   { value: "Forward", label: "Forward" },
 ] as const
 
-export function getPopularityColor(popularity: string): string {
-  switch (popularity.toLowerCase()) {
-    case "very high":
-      return "bg-red-500"
-    case "high":
-      return "bg-orange-500"
-    case "medium":
-      return "bg-yellow-500"
-    case "low":
-      return "bg-green-500"
-    default:
-      return "bg-gray-500"
-  }
-}

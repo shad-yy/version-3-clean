@@ -15,7 +15,6 @@ import {
   getTrendingTitles,
   getWatchProvidersForCountry,
   isTmdbConfigured,
-  JUSTWATCH_ATTRIBUTION,
 } from "@/lib/api/tmdb"
 import {
   PageShell,
@@ -26,6 +25,8 @@ import {
   EmptyState,
   RowSkeleton,
 } from "@/components/sightline/page-shell"
+import { PosterThumb } from "@/components/sightline/poster-thumb"
+import { CompetitionBadge } from "@/components/sightline/competition-badge"
 
 /**
  * "Where to watch in <country>" — the answer page for the query this site exists to own.
@@ -121,6 +122,7 @@ async function SportSection({ code, name }: { code: string; name: string }) {
             key={`${competition.id}-${listing.broadcaster}`}
             href={competition.href}
             accent="sport"
+            thumb={<CompetitionBadge competition={competition.id} size="lg" />}
             title={competition.name}
             meta={listing.streamingOn ? `Streams on ${listing.streamingOn}` : undefined}
             right={listing.broadcaster}
@@ -182,6 +184,7 @@ async function FilmSection({ code, name }: { code: string; name: string }) {
             key={`${title.mediaType}-${title.tmdbId}`}
             href={`/watch/title/${buildTitleSlug(title.mediaType, title.tmdbId, title.name)}`}
             accent="film-tv"
+            thumb={<PosterThumb path={title.posterPath} />}
             lead={title.year}
             leadSub={title.mediaType === "movie" ? "Film" : "Series"}
             title={title.name}
@@ -191,9 +194,6 @@ async function FilmSection({ code, name }: { code: string; name: string }) {
           />
         ))}
       </RowList>
-      <p className="mt-6 font-mono text-[10px] uppercase tracking-[.12em] text-sl-dim">
-        {JUSTWATCH_ATTRIBUTION}
-      </p>
     </Section>
   )
 }
@@ -250,13 +250,13 @@ export default async function WhereToWatchCountryPage({
 
       <Section>
         <p className="max-w-[620px] text-[13px] leading-[1.55] text-sl-mute">
-          Looking for something specific?{" "}
+          Looking for something specific?
           <Link
             href="/search"
             className="text-sl-mid underline decoration-sl-dim underline-offset-2 transition-colors duration-[.16s] hover:text-sl-text"
           >
             Search for a film, series, team or competition
-          </Link>{" "}
+          </Link>
           and we will answer for {name}.
         </p>
       </Section>

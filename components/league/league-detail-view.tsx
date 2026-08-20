@@ -86,7 +86,7 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
         </h3>
         {standings.length > 0 && (
           <div className="hidden sm:flex items-center gap-4 text-xs font-semibold text-sl-mute">
-            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-emerald-500/20 border border-emerald-500/40" /> CL / Promotion</span>
+            <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-sl-amber/20 border border-sl-amber/40" /> CL / Promotion</span>
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-blue-500/20 border border-blue-500/40" /> EL Promotion</span>
             <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded bg-red-500/20 border border-red-500/40" /> Relegation</span>
           </div>
@@ -118,8 +118,8 @@ function StandingsTab({ standings }: { standings: Standing[] }) {
                 let posIndicator = "text-sl-mute"
 
                 if (pos <= 4 && standings.length > 10) {
-                  zoneClass = "border-b border-white/5 hover:bg-emerald-500/5 bg-emerald-500/[0.01] transition-colors"
-                  posIndicator = "text-[var(--sl-amber)] bg-emerald-500/10 rounded-lg px-2 py-0.5"
+                  zoneClass = "border-b border-white/5 hover:bg-sl-amber/5 bg-sl-amber/[0.02] transition-colors"
+                  posIndicator = "text-[var(--sl-amber)] bg-sl-amber/10 rounded-lg px-2 py-0.5"
                 } else if ((pos === 5 || pos === 6) && standings.length > 10) {
                   zoneClass = "border-b border-white/5 hover:bg-blue-500/5 bg-blue-500/[0.01] transition-colors"
                   posIndicator = "text-blue-400 bg-blue-500/10 rounded-lg px-2 py-0.5"
@@ -349,7 +349,6 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* League Header Banner */}
       <div className="relative rounded-2xl overflow-hidden border border-[var(--sl-raise)] bg-[var(--sl-ground)] p-6 md:p-10 shadow-2xl">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 left-10 w-60 h-60 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 text-center md:text-left">
@@ -370,7 +369,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
             </div>
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[var(--sl-amber)]">Official Stats</span>
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-sl-amber/10 border border-sl-amber/20 text-[var(--sl-amber)]">Official Stats</span>
               <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">{league.type || "League"}</span>
               {league.formedYear && (
                 <span className="text-xs text-sl-mute font-semibold px-3 py-1 rounded-full bg-white/5">Est. {league.formedYear}</span>
@@ -383,7 +382,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
             <p className="text-xs text-sl-mid mb-4">Stream all matches in 4K UHD.</p>
             <Link
               href={watchHref}
-              className="w-full inline-flex items-center justify-center gap-1.5 bg-[var(--sl-amber)] text-black font-extrabold text-xs py-3 px-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(0,230,118,0.2)]"
+              className="w-full inline-flex items-center justify-center gap-1.5 bg-[var(--sl-amber)] text-black font-extrabold text-xs py-3 px-4 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all hover:scale-[1.02]"
             >
               Watch League Live <ExternalLink className="w-3.5 h-3.5" />
             </Link>
@@ -402,7 +401,7 @@ export function LeagueDetailView({ league, teams, standings, fixtures }: LeagueD
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all duration-300 whitespace-nowrap flex-1 ${
                 isActive
-                  ? "bg-gradient-to-r from-emerald-500 to-[var(--sl-amber)] text-black shadow-[0_0_15px_rgba(0,230,118,0.25)]"
+                  ? "bg-sl-amber text-black"
                   : "text-sl-mute hover:text-sl-text hover:bg-white/5"
               }`}
             >

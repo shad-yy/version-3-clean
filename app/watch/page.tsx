@@ -3,9 +3,10 @@ import Link from "next/link"
 import { ENV } from "@/lib/config/env"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 import { LEAGUES } from "@/lib/constants/leagues"
+import { CompetitionBadge } from "@/components/sightline/competition-badge"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
+import { PosterThumb } from "@/components/sightline/poster-thumb"
 import {
-  JUSTWATCH_ATTRIBUTION,
   buildTitleSlug,
   getTrendingTitles,
   isTmdbConfigured,
@@ -79,13 +80,16 @@ function GuideCard({ guide }: { guide: Guide }) {
       href={guide.href}
       className="group flex flex-col rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 transition-colors hover:border-[var(--sl-amber)]/40"
     >
-      <h3 className="text-lg font-bold text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">
-        {guide.name}
-      </h3>
+      <div className="mb-2 flex items-center gap-2.5">
+        <CompetitionBadge competition={guide.href.replace("/watch/", "")} size="lg" />
+        <h3 className="text-lg font-bold text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">
+          {guide.name}
+        </h3>
+      </div>
       <p className="mt-2 flex-1 text-sm text-sl-mute leading-relaxed">{guide.blurb}</p>
       {countries > 0 && (
         <p className="mt-4 text-xs text-sl-mute">
-          Broadcast listings verified for {countries}{" "}
+          Broadcast listings verified for {countries}
           {countries === 1 ? "country" : "countries"}
         </p>
       )}
@@ -188,8 +192,10 @@ export default async function WatchIndexPage() {
                 <Link
                   key={`${t.mediaType}-${t.tmdbId}`}
                   href={`/watch/title/${buildTitleSlug(t.mediaType, t.tmdbId, t.name)}`}
-                  className="group flex flex-col rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 transition-colors hover:border-[var(--sl-amber)]/40"
+                  className="group flex gap-4 rounded-2xl border border-[var(--sl-line)] bg-[var(--sl-surface)] p-5 transition-colors hover:border-[var(--sl-amber)]/40"
                 >
+                  <PosterThumb path={t.posterPath} size="md" />
+                  <div className="flex min-w-0 flex-col">
                   <p className="mb-1 text-[10px] uppercase tracking-wide text-sl-mute">
                     {t.mediaType === "movie" ? "Film" : "Series"}
                     {t.year ? ` · ${t.year}` : ""}
@@ -197,11 +203,11 @@ export default async function WatchIndexPage() {
                   <h3 className="text-lg font-bold text-sl-text transition-colors group-hover:text-[var(--sl-amber)]">
                     {t.name}
                   </h3>
+                  </div>
                 </Link>
               ))}
             </div>
 
-            <p className="mt-8 text-xs text-sl-dim">{JUSTWATCH_ATTRIBUTION}.</p>
           </div>
         </section>
       )}

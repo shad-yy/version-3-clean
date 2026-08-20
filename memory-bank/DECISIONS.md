@@ -1079,3 +1079,283 @@ Also fixed a real bug found during the check: the upstream reports in-play state
 period codes (`1H`, `2H`, `HT`, `ET`), and the page trusted only its own `isLive` flag,
 which is not set for them. A match in its first half rendered as though it had not
 kicked off.
+
+---
+
+## 2026-08-20 — The discovery dock ships, and its resting state is empty
+
+Built the "just checked" dock from HANDOFF.md §1.6. It reads the verification log, not a
+popularity feed, and applies the two filters design opinion 6 requires: re-verified inside
+a 24-hour window, and only where we hold an offer in the viewer's own country.
+
+**Consequence the owner should expect: on most days it renders nothing.** The seeded log
+entries are dated 2026-07-31, so at a one-day window the dock is currently absent from the
+homepage entirely. That is the design working, not a bug — a strip announcing "0 things
+verified" is worse than no strip. It appears the day someone records a verification.
+
+This is the first component whose visibility is governed by how often a person actually
+does the work. It makes the verification cadence visible in the product, which is the
+honest version of a "fresh content" signal.
+
+Two things were fixed while building it, both worth recording because both were my own
+errors rather than pre-existing ones:
+
+*   **A card printed the same date twice** — once as the mono lead, once in the "Checked"
+    footer. The lead now states what happened (`Re-checked` / `Newly added`), which is the
+    more useful half of the entry and is still nothing but recorded fact.
+*   **I nearly committed a false bug history.** The dock appeared not to slide in, and I
+    wrote a code comment confidently explaining a `requestAnimationFrame` throttle failure
+    as the cause. The component was fine. The real cause was my own test environment: a
+    stale `sl_dock_dismissed` session flag, and a page that had navigated away mid-test.
+    The comment was replaced with one that claims only what was verified. A wrong
+    explanation left in a comment is worse than no comment, because the next reader
+    inherits it as fact.
+
+**Added `tests/verification-log.test.ts`** (13 tests) rather than relying on a screenshot.
+The dock's window and country filters are the difference between "we re-checked this for
+you" and a trending strip, so they are now regression-guarded, along with the log's own
+integrity: every entry must name a competition that still exists and carry a valid ISO
+country code. The clock is pinned in any test that exercises a window, because the seeded
+entries age and an unpinned test would quietly stop testing the branch it was written for.
+
+---
+
+## 2026-08-20 — Editorial claims get a source registry, mirroring the verification log
+
+`lib/data/editorial-claims.ts` now records where every factual assertion about the real
+world came from, the way `verification-log.ts` records when a broadcast listing was
+confirmed. `<ClaimSources>` renders the provenance on the page. Rules enforced by
+`tests/editorial-claims.test.ts` (16 tests), not by anyone remembering them.
+
+**The corroboration rule is the load-bearing part:** results and records need two
+*independent publishers*. Not one publisher cited twice — that is the failure being
+guarded against, not a way of satisfying the rule.
+
+### Why a registry rather than "check things more carefully"
+
+Careful checking was already the rule. What it lacked was a place to put the answer.
+
+The first pass at fixing `/watch/world-cup-2026` corrected "fifth time" and **missed
+"fifth World Cup title" three sections lower on the same page** — the same false fact in
+wording the grep did not predict. Prose scatters a fact across a page; a registry holds it
+once and pages reference it. That is the actual argument for the mechanism.
+
+### What the registry found once it existed
+
+Building it surfaced two more wrong claims on a *different* page,
+`content/blog/harry-kane-world-cup-goals-record-2026.mdx`:
+
+*   **"The all-time World Cup top scorer is Miroslav Klose with 16 goals."** Wrong. Klose
+    was passed twice during the 2026 tournament itself — by Messi in the group stage, then
+    by Mbappé in the third-place match. Mbappé finished on 22, Messi 21.
+*   **The post froze at Kane's 11th goal** and was never updated. He finished on 14 in 18
+    matches. Accurate the morning it was published, misleading a month later.
+
+The post now carries a dated update at the top and a corrected answer with both sources
+linked inline. Its core claim — that Kane passed Lineker, whose record was 10 — is
+corroborated and stands.
+
+### An open conflict, deliberately not resolved
+
+Two reputable sources disagree on which match produced the record-breaking goal. TNT
+Sports says the 11th came against Panama; England Football says Kane equalled Lineker with
+a brace against Croatia in the opener and moved ahead against Paraguay. The blog post also
+places the Panama match in Houston on 27 June, where TNT Sports has MetLife Stadium on
+28 June.
+
+**The claim entry states only what both sources agree on and records the disagreement in
+its `note`.** Picking a side would be inventing certainty neither source supports — which
+is the same failure as the fabricated scoreline, arrived at more politely. Escalated to
+the owner per OWNER-INSTRUCTIONS §5f.
+
+### Scope still open
+
+Only the World Cup page is wired to `<ClaimSources>`. The Premier League cost posts carry
+unsourced prices (£43.00, £30.99, £8.99, £82.99/month) and match counts (128, 52, 20).
+Prices are claims readers act on financially and change without notice — they should be
+next.
+
+---
+
+## 2026-08-20 — The reseller strategy outlived the reseller. Removed.
+
+The owner's correction: *"I need to completely remove the old strategy the original
+website follow. This one is not going to sell any service."*
+
+The store's **links** were removed months ago. Its **editorial strategy** was not, and it
+survived far longer precisely because it does not read as a remnant — it reads as helpful
+content. Four blog posts and one competition page ran the reseller narrative intact:
+
+1.  Establish price pain — "£82.99 / month", "£843.88 per year", "raising prices again"
+2.  Amplify it — "The Cost Problem", "Official Solutions (And the Hidden Costs)"
+3.  Offer the way out — "How to Cut the Bill", "The Contract-Free Route", "Alternatives"
+
+With the shop gone that argument sells nothing. It just tells readers that watching sport
+legitimately is expensive, on a site that takes no commission from anyone it lists.
+
+**I had been auditing the numbers inside those posts** — arithmetic errors, missing
+sources — without noticing the posts themselves were the problem. Worth remembering: when
+content is off-strategy, checking its facts is the wrong question asked carefully.
+
+### What changed
+
+| Post | Action |
+|---|---|
+| `sky-sports-price-increase-2026-alternatives` | **Deleted** — pure price argument, no where-to-watch content to keep |
+| `sky-sports-tnt-prime-cost-premier-league-2026-27` | **Deleted** — same |
+| `watch-premier-league-2026-27-live-channels-streaming` | **Rewritten** as "Where to Watch the Premier League 2026-27, by Country" |
+| `tnt-sports-sd-discontinued-sky-alternatives` | **Rewritten** around the availability change itself |
+| `/watch/europa-league` | Cost-comparison table (Monthly Cost / UHD / Contract) replaced with where-and-what-it-needs |
+
+Both deletions **301 to the rewritten Premier League guide** rather than 404. They were
+nominally about watching the Premier League, and that question still has a live answer —
+just without the sales argument.
+
+The rewrites gained something too. The Premier League post now answers **by country**
+(United Kingdom, United States, Australia) from the verified rights data instead of being
+a UK cost guide, and states plainly that an absent country means unchecked rather than
+unavailable. The TNT post now leads with the fact that TNT Sports did not move — only
+Sky's transmission of it did — and corrects a genuine, widely-held mix-up: NOW carries Sky
+Sports, not TNT.
+
+### Decisions taken
+
+*   **No prices anywhere on the site.** Name the service; never what it costs. Prices go
+    stale silently, vary by bundle and region, and quoting one is inherently a value
+    argument — the thing being removed. Recorded as OWNER-INSTRUCTIONS §4a.
+*   **Free-to-air versus subscription stays**, because it answers "can I watch this
+    without paying" without needing a figure.
+
+### Also corrected: `llms.txt` still described the old product
+
+The file answer engines read first called the site "a real-time sports telemetry and live
+match data platform" and led its page list with "Live Scores: Real-time football scores".
+That is the positioning the owner had already corrected. It now leads with where-to-watch,
+and states explicitly that the site sells nothing, carries no advertising for the services
+it lists, and never ranks listings by payment.
+
+**`leagueColor` was checked and deliberately left alone.** Europa League orange, Champions
+League gold and Formula 1 red are the competitions' own brand colours and a deliberate
+system — not palette drift. Flattening them to amber would have been a confident wrong fix.
+
+---
+
+## 2026-08-20 — Homepage imagery, and the CSS bug behind the broken menu
+
+### The handoff already allowed most of this
+
+Posters and animation were assumed to be a deviation from the binding design. They are
+not: the handoff specifies a **136x202 poster slot** fed by the metadata provider, and a
+complete motion table (fade-rise, expand, slot, shimmer, pulse) with 70ms stagger and
+reduced-motion rules. Adding them was executing the spec, not departing from it.
+
+### Two conflicts, both escalated, both decided by the owner
+
+*   **Popularity ordering.** Design opinion 6 forbids ranking discovery by popularity. The
+    owner allowed a TMDB-trending rail **on condition it is labelled as one**, so the
+    homepage now carries two orderings that name themselves: the dock says "Just checked",
+    the rail says "Trending on TMDB · ordered by popularity". The label is in the eyebrow,
+    not a footnote, so it survives skim-reading.
+*   **Search focus ring.** The handoff specifies an amber border plus
+    `box-shadow: 0 0 0 3px rgba(240,166,60,.13)`. Stacked, they read as two yellow outlines
+    around one field. Softened to a 2px ring at .10 on a 70% border at the owner's request.
+    A recorded deviation from the binding spec.
+
+### The menu was broken by `backdrop-filter`
+
+The header carries `backdrop-blur-[9px]`. **`backdrop-filter` makes an element the
+containing block for its `position: fixed` descendants** — so the mobile drawer, rendered
+inside the header, was clipped to the header's 62px box. It opened as a **61px sliver with
+the page showing through it**, and the country picker appeared as a strip across the top
+of the screen.
+
+Neither looks like a positioning bug. Both look like broken styling, which is why they
+survived. Fixed with `components/ui/portal.tsx`; **any full-screen overlay in this codebase
+must go through it.** `transform`, `filter`, `perspective`, `contain: paint` and
+`will-change` create the same trap.
+
+The country control also had 139 options and no search, and its panel ran 143px below the
+fold on a phone. It now has a filter, keyboard navigation, and becomes a bottom sheet
+under 640px.
+
+### Also found and fixed
+
+*   **`a { color: #3b82f6 }`** — a global rule painting every unstyled anchor Tailwind
+    blue, plus `a:hover { text-decoration: underline }`. The underline was the visible one:
+    card links wrap a heading, a date and a caption, so hovering a card underlined all
+    three. Anchors now inherit colour; components decide.
+*   **29 of 32 API routes declared no caching intent.** Seven were genuinely static-baked by
+    Next 14's default — including `/api/scores/recent` and the UFC feeds — meaning they
+    would have frozen at build time in production. Each now carries a `revalidate` matched
+    to how fast its data actually moves.
+*   **`fill` on fixed-size images** emitted a sixteen-entry srcset reaching 3840w for a
+    136px slot. Explicit `width`/`height` emits 1x and 2x.
+*   **UFC events were empty and then 404ing.** `getUpcomingEvents()` returned an empty
+    array; the schedule was sitting unread in `leagues[0].calendar` of a response the app
+    already fetched — 18 events, no credential needed. The event pages then 404'd because
+    ESPN publishes a `summary` only for events that are close, so scheduled events now
+    render date-and-name with an honest "the card is not published yet".
+
+### Attribution consolidated, and completed
+
+Six in-page repeats reduced to one footer line, at the owner's request to keep it
+compliant but unobtrusive. **It gained the notice TMDB requires** — "This product uses the
+TMDB API but is not endorsed or certified by TMDB" — which was missing entirely. It must
+not be hidden with `display: none` or from assistive technology: the obligation is the
+reason the data can be used.
+
+### Navigation had no feedback
+
+Server components can spend several hundred milliseconds fetching before anything changes
+on screen, so clicks read as ignored. `components/ui/route-progress.tsx` shows a 2px amber
+bar, but only after 120ms — a flash on an instant navigation is worse than nothing — and
+creeps toward 90% rather than completing, because a bar that reaches 100% and waits is
+lying about being done.
+
+---
+
+## 2026-08-20 — Domain fixed, competition crests, and why the progress bar was wrong
+
+**Domain: `sightlinetv.com`.** `sightline.tv` was already registered by someone else.
+`NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_SITE_HOST` are set in `.env.local`; the same two
+must be set in Vercel or generated files fall back to `localhost:3200`, which is what
+`llms.txt` had been emitting.
+
+### Competition crests
+
+Sport had no imagery at all while film and television had posters, so half the site read as
+a spreadsheet. `LEAGUES` already carried both a CDN `badgeUrl` and a `localBadge`, and
+`public/leagues/` already held ten PNGs — the data and the files existed; nothing rendered
+them.
+
+`components/sightline/competition-badge.tsx` uses the **local** file, not the provider CDN.
+A crest on every competition row would otherwise mean a DNS lookup, TLS handshake and
+round trip to a third party before the page settles, for a file that changes once a decade.
+The remote URL stays in the data as the source of record.
+
+Two lookup gaps found while wiring it, both of which showed as lettermarks beside real
+crests — which reads as a loading failure rather than a design:
+
+*   `LEAGUES` holds six football competitions, but Formula 1, UFC, the World Cup and the
+    Europa League all have routes and badge files. Added as `EXTRA_BADGES`.
+*   Competitions with a top-level route arrive as `/ufc`, not `ufc`. The key is now
+    stripped of slashes before lookup.
+
+### The progress bar was the wrong idea, and replacing it was the point
+
+The first navigation indicator was a 2px bar across the top of the viewport. It worked, and
+the owner's reaction was that it made the site feel like it was lagging.
+
+That reaction is the correct one, and it is worth writing down because the instinct to add
+a progress bar is strong: **a page-wide progress bar is a statement about the site, and
+what it states is "this is slow".** Readers have learned to associate a loading bar with
+waiting, so drawing one makes a 200ms navigation feel like a stall.
+
+The question a reader actually has is narrower — *did my click register?* — and that
+question is about the link, not the page. Feedback now attaches to the pressed anchor: a
+quiet amber underline sweeping across it, with the rest of the page receding by 12%.
+Nothing appears for the first 140ms, because most navigations resolve faster than that and
+a flash of feedback is itself a kind of jitter.
+
+**The general lesson: feedback belongs on the control that was operated, not on the
+document.** One says "you did a thing"; the other says "the software is busy".

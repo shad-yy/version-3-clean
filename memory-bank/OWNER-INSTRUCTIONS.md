@@ -47,6 +47,36 @@ is worse than publishing nothing at all.
 - Never present an estimate as a measurement. If you did not measure it, say so.
 - This applies to code comments, documentation and commit messages too.
 
+## 1a. Every factual claim carries its source. No exceptions.
+
+Rule 1 says never fabricate. This says how it is enforced, because "do not fabricate" was
+already the rule when a fabricated World Cup scoreline went live for a month.
+
+**Any assertion about the real world — a result, a record, a statistic, an announced date —
+lives in `lib/data/editorial-claims.ts` with the source it came from, and the page renders
+`<ClaimSources>` beneath it. A claim with no registry entry does not get published.**
+
+The full rules are in that file's doc-block and enforced by
+`tests/editorial-claims.test.ts`. The two that matter most:
+
+*   **Results and records need two independent publishers.** Not one source twice.
+*   **Cite only what was actually opened and read.** A search result that was never
+    fetched is not a source, however official the site would have looked in the list.
+
+**What went wrong, so it is not repeated:** `/watch/world-cup-2026` published the 2026
+final as "Spain 4–1 Argentina" and called Spain champions "for the fifth time". The real
+result was 1–0 after extra time, their second title. It was in the page title, the
+OpenGraph description, a `FAQPage` answer and a `SportsEvent` schema at once.
+
+The page was correct about the winner, the opponent, the date and the venue. That is what
+made it dangerous — **a page wrong about everything gets caught; a page wrong about one
+number reads as authoritative.**
+
+If a claim cannot be sourced, the claim comes out. A page that says less is not a failure;
+a page that says something false is.
+
+---
+
 ## 2. Never build on weak data.
 
 Distinct from rule 1, and just as important.
@@ -87,6 +117,41 @@ appear here — in content, metadata, structured data, images, documentation or 
 - **Text search is not sufficient to audit this.** The worst offender found to date was
   rendered text inside a PNG (`og-default.png`, "15,000+ Channels · 4K · Free Trial")
   that survived every text-based audit. Check images, generated assets and binaries.
+
+## 4a. This site sells nothing. No prices, no value arguments, ever.
+
+The original project was an IPTV reseller. Its links and CTAs were removed long ago —
+**its editorial strategy was not**, and that survived much longer because it does not look
+like a remnant. It looks like helpful content.
+
+The shape to recognise:
+
+1.  Establish price pain — *"£82.99 a month"*, *"£843.88 per year"*, *"raising prices
+    again"*
+2.  Amplify the frustration — *"The Cost Problem"*, *"Hidden Costs"*, *"The Big Missing
+    Piece"*
+3.  Offer the way out — *"How to Cut the Bill"*, *"The Contract-Free Route"*,
+    *"Alternatives"*, *"the cheapest way to..."*
+
+That is a sales funnel for a cheap streaming alternative. With the shop gone it argues for
+nothing at all, on a site that sells nothing and takes no commission from anyone it lists.
+
+**Standing rules:**
+
+*   **No prices anywhere.** Not in blog posts, not in comparison tables, not in schema.
+    Name the service that carries something; never what it costs. Prices go stale
+    silently, vary by bundle and region, and quoting one is inherently a value argument.
+*   **No cost comparisons, "cheapest way", "best value", "worth it" or "alternatives to"
+    framing.** The question is *where is it shown*, never *what should you buy*.
+*   **Free-to-air versus subscription is allowed and useful** — it answers "can I watch
+    this without paying". A figure is not needed to say it.
+*   **No commission, affiliate links or paid placement**, and listings are never ordered
+    by payment. State this plainly where it is relevant rather than leaving it implied.
+
+Applied 2026-08-20: two blog posts deleted outright, two rewritten, and a cost-comparison
+table removed from `/watch/europa-league`. See `DECISIONS.md`.
+
+---
 
 ## 5. Theme changes must reach every page.
 
@@ -228,6 +293,35 @@ find a current answer here.
 - **It never licenses invention.** Publishing about a fixture requires the fixture to be
   real and the claim to be sourced. Trend-following expands *what* is covered, never
   loosens *how* it is verified.
+
+## 5h. Finish means optimised. Every task, no exceptions.
+
+**A feature is not done when it works. It is done when it works and the component it
+lives in has been left faster and cleaner than it was found.**
+
+After every task, before reporting it complete, go back over the whole component or
+feature just touched — not only the lines changed:
+
+*   **Caching.** Every external fetch goes through the TTL cache. Every route declares its
+    caching intent explicitly rather than inheriting a default nobody chose. A route that
+    is dynamic must be dynamic for a stated reason.
+*   **Loading time.** Server-render what can be server-rendered. Do not ship a client
+    bundle for something static. Stream long-running sections behind Suspense rather than
+    blocking the page on the slowest query. Parallelise independent fetches; never `await`
+    them in series.
+*   **Images.** Correct dimensions, modern formats, `sizes` set, lazy below the fold,
+    priority only for what is actually above it.
+*   **Dead weight.** Remove what the change made redundant — unused props, orphaned
+    helpers, duplicated state, components nothing imports any more.
+
+**Quality and functionality are never the thing traded away for speed.** If the only way
+to make something faster is to make it worse, it stays as it is and the reason is
+recorded.
+
+Optimisation is part of the task, not a follow-up ticket. A task reported complete with
+"could be optimised later" is not complete.
+
+---
 
 ## 6. Suggest improvements — with evidence.
 

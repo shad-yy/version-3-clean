@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { CountrySelect, type CountryOption } from "@/components/sightline/country-select"
+import { Portal } from "@/components/ui/portal"
 
 /**
  * Header navigation and the mobile drawer.
@@ -89,8 +90,16 @@ export function HeaderNav({
         <Menu className="size-5" aria-hidden="true" />
       </button>
 
-      {/* Mobile drawer */}
+      {/*
+        Mobile drawer, portalled to <body>.
+
+        The header sets `backdrop-blur`, and backdrop-filter makes an element the
+        containing block for its `position: fixed` descendants -- so rendered in place this
+        drawer was clipped to the header's 62px box and opened as a 61px sliver with the
+        page visible through it.
+      */}
       {open && (
+        <Portal>
         <div className="fixed inset-0 z-50 lg:hidden">
           <div
             className="absolute inset-0 bg-black/60"
@@ -143,6 +152,7 @@ export function HeaderNav({
             </div>
           </div>
         </div>
+        </Portal>
       )}
     </>
   )

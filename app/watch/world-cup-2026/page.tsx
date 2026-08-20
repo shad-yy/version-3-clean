@@ -2,16 +2,17 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { ENV } from '@/lib/config/env'
+import { ClaimSources } from '@/components/sightline/claim-sources'
 
 export const metadata: Metadata = {
   title: 'World Cup 2026 Results & Broadcast Archive | Sightline',
-  description: 'Spain beat Argentina 4-1 in the 2026 FIFA World Cup final on 19 July 2026. Full results archive, plus the Premier League 2026-27 start date and UK broadcast listings.',
+  description: 'Spain beat Argentina 1-0 after extra time in the 2026 FIFA World Cup final on 19 July 2026. Full results archive, plus the Premier League 2026-27 start date and UK broadcast listings.',
   alternates: {
     canonical: `${ENV.BASE_URL}/watch/world-cup-2026`,
   },
   openGraph: {
     title: 'World Cup 2026 — Spain Are Champions | Watch Premier League Next',
-    description: 'Spain beat Argentina 4-1 in the World Cup 2026 final. The Premier League 2026-27 season starts 21 August. Get ready.',
+    description: 'Spain beat Argentina 1-0 after extra time in the World Cup 2026 final. The Premier League 2026-27 season starts 21 August. Get ready.',
     images: ['/og-default.png'],
   },
 }
@@ -25,7 +26,7 @@ const faqSchema = {
       name: 'Who won the World Cup 2026?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Spain won the 2026 FIFA World Cup, defeating Argentina 4-1 in the final on 19 July 2026 at MetLife Stadium in New Jersey, USA.',
+        text: 'Spain won the 2026 FIFA World Cup, beating Argentina 1-0 after extra time in the final on 19 July 2026 at MetLife Stadium in New Jersey, USA. Ferran Torres scored the only goal in the 106th minute. It is Spain’s second world title, after 2010.',
       },
     },
     {
@@ -66,7 +67,7 @@ const eventSchema = {
     '@type': 'Place',
     name: 'USA, Canada, Mexico',
   },
-  description: 'The 23rd FIFA World Cup. Spain beat Argentina 4-1 in the final on 19 July 2026.',
+  description: 'The 23rd FIFA World Cup. Spain beat Argentina 1-0 after extra time in the final on 19 July 2026.',
   url: `${ENV.BASE_URL}/watch/world-cup-2026`,
   winner: {
     '@type': 'SportsTeam',
@@ -110,18 +111,19 @@ export default function WorldCup2026Page() {
             <span className="text-[var(--sl-amber)]">World Cup 2026</span>
           </h1>
           <p className="text-2xl font-bold text-sl-text mb-3">
-            Spain 4 – 1 Argentina
+            Spain 1 – 0 Argentina <span className="text-sl-mute font-medium">(after extra time)</span>
           </p>
           <p className="text-sl-mute mb-4">
             Final — MetLife Stadium, New Jersey — 19 July 2026
           </p>
           <p className="text-sl-mid text-lg max-w-2xl mx-auto mb-10">
-            The 2026 FIFA World Cup is over. Spain are world champions for the fifth time.
-            The next major tournament is the Premier League 2026-27, which begins on 21 August 2026.
+            The 2026 FIFA World Cup is over. Ferran Torres settled it in the 106th minute,
+            giving Spain a second world title and their first since 2010. Domestic football
+            resumes with the Premier League 2026-27 on 21 August 2026.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/watch/premier-league"
-              className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-4 rounded-xl text-lg hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_30px_rgba(0,230,118,0.3)]">
+              className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-4 rounded-xl text-lg hover:bg-[var(--sl-amber-hover)] transition-all">
               Premier League 2026-27 TV Guide →
             </Link>
             <Link href="/scores"
@@ -186,9 +188,9 @@ export default function WorldCup2026Page() {
                 <div className="text-sl-mute text-sm">World Champions</div>
               </div>
               <div className="text-center">
-                <div className="text-6xl font-extrabold text-[var(--sl-amber)]">4 – 1</div>
-                <div className="text-sl-mute text-sm mt-2">Final Score</div>
-                <div className="text-sl-mute text-xs mt-1">19 July 2026</div>
+                <div className="text-6xl font-extrabold text-[var(--sl-amber)]">1 – 0</div>
+                <div className="text-sl-mute text-sm mt-2">After extra time</div>
+                <div className="text-sl-mute text-xs mt-1">19 July 2026 · Torres 106&apos;</div>
               </div>
               <div>
                 <div className="text-5xl font-extrabold text-sl-text mb-2">Argentina</div>
@@ -196,10 +198,20 @@ export default function WorldCup2026Page() {
               </div>
             </div>
             <p className="text-sl-mute text-center max-w-2xl mx-auto">
-              Spain claimed their fifth World Cup title at MetLife Stadium in New Jersey.
-              The 2026 tournament was the largest in history with 48 nations and 104 matches
-              played across the United States, Canada, and Mexico.
+              Spain claimed their second World Cup title at MetLife Stadium in New Jersey,
+              their first since 2010. The 2026 tournament was the largest staged: the first
+              with 48 teams and the first hosted by three countries, with 104 matches played
+              across the United States, Canada and Mexico.
             </p>
+
+            <ClaimSources
+              claimIds={[
+                'wc-2026-final-result',
+                'wc-2026-final-goalscorer',
+                'spain-world-cup-titles',
+                'wc-2026-tournament-format',
+              ]}
+            />
           </div>
         </section>
 
@@ -271,7 +283,7 @@ export default function WorldCup2026Page() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/watch/premier-league"
-              className="inline-flex items-center bg-[var(--sl-amber)] text-black font-extrabold px-12 py-5 rounded-xl text-xl hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_40px_rgba(0,230,118,0.25)]">
+              className="inline-flex items-center bg-[var(--sl-amber)] text-black font-extrabold px-12 py-5 rounded-xl text-xl hover:bg-[var(--sl-amber-hover)] transition-all">
               View Premier League Fixtures →
             </Link>
             <Link href="/scores"

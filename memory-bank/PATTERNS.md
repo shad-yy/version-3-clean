@@ -59,6 +59,60 @@ The separation is about signals, not just words:
 *   Homepage statistics must be derived from data or removed. Hardcoded "2,500+ matches"
     and "45+ leagues" claims were deleted for this reason.
 
+### Optimisation is part of the task
+
+See OWNER-INSTRUCTIONS §5h. A feature is done when it works **and** the component it lives
+in has been left faster and cleaner. After every change, re-check the whole component for:
+caching (every fetch through the TTL cache, every route declaring its intent), loading
+(server-render what can be, Suspense for slow sections, parallel not serial awaits),
+images (dimensions, `sizes`, lazy below the fold), and dead weight the change made
+redundant. Never trade quality or functionality for speed — if the only way to speed
+something up is to make it worse, leave it and record why.
+
+### Editorial claims need a source, the same way listings need a date
+
+Two registries, one rule. `lib/data/verification-log.ts` records when a person confirmed a
+**broadcast listing**. `lib/data/editorial-claims.ts` records where a **factual assertion
+about the real world** came from — results, records, statistics, announced dates.
+
+**Any page asserting a result, a record or a statistic references a claim id and renders
+`<ClaimSources>`, or it does not make the claim.**
+
+```tsx
+<ClaimSources claimIds={['wc-2026-final-result', 'spain-world-cup-titles']} />
+```
+
+The rules live in the file's doc-block and are enforced by
+`tests/editorial-claims.test.ts`, not by anyone remembering them:
+
+*   Every claim carries at least one source, as a URL a reader can open.
+*   **Results and records need two independent sources** — different publishers, not the
+    same publisher twice. These are the claims that end up in schema and get read aloud by
+    answer engines, so one source is one point of failure.
+*   Every source names the **article** that was read, not just the publisher. Two
+    Wikipedia articles both labelled "Wikipedia" read as a duplication bug.
+*   **Cite only what was actually opened.** A search result that was never fetched is not
+    corroboration. FIFA's own match pages render client-side and return an empty document,
+    so they are absent from the registry despite being the strongest record available.
+*   Corrections are shown, not buried. `supersedes` records what was wrong before, and the
+    component renders it.
+
+**Why this exists.** `/watch/world-cup-2026` published the 2026 World Cup final as
+"Spain 4–1 Argentina" and called Spain champions "for the fifth time", when the result was
+1–0 after extra time and it was their second title. It was live for about a month, in the
+page title, the OpenGraph description, a `FAQPage` answer and a `SportsEvent` schema with a
+declared winner — four machine-readable assertions at once.
+
+The page was right about the winner, the opponent, the date and the venue, which is
+precisely what made it dangerous: **a page wrong about everything gets caught; a page wrong
+about one number reads as authoritative.** Nothing on it invited checking, because nothing
+on it recorded where any of it came from.
+
+A second lesson worth keeping: the first fix of that page corrected "fifth time" and
+missed "fifth World Cup title" three sections lower. Prose repeats a fact in wording a
+grep will not predict. Facts belong in one record that pages reference — which is the
+whole point of the registry.
+
 ---
 
 ## 2. Core Architectural Decisions

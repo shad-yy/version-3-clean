@@ -249,20 +249,21 @@ function generateLlmsIndex(posts) {
   const content = `# ${SITE_NAME}
 
 > ${SITE_NAME} (${SITE_HOST}) answers one question: where and how can I watch this?
-> It publishes live football scores, fixtures, league standings, team and player
-> statistics, and the broadcast listings that show which service carries a given
-> competition in a given country.
+> It names the service carrying a match, film or series in a given country, with the
+> date that answer was last verified by hand. Fixtures, standings and team data are
+> published in support of that question rather than as the product.
 
 ## Core pages
-- [Home](${base}/): Live scores, today's fixtures, standings and sports news.
-- [Live Scores](${base}/scores): Real-time football scores and results.
+- [Home](${base}/): Where to watch sport, film and television, by country.
+- [On Now](${base}/scores): What is being played or shown at this moment, and where.
+- [Where to Watch](${base}/where-to-watch): Availability by country, sport and film alike.
 - [Leagues](${base}/leagues): Tables, fixtures and results for major competitions.
 - [Teams](${base}/teams): Club profiles, squads and fixture histories.
 - [Players](${base}/players): Player profiles and season statistics.
 - [Fixtures & Results](${base}/events): Full fixture calendar and results archive.
 - [Sports News](${base}/news): Football and MMA headlines updated daily.
 - [Blog](${base}/blog): Editorial guides on fixtures, competitions and broadcast schedules.
-- [FAQ](${base}/faq): Common questions about scores, fixtures and broadcast listings.
+- [Help](${base}/faq): Why something is not available where you are, and how listings are verified.
 
 ## Competition guides
 Each guide carries the fixture list, standings where applicable, and the broadcast
@@ -308,9 +309,10 @@ function generateLlmsFull(posts) {
 ---
 
 ## 1. About ${SITE_NAME}
-${SITE_NAME} (${SITE_HOST}) is a real-time sports telemetry and live match data platform serving an international audience, with no single-market focus.
-- **Core Features:** Live football scores, match statistics, team lineups, league standings, and broadcast schedule guides by country for Premier League, Champions League, Europa League, UFC, Formula 1, and World Cup 2026.
-- **Data Coverage:** Real-time event updates across global leagues and competitions via official sports data providers (TheSportsDB for scores, fixtures, standings, teams and players; NewsData.io for news).
+${SITE_NAME} (${SITE_HOST}) answers "where can I watch this, from where I am?" for sport, film and television, serving an international audience with no single-market focus.
+- **Core Features:** Per-country broadcast and streaming availability, each carrying the date it was last verified by hand; competition guides; fixtures, standings and team data supporting those answers.
+- **Data Coverage:** Broadcast rights verified by a person, competition by competition and country by country. Film and television availability via TMDB watch providers, powered by JustWatch. Fixtures, standings, teams and players via TheSportsDB; news via NewsData.io.
+- **Commercial Model:** None. ${SITE_NAME} sells nothing, carries no advertising for the services it lists, and takes no payment or commission from any broadcaster or streaming platform named on the site. Listings are never ranked by payment.
 - **Broadcast Listings:** Name the official rights holder per country covered, each with the date it was last verified. No claim is made for countries not covered. ${SITE_NAME} does not sell or provide television subscriptions.
 
 ---

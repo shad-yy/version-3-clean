@@ -349,7 +349,7 @@ export function MatchCard() {
                                                 <Link
                                                     href={`/match/${match.idEvent}`}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="w-full shrink-0 bg-green-500 hover:bg-green-400 text-black text-xs font-bold px-3 py-2 rounded-lg whitespace-nowrap text-center"
+                                                    className="w-full shrink-0 bg-sl-amber hover:bg-sl-amber-hover text-black text-xs font-bold px-3 py-2 rounded-lg whitespace-nowrap text-center"
                                                 >
                                                     {isFinished ? "Match Guide →" : "Broadcast Guide →"}
                                                 </Link>

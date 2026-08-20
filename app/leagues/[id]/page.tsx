@@ -135,7 +135,6 @@ export default async function LeaguePage({ params }: LeaguePageProps) {
     <main className="min-h-screen bg-[var(--sl-ground)] py-8 px-4 md:px-6 lg:px-8">
       {/* Ambient background glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/4 rounded-full blur-[140px]" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/4 rounded-full blur-[120px]" />
       </div>
 

@@ -14,7 +14,7 @@ interface EventCardProps {
 
 export function EventCard({ fixture }: EventCardProps) {
     const getStatusColor = (status: string) => {
-        if (status.includes("Finished") || status.includes("FT")) return "bg-green-500/20 text-green-400 border-green-500/30"
+        if (status.includes("Finished") || status.includes("FT")) return "bg-sl-surface text-sl-mid border-sl-line"
         if (status.includes("Scheduled") || status.includes("Not Started")) return "bg-blue-500/20 text-blue-400 border-blue-500/30"
         if (status.includes("Live") || status.includes("In Play")) return "bg-red-500/20 text-red-400 border-red-500/30 animate-pulse"
         return "bg-sl-mute/20 text-sl-mute border-sl-outline/30"

@@ -16,7 +16,7 @@ export function ShimmerButton({
   href, children, className, external, variant = 'primary', leagueColor 
 }: ShimmerButtonProps) {
   const variants: Record<string, string> = {
-    primary: "bg-[var(--sl-amber)] text-black shadow-[0_0_20px_rgba(0,230,118,0.3)]",
+    primary: "bg-[var(--sl-amber)] text-black",
     ghost: "border border-[var(--sl-line)] hover:border-[var(--sl-amber)] text-sl-text",
     league: "text-black",
   }

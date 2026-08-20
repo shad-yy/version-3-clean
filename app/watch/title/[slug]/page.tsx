@@ -11,7 +11,6 @@ import { regionOf, notCheckedCount } from "@/lib/geo/regions"
 import { AvailabilityExplorer } from "@/components/sightline/availability-explorer"
 import { LANES, type CountryAvailabilityView } from "@/components/sightline/availability-types"
 import {
-  JUSTWATCH_ATTRIBUTION,
   buildTitleSlug,
   getTitleDetails,
   getTrendingTitles,
@@ -20,6 +19,7 @@ import {
   parseTitleSlug,
   type CountryAvailability,
   type TitleDetails,
+  tmdbImage,
 } from "@/lib/api/tmdb"
 
 /**
@@ -39,7 +39,6 @@ import {
 
 export const revalidate = 21600
 
-const TMDB_IMAGE = "https://image.tmdb.org/t/p"
 
 /** Flatten provider data into the shape the explorer renders. */
 function toView(entry: CountryAvailability): CountryAvailabilityView {
@@ -105,7 +104,7 @@ export async function generateMetadata({
       description,
       url,
       images: details.posterPath
-        ? [{ url: `${TMDB_IMAGE}/w780${details.posterPath}`, width: 780, height: 1170, alt: details.name }]
+        ? [{ url: tmdbImage(details.posterPath, "w780")!, width: 780, height: 1170, alt: details.name }]
         : undefined,
     }),
   }
@@ -126,7 +125,7 @@ function buildSchema(details: TitleDetails, url: string) {
     name: details.name,
     url,
     ...(details.overview ? { description: details.overview } : {}),
-    ...(details.posterPath ? { image: `${TMDB_IMAGE}/w780${details.posterPath}` } : {}),
+    ...(details.posterPath ? { image: tmdbImage(details.posterPath, "w780")! } : {}),
     ...(details.year ? { datePublished: details.year } : {}),
     ...(details.genres.length ? { genre: details.genres } : {}),
     ...(details.mediaType === "tv" && details.seasons ? { numberOfSeasons: details.seasons } : {}),
@@ -249,7 +248,7 @@ export default async function TitlePage({ params }: { params: { slug: string } }
         <div className="flex flex-col gap-6 sm:flex-row">
           {details.posterPath ? (
             <Image
-              src={`${TMDB_IMAGE}/w342${details.posterPath}`}
+              src={tmdbImage(details.posterPath, "w342")!}
               alt={details.name}
               width={136}
               height={202}
@@ -324,10 +323,6 @@ export default async function TitlePage({ params }: { params: { slug: string } }
           </div>
         </div>
       )}
-
-      <p className="mx-auto max-w-[1280px] px-[18px] pb-16 font-mono text-[10px] uppercase tracking-[.12em] text-sl-dim lg:px-10">
-        {JUSTWATCH_ATTRIBUTION}
-      </p>
     </main>
   )
 }

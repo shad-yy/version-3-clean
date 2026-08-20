@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { Suspense } from "react"
 import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
@@ -8,6 +9,13 @@ import { Hero } from "@/components/sightline/hero"
 import { RightsLedger } from "@/components/sightline/rights-ledger"
 import { LiveNow } from "@/components/sightline/live-now"
 import { ChangedAndUnknown } from "@/components/sightline/changed-and-unknown"
+import { TrendingTitles } from "@/components/sightline/trending-titles"
+import { UpcomingFights } from "@/components/sightline/upcoming-fights"
+import { RailSkeleton } from "@/components/sightline/rail-skeleton"
+import { DiscoveryDock } from "@/components/sightline/discovery-dock"
+import { dockItemsFor } from "@/lib/data/verification-log"
+import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
+import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 
 /**
  * Homepage — design/sightline/HANDOFF.md §1.
@@ -26,8 +34,10 @@ import { ChangedAndUnknown } from "@/components/sightline/changed-and-unknown"
  * /news and /blog. The homepage's job in this design is to ask one question and get the
  * reader to an answer, not to index everything the site holds.
  *
- * The discovery dock (§1.6) is deliberately absent — it requires a feed of things
- * re-verified in the last 24 hours, which does not exist. See DECISIONS.md.
+ * The discovery dock (§1.6) reads the verification log for things re-checked by hand in
+ * the last day, in the reader's own country. At the cadence a person can actually verify
+ * listings that set is usually empty, and the dock renders nothing at all when it is —
+ * which is the intended resting state, not a failure. See DECISIONS.md.
  */
 
 const TITLE = "Where can I watch it? Sport, film and TV by country"
@@ -42,6 +52,15 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
+  // The dock shows only things re-verified by hand in the last day, in the reader's own
+  // country. It renders nothing when that set is empty, which is the common case at a
+  // low verification cadence -- announcing "0 verified" would be worse than absent.
+  const viewerCountry = getViewerCountry()
+  const dockItems = dockItemsFor(
+    viewerCountry,
+    COMPETITION_RIGHTS.map((c) => ({ id: c.id, name: c.name, href: c.href })),
+  )
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -93,7 +112,24 @@ export default async function HomePage() {
       <Hero />
       <RightsLedger />
       <LiveNow />
+
+      {/*
+        Both rails hit an upstream (TMDB, ESPN) and are streamed rather than awaited, so a
+        slow provider delays only its own strip instead of holding back the whole page.
+        Each renders nothing at all when it has nothing to show, so neither can leave a
+        titled but empty section behind.
+      */}
+      <Suspense fallback={<RailSkeleton kind="poster" />}>
+        <TrendingTitles />
+      </Suspense>
+
+      <Suspense fallback={<RailSkeleton kind="card" />}>
+        <UpcomingFights />
+      </Suspense>
+
       <ChangedAndUnknown />
+
+      <DiscoveryDock items={dockItems} countryName={countryLabel(viewerCountry)} />
     </div>
   )
 }

@@ -99,6 +99,7 @@ export function Row({
   href,
   lead,
   leadSub,
+  thumb,
   title,
   meta,
   right,
@@ -108,6 +109,14 @@ export function Row({
   href?: string
   lead?: React.ReactNode
   leadSub?: string
+  /**
+   * Artwork for the row — a `PosterThumb` for a film or series.
+   *
+   * Sits before the lead column rather than replacing it: the lead carries the year and
+   * the type, which stay useful when a title has no artwork, and a row that silently
+   * changes shape depending on whether a poster exists reads as broken.
+   */
+  thumb?: React.ReactNode
   title: string
   meta?: string
   right?: string
@@ -126,6 +135,7 @@ export function Row({
 
   const inner = (
     <>
+      {thumb}
       {(lead || leadSub) && (
         <div className="w-[76px] shrink-0 sm:w-[104px]">
           {lead && (

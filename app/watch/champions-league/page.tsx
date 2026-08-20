@@ -68,7 +68,7 @@ function safeParseSportsDBDate(date: string, time?: string): Date | null {
 
 const FormPill = ({ result }: { result: string }) => {
   const colors: Record<string, string> = {
-    W: 'bg-green-500 text-black',
+    W: 'bg-sl-amber text-black',
     D: 'bg-sl-mute text-sl-text',
     L: 'bg-red-500 text-sl-text',
   }

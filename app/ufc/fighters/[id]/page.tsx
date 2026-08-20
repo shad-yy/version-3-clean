@@ -116,7 +116,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                     <div className="text-sm text-sl-mute">Record</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-green-400">{winPercentage}%</div>
+                    <div className="text-2xl font-bold text-sl-amber">{winPercentage}%</div>
                     <div className="text-sm text-sl-mute">Win Rate</div>
                   </div>
                   <div>
@@ -164,7 +164,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-green-400 mb-1">{fighter.stats.wins}</div>
+                    <div className="text-3xl font-bold text-sl-amber mb-1">{fighter.stats.wins}</div>
                     <div className="text-sm text-sl-mute">Wins</div>
                   </div>
                   <div className="text-center">
@@ -213,7 +213,7 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                         <Badge
                           className={
                             fight.result?.includes('Win') || fight.result?.includes('W')
-                              ? "bg-green-500 text-white"
+                              ? "bg-sl-amber text-black"
                               : fight.result?.includes('Loss') || fight.result?.includes('L')
                                 ? "bg-red-500 text-white"
                                 : "bg-yellow-500 text-black"
@@ -290,8 +290,8 @@ export default async function UFCFighterPage({ params }: UFCFighterPageProps) {
                   <span className="text-white">UFC {fighter.weightClass} Fighter</span>
                 </div>
                 {winPercentage >= 80 && (
-                  <div className="flex items-center gap-3 p-3 bg-green-500/10 rounded-lg border border-green-500/30">
-                    <TrendingUp className="w-5 h-5 text-green-500" />
+                  <div className="flex items-center gap-3 p-3 bg-sl-amber/10 rounded-lg border border-sl-amber/30">
+                    <TrendingUp className="w-5 h-5 text-sl-amber" />
                     <span className="text-white">High Win Percentage ({winPercentage}%)</span>
                   </div>
                 )}

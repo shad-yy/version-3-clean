@@ -3,6 +3,8 @@ import { headers } from "next/headers"
 import type { Metadata, Viewport } from "next"
 import { Archivo, IBM_Plex_Mono } from "next/font/google"
 import "./globals.css"
+import { Suspense } from "react"
+import { RouteProgress } from "@/components/ui/route-progress"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { cn } from "@/lib/utils"
@@ -98,7 +100,6 @@ export const metadata: Metadata = {
   },
 }
 
-import { SportThemeProvider } from "@/components/sport-theme-provider"
 import { ThemeProvider } from 'next-themes'
 import { PRODUCTION_SITE_URL, SITE_NAME } from '@/lib/config/site-url'
 
@@ -186,13 +187,18 @@ export default function RootLayout({
       </head>
       <body className={cn(archivo.variable, plexMono.variable, "font-sans antialiased")}>
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false} nonce={nonce}>
-        <SportThemeProvider>
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             Skip to main content
           </a>
+
+          {/* Navigation feedback. useSearchParams needs a Suspense boundary or the
+              whole tree opts out of static rendering. */}
+          <Suspense fallback={null}>
+            <RouteProgress />
+          </Suspense>
 
           <div className="flex flex-col min-h-screen transition-colors duration-500">
             <Header />
@@ -201,7 +207,6 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
-        </SportThemeProvider>
         </ThemeProvider>
 
         <GoogleAnalytics measurementId={ENV.GA_MEASUREMENT_ID} />

@@ -47,7 +47,7 @@ function PlayerStatsClient({ playerId }: { playerId: string }) {
               <div className="text-sm text-muted-foreground">Appearances</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{playerStats.goals}</div>
+              <div className="text-2xl font-bold text-sl-amber">{playerStats.goals}</div>
               <div className="text-sm text-muted-foreground">Goals</div>
             </div>
             <div className="text-center">

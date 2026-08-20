@@ -20,7 +20,24 @@ import { cacheGet, cacheSet } from "@/lib/cache/redis"
 
 const TMDB_BASE = "https://api.themoviedb.org/3"
 
-/** Must be rendered wherever availability data appears. */
+/**
+ * Required attribution, rendered once site-wide in the footer.
+ *
+ * Two obligations, not one. JustWatch must be credited as the source of availability
+ * data, and TMDB's terms separately require the "not endorsed or certified" wording — that
+ * second half was missing entirely until this was consolidated, so the site was showing
+ * the data without the notice TMDB asks for.
+ *
+ * It lives in the footer rather than beside every section on purpose: present on every
+ * page, permanently, and unobtrusive. That satisfies both providers without repeating the
+ * same sentence five times down a single page. **Do not remove it, and do not hide it
+ * from assistive technology or with `display: none`** — a notice nobody can read is not a
+ * notice, and the obligation is the reason the data can be used at all.
+ */
+export const DATA_ATTRIBUTION =
+  "Streaming availability data provided by JustWatch. This product uses the TMDB API but is not endorsed or certified by TMDB."
+
+/** @deprecated Use `DATA_ATTRIBUTION`, which also carries the notice TMDB requires. */
 export const JUSTWATCH_ATTRIBUTION = "Streaming availability data provided by JustWatch"
 
 /** Availability changes daily at most; a day is a safe floor. */
@@ -333,6 +350,25 @@ export async function getTitleDetails(
  * than the reference TTL: the list genuinely moves, and a stale trending list produces
  * pages nobody is looking for.
  */
+/**
+ * Build a TMDB artwork URL at a named width.
+ *
+ * TMDB serves fixed rendition widths; requesting an arbitrary size returns nothing, so the
+ * width is a union rather than a number. `w342` is the right default for the 136x202
+ * poster slot the design specifies -- roughly 2.5x for high-density screens, and the next
+ * size down (w185) visibly softens on retina.
+ *
+ * Returns null when there is no artwork, which is common enough that callers must handle
+ * it: TMDB has no poster for plenty of unreleased or minor titles, and a broken image is
+ * worse than a designed empty slot.
+ */
+export type TmdbImageWidth = "w92" | "w154" | "w185" | "w342" | "w500" | "w780" | "original"
+
+export function tmdbImage(path: string | null, width: TmdbImageWidth = "w342"): string | null {
+  if (!path) return null
+  return `https://image.tmdb.org/t/p/${width}${path}`
+}
+
 export async function getTrendingTitles(limit = 20): Promise<TitleDetails[]> {
   const data = await tmdbFetch<{ results?: TmdbTitleRaw[] }>(
     "/trending/all/week",

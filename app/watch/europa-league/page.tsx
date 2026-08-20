@@ -72,7 +72,7 @@ function safeParseSportsDBDate(date: string, time?: string): Date | null {
 
 const FormPill = ({ result }: { result: string }) => {
   const colors: Record<string, string> = {
-    W: 'bg-green-500 text-black',
+    W: 'bg-sl-amber text-black',
     D: 'bg-sl-mute text-sl-text',
     L: 'bg-red-500 text-sl-text',
   }
@@ -223,36 +223,46 @@ export default async function EuropaLeaguePage() {
                 To watch the <strong>UEFA Europa League live</strong> in the UK, all 189 matches are broadcast on <strong>TNT Sports</strong>, with <strong>discovery+</strong> as the official streaming platform. TNT Sports is also available as an add-on through Sky, Virgin Media and EE TV. Below you will find the full fixture list, the current league phase table, and confirmed UK kick-off times.
               </p>
 
-              <h3 className="text-lg font-bold text-sl-text mb-4">Europa League TV Coverage & Cost Comparison</h3>
+              {/*
+                This was a "TV Coverage & Cost Comparison" table with Monthly Cost, UHD
+                and Contract columns. That is a subscription buying guide, and this site
+                sells nothing and takes nothing from anyone listed on it -- the columns
+                only ever argued about value. What a reader needs is where the match is,
+                so that is all that is left.
+              */}
+              <h3 className="text-lg font-bold text-sl-text mb-4">Where Europa League matches are shown in the UK</h3>
               <div className="overflow-x-auto rounded-xl border border-sl-line bg-sl-ground/40 mb-6">
                 <table className="w-full text-xs md:text-sm text-left">
                   <thead>
                     <tr className="border-b border-sl-line bg-sl-surface/60 text-sl-mute">
-                      <th className="p-3 font-semibold">Service</th>
-                      <th className="p-3 font-semibold">Live Coverage</th>
-                      <th className="p-3 font-semibold">Monthly Cost</th>
-                      <th className="p-3 font-semibold">UHD 4K</th>
-                      <th className="p-3 font-semibold">Contract</th>
+                      <th className="p-3 font-semibold">Where</th>
+                      <th className="p-3 font-semibold">Live coverage</th>
+                      <th className="p-3 font-semibold">What it needs</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-800/40">
+                  <tbody className="divide-y divide-sl-hair">
                     <tr>
-                      <td className="p-3 font-bold text-sl-text">discovery+ Premium</td>
+                      <td className="p-3 font-bold text-sl-text">discovery+</td>
                       <td className="p-3 text-sl-mid">All 189 matches</td>
-                      <td className="p-3 text-sl-mid">£30.99/mo</td>
-                      <td className="p-3 text-sl-mid">Selected (Ultimate only)</td>
-                      <td className="p-3 text-sl-mid">None (Rolling)</td>
+                      <td className="p-3 text-sl-mid">Any smart TV, streaming stick, phone or browser</td>
                     </tr>
                     <tr>
-                      <td className="p-3 font-bold text-sl-text">Sky Sports + TNT Add-on</td>
+                      <td className="p-3 font-bold text-sl-text">TNT Sports</td>
                       <td className="p-3 text-sl-mid">All 189 matches</td>
-                      <td className="p-3 text-sl-mid">£43 + £30.99 = £73.99/mo</td>
-                      <td className="p-3 text-[#f97316]">Extra £6-£10/mo</td>
-                      <td className="p-3 text-sl-mid">18 Months</td>
+                      <td className="p-3 text-sl-mid">Carried on Sky, Virgin Media and EE TV</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <p className="mb-6 text-xs text-sl-mute">
+                Listings are for the United Kingdom. The Europa League is sold country by
+                country, so the broadcaster is different elsewhere &mdash;{' '}
+                <Link href="/where-to-watch" className="underline decoration-sl-dim underline-offset-2 hover:text-sl-text">
+                  check what we hold for your country
+                </Link>
+                .
+              </p>
 
               <div className="flex flex-wrap gap-3">
                 <Link href="#upcoming-matches" className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg text-xs font-bold text-black transition-colors">

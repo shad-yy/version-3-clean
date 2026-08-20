@@ -98,7 +98,7 @@ function TeamPanel({
     <div className={`flex flex-col gap-3 ${align}`}>
       {logo ? (
         <div className={`relative ${side === "away" ? "md:order-first" : ""}`}>
-          <div className={`absolute inset-0 rounded-full blur-2xl opacity-30 ${isWinner ? "bg-emerald-400" : "bg-white/10"}`} />
+          <div className={`absolute inset-0 rounded-full blur-2xl opacity-30 ${isWinner ? "bg-sl-amber" : "bg-white/10"}`} />
           <OptimizedImage
             src={logo}
             alt={`${name} logo`}
@@ -223,7 +223,6 @@ export default async function EventPage({ params }: EventPageProps) {
       {/* Ambient background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/3 w-[600px] h-[500px] bg-blue-500/4 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-emerald-500/3 rounded-full blur-[100px]" />
       </div>
 
       <div className="container mx-auto px-4 pb-16 max-w-4xl">
@@ -313,16 +312,16 @@ export default async function EventPage({ params }: EventPageProps) {
 
         {/* ── Stream CTA ────────────────────────────────────────────────── */}
         {(unifiedEvent.isLive || unifiedEvent.status.toLowerCase().includes("schedul")) && (
-          <div className="flex items-center justify-between gap-4 px-6 py-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 mb-6">
+          <div className="flex items-center justify-between gap-4 px-6 py-4 rounded-2xl border border-sl-line bg-sl-surface mb-6">
             <div>
-              <p className="font-semibold text-emerald-400 text-sm">
+              <p className="font-semibold text-sl-amber text-sm">
                 {unifiedEvent.isLive ? "This match is live now!" : "Upcoming match"}
               </p>
               <p className="text-white/40 text-xs">Live score, lineups and official broadcast listing</p>
             </div>
             <Link
               href="/scores"
-              className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-sm transition-all"
+              className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sl-amber hover:bg-sl-amber-hover text-black font-bold text-sm transition-all"
             >
               <Zap className="w-4 h-4" /> Live Scores
             </Link>

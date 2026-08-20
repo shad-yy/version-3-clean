@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { PosterThumb } from "@/components/sightline/poster-thumb"
 
 /**
  * One search result — design/sightline/HANDOFF.md §3.
@@ -30,6 +31,14 @@ export interface ResultRowData {
   right?: string
   /** Mono provenance under the right column, e.g. a verification date. */
   rightNote?: string
+  /**
+   * TMDB poster path for a film or series result.
+   *
+   * Optional because sport results have no equivalent artwork — a fixture is not a thing
+   * with a cover. Rows without it keep the same geometry rather than reflowing, so a
+   * mixed list of sport and film does not look ragged.
+   */
+  posterPath?: string | null
 }
 
 const ACCENT: Record<ResultKind, string> = {
@@ -52,6 +61,8 @@ export function ResultRow({ row }: { row: ResultRowData }) {
       style={{ borderLeft: `2px solid ${ACCENT[row.kind]}` }}
     >
       {/* Lead column: carries the type, so no badge is needed. */}
+      {row.posterPath !== undefined && <PosterThumb path={row.posterPath} />}
+
       <div className="w-[80px] shrink-0 sm:w-[104px]">
         {row.lead && (
           <p className={cn("font-mono text-[12px] tracking-[.06em]", LEAD_COLOUR[row.kind])}>

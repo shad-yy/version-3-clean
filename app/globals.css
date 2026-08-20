@@ -149,14 +149,21 @@ button {
   cursor: pointer;
 }
 
-/* Link fallbacks */
+/*
+ * Link fallbacks.
+ *
+ * These previously painted every unstyled anchor #3b82f6 (Tailwind blue-500 -- a colour
+ * from no palette this site uses; the Sightline blue is --sl-blue) and underlined every
+ * link on hover. The underline rule was the visible one: card links wrap a heading, a
+ * date and a caption, so hovering a card underlined all three at once.
+ *
+ * Anchors now inherit their colour, which is what a design system wants -- the component
+ * decides, not a global default. Decoration is left to whatever styles the link, and the
+ * components that want an underline ask for one.
+ */
 a {
-  color: #3b82f6;
+  color: inherit;
   text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 @layer base {
@@ -213,7 +220,7 @@ a:hover {
     --surface: #f3f4f6;
     --surface-elevated: #ffffff;
     --border: #e5e7eb;
-    --accent-primary: #00e676;
+    --accent-primary: var(--sl-amber);
     --accent-secondary: #2563eb;
     --text-primary: #111827;
     --text-secondary: #4b5563;
@@ -227,18 +234,18 @@ a:hover {
     --card-foreground: #000000;
     --popover: #ffffff;
     --popover-foreground: #000000;
-    --primary: #00e676;
+    --primary: var(--sl-amber);
     --primary-foreground: #000000;
     --secondary: #1565c0;
     --secondary-foreground: #ffffff;
     --muted: #f3f4f6;
     --muted-foreground: #6b7280;
-    --accent: #00e676;
+    --accent: var(--sl-amber);
     --accent-foreground: #000000;
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
     --input: #e5e7eb;
-    --ring: #00e676;
+    --ring: var(--sl-amber);
     --radius: 0.5rem;
 
     /* Chart color variables */
@@ -270,7 +277,7 @@ a:hover {
     --text-secondary: var(--sl-mid);
     --text-muted: var(--sl-mute);
     --live-red: #ff1744;
-    --success: #00e676;
+    --success: var(--sl-amber);
 
     /* Shadcn fallbacks */
     --foreground: #ffffff;
@@ -278,18 +285,18 @@ a:hover {
     --card-foreground: #ffffff;
     --popover: #1a1a24;
     --popover-foreground: #ffffff;
-    --primary: #00e676;
+    --primary: var(--sl-amber);
     --primary-foreground: #000000;
     --secondary: #1565c0;
     --secondary-foreground: #ffffff;
     --muted: #12121a;
     --muted-foreground: #606070;
-    --accent: #00e676;
+    --accent: var(--sl-amber);
     --accent-foreground: #000000;
     --destructive: #ff1744;
     --destructive-foreground: #ffffff;
     --input: #2a2a3a;
-    --ring: #00e676;
+    --ring: var(--sl-amber);
     --radius: 0.5rem;
 
     /* Chart color variables */
@@ -310,89 +317,6 @@ a:hover {
     --sidebar-ring: 224.3 76.3% 94.0%;
   }
 
-  /* UFC Theme - Red/Black/Metallic */
-  .theme-ufc {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 91% 43%; /* Red */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 91% 43%;
-    --accent-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 91% 43%;
-  }
-
-  /* Football Theme - Green/White/Stadium */
-  .theme-football {
-    --background: 140 30% 4%;
-    --foreground: 140 10% 98%;
-    --card: 140 30% 6%;
-    --card-foreground: 140 10% 98%;
-    --popover: 140 30% 6%;
-    --popover-foreground: 140 10% 98%;
-    --primary: 142 70% 45%; /* Grass Green */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 140 20% 15%;
-    --secondary-foreground: 140 10% 98%;
-    --muted: 140 20% 15%;
-    --muted-foreground: 140 10% 70%;
-    --accent: 142 70% 45%;
-    --accent-foreground: 0 0% 100%;
-    --border: 140 20% 20%;
-    --input: 140 20% 20%;
-    --ring: 142 70% 45%;
-  }
-
-  /* Basketball Theme - Orange/Black/Wood */
-  .theme-basketball {
-    --background: 30 20% 5%;
-    --foreground: 30 10% 98%;
-    --card: 30 20% 8%;
-    --card-foreground: 30 10% 98%;
-    --popover: 30 20% 8%;
-    --popover-foreground: 30 10% 98%;
-    --primary: 25 95% 53%; /* Orange */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 30 15% 15%;
-    --secondary-foreground: 30 10% 98%;
-    --muted: 30 15% 15%;
-    --muted-foreground: 30 10% 70%;
-    --accent: 25 95% 53%;
-    --accent-foreground: 0 0% 100%;
-    --border: 30 15% 20%;
-    --input: 30 15% 20%;
-    --ring: 25 95% 53%;
-  }
-
-  /* Tennis Theme - Neon Green/Blue */
-  .theme-tennis {
-    --background: 220 30% 6%;
-    --foreground: 220 10% 98%;
-    --card: 220 30% 9%;
-    --card-foreground: 220 10% 98%;
-    --popover: 220 30% 9%;
-    --popover-foreground: 220 10% 98%;
-    --primary: 75 90% 55%; /* Neon Green */
-    --primary-foreground: 220 30% 6%;
-    --secondary: 220 20% 18%;
-    --secondary-foreground: 220 10% 98%;
-    --muted: 220 20% 18%;
-    --muted-foreground: 220 10% 70%;
-    --accent: 75 90% 55%;
-    --accent-foreground: 220 30% 6%;
-    --border: 220 20% 22%;
-    --input: 220 20% 22%;
-    --ring: 75 90% 55%;
-  }
 }
 
 @layer base {
@@ -523,11 +447,6 @@ a:hover {
   /* Loading animation */
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  /* Gradient text */
-  .gradient-text {
-    @apply bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent;
   }
 
   /* Card hover effects */
@@ -668,18 +587,6 @@ a:hover {
 
   .match-status {
     @apply px-2 py-1 text-xs font-semibold rounded-full uppercase tracking-wide;
-  }
-
-  .match-status.live {
-    @apply bg-red-500/20 text-red-400 animate-pulse;
-  }
-
-  .match-status.finished {
-    @apply bg-green-500/20 text-green-400;
-  }
-
-  .match-status.scheduled {
-    @apply bg-blue-500/20 text-blue-400;
   }
 
   /* News article styling */
@@ -841,15 +748,15 @@ a:hover {
 }
 
 .prose-blog a {
-  color: #00e676;
+  color: var(--sl-amber);
   text-decoration: underline;
-  text-decoration-color: rgba(0, 230, 118, 0.3);
+  text-decoration-color: rgba(240, 166, 60, 0.3);
   text-underline-offset: 3px;
   transition: text-decoration-color 0.2s;
 }
 
 .prose-blog a:hover {
-  text-decoration-color: #00e676;
+  text-decoration-color: var(--sl-amber);
 }
 
 .prose-blog ul,
@@ -878,7 +785,7 @@ a:hover {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #00e676;
+  background: var(--sl-amber);
 }
 
 .prose-blog ol {
@@ -892,12 +799,12 @@ a:hover {
 }
 
 .prose-blog ol li::marker {
-  color: #00e676;
+  color: var(--sl-amber);
   font-weight: 700;
 }
 
 .prose-blog blockquote {
-  border-left: 3px solid #00e676;
+  border-left: 3px solid var(--sl-amber);
   padding: 1rem 1.5rem;
   margin: 2rem 0;
   background: #12121a;
@@ -924,7 +831,7 @@ a:hover {
   font-weight: 700;
   padding: 0.75rem 1rem;
   text-align: left;
-  border-bottom: 2px solid #00e676;
+  border-bottom: 2px solid var(--sl-amber);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -956,14 +863,14 @@ a:hover {
   border-radius: 4px;
   padding: 0.15em 0.4em;
   font-size: 0.875em;
-  color: #00e676;
+  color: var(--sl-amber);
   font-family: 'Geist Mono', ui-monospace, monospace;
 }
 
 /* Info / callout box */
 .prose-blog .info-box {
-  background: rgba(0, 230, 118, 0.05);
-  border: 1px solid rgba(0, 230, 118, 0.2);
+  background: rgba(240, 166, 60, 0.05);
+  border: 1px solid rgba(240, 166, 60, 0.2);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   margin: 2rem 0;
@@ -977,3 +884,126 @@ a:hover {
   font-weight: 400;
 }
 
+
+/*
+ * Sightline motion — design/sightline/HANDOFF.md.
+ *
+ * fade-rise is the entrance used for content reveals and panel swaps. Defined here
+ * rather than inline so every use shares one definition and one easing.
+ *
+ * Reduced motion resolves it to the final state with no animation, per the handoff:
+ * anything hidden pending a reveal must still be visible if the reveal never runs.
+ */
+@keyframes fadeRise {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/*
+ * Skeleton shimmer, per the handoff's motion table: a background-position sweep at
+ * 1.15s linear, on the surface tokens rather than Tailwind's greys. The pre-existing
+ * `.image-loading` rule sweeps gray-800/700, which belongs to no palette this site has.
+ */
+.sl-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    var(--sl-surface) 0%,
+    var(--sl-raise) 50%,
+    var(--sl-surface) 100%
+  );
+  background-size: 680px 100%;
+  background-repeat: no-repeat;
+  animation: slShimmer 1.15s linear infinite;
+}
+
+/*
+ * Navigation feedback.
+ *
+ * Applied to the link that was clicked rather than to the page, because the question a
+ * reader has is "did my click register", not "is the site busy". A page-wide progress bar
+ * answers the second question and, in doing so, makes every navigation feel slow.
+ *
+ * The pressed link grows a 2px amber underline that sweeps across it; the rest of the
+ * page recedes very slightly so the pressed thing is the one still holding attention.
+ */
+[data-navigating] {
+  position: relative;
+}
+
+a[data-navigating]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--sl-amber) 22%,
+    var(--sl-amber) 78%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  animation: navSweep .85s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+@keyframes navSweep {
+  from { background-position: 120% 0; opacity: .55; }
+  50%  { opacity: 1; }
+  to   { background-position: -20% 0; opacity: .55; }
+}
+
+/* The page steps back a fraction. Deliberately below the threshold of being noticed as
+   a change -- it should register as focus moving, not as the page reacting. */
+html[data-navigating] body {
+  opacity: .88;
+  transition: opacity .22s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a[data-navigating]::after {
+    animation: none;
+    background: var(--sl-amber);
+    opacity: .9;
+  }
+
+  html[data-navigating] body {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* Bottom sheet entrance, for the country picker on small screens. */
+@keyframes sheetUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes slShimmer {
+  from { background-position: -340px 0; }
+  to   { background-position: 340px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="fadeRise"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* A looping sweep is exactly what reduced-motion is asking us not to do. The element
+     keeps a flat surface fill so the placeholder is still visible. */
+  .sl-shimmer {
+    animation: none;
+    background-image: none;
+    background-color: var(--sl-surface);
+  }
+
+  [style*="sheetUp"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

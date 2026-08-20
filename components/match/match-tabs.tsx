@@ -151,7 +151,7 @@ function InfoView({ date, time, venue, league }: InfoViewProps) {
           </div>
           <Link
             href="/scores"
-            className="inline-flex items-center justify-center gap-2 bg-[var(--sl-amber)] text-black font-extrabold text-sm py-4 px-6 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(0,230,118,0.2)]"
+            className="inline-flex items-center justify-center gap-2 bg-[var(--sl-amber)] text-black font-extrabold text-sm py-4 px-6 rounded-xl hover:bg-[var(--sl-amber-hover)] transition-all hover:scale-[1.02]"
           >
             View Live Scores <ExternalLink className="w-4 h-4" />
           </Link>
@@ -194,7 +194,7 @@ function StatsView({ displayStats, homeTeam, awayTeam }: StatsViewProps) {
   return (
     <div className="relative z-10 space-y-6">
       <h3 className="text-lg font-bold text-sl-text mb-6">
-        Team Comparison — <span className="text-emerald-400">{homeTeam}</span> vs <span className="text-blue-400">{awayTeam}</span>
+        Team Comparison — <span className="text-sl-amber">{homeTeam}</span> vs <span className="text-sl-mid">{awayTeam}</span>
       </h3>
       <div className="space-y-6">
         {Object.entries(displayStats).map(([name, val]) => {
@@ -207,13 +207,13 @@ function StatsView({ displayStats, homeTeam, awayTeam }: StatsViewProps) {
           return (
             <div key={name} className="space-y-2">
               <div className="flex justify-between text-xs font-bold uppercase tracking-wide">
-                <span className="text-emerald-400">{homeVal}</span>
+                <span className="text-sl-amber">{homeVal}</span>
                 <span className="text-sl-text text-center font-black tracking-widest">{name}</span>
                 <span className="text-blue-400">{awayVal}</span>
               </div>
               <div className={`h-2.5 w-full ${CARD_BG} rounded-full overflow-hidden flex`}>
                 <div
-                  className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-l-full"
+                  className="h-full bg-sl-amber rounded-l-full"
                   style={{ width: `${homePct}%` }}
                 />
                 <div className="h-full bg-[var(--sl-surface)]" style={{ width: `${100 - homePct - awayPct}%` }} />
@@ -245,8 +245,8 @@ function TimelineView({ timeline, homeTeam, awayTeam }: TimelineViewProps) {
             const isHome = event.strHome === "yes" || event.strTeam === homeTeam
             return (
               <div key={event.idTimeline || idx} className="relative">
-                <div className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-[var(--sl-surface)] border-2 border-emerald-500 flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <div className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-[var(--sl-surface)] border-2 border-sl-amber flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-sl-amber" />
                 </div>
 
                 <div className={`${CARD_BG_50} border border-white/5 rounded-xl p-4 flex justify-between items-center hover:border-[var(--sl-amber)]/30 transition-colors`}>
@@ -325,7 +325,7 @@ function LineupView({ homeTeam, awayTeam, homeTeamBadge, awayTeamBadge, homeLine
           teamName={homeTeam}
           teamBadge={homeTeamBadge}
           lineup={homeLineup}
-          accentClass="bg-emerald-500/20 text-emerald-400"
+          accentClass="bg-sl-amber/20 text-sl-amber"
         />
         <TeamColumn
           teamName={awayTeam}
@@ -392,7 +392,7 @@ export function MatchTabs({
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all duration-300 whitespace-nowrap flex-1 ${
                 isActive
-                  ? "bg-gradient-to-r from-emerald-500 to-[var(--sl-amber)] text-black shadow-[0_0_15px_rgba(0,230,118,0.25)]"
+                  ? "bg-sl-amber text-black"
                   : "text-sl-mute hover:text-sl-text hover:bg-white/5"
               }`}
             >
@@ -414,7 +414,6 @@ export function MatchTabs({
           className="bg-gradient-to-br from-[var(--sl-surface)] via-[var(--sl-surface)] to-[var(--sl-ground)] border border-[var(--sl-raise)] rounded-2xl p-6 md:p-8 shadow-2xl relative overflow-hidden"
         >
           {/* Ambient light inside card */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
           {activeTab === "info"     && <InfoView date={date} time={time} venue={venue} league={league} />}
           {activeTab === "stats"    && <StatsView displayStats={uniqueStats} homeTeam={homeTeam} awayTeam={awayTeam} />}

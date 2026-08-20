@@ -121,7 +121,7 @@ export default async function WatchLeaguePage({ params }: Props) {
 
     const FormPill = ({ result }: { result: string }) => {
         const colors: Record<string, string> = {
-            W: 'bg-green-500 text-black',
+            W: 'bg-sl-amber text-black',
             D: 'bg-sl-mute text-sl-text',
             L: 'bg-red-500 text-sl-text'
         }
@@ -234,7 +234,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                             </ShimmerButton>
                             <Link
                                 href="/leagues"
-                                className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-5 rounded-xl text-lg hover:bg-[var(--sl-amber-hover)] transition-all shadow-[0_0_20px_rgba(0,230,118,0.3)] touch-manipulation w-full sm:w-auto text-center"
+                                className="bg-[var(--sl-amber)] text-black font-extrabold px-10 py-5 rounded-xl text-lg hover:bg-[var(--sl-amber-hover)] transition-all touch-manipulation w-full sm:w-auto text-center"
                             >
                                 Explore League Standings →
                             </Link>
@@ -259,7 +259,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                             </p>
                             <p className="max-w-2xl">
                                 Check real-time match stats and standings on our{' '}
-                                <Link href="/scores" className="text-green-400 hover:text-green-300">Live Scores Hub</Link>.
+                                <Link href="/scores" className="text-sl-amber hover:text-sl-amber-hover">Live Scores Hub</Link>.
                                 {slug !== 'champions-league' && (
                                     <> Also check official listings for the{' '}
                                     <Link href="/watch/champions-league" className="text-blue-400 hover:text-blue-300">UEFA Champions League</Link>.</>
@@ -411,7 +411,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                         </div>
 
                         <div className="p-4 border-t border-sl-line bg-sl-raise/20 text-center">
-                            <Link href="/leagues" className="text-green-500 hover:text-green-400 font-bold text-sm">View full table &amp; all teams →</Link>
+                            <Link href="/leagues" className="text-sl-amber hover:text-sl-amber-hover font-bold text-sm">View full table &amp; all teams →</Link>
                         </div>
                     </div>
                 </div>
@@ -426,7 +426,7 @@ export default async function WatchLeaguePage({ params }: Props) {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link
                                 href="/scores"
-                                className="px-10 py-5 text-xl rounded-xl font-bold bg-[var(--sl-amber)] text-black hover:bg-[var(--sl-amber-hover)] transition-all w-full sm:w-auto text-center shadow-[0_0_20px_rgba(0,230,118,0.3)]"
+                                className="px-10 py-5 text-xl rounded-xl font-bold bg-[var(--sl-amber)] text-black hover:bg-[var(--sl-amber-hover)] transition-all w-full sm:w-auto text-center"
                             >
                                 Explore Live Scores Hub →
                             </Link>

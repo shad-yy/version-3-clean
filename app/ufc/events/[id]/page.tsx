@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ENV } from '@/lib/config/env'
 import { Calendar, MapPin } from "lucide-react"
 import { formatLongDate } from "@/lib/utils/datetime"
+import { getUFCCalendar } from "@/lib/api/espn"
 
 export const metadata: Metadata = {
   title: 'UFC Event',
@@ -43,11 +44,60 @@ async function getUFCEvent(id: string) {
 export default async function UFCEventPage({ params }: { params: { id: string } }) {
   const summary = await getUFCEvent(params.id)
 
-  // getUFCEvent returns null when ESPN has no such event. Without this check the page
-  // fell through to the hardcoded 'UFC Event' placeholder below and rendered an empty
-  // shell reading "UFC Event Details Loading" -- forever, with a 200. A soft 404 that
-  // also looks broken to anyone who lands on it.
-  if (!summary) notFound()
+  /*
+   * ESPN publishes a `summary` only once an event is close. For anything further out it
+   * returns 404, which used to make this page 404 too -- so every card on the homepage
+   * rail linked to a dead page the moment it was built.
+   *
+   * The scheduled calendar still knows the event by name and date. When the summary is
+   * missing but the calendar has it, the page answers "when is it" and says the card is
+   * not published yet. Only an id in neither is genuinely not found.
+   */
+  const scheduled = summary ? null : (await getUFCCalendar(64)).find((e) => e.id === params.id)
+  if (!summary && !scheduled) notFound()
+
+  if (!summary && scheduled) {
+    return (
+      <div className="min-h-screen bg-sl-ground px-[18px] pb-16 pt-28 text-sl-text lg:px-20">
+        <div className="mx-auto max-w-[820px]">
+          <p className="font-mono text-[10.5px] uppercase tracking-[.14em] text-sl-amber">
+            UFC · scheduled
+          </p>
+          <h1 className="mt-2 text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] lg:text-[44px]">
+            {scheduled.name}
+          </h1>
+          <p className="mt-4 flex items-center gap-2 text-[15px] text-sl-mid">
+            <Calendar className="size-4 text-sl-mute" aria-hidden="true" />
+            {formatLongDate(scheduled.startDate)}
+          </p>
+
+          <div className="mt-8 rounded-[8px] border border-sl-line bg-sl-panel p-5">
+            <h2 className="text-[15px] font-medium">The card is not published yet</h2>
+            <p className="mt-2 max-w-[560px] text-[14px] leading-[1.6] text-sl-mid">
+              Bouts are confirmed closer to the date, and we would rather show you nothing
+              than a line-up that changes. The date above is the one on the official
+              schedule.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/ufc"
+              className="rounded-[7px] bg-sl-amber px-5 py-2.5 text-[14px] font-semibold text-sl-ground transition-colors duration-[.16s] hover:bg-sl-amber-hover"
+            >
+              All UFC events
+            </Link>
+            <Link
+              href="/watch"
+              className="rounded-[7px] border border-sl-line px-5 py-2.5 text-[14px] text-sl-mid transition-colors duration-[.16s] hover:text-sl-text"
+            >
+              Competition guides
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Extract data from ESPN summary format
   const header = summary?.header || summary

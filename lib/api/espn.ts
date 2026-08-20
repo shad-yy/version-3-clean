@@ -75,6 +75,69 @@ export interface ESPNEvent {
 export interface ESPNScoreboard {
   events: ESPNEvent[]
   season?: { year: number; type: number }
+  leagues?: ESPNLeague[]
+}
+
+interface ESPNLeague {
+  /**
+   * The season's full event list.
+   *
+   * This is the only public, keyless source of *upcoming* UFC events. The `events` array
+   * beside it holds just the current day, and passing a future `?dates=` returns an empty
+   * set, so anything beyond today has to come from here.
+   */
+  calendar?: {
+    label?: string
+    startDate?: string
+    endDate?: string
+    /** `$ref` points at an internal `espn.pvt` host that does not resolve publicly --
+     *  only the numeric id inside the URL is usable. */
+    event?: { $ref?: string }
+  }[]
+  logos?: { href?: string }[]
+}
+
+/** One scheduled UFC event, as far as the public calendar describes it. */
+export interface ESPNCalendarEvent {
+  id: string
+  name: string
+  /** ISO 8601 start, UTC. */
+  startDate: string
+}
+
+/**
+ * Scheduled UFC events, soonest first.
+ *
+ * Shares `espnFetch`'s cache entry with `getUFCEvents()` -- same URL, same key -- so
+ * asking for both on one page costs one upstream request rather than two.
+ *
+ * Fight cards are deliberately not returned. ESPN does not expose the card for an event
+ * until it is close, and inventing one is not an option, so this answers the question the
+ * data can actually support: what is on, and when.
+ */
+export async function getUFCCalendar(limit = 6): Promise<ESPNCalendarEvent[]> {
+  const data = await espnFetch<ESPNScoreboard>(
+    'https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard',
+    'espn:ufc:scoreboard:v5',
+    900
+  )
+
+  const calendar = data?.leagues?.[0]?.calendar ?? []
+  const now = Date.now()
+
+  return calendar
+    .map((entry) => {
+      const startDate = entry.startDate ?? ''
+      const id = entry.event?.$ref?.match(/\/events\/(\d+)/)?.[1] ?? ''
+      return { id, name: entry.label ?? '', startDate }
+    })
+    .filter((e) => {
+      if (!e.id || !e.name || !e.startDate) return false
+      const t = Date.parse(e.startDate)
+      return Number.isFinite(t) && t > now
+    })
+    .sort((a, b) => Date.parse(a.startDate) - Date.parse(b.startDate))
+    .slice(0, limit)
 }
 
 export async function getUFCEvents(): Promise<{
