@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { getUpcomingEvents } from "@/lib/api/ufc"
 import { RailScroller } from "@/components/sightline/rail-scroller"
+import { CompetitionBadge } from "@/components/sightline/competition-badge"
 
 /**
  * Upcoming UFC events on the homepage.
@@ -75,9 +76,14 @@ export async function UpcomingFights({ limit = 8 }: { limit?: number }) {
                 }}
               >
                 <div>
-                  <p className="font-mono text-[10.5px] uppercase tracking-[.1em] text-sl-amber">
-                    {when ?? "Date to be confirmed"}
-                  </p>
+                  <div className="mb-2 flex items-center gap-2">
+                    {/* ESPN publishes no artwork for a card until it is close, so the
+                        competition crest is the only honest image available here. */}
+                    <CompetitionBadge competition="ufc" size="md" />
+                    <p className="font-mono text-[10.5px] uppercase tracking-[.1em] text-sl-amber">
+                      {when ?? "Date to be confirmed"}
+                    </p>
+                  </div>
                   <p className="mt-2 line-clamp-3 text-[14px] font-medium leading-[1.34] text-sl-text">
                     {event.name}
                   </p>

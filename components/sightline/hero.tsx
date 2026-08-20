@@ -2,7 +2,9 @@ import { getAvailableRegions } from "@/lib/api/tmdb"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { getSelectableCountries } from "@/lib/geo/countries"
 import { CountrySelect } from "@/components/sightline/country-select"
+import { Suspense } from "react"
 import { HeroSearch } from "@/components/sightline/hero-search"
+import { HeroBackdrop } from "@/components/sightline/hero-backdrop"
 
 /**
  * Homepage hero — design/sightline/HANDOFF.md §1.1–1.2.
@@ -29,8 +31,16 @@ export async function Hero() {
   const countryText = countryLabel(country)
 
   return (
-    <section className="border-b border-sl-line bg-sl-ground px-[18px] pb-10 pt-[86px] lg:px-20 lg:pb-10 lg:pt-[128px]">
-      <div className="mx-auto max-w-[1280px]">
+    <section className="relative overflow-hidden border-b border-sl-line bg-sl-ground px-[18px] pb-10 pt-[86px] lg:px-20 lg:pb-10 lg:pt-[128px]">
+      {/*
+        Streamed, so a slow TMDB call delays the wall and never the headline or the search
+        field -- those are the reason the page exists and must paint first.
+      */}
+      <Suspense fallback={null}>
+        <HeroBackdrop />
+      </Suspense>
+
+      <div className="relative mx-auto max-w-[1280px]">
         <p className="mb-4 font-mono text-[10.5px] uppercase tracking-[.16em] text-sl-mute lg:text-[11px] lg:tracking-[.18em]">
           Sport · Film · Television
           {regions.length > 0 ? ` — ${regions.length} countries` : ""}
