@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { PosterThumb } from "@/components/sightline/poster-thumb"
+import { TeamBadge } from "@/components/sightline/team-badge"
 
 /**
  * One search result — design/sightline/HANDOFF.md §3.
@@ -39,6 +40,14 @@ export interface ResultRowData {
    * mixed list of sport and film does not look ragged.
    */
   posterPath?: string | null
+  /**
+   * Team crests for a fixture result. Two, because a fixture is a pairing — a single
+   * crest would misrepresent which side the row is about.
+   */
+  homeLogo?: string | null
+  awayLogo?: string | null
+  homeTeam?: string
+  awayTeam?: string
 }
 
 const ACCENT: Record<ResultKind, string> = {
@@ -62,6 +71,12 @@ export function ResultRow({ row }: { row: ResultRowData }) {
     >
       {/* Lead column: carries the type, so no badge is needed. */}
       {row.posterPath !== undefined && <PosterThumb path={row.posterPath} />}
+      {row.homeTeam && row.awayTeam && (
+        <span className="flex shrink-0 items-center -space-x-1.5">
+          <TeamBadge src={row.homeLogo} team={row.homeTeam} size="md" />
+          <TeamBadge src={row.awayLogo} team={row.awayTeam} size="md" />
+        </span>
+      )}
 
       <div className="w-[80px] shrink-0 sm:w-[104px]">
         {row.lead && (

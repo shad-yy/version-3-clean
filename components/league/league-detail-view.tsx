@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, ExternalLink, Info, MapPin, Trophy, Users } from "lucide-react"
+import { TeamBadge } from "@/components/sightline/team-badge"
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const CARD_BG = "bg-[var(--sl-raise)]"
@@ -195,12 +196,13 @@ function FixturesTab({ fixtures }: { fixtures: Fixture[] }) {
                     { name: fixture.awayTeam, logo: fixture.awayLogo },
                   ].map(({ name, logo }) => (
                     <div key={name} className="flex items-center gap-3">
+                      {/*
+                        Was a raw <img>, which bypasses the image pipeline entirely: no
+                        webp/avif conversion, no srcset, and none of the 30-day optimised
+                        cache the rest of the site's artwork gets.
+                      */}
                       <div className="w-8 h-8 rounded-full bg-[var(--sl-raise)] border border-white/5 flex items-center justify-center p-1.5">
-                        {logo ? (
-                          <img src={logo} alt="" className="w-full h-full object-contain" loading="lazy" />
-                        ) : (
-                          <span className="text-[10px] font-bold text-sl-mute">{name.substring(0, 2).toUpperCase()}</span>
-                        )}
+                        <TeamBadge src={logo} team={name} size="md" />
                       </div>
                       <span className="font-bold text-sm text-sl-text group-hover:text-[var(--sl-amber)] transition-colors">{name}</span>
                     </div>

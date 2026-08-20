@@ -5,6 +5,7 @@ import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
+import { TeamBadge } from "@/components/sightline/team-badge"
 import { resolveRights } from "@/lib/data/resolve-rights"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { LocalTime } from "@/components/ui/local-time"
@@ -109,6 +110,14 @@ async function FixtureList() {
                   key={f.id}
                   href={`/match/${f.id}`}
                   accent="sport"
+                  // Both crests, overlapped slightly so the pair reads as one fixture
+                  // rather than two unrelated marks.
+                  thumb={
+                    <span className="flex shrink-0 items-center -space-x-1.5">
+                      <TeamBadge src={f.homeLogo} team={f.homeTeam} size="md" />
+                      <TeamBadge src={f.awayLogo} team={f.awayTeam} size="md" />
+                    </span>
+                  }
                   lead={
                     f.time ? (
                       <LocalTime value={`${f.date}T${String(f.time).slice(0, 8)}Z`} />

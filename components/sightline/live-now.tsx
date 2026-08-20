@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { TeamBadge } from "@/components/sightline/team-badge"
 import { ENV } from "@/lib/config/env"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { resolveRights } from "@/lib/data/resolve-rights"
@@ -26,6 +27,9 @@ interface Fixture {
   strStatus?: string
   intHomeScore?: string | null
   intAwayScore?: string | null
+  // Returned on the fixture itself, so crests cost no extra request.
+  strHomeTeamBadge?: string | null
+  strAwayTeamBadge?: string | null
 }
 
 async function getFixtures(): Promise<Fixture[]> {
@@ -93,8 +97,12 @@ export async function LiveNow() {
                 </span>
 
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[14px] font-medium text-sl-text">
-                    {f.strHomeTeam} v {f.strAwayTeam}
+                  <span className="flex items-center gap-1.5 text-[14px] font-medium text-sl-text">
+                    <TeamBadge src={f.strHomeTeamBadge} team={f.strHomeTeam} size="sm" />
+                    <span className="truncate">{f.strHomeTeam}</span>
+                    <span className="shrink-0 text-sl-mute">v</span>
+                    <TeamBadge src={f.strAwayTeamBadge} team={f.strAwayTeam} size="sm" />
+                    <span className="truncate">{f.strAwayTeam}</span>
                   </span>
                   <span className="block truncate text-[12px] text-sl-mute">
                     {f.strLeague}

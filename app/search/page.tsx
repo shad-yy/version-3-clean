@@ -50,6 +50,10 @@ async function sportRows(query: string): Promise<ResultRowData[]> {
       leadSub: "Fixture",
       title: `${f.homeTeam} v ${f.awayTeam}`,
       meta: [f.league, f.venue].filter(Boolean).join(" · "),
+      homeTeam: f.homeTeam,
+      awayTeam: f.awayTeam,
+      homeLogo: f.homeLogo ?? null,
+      awayLogo: f.awayLogo ?? null,
     }))
 
     const teamRows: ResultRowData[] = (teams ?? []).slice(0, 4).map((t: any) => ({

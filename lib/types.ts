@@ -381,6 +381,17 @@ export interface SportsDbEvent {
   strDescriptionEN?: string
   strHomeTeam: string
   strAwayTeam: string
+  /**
+   * Team and competition crests, returned on the fixture itself.
+   *
+   * These were never declared, so every fixture surface rendered two team names as plain
+   * text while the artwork sat unread in the same response. Optional because TheSportsDB
+   * genuinely lacks crests for some lower-division and national sides -- callers must
+   * handle absence rather than assume a URL.
+   */
+  strHomeTeamBadge?: string
+  strAwayTeamBadge?: string
+  strLeagueBadge?: string
   intHomeScore?: string
   intAwayScore?: string
   intRound?: string
