@@ -6,8 +6,8 @@ import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 
 import { Hero } from "@/components/sightline/hero"
-import { RightsLedger } from "@/components/sightline/rights-ledger"
-import { LiveNow } from "@/components/sightline/live-now"
+import { RecheckMarquee } from "@/components/sightline/recheck-marquee"
+import { HomeBand } from "@/components/sightline/home-band"
 import { ChangedAndUnknown } from "@/components/sightline/changed-and-unknown"
 import { TrendingTitles } from "@/components/sightline/trending-titles"
 import { UpcomingFights } from "@/components/sightline/upcoming-fights"
@@ -109,9 +109,20 @@ export default async function HomePage() {
       <SchemaMarkup schema={faqSchema} />
       <SchemaMarkup schema={speakableSchema} />
 
+      {/*
+        Order is design_handoff_sightline_ui §3a: hero, the re-checked strip, the
+        two-column band, then the poster rail.
+
+        The old rights ledger and standalone live-now section are gone -- the band folds
+        both into one screen, which is the change the redesign was for. Seven identical
+        full-width text bands became four sections with different weights.
+      */}
       <Hero />
-      <RightsLedger />
-      <LiveNow />
+      <RecheckMarquee />
+
+      <Suspense fallback={null}>
+        <HomeBand />
+      </Suspense>
 
       {/*
         Both rails hit an upstream (TMDB, ESPN) and are streamed rather than awaited, so a
