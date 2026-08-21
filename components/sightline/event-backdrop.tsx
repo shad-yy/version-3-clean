@@ -29,16 +29,23 @@ export function EventBackdrop({
   priority = false,
 }: {
   src?: string | null
-  intensity?: "row" | "hero"
+  intensity?: "row" | "hero" | "live"
   className?: string
   priority?: boolean
 }) {
   if (!src) return null
 
-  // Row artwork sits far lower than the hero. These are busy, high-contrast broadcast
-  // stills; at 0.09 under a one-sided gradient they were legible enough to fight the
-  // fixture text sitting on them, which is the exact failure the doc-block warns about.
-  const opacity = intensity === "hero" ? 0.15 : 0.05
+  /*
+   * Three strengths, and the gap between them is deliberate.
+   *
+   * `row` is 0.05 — texture only, because a busy broadcast still at any higher value
+   * fights the fixture text sitting on it.
+   *
+   * `live` is 0.3, six times stronger, and applies to live rows only. The handoff is
+   * explicit that this is a deliberate lift from the row value: it is what makes a live
+   * fixture read as live at a glance, rather than needing the reader to find the dot.
+   */
+  const opacity = intensity === "hero" ? 0.15 : intensity === "live" ? 0.3 : 0.05
 
   return (
     <span
@@ -66,7 +73,11 @@ export function EventBackdrop({
             // A flat scrim across the whole row, not a left-to-right fade. The fade left
             // the right-hand third at 70% ground, which is where the broadcaster column
             // and the chevron sit -- the two places the row most needs to stay readable.
-            : "bg-sl-ground/85",
+            : intensity === "live"
+              // Masked from 62% rather than a flat scrim: the still stays visible on the
+              // right where there is no text, and disappears under the team names.
+              ? "bg-gradient-to-l from-transparent via-sl-ground/70 to-sl-ground"
+              : "bg-sl-ground/85",
         )}
       />
     </span>

@@ -5,8 +5,8 @@ import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
-import { TeamBadge } from "@/components/sightline/team-badge"
-import { EventBackdrop } from "@/components/sightline/event-backdrop"
+import { FixtureList } from "@/components/sightline/fixture-list"
+import { lastCheckedForCountry } from "@/lib/data/verification-log"
 import { resolveRights } from "@/lib/data/resolve-rights"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { LocalTime } from "@/components/ui/local-time"
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   }),
 }
 
-async function FixtureList() {
+async function FixturesByDate() {
   const viewerCountry = getViewerCountry()
   const countryText = countryLabel(viewerCountry)
 
@@ -100,44 +100,33 @@ async function FixtureList() {
           }
           className="pb-0 last:pb-10"
         >
-          <RowList>
-            {list.map((f) => {
+          {/*
+            §2d: rows open in place instead of navigating. The answer to "who is showing
+            this where I am" is two lines long, and sending someone to another page for
+            two lines is what made the old list read as a directory.
+          */}
+          <FixtureList
+            countryText={countryText}
+            fixtures={list.map((f) => {
               const rights = resolveRights(f.league, viewerCountry)
               const forViewer = rights.countries.find((c) => c.code === viewerCountry)
-              const broadcaster = forViewer?.listings?.[0]?.broadcaster ?? null
-
-              return (
-                <Row
-                  key={f.id}
-                  href={`/match/${f.id}`}
-                  accent="sport"
-                  // Event artwork, held far back. Present on major fixtures, absent on
-                  // most others -- the row must look deliberate either way.
-                  backdrop={<EventBackdrop src={f.artwork} />}
-                  // Both crests, overlapped slightly so the pair reads as one fixture
-                  // rather than two unrelated marks.
-                  thumb={
-                    <span className="flex shrink-0 items-center -space-x-1.5">
-                      <TeamBadge src={f.homeLogo} team={f.homeTeam} size="md" />
-                      <TeamBadge src={f.awayLogo} team={f.awayTeam} size="md" />
-                    </span>
-                  }
-                  lead={
-                    f.time ? (
-                      <LocalTime value={`${f.date}T${String(f.time).slice(0, 8)}Z`} />
-                    ) : (
-                      "TBA"
-                    )
-                  }
-                  leadSub="Kick-off"
-                  title={`${f.homeTeam} v ${f.awayTeam}`}
-                  meta={[f.league, f.venue].filter(Boolean).join(" · ")}
-                  right={broadcaster ?? undefined}
-                  rightNote={broadcaster ? undefined : `Not verified in ${countryText}`}
-                />
-              )
+              return {
+                id: String(f.id),
+                homeTeam: f.homeTeam,
+                awayTeam: f.awayTeam,
+                homeLogo: f.homeLogo,
+                awayLogo: f.awayLogo,
+                league: f.league,
+                venue: f.venue,
+                date: f.date,
+                time: f.time ? String(f.time) : undefined,
+                artwork: f.artwork,
+                broadcaster: forViewer?.listings?.[0]?.broadcaster ?? null,
+                verified: viewerCountry ? lastCheckedForCountry(viewerCountry) : null,
+                isLive: f.isLive,
+              }
             })}
-          </RowList>
+          />
         </Section>
       ))}
     </>
@@ -172,7 +161,7 @@ export default function EventsPage() {
           </Section>
         }
       >
-        <FixtureList />
+        <FixturesByDate />
       </Suspense>
     </PageShell>
   )
