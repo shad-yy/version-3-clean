@@ -75,21 +75,37 @@ function CountryRow({
           {country.name}
         </span>
 
+        {/* Slots animate in 45ms apart, once per row — five separate answers arriving,
+            not one block appearing. */}
         <span className="flex shrink-0 gap-1">
-          {LANES.map((lane) => (
-            <MatrixSlot
+          {LANES.map((lane, i) => (
+            <span
               key={lane.key}
-              held={country.lanes[lane.key].length > 0}
-              letter={lane.letter}
-              label={lane.label}
-            />
+              className="block"
+              style={{ animation: `slotIn .38s cubic-bezier(.2,.7,.3,1) ${i * 45}ms both` }}
+            >
+              <MatrixSlot
+                held={country.lanes[lane.key].length > 0}
+                letter={lane.letter}
+                label={lane.label}
+              />
+            </span>
           ))}
         </span>
 
-        <span className="ml-auto shrink-0 font-mono text-[10.5px] uppercase tracking-[.08em] text-sl-mute">
+        {/*
+          §2j counts offer *kinds* rather than services: the five slots beside this are
+          kinds, so a services count made the row disagree with itself at a glance.
+        */}
+        <span
+          className={cn(
+            "ml-auto shrink-0 font-mono text-[10.5px] uppercase tracking-[.08em]",
+            nothingRecorded ? "text-sl-dim" : "text-sl-mute",
+          )}
+        >
           {nothingRecorded
             ? "No offers recorded"
-            : `${country.serviceCount} ${country.serviceCount === 1 ? "service" : "services"}`}
+            : `${LANES.filter((l) => country.lanes[l.key].length > 0).length} of 5 offer kinds`}
         </span>
 
         <ChevronDown
@@ -144,6 +160,20 @@ function CountryRow({
   )
 }
 
+/**
+ * ## The one part of §2j that is not here
+ *
+ * The handoff adds a per-country **checked** column and says plainly: *"The date is the
+ * product."* That is right for sport, where a person confirmed a listing on a date this
+ * repo records. It cannot be built for film and television: TMDB's watch-provider data
+ * carries no verification date, and inventing one — or dressing the cache timestamp up as
+ * a check — would put the most authoritative-looking element on the screen behind the only
+ * unfounded claim on it.
+ *
+ * What is true and useful is stated once for the whole matrix rather than faked per row:
+ * this data is re-read from the provider on a six-hour cycle, and it is what the provider
+ * lists rather than something we verified.
+ */
 export function AvailabilityExplorer({
   countries,
   notCheckedCount,
