@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 import { Suspense } from "react"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
@@ -6,13 +7,14 @@ import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
-import { PosterThumb } from "@/components/sightline/poster-thumb"
 import {
   buildTitleSlug,
   getAvailableRegions,
   getTrendingTitles,
   isTmdbConfigured,
   type TitleDetails,
+  getWatchProvidersForCountry,
+  tmdbImage,
 } from "@/lib/api/tmdb"
 
 /**
@@ -42,29 +44,126 @@ export const metadata: Metadata = (() => {
   }
 })()
 
-function TitleCard({ title }: { title: TitleDetails }) {
+/**
+ * Browse card — design_handoff_sightline_ui/README.md §2b.
+ *
+ * Poster-forward: a 3/4 still filling the card's width, then a padded column carrying the
+ * kind, the title, the services that actually hold it in the reader's country, and
+ * nothing else.
+ *
+ * Replaces a card that put a 64px thumbnail beside a title inside a ~440px box and left
+ * roughly 370px of it empty. That was not a design decision, it was artwork bolted onto a
+ * layout built for text.
+ *
+ * **No "checked" line, unlike the spec.** §2b ends the card with a mono "Checked 14 Aug".
+ * Film and television availability carries no verification date — TMDB does not supply
+ * one, and this site never describes that vertical as verified, only as what the provider
+ * currently lists. A date there would be the strongest claim on the card and the only
+ * unfounded one.
+ */
+function TitleCard({
+  title,
+  services,
+}: {
+  title: TitleDetails
+  /** Services holding it in the viewer's country. Empty is common and rendered as such. */
+  services: string[]
+}) {
+  const poster = tmdbImage(title.posterPath, "w342")
+
   return (
     <Link
       href={`/watch/title/${buildTitleSlug(title.mediaType, title.tmdbId, title.name)}`}
-      className="group flex gap-3.5 rounded-[7px] border border-sl-line bg-sl-surface p-4 transition-colors duration-[.16s] hover:border-sl-outline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
+      className="group flex flex-col overflow-hidden rounded-[7px] border border-sl-line bg-sl-surface transition-[transform,border-color] duration-[.16s] hover:-translate-y-0.5 hover:border-sl-outline active:scale-[.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
     >
-      <PosterThumb path={title.posterPath} size="md" />
-      <div className="flex min-w-0 flex-col">
-        {/* Blue is the film/TV accent. Amber would be wrong here -- it means live sport. */}
-        <p className="mb-1.5 font-mono text-[10.5px] uppercase tracking-[.14em] text-sl-blue">
+      <span className="relative block aspect-[3/4] bg-sl-panel">
+        {poster ? (
+          <Image
+            src={poster}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            loading="lazy"
+            className="object-cover"
+          />
+        ) : (
+          <span className="flex h-full items-center justify-center font-mono text-[10px] uppercase tracking-[.1em] text-sl-dim">
+            No artwork
+          </span>
+        )}
+      </span>
+
+      <span className="flex flex-col gap-2 p-[14px]">
+        {/* Blue is the film/TV accent. Type is carried by colour, never a badge. */}
+        <span className="font-mono text-[10px] uppercase tracking-[.14em] text-sl-blue">
           {title.mediaType === "movie" ? "Film" : "Series"}
-          {title.year ? ` · ${title.year}` : ""}
-        </p>
-        <h3 className="text-[15px] font-medium leading-tight text-sl-text transition-colors duration-[.16s] group-hover:text-sl-blue">
+          {title.year && (
+            <>
+              <span className="text-sl-dim"> · </span>
+              <span className="text-sl-mute">{title.year}</span>
+            </>
+          )}
+        </span>
+
+        <span className="text-[16px] font-medium leading-[1.25] tracking-[-0.01em] text-sl-text">
           {title.name}
-        </h3>
-      </div>
+        </span>
+
+        {services.length > 0 ? (
+          <span className="flex flex-wrap gap-1.5">
+            {services.slice(0, 3).map((name) => (
+              <span
+                key={name}
+                className="rounded-[5px] border border-sl-line px-2 py-1 text-[11.5px] text-sl-mid"
+              >
+                {name}
+              </span>
+            ))}
+            {services.length > 3 && (
+              <span className="self-center font-mono text-[10px] uppercase tracking-[.1em] text-sl-dim">
+                +{services.length - 3}
+              </span>
+            )}
+          </span>
+        ) : (
+          // Verbatim from §Copy. An absent offer is an answer, not a blank.
+          <span className="font-mono text-[10px] uppercase tracking-[.1em] text-sl-dim">
+            No offers recorded
+          </span>
+        )}
+      </span>
     </Link>
   )
 }
 
 async function TitleGrid({ countryText }: { countryText: string }) {
-  const [titles, regions] = await Promise.all([getTrendingTitles(18), getAvailableRegions()])
+  const country = getViewerCountry()
+  const [titles, regions] = await Promise.all([getTrendingTitles(16), getAvailableRegions()])
+
+  /*
+   * Availability per title, in parallel.
+   *
+   * One watch-provider lookup each, which sounds expensive and is not: every response is
+   * cached for six hours and shared, so a warm grid costs nothing and a cold one costs
+   * sixteen requests once. Without this the cards can only name the title, and a card that
+   * cannot say where to watch something is not doing this site's job.
+   *
+   * A failure yields no chips rather than failing the grid.
+   */
+  const withServices = await Promise.all(
+    titles.map(async (t) => {
+      if (!country) return { title: t, services: [] as string[] }
+      try {
+        const a = await getWatchProvidersForCountry(t.mediaType, t.tmdbId, country)
+        const names = a
+          ? [...a.free, ...a.ads, ...a.flatrate, ...a.rent, ...a.buy].map((p) => p.name)
+          : []
+        return { title: t, services: [...new Set(names)] }
+      } catch {
+        return { title: t, services: [] as string[] }
+      }
+    }),
+  )
 
   if (!titles.length) {
     // An honest gap, in the same panel geometry as a populated result -- design opinion
@@ -83,17 +182,27 @@ async function TitleGrid({ countryText }: { countryText: string }) {
   return (
     <>
       <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2">
+        {/*
+          Not §2b's "Checked recently". Nothing on this grid has been checked by us --
+          film and television availability is what the provider lists, and the site does
+          not call that verified. The heading says what the list actually is.
+        */}
         <h2 className="text-[20px] font-semibold tracking-[-0.022em] text-sl-text">
-          Checked recently
+          Trending now
         </h2>
         <p className="font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mute">
           {regions.length} countries covered
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {titles.map((t) => (
-          <TitleCard key={`${t.mediaType}-${t.tmdbId}`} title={t} />
+      {/* 4 across at desktop, 14px gap, per §2b. */}
+      <div className="grid grid-cols-2 gap-[14px] lg:grid-cols-4">
+        {withServices.map(({ title, services }) => (
+          <TitleCard
+            key={`${title.mediaType}-${title.tmdbId}`}
+            title={title}
+            services={services}
+          />
         ))}
       </div>
 
