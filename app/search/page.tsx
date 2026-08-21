@@ -8,10 +8,10 @@ import { formatTime } from "@/lib/utils/datetime"
 import { HeroSearch } from "@/components/sightline/hero-search"
 import {
   ResultRow,
-  ResultsSkeleton,
   type ResultRowData,
 } from "@/components/sightline/result-row"
-import { buildTitleSlug, isTmdbConfigured, searchTitles } from "@/lib/api/tmdb"
+import { buildTitleSlug, getAvailableRegions, isTmdbConfigured, searchTitles } from "@/lib/api/tmdb"
+import { RightsCheckLoader } from "@/components/sightline/rights-check-loader"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 
 /**
@@ -127,7 +127,7 @@ async function Results({ query, scope }: { query: string; scope: Scope }) {
   )
 }
 
-export default function SearchPage({
+export default async function SearchPage({
   searchParams,
 }: {
   searchParams: { q?: string; scope?: string }
@@ -140,6 +140,9 @@ export default function SearchPage({
 
   const country = getViewerCountry()
   const countryText = countryLabel(country)
+  // Real provider coverage, so the loader's "Checking N catalogues" is a fact rather than
+  // a hardcoded number that quietly goes stale.
+  const regionCount = (await getAvailableRegions()).length
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -167,8 +170,17 @@ export default function SearchPage({
           <HeroSearch countryText={countryText} />
         </div>
 
+        {/*
+          The four-stage rights check rather than a flat skeleton. A search genuinely does
+          resolve a region, match a title, check catalogues and confirm rights -- saying so
+          turns the one unavoidable wait into the clearest explanation of the product a
+          reader will get.
+        */}
         {query ? (
-          <Suspense key={`${query}-${scope}`} fallback={<ResultsSkeleton countryText={countryText} />}>
+          <Suspense
+            key={`${query}-${scope}`}
+            fallback={<RightsCheckLoader regionCount={regionCount} rows={5} />}
+          >
             <Results query={query} scope={scope} />
           </Suspense>
         ) : (

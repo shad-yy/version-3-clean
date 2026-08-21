@@ -26,6 +26,7 @@ import {
   RowSkeleton,
 } from "@/components/sightline/page-shell"
 import { PosterThumb } from "@/components/sightline/poster-thumb"
+import { RightsCheckLoader } from "@/components/sightline/rights-check-loader"
 import { CompetitionBadge } from "@/components/sightline/competition-badge"
 
 /**
@@ -238,10 +239,15 @@ export default async function WhereToWatchCountryPage({
         <SportSection code={code} name={name} />
       </Suspense>
 
+      {/*
+        The film section is the slow one: it fans out a watch-provider lookup per title.
+        That wait gets the four-stage check rather than a flat skeleton, because the
+        stages describe exactly what is taking the time.
+      */}
       <Suspense
         fallback={
           <Section title="Film and television">
-            <RowSkeleton rows={6} />
+            <RightsCheckLoader rows={4} />
           </Section>
         }
       >
