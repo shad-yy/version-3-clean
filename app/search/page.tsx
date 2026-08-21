@@ -167,7 +167,7 @@ export default async function SearchPage({
           {query ? `Search results for ${query}` : "Search"}
         </h1>
         <div className="mb-8">
-          <HeroSearch countryText={countryText} />
+          <HeroSearch countryText={countryText} country={country} />
         </div>
 
         {/*

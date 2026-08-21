@@ -48,16 +48,31 @@ const EXAMPLES = [
   "Formula 1",
 ] as const
 
+/** Group order: film and TV first, because it is by far the larger catalogue. */
+const GROUPS = [
+  { kind: "film-tv" as const, label: "Film & TV" },
+  { kind: "sport" as const, label: "Fixtures" },
+]
+
 const DEBOUNCE_MS = 220
 const MIN_QUERY = 2
 
-export function HeroSearch({ countryText }: { countryText: string }) {
+export function HeroSearch({
+  countryText,
+  country,
+}: {
+  countryText: string
+  /** ISO code, so suggestions can say where each title is shown. */
+  country?: string | null
+}) {
   const router = useRouter()
   const [scope, setScope] = useState<Scope>("Everything")
   const [q, setQ] = useState("")
   const [focused, setFocused] = useState(false)
   const [suggestions, setSuggestions] = useState<Suggestion[]>([])
   const [loading, setLoading] = useState(false)
+  // §2h defines a failed state with its own copy and a retry, distinct from "no match".
+  const [failed, setFailed] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const [open, setOpen] = useState(false)
 
@@ -86,15 +101,17 @@ export function HeroSearch({ countryText }: { countryText: string }) {
       abortRef.current = controller
       setLoading(true)
       try {
-        const res = await fetch(`/api/suggest?q=${encodeURIComponent(term)}`, {
-          signal: controller.signal,
-        })
+        const params = new URLSearchParams({ q: term })
+        if (country) params.set("country", country)
+        const res = await fetch(`/api/suggest?${params}`, { signal: controller.signal })
+        if (!res.ok) throw new Error(`suggest: ${res.status}`)
         const json = (await res.json()) as { suggestions?: Suggestion[] }
         setSuggestions(json.suggestions ?? [])
+        setFailed(false)
         setActiveIndex(-1)
-      } catch {
-        // An aborted request is the normal case on every keystroke, not an error. A real
-        // failure simply leaves the previous suggestions up rather than blanking them.
+      } catch (err) {
+        // An abort is the normal case on every keystroke, not a failure.
+        if ((err as Error)?.name !== "AbortError") setFailed(true)
       } finally {
         if (!controller.signal.aborted) setLoading(false)
       }
@@ -226,7 +243,14 @@ export function HeroSearch({ countryText }: { countryText: string }) {
             )}
           </div>
 
-          {/* Suggestions */}
+          {/*
+            Search-as-you-type panel — design_handoff_sightline_ui §2h.
+
+            Four states sharing one geometry: grouped results, "nothing found", a provider
+            failure with a retry, and loading. Same border, radius, background and shadow
+            throughout, so the panel never appears to change shape under the reader as
+            they type.
+          */}
           {showPanel && (
             <div
               id="search-suggestions"
@@ -235,67 +259,130 @@ export function HeroSearch({ countryText }: { countryText: string }) {
               className="absolute inset-x-0 top-full z-40 mt-2 overflow-hidden rounded-[8px] border border-sl-line bg-sl-panel shadow-dock"
               style={{ animation: "fadeRise .18s cubic-bezier(.2,.7,.3,1) both" }}
             >
-              {visible.length === 0 ? (
-                <p className="px-4 py-4 text-[13px] text-sl-mute">
-                  {loading ? "Searching…" : `Nothing matching “${q.trim()}” yet.`}
-                </p>
+              {failed ? (
+                /*
+                  A provider outage is not the same answer as "nothing matches", and
+                  saying so is the difference between a reader retrying and a reader
+                  concluding we do not hold the title. Copy is verbatim from §Copy.
+                */
+                <div className="px-4 py-4">
+                  <p className="text-[13.5px] text-sl-text">
+                    The metadata provider did not answer.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setQ((v) => `${v} `.trimEnd() + " ")}
+                    className="mt-3 rounded-[6px] border border-sl-chip-border bg-sl-surface px-3 py-1.5 font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mid transition-colors duration-[.16s] hover:text-sl-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/50"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : visible.length === 0 ? (
+                <div className="px-4 py-4">
+                  <p className="text-[13.5px] text-sl-text">
+                    {loading ? "Searching…" : `No title or fixture matches “${q.trim()}”.`}
+                  </p>
+                  {!loading && (
+                    <p className="mt-1.5 max-w-[460px] text-[12.5px] leading-[1.5] text-sl-mute">
+                      We hold 139 countries for film and TV, and hand-verified rights for 2
+                      competitions. If it should be here, tell us.
+                    </p>
+                  )}
+                </div>
               ) : (
-                <ul className="max-h-[336px] overflow-y-auto overscroll-contain">
-                  {visible.map((s, i) => (
-                    <li key={s.id}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={i === activeIndex}
-                        onMouseEnter={() => setActiveIndex(i)}
-                        onClick={() => {
-                          router.push(s.href)
-                          setOpen(false)
-                        }}
-                        className={cn(
-                          "flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors duration-[.12s]",
-                          i === activeIndex ? "bg-sl-surface" : "",
-                        )}
-                      >
-                        {s.kind === "film-tv" ? (
-                          <span
-                            className="relative block h-[54px] w-9 shrink-0 overflow-hidden rounded-[3px] border border-sl-line bg-sl-surface"
-                            aria-hidden="true"
-                          >
-                            {s.posterPath && (
-                              <Image
-                                src={`https://image.tmdb.org/t/p/w185${s.posterPath}`}
-                                alt=""
-                                width={36}
-                                height={54}
-                                className="size-full object-cover"
-                              />
-                            )}
-                          </span>
-                        ) : (
-                          <span
-                            className="block h-[54px] w-[2px] shrink-0 rounded bg-sl-amber"
-                            aria-hidden="true"
-                          />
-                        )}
+                <ul className="max-h-[380px] overflow-y-auto overscroll-contain">
+                  {GROUPS.map((group) => {
+                    const rows = visible.filter((s) => s.kind === group.kind)
+                    if (rows.length === 0) return null
+                    return (
+                      <li key={group.kind}>
+                        <p className="border-b border-sl-hair bg-sl-ground px-4 py-2 font-mono text-[9.5px] uppercase tracking-[.16em] text-sl-mute">
+                          {group.label}
+                        </p>
+                        <ul>
+                          {rows.map((s) => {
+                            const i = visible.indexOf(s)
+                            return (
+                              <li key={s.id}>
+                                <button
+                                  type="button"
+                                  role="option"
+                                  aria-selected={i === activeIndex}
+                                  onMouseEnter={() => setActiveIndex(i)}
+                                  onClick={() => {
+                                    router.push(s.href)
+                                    setOpen(false)
+                                  }}
+                                  className={cn(
+                                    "flex w-full items-center gap-3 px-3 py-[9px] text-left transition-colors duration-[.12s]",
+                                    i === activeIndex ? "bg-sl-surface" : "",
+                                  )}
+                                >
+                                  {s.kind === "film-tv" ? (
+                                    <span
+                                      className="relative block h-[54px] w-9 shrink-0 overflow-hidden rounded-[3px] border border-sl-line bg-sl-surface"
+                                      aria-hidden="true"
+                                    >
+                                      {s.posterPath && (
+                                        <Image
+                                          src={`https://image.tmdb.org/t/p/w185${s.posterPath}`}
+                                          alt=""
+                                          width={36}
+                                          height={54}
+                                          className="size-full object-cover"
+                                        />
+                                      )}
+                                    </span>
+                                  ) : (
+                                    <span
+                                      className="block h-[54px] w-[2px] shrink-0 rounded bg-sl-amber"
+                                      aria-hidden="true"
+                                    />
+                                  )}
 
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[14px] text-sl-text">
-                            {s.label}
-                          </span>
-                          <span
-                            className={cn(
-                              "mt-0.5 block truncate font-mono text-[10px] uppercase tracking-[.1em]",
-                              s.kind === "film-tv" ? "text-sl-blue" : "text-sl-amber",
-                            )}
-                          >
-                            {s.sub}
-                          </span>
-                        </span>
-                      </button>
-                    </li>
-                  ))}
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block truncate text-[14.5px] text-sl-text">
+                                      {s.label}
+                                    </span>
+                                    <span
+                                      className={cn(
+                                        "mt-0.5 block truncate font-mono text-[10px] uppercase tracking-[.1em]",
+                                        s.kind === "film-tv" ? "text-sl-blue" : "text-sl-amber",
+                                      )}
+                                    >
+                                      {s.sub}
+                                    </span>
+                                  </span>
+
+                                  {/* Where it is shown. An absent answer is stated, not
+                                      hidden — that is the whole product. */}
+                                  <span className="hidden max-w-[150px] shrink-0 truncate text-right text-[12.5px] text-sl-mute sm:block">
+                                    {s.where ?? "Not verified"}
+                                  </span>
+                                </button>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </li>
+                    )
+                  })}
                 </ul>
+              )}
+
+              {visible.length > 0 && !failed && (
+                <div className="flex items-center justify-between gap-3 border-t border-sl-hair bg-sl-ground px-4 py-2">
+                  <p className="font-mono text-[9.5px] uppercase tracking-[.1em] text-sl-dim">
+                    ↑↓ move · ↵ open · esc close
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => submit(q)}
+                    className="shrink-0 rounded-[4px] text-[12px] text-sl-blue transition-colors duration-[.16s] hover:text-sl-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/50"
+                  >
+                    See all {visible.length} results
+                  </button>
+                </div>
               )}
             </div>
           )}

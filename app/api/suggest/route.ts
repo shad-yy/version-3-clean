@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
-import { buildTitleSlug, isTmdbConfigured, searchTitles } from "@/lib/api/tmdb"
+import {
+  buildTitleSlug,
+  getWatchProvidersForCountry,
+  isTmdbConfigured,
+  searchTitles,
+} from "@/lib/api/tmdb"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 
 /**
@@ -28,6 +33,11 @@ export interface Suggestion {
   kind: "sport" | "film-tv"
   /** TMDB poster path, film and TV only. */
   posterPath?: string | null
+  /**
+   * Where it is shown in the viewer's country — the right-hand column of the dropdown.
+   * Absent when we hold nothing, which the panel renders as such rather than hiding.
+   */
+  where?: string | null
 }
 
 const MIN_QUERY = 2
@@ -40,6 +50,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ suggestions: [] as Suggestion[] })
   }
 
+  // The viewer's country decides the "where" column. Absent is fine and common.
+  const country = new URL(request.url).searchParams.get("country")
+
   const [films, sport] = await Promise.allSettled([
     isTmdbConfigured() ? searchTitles(q, MAX_PER_KIND) : Promise.resolve([]),
     unifiedSportsAPI.searchAll(q),
@@ -48,7 +61,33 @@ export async function GET(request: NextRequest) {
   const suggestions: Suggestion[] = []
 
   if (films.status === "fulfilled") {
-    for (const t of films.value.slice(0, MAX_PER_KIND)) {
+    const picks = films.value.slice(0, MAX_PER_KIND)
+
+    /*
+     * One availability lookup per suggestion, in parallel, only when a country is known.
+     * Cached for six hours and shared, so a repeated prefix costs nothing. A failure
+     * yields no "where" rather than failing the suggestion — a title the reader can still
+     * open is better than a dropdown that lost a row.
+     */
+    const wheres = await Promise.all(
+      picks.map(async (t) => {
+        if (!country) return null
+        try {
+          const a = await getWatchProvidersForCountry(t.mediaType, t.tmdbId, country)
+          if (!a) return null
+          const names = [...a.free, ...a.ads, ...a.flatrate, ...a.rent, ...a.buy].map(
+            (p) => p.name,
+          )
+          const unique = [...new Set(names)]
+          if (unique.length === 0) return null
+          return unique.length > 1 ? `${unique[0]} +${unique.length - 1}` : unique[0]
+        } catch {
+          return null
+        }
+      }),
+    )
+
+    picks.forEach((t, i) => {
       suggestions.push({
         id: `title-${t.tmdbId}`,
         label: t.name,
@@ -56,8 +95,9 @@ export async function GET(request: NextRequest) {
         href: `/watch/title/${buildTitleSlug(t.mediaType, t.tmdbId, t.name)}`,
         kind: "film-tv",
         posterPath: t.posterPath,
+        where: wheres[i],
       })
-    }
+    })
   }
 
   if (sport.status === "fulfilled") {

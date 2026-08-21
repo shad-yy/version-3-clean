@@ -101,7 +101,7 @@ export async function Hero() {
         </p>
 
         <div style={{ animation: "wordIn .62s cubic-bezier(.2,.7,.3,1) 424ms both" }}>
-          <HeroSearch countryText={countryText} />
+          <HeroSearch countryText={countryText} country={country} />
         </div>
 
         <HeroCounters stats={stats} />
