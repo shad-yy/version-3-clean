@@ -997,6 +997,120 @@ html[data-navigating] body {
   }
 }
 
+/* ============================================================================
+ * Sightline motion system — design_handoff_sightline_ui/README.md §Motion
+ *
+ * Ten patterns, all hand-written keyframes. **Do not add an animation library.**
+ *
+ * Three surfaces stay still on purpose: the availability matrix body, the
+ * unverified panel, and every provenance date. A page about what is true should
+ * not have its facts moving.
+ *
+ * Nothing here animates a layout property. Transform and opacity only, so the
+ * work stays on the compositor.
+ * ========================================================================= */
+
+/* Hero headline words, eyebrow, body, search block, counters. 52ms apart. */
+@keyframes wordIn {
+  from { opacity: 0; filter: blur(7px); transform: translateY(9px); }
+  to   { opacity: 1; filter: blur(0);   transform: translateY(0); }
+}
+
+/* Homepage live feed rows. 90ms apart. */
+@keyframes listIn {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Availability slots, five per row, 45ms apart. */
+@keyframes slotIn {
+  from { opacity: 0; transform: scale(.74); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Skeleton availability slots only. A sweep across five squares would read as
+   one loading bar rather than five separate answers. */
+@keyframes breathe {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: .9; }
+}
+
+/* Hero backdrop, live-row stills, promo card. Alternates so it never snaps back. */
+@keyframes kenBurns {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.13) translate3d(-1.5%, -1.5%, 0); }
+}
+
+/* "Just re-checked" strip. Items are duplicated once so -50% loops seamlessly. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Border beam. Used exactly once, on the one card whose data is actually
+   changing -- used twice it means nothing. */
+@keyframes beamSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Search field, Search button, loader bar. */
+@keyframes sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(320%); }
+}
+
+/* Loader spinner arc, dropdown loading icon. */
+@keyframes arcSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Hero grid pattern. */
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-40px, -40px, 0); }
+}
+
+/* Live clock, on each tick. */
+@keyframes digitIn {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sl-ken-burns { animation: kenBurns 28s ease-in-out alternate infinite; }
+.sl-marquee   { animation: marquee 42s linear infinite; }
+.sl-drift     { animation: drift 34s linear infinite; }
+.sl-breathe   { animation: breathe 1.5s ease-in-out infinite; }
+.sl-arc       { animation: arcSpin 1.1s linear infinite; }
+
+/*
+ * Reduced motion.
+ *
+ * Per-rule rather than a blanket `animation: none`, so reveal patterns still
+ * land at their end state instead of staying at opacity 0. The looping
+ * ambient patterns simply stop.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [style*="wordIn"],
+  [style*="listIn"],
+  [style*="slotIn"],
+  [style*="digitIn"] {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .sl-ken-burns,
+  .sl-marquee,
+  .sl-drift,
+  .sl-breathe,
+  .sl-arc {
+    animation: none !important;
+  }
+}
+
 /* Bottom sheet entrance, for the country picker on small screens. */
 @keyframes sheetUp {
   from { transform: translateY(12px); opacity: 0; }

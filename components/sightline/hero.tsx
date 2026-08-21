@@ -1,26 +1,31 @@
+import { Suspense } from "react"
 import { getAvailableRegions } from "@/lib/api/tmdb"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { getSelectableCountries } from "@/lib/geo/countries"
+import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
 import { CountrySelect } from "@/components/sightline/country-select"
-import { Suspense } from "react"
 import { HeroSearch } from "@/components/sightline/hero-search"
 import { HeroBackdrop } from "@/components/sightline/hero-backdrop"
+import { HeroCounters, type HeroStat } from "@/components/sightline/hero-counters"
+import { HeroEyebrow } from "@/components/sightline/hero-eyebrow"
 
 /**
- * Homepage hero — design/sightline/HANDOFF.md §1.1–1.2.
+ * Homepage hero — design_handoff_sightline_ui/README.md §3a.
  *
- * Replaces a hero that opened with "Live Sports Scores, Fixtures & Global Broadcast
- * Guide": an inventory list that described stock rather than value, asked nothing, never
- * mentioned film or television, and omitted the one control the product is built around.
+ * The headline is the reader's own question, with the country as a live control inside
+ * the sentence — the single variable every answer turns on, changeable in the first line
+ * of the page.
  *
- * The headline is now the user's own question, with the country as an inline control
- * inside the sentence — so the single most important variable in every answer is visible
- * and changeable in the first line of the page.
+ * Words blur in 52ms apart from 60ms. The country control is deliberately **not** part of
+ * that sequence: it is an interactive element, and staggering it in makes the one thing a
+ * reader might click arrive last.
  *
- * The coverage figure is read from the provider rather than hardcoded. It is the count of
- * countries we can genuinely answer film and television for, and it grows on its own when
- * the provider adds a market.
+ * Everything except the eyebrow clock and the counters is server rendered. A headline
+ * that waits on hydration is a headline nobody sees.
  */
+
+const HEADLINE_PREFIX = ["Where", "can", "I", "watch", "this", "in"] as const
+
 export async function Hero() {
   const country = getViewerCountry()
   const [regions, countries] = await Promise.all([
@@ -30,10 +35,25 @@ export async function Hero() {
 
   const countryText = countryLabel(country)
 
+  /*
+   * Stats, all three read from real data.
+   *
+   * The handoff's third column was "4,128 checks in the last 7 days". The verification
+   * log holds seven entries from a single day, so that metric is genuinely zero and the
+   * number was sample data the designer flagged as representative. Counting listings
+   * verified by hand is smaller and defensible line by line. See DECISIONS.md.
+   */
+  const listings = COMPETITION_RIGHTS.reduce((n, c) => n + c.listings.length, 0)
+  const stats: HeroStat[] = [
+    { value: regions.length, label: "Countries for film & TV" },
+    { value: COMPETITION_RIGHTS.length, label: "Competitions hand-verified" },
+    { value: listings, label: "Broadcast listings verified by hand" },
+  ]
+
   return (
-    <section className="relative overflow-hidden border-b border-sl-line bg-sl-ground px-[18px] pb-10 pt-[86px] lg:px-20 lg:pb-10 lg:pt-[128px]">
+    <section className="relative overflow-hidden border-b border-sl-line bg-sl-ground px-[18px] pb-[34px] pt-[86px] lg:px-[60px] lg:pt-[128px]">
       {/*
-        Streamed, so a slow TMDB call delays the wall and never the headline or the search
+        Streamed, so a slow TMDB call delays the backdrop and never the headline or search
         field -- those are the reason the page exists and must paint first.
       */}
       <Suspense fallback={null}>
@@ -41,35 +61,50 @@ export async function Hero() {
       </Suspense>
 
       <div className="relative mx-auto max-w-[1280px]">
-        <p className="mb-4 font-mono text-[10.5px] uppercase tracking-[.16em] text-sl-mute lg:text-[11px] lg:tracking-[.18em]">
-          Sport · Film · Television
-          {regions.length > 0 ? ` — ${regions.length} countries` : ""}
-        </p>
+        {/*
+          There is no live fixture most days, so the eyebrow states scope rather than a
+          scoreline. The row keeps its height either way -- nothing shifts when a match
+          kicks off.
+        */}
+        <HeroEyebrow
+          fallback={`Sport · Film · Television${regions.length ? ` — ${regions.length} countries` : ""}`}
+        />
 
-        <h1 className="mb-5 max-w-[900px] text-[35px] font-semibold leading-[1.06] tracking-[-0.034em] text-sl-text lg:text-[62px] lg:leading-[1.02] lg:tracking-[-0.038em]">
-          <span>Where can I watch this in </span>
-          {/*
-            The country sits inside the headline as a live control, not as static text.
-            It is the variable the whole answer turns on, so it is the one thing in the
-            sentence a reader can change.
-          */}
+        <h1 className="mb-5 max-w-[900px] text-[35px] font-semibold leading-[1.06] tracking-[-0.034em] text-sl-text lg:text-[60px] lg:leading-[1.02] lg:tracking-[-0.038em]">
+          {HEADLINE_PREFIX.map((word, i) => (
+            <span
+              key={word + i}
+              className="inline-block"
+              style={{
+                animation: `wordIn .62s cubic-bezier(.2,.7,.3,1) ${60 + i * 52}ms both`,
+              }}
+            >
+              {word}&nbsp;
+            </span>
+          ))}
           <CountrySelect
             countries={countries}
             current={country}
             variant="inline"
             className="inline-block align-baseline"
           />
-          {/* No leading space: the question mark closes the sentence tight against the
-              country name, or the headline reads "United Kingdom ?". */}
+          {/* No leading space, or the headline reads "United Kingdom ?". */}
           <span>?</span>
         </h1>
 
-        <p className="mb-8 max-w-[620px] text-[15px] leading-[1.55] text-sl-mid lg:text-[17px]">
+        <p
+          className="mb-8 max-w-[560px] text-[15px] leading-[1.55] text-sl-mid lg:text-[17px]"
+          style={{ animation: "wordIn .62s cubic-bezier(.2,.7,.3,1) 372ms both" }}
+        >
           One lookup for sport, film and television. We tell you which service carries it
           where you are — and the date we last checked.
         </p>
 
-        <HeroSearch countryText={countryText} />
+        <div style={{ animation: "wordIn .62s cubic-bezier(.2,.7,.3,1) 424ms both" }}>
+          <HeroSearch countryText={countryText} />
+        </div>
+
+        <HeroCounters stats={stats} />
       </div>
     </section>
   )

@@ -298,6 +298,12 @@ export interface TitleDetails {
   year: string
   overview: string
   posterPath: string | null
+  /**
+   * Wide artwork, roughly 16:9. The right shape for a hero backdrop or a row still, where
+   * a 2:3 poster has to be cropped hard. TMDB has it less often than a poster, so callers
+   * must fall back rather than assume.
+   */
+  backdropPath: string | null
   genres: string[]
   /** Minutes for a film; undefined for a series. */
   runtime?: number
@@ -313,6 +319,7 @@ interface TmdbTitleRaw {
   first_air_date?: string
   overview?: string
   poster_path?: string | null
+  backdrop_path?: string | null
   runtime?: number
   number_of_seasons?: number
   genres?: Array<{ name: string }>
@@ -328,6 +335,7 @@ function mapTitle(raw: TmdbTitleRaw, mediaType: MediaType): TitleDetails {
     year: date.slice(0, 4),
     overview: raw.overview || "",
     posterPath: raw.poster_path ?? null,
+    backdropPath: raw.backdrop_path ?? null,
     genres: (raw.genres || []).map((g) => g.name),
     runtime: raw.runtime,
     seasons: raw.number_of_seasons,

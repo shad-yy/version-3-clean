@@ -2,108 +2,83 @@ import Image from "next/image"
 import { getTrendingTitles, isTmdbConfigured, tmdbImage } from "@/lib/api/tmdb"
 
 /**
- * Poster wall behind the hero.
+ * Hero backdrop — design_handoff_sightline_ui/README.md §3a.
  *
- * ## Why this exists
+ * A single Ken Burns still occupying the right 54% of the hero, under two scrims and a
+ * drifting grid pattern. Replaces an earlier poster wall: a wall of eighteen posters read
+ * as a product grid behind the headline, where one slowly moving still reads as a
+ * backdrop and lets the type stay the subject.
  *
- * Every image on the homepage sat **3,301 pixels down the page** — the first screen and a
- * half was hero and ledger, both pure text. The artwork was all real and all working, and
- * a visitor landing on the site saw none of it, which reads as "this site has no images".
+ * Geometry is from the spec, not invented:
  *
- * The fix is not more images. It is images *where people look*.
+ *  - Still at `inset: 0 0 0 46%`
+ *  - Scrim 1 runs left-to-right, solid `ground` to 34%, easing out to .62 at the far edge
+ *  - Scrim 2 runs bottom-to-top so the still never collides with the search block
+ *  - Grid is 40×40px `hair` lines at .5 opacity, radially masked and drifting
  *
- * ## The restraint
+ * All three layers are `pointer-events: none`. The still is decorative: it illustrates
+ * that the site covers film and television, and carries no information the copy does not.
  *
- * This is a **backdrop, not a gallery**. The hero's job is the question and the search
- * field; if the wall competes with either, it has failed. So:
- *
- *  - Posters are heavily dimmed and sit behind a scrim that is near-opaque on the left,
- *    where the headline and search box live, and thins toward the right.
- *  - The grid is clipped and offset so no poster reads as a clickable item — it is
- *    texture, not content, and nothing here is interactive.
- *  - It renders nothing at all when TMDB is unconfigured or returns too few titles. A
- *    half-populated wall looks broken in a way an absent one does not.
- *
- * The posters are the same `getTrendingTitles` call the rail below already makes, so this
- * costs no extra request — the response is cached and shared.
+ * Renders nothing when TMDB is unconfigured or has no artwork — the hero is designed to
+ * stand on its type alone, so an absent backdrop costs nothing.
  */
-
-const MIN_POSTERS = 8
-const POSTER_W = 150
-const POSTER_H = 225
-
 export async function HeroBackdrop() {
   if (!isTmdbConfigured()) return null
 
-  const titles = await getTrendingTitles(18)
-  const posters = titles
-    .map((t) => tmdbImage(t.posterPath, "w342"))
-    .filter((p): p is string => Boolean(p))
-
-  if (posters.length < MIN_POSTERS) return null
+  const titles = await getTrendingTitles(8)
+  // Backdrops are wider than posters and sit better behind a headline, but TMDB lacks
+  // them more often, so a poster is the fallback rather than nothing.
+  const source = titles.find((t) => t.backdropPath) ?? titles.find((t) => t.posterPath)
+  const src = source
+    ? tmdbImage(source.backdropPath ?? source.posterPath, "w780")
+    : null
+  if (!src) return null
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/*
-        Two offset rows, rotated slightly and pushed off the right edge. The rotation stops
-        it reading as a product grid, which is what makes it recede into texture.
-      */}
-      <div
-        className="absolute -right-24 top-1/2 flex -translate-y-1/2 gap-3 opacity-[.13]"
-        style={{ transform: "translateY(-50%) rotate(-8deg)", width: "148%" }}
-      >
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-3">
-            {posters.slice(0, 9).map((src, i) => (
-              <span
-                key={`${src}-${i}`}
-                className="relative block shrink-0 overflow-hidden rounded-[6px]"
-                style={{ width: POSTER_W, height: POSTER_H }}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  width={POSTER_W}
-                  height={POSTER_H}
-                  /*
-                   * Eager, not lazy. The wall is rotated and pushed past the right edge,
-                   * so the browser computes these as out of view and never requests them
-                   * — every poster rendered with an empty src. They are above the fold by
-                   * definition, so there is nothing for lazy loading to save.
-                   */
-                  loading="eager"
-                  className="size-full object-cover"
-                />
-              </span>
-            ))}
-          </div>
-          <div className="flex gap-3 pl-16">
-            {posters.slice(9, 18).map((src, i) => (
-              <span
-                key={`${src}-${i}`}
-                className="relative block shrink-0 overflow-hidden rounded-[6px]"
-                style={{ width: POSTER_W, height: POSTER_H }}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  width={POSTER_W}
-                  height={POSTER_H}
-                  loading="eager"
-                  className="size-full object-cover"
-                />
-              </span>
-            ))}
-          </div>
-        </div>
+      {/* The still. Right 54% of the hero. */}
+      <div className="absolute inset-y-0 right-0 left-[46%] overflow-hidden">
+        <Image
+          src={src}
+          alt=""
+          fill
+          sizes="60vw"
+          // Above the fold and the only decorative image in the hero, so it is fetched
+          // immediately rather than waiting on an intersection it will never miss.
+          priority
+          className="sl-ken-burns object-cover"
+        />
       </div>
 
-      {/*
-        Contrast floor. Near-solid on the left where the headline and search sit, thinning
-        rightward so the wall is visible without ever being read as content.
-      */}
-      <div className="absolute inset-0 bg-gradient-to-r from-sl-ground via-sl-ground/94 to-sl-ground/62" />
-      <div className="absolute inset-0 bg-gradient-to-t from-sl-ground via-transparent to-sl-ground/70" />
+      {/* Scrim 1 — horizontal. Keeps the headline column solid. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, var(--sl-ground) 0%, var(--sl-ground) 34%, rgba(11,13,17,.86) 54%, rgba(11,13,17,.5) 78%, rgba(11,13,17,.62) 100%)",
+        }}
+      />
+
+      {/* Scrim 2 — vertical. Lands the still into the page rather than cutting it off. */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(to top, var(--sl-ground) 0%, transparent 40%)" }}
+      />
+
+      {/* Drifting grid. Texture only — it is what stops the left column reading as flat. */}
+      <div
+        className="sl-drift absolute"
+        style={{
+          inset: "-80px",
+          opacity: 0.5,
+          backgroundImage:
+            "linear-gradient(to right, var(--sl-hair) 1px, transparent 1px), linear-gradient(to bottom, var(--sl-hair) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          WebkitMaskImage:
+            "radial-gradient(120% 90% at 12% 30%, #000 0%, transparent 62%)",
+          maskImage: "radial-gradient(120% 90% at 12% 30%, #000 0%, transparent 62%)",
+        }}
+      />
     </div>
   )
 }
