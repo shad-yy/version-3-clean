@@ -1359,3 +1359,62 @@ a flash of feedback is itself a kind of jitter.
 
 **The general lesson: feedback belongs on the control that was operated, not on the
 document.** One says "you did a thing"; the other says "the software is busy".
+
+---
+
+## 2026-08-21 — The UI handoff, implemented; and the one instruction declined four times
+
+`design_handoff_sightline_ui` is vendored into `design/` so the spec travels with the
+code. Both primary deliverables (§3a animated homepage, §3b loading sequence) and the
+Pass 2 screens are built.
+
+### What changed structurally
+
+The homepage was seven full-width bands of near-identical weight, the first two pure text,
+with the first image **3,301 pixels down**. It is now four sections at 684 / 82 / 539 /
+728px — weight varies instead of everything shouting equally. The rights ledger and the
+standalone live-now section folded into one two-column band.
+
+### The pattern that keeps recurring, now four times
+
+**A client component whose output is gated behind an effect renders nothing during SSR.**
+
+- The discovery dock rendered null until a session check ran.
+- `OptimizedImage` deadlocked: an IntersectionObserver at `threshold: 0.1` watched a
+  wrapper whose only content was the image the observer was meant to reveal, so it
+  collapsed to zero height and never qualified.
+- `RightsCheckLoader` held its markup behind a `setTimeout`, which made a Suspense
+  fallback that renders nothing on the server — in the one place it must appear.
+- The hero poster wall used `loading="lazy"` on a rotated, off-canvas element, so the
+  browser computed every poster as out of view and requested none.
+
+**If markup must exist server-side, the gate has to be CSS, not state.** Delays belong in
+`animation-delay`; laziness belongs to the browser.
+
+### Four declined instructions, one root assumption
+
+The handoff repeatedly applies the **sport vertical's verification language to film and
+television**, where it is not earned:
+
+1. §3a hero: "4,128 checks in the last 7 days" — the log holds seven entries from one day.
+2. §3a.5 poster rail: "Checked in the last 24 hours".
+3. §2b browse cards: a per-card "Checked 14 Aug", and a "Checked recently" heading.
+4. §2j matrix: a per-country **checked** column, with "The date is the product".
+
+TMDB supplies **no verification date** for watch-provider data, and this site states
+plainly that it never describes that vertical as verified — only as what the provider
+currently lists. In each case the date would have been the most authoritative-looking
+element on the screen and the only unfounded one.
+
+This is one assumption repeated, not four separate mistakes. Worth stating plainly before
+commissioning more design work: **the two verticals do not have the same provenance and
+cannot carry the same language.**
+
+### Where a design decision was overridden on evidence
+
+*   **The live card and the live eyebrow are built to work empty**, because they are empty
+    most days. The design shows four fixture rows and a live scoreline; wired honestly
+    that is frequently zero. A homepage that only looks right on a Saturday is the wrong
+    homepage, so the empty bodies keep identical geometry and state what is true.
+*   **The search focus ring** was softened from the spec's stacked amber border plus 3px
+    glow, which read as two yellow outlines around one field.

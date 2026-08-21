@@ -66,7 +66,9 @@ export function ResultRow({ row }: { row: ResultRowData }) {
   return (
     <Link
       href={row.href}
-      className="group flex items-center gap-4 border-b border-sl-hair px-4 py-4 transition-colors duration-[.16s] last:border-b-0 hover:bg-sl-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
+      // 74px min, 20px padding — §2g. The minimum matters: rows with and without a
+      // right-hand service would otherwise sit at different heights down one list.
+      className="group flex min-h-[74px] items-center gap-4 border-b border-sl-hair px-5 py-4 transition-colors duration-[.16s] last:border-b-0 hover:bg-sl-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
       style={{ borderLeft: `2px solid ${ACCENT[row.kind]}` }}
     >
       {/* Lead column: carries the type, so no badge is needed. */}
@@ -92,7 +94,7 @@ export function ResultRow({ row }: { row: ResultRowData }) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[15px] font-medium text-sl-text sm:text-[17px]">
+        <p className="truncate text-[15px] font-medium tracking-[-0.014em] text-sl-text sm:text-[17px]">
           {row.title}
         </p>
         {row.meta && <p className="mt-0.5 truncate text-[13px] text-sl-mute">{row.meta}</p>}
@@ -100,7 +102,7 @@ export function ResultRow({ row }: { row: ResultRowData }) {
 
       {(row.right || row.rightNote) && (
         <div className="hidden w-[280px] shrink-0 text-right lg:block">
-          {row.right && <p className="truncate text-[13px] text-sl-mid">{row.right}</p>}
+          {row.right && <p className="truncate text-[13.5px] text-sl-mid">{row.right}</p>}
           {row.rightNote && (
             <p className="mt-0.5 truncate font-mono text-[10px] uppercase tracking-[.1em] text-sl-mute">
               {row.rightNote}
@@ -137,7 +139,7 @@ export function ResultsSkeleton({ countryText }: { countryText: string }) {
         {[0, 90, 180, 270, 360].map((delay) => (
           <div
             key={delay}
-            className="flex items-center gap-4 border-b border-sl-hair px-4 py-4 last:border-b-0"
+            className="flex min-h-[74px] items-center gap-4 border-b border-sl-hair px-5 py-4 last:border-b-0"
             style={{ borderLeft: "2px solid var(--sl-hair)" }}
           >
             <div className="w-[80px] shrink-0 sm:w-[104px]">

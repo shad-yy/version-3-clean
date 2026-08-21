@@ -128,7 +128,10 @@ export function RightsPanel({
       {/* Re-keyed so a country change crossfades rather than mutating in place. */}
       <div
         key={current.code}
-        className="animate-in fade-in slide-in-from-top-1 rounded-[8px] border border-sl-line bg-sl-panel duration-[.34s]"
+        // fade-rise at .34s on country change, per the motion table. The panel is the
+        // answer; it should arrive rather than snap.
+        className="rounded-[8px] border border-sl-line bg-sl-panel"
+        style={{ animation: "fadeRise .34s cubic-bezier(.2,.7,.3,1) both" }}
       >
         {verified ? (
           <>
