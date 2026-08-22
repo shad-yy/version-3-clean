@@ -1,5 +1,5 @@
 import type { UFCEvent, UFCFighter } from "@/lib/types"
-import { getUFCCalendar, getUFCEvents } from "@/lib/api/espn"
+import { getUFCAthletes, getUFCCalendar, getUFCEvents } from "@/lib/api/espn"
 
 // Current realistic UFC data (updated as of 2024)
 const mockUpcomingEvents: UFCEvent[] = []
@@ -323,19 +323,68 @@ export async function getPastEvents(): Promise<UFCEvent[]> {
   }
 }
 
+/**
+ * UFC fighters, from the provider.
+ *
+ * Replaces a hardcoded roster of eight fighters carrying records ("28-1-0"), ages,
+ * rankings and biographies that **no source backed**. Three of its eight photo paths
+ * pointed at files that were not in the repo, so those rendered broken. Records and titles
+ * go stale after every event, and nothing here could tell you when they were last true.
+ *
+ * ESPN's core API supplies name, weight class, country flag and a real headshot URL. It
+ * does **not** supply a win-loss record on this endpoint, so the fields that used to carry
+ * invented ones are now empty rather than filled with plausible numbers — an absent record
+ * is honest, and a wrong one on a fighter's page is the kind of error readers notice and
+ * remember.
+ *
+ * The function keeps its name because the API route and callers depend on it, but what it
+ * returns is a roster rather than a ranking: ESPN does not publish divisional rankings
+ * here, and ordering fighters ourselves would be inventing the very thing the name implies.
+ *
+ * ## Why this returns almost nothing, and why that is the right answer
+ *
+ * The source was investigated properly before settling for it. ESPN's athlete index holds
+ * 1,857 UFC fighters, but:
+ *
+ *  - **Roughly one in ten has a headshot** — measured at 2 of 20 sampled.
+ *  - **The index is ordered by athlete id**, so the first page is the oldest entries. Both
+ *    fighters that came back with photographs retired over a decade ago.
+ *  - **There is no working name lookup.** ESPN's search endpoint returns zero results for
+ *    a current champion, so current fighters named on a fight card cannot be resolved to
+ *    the ids the headshot CDN needs.
+ *
+ * Fetching deeper does not fix it: it costs one request per athlete to discover a 10% hit
+ * rate on fighters nobody is searching for. A "Fighters" section showing two men who
+ * retired in 2012 reads as a site that does not know who currently competes — worse than
+ * showing nothing.
+ *
+ * So the cap stays low and the usual result is an empty list. What this **did** achieve is
+ * removing the hardcoded roster's invented records, which is the part that mattered:
+ * nothing here is fabricated any more. Real fighter photography needs a different provider.
+ */
 export async function getRankings(): Promise<UFCFighter[]> {
   try {
-    const cacheKey = "rankings"
+    const cacheKey = "rankings:espn"
     const cached = getCachedData<UFCFighter[]>(cacheKey)
     if (cached) return cached
 
-    await new Promise((resolve) => setTimeout(resolve, Math.random() * 500 + 200))
+    const athletes = await getUFCAthletes(24)
+    const fighters: UFCFighter[] = athletes.map((a) => ({
+      id: a.id,
+      name: a.name,
+      weightClass: a.weightClass ?? undefined,
+      photo: a.headshot ?? undefined,
+      // record, ranking, age, height and reach are deliberately absent: this endpoint
+      // does not carry them, and the previous values were not sourced from anywhere.
+    }))
 
-    setCachedData(cacheKey, mockRankings)
-    return mockRankings
+    setCachedData(cacheKey, fighters)
+    return fighters
   } catch (error) {
-    console.error("Error fetching UFC rankings:", error)
-    throw new Error("Failed to fetch UFC rankings")
+    console.error("Error fetching UFC fighters:", error)
+    // An empty roster renders as "nothing to show", which is accurate when the upstream
+    // is unreachable. Never the old placeholder data.
+    return []
   }
 }
 

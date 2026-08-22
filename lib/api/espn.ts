@@ -97,6 +97,83 @@ interface ESPNLeague {
   logos?: { href?: string }[]
 }
 
+/** A UFC fighter as ESPN's core API describes them. */
+export interface ESPNAthlete {
+  id: string
+  name: string
+  /** Direct headshot URL from the provider — not a constructed path. */
+  headshot: string | null
+  weightClass: string | null
+  /** Country flag, when ESPN holds one. Frequently a blank placeholder. */
+  flag: string | null
+}
+
+/**
+ * UFC fighters, with real photographs.
+ *
+ * Uses `sports.core.api.espn.com`, which is a different service from the `site.api` used
+ * for scoreboards and returns athlete **ids** — the thing that was missing. The scoreboard
+ * exposes only names and country flags, which is why headshots looked impossible earlier:
+ * the CDN path needs an id, and the endpoint being asked did not have one.
+ *
+ * ESPN hands back the headshot URL directly, so nothing is constructed here. A fighter
+ * without a photograph returns null rather than a guessed path that 404s.
+ *
+ * This replaces a hardcoded roster carrying records, ages and rankings that no source
+ * backed and that had quietly gone stale.
+ *
+ * Two round trips per fighter is why this is capped and cached hard: one page listing ids,
+ * then one detail call each. At 24 fighters that is 25 requests on a cold cache and none
+ * on a warm one.
+ */
+export async function getUFCAthletes(limit = 24): Promise<ESPNAthlete[]> {
+  const index = await espnFetch<{ items?: { $ref?: string }[] }>(
+    `https://sports.core.api.espn.com/v2/sports/mma/leagues/ufc/athletes?limit=${limit}`,
+    `espn:ufc:athletes:index:${limit}`,
+    86_400,
+  )
+
+  const ids = (index?.items ?? [])
+    .map((i) => i.$ref?.match(/\/athletes\/(\d+)/)?.[1])
+    .filter((id): id is string => Boolean(id))
+
+  if (ids.length === 0) return []
+
+  const athletes = await Promise.all(
+    ids.map((id) =>
+      espnFetch<{
+        id?: string
+        displayName?: string
+        headshot?: { href?: string }
+        weightClass?: { text?: string }
+        flag?: { href?: string }
+      }>(
+        `https://sports.core.api.espn.com/v2/sports/mma/athletes/${id}?lang=en&region=us`,
+        `espn:ufc:athlete:${id}`,
+        86_400,
+      ),
+    ),
+  )
+
+  return athletes
+    .map((a) => {
+      if (!a?.displayName) return null
+      const flag = a.flag?.href ?? null
+      return {
+        id: String(a.id ?? ""),
+        name: a.displayName,
+        headshot: a.headshot?.href ?? null,
+        weightClass: a.weightClass?.text ?? null,
+        // ESPN serves a literal "blank.png" placeholder where it has no flag; carrying
+        // that through would render an empty box that looks like a failed load.
+        flag: flag && !flag.includes("blank") ? flag : null,
+      }
+    })
+    .filter((a): a is ESPNAthlete => a !== null)
+    // A fighter with no photograph is not useful on a screen whose point is photographs.
+    .filter((a) => Boolean(a.headshot))
+}
+
 /** One scheduled UFC event, as far as the public calendar describes it. */
 export interface ESPNCalendarEvent {
   id: string

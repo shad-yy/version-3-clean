@@ -54,6 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/ufc`, priority: 0.8, changeFrequency: 'weekly', lastModified: now },
     { url: `${baseUrl}/news`, priority: 0.8, changeFrequency: 'daily', lastModified: now },
     { url: `${baseUrl}/blog`, priority: 0.7, changeFrequency: 'weekly', lastModified: now },
+    // Help answers high-intent queries with no good single answer elsewhere, so it is
+    // ranked above the FAQ rather than beside it.
+    { url: `${baseUrl}/help`, priority: 0.9, changeFrequency: 'monthly' as const, lastModified: STATIC_PAGE_UPDATED },
     { url: `${baseUrl}/faq`, priority: 0.8, changeFrequency: 'monthly' as const, lastModified: STATIC_PAGE_UPDATED },
     { url: `${baseUrl}/about`, priority: 0.5, changeFrequency: 'monthly', lastModified: STATIC_PAGE_UPDATED },
     { url: `${baseUrl}/contact`, priority: 0.5, changeFrequency: 'monthly', lastModified: STATIC_PAGE_UPDATED },

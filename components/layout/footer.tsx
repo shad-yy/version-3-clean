@@ -63,6 +63,7 @@ const COLUMNS = [
     links: [
       { name: "About", href: "/about" },
       { name: "Contact", href: "/contact" },
+      { name: "Help", href: "/help" },
       { name: "FAQ", href: "/faq" },
       { name: "Privacy", href: "/privacy" },
       { name: "Terms", href: "/terms" },
