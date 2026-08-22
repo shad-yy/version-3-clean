@@ -5,7 +5,6 @@ import { ENV } from "@/lib/config/env"
 import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
-import { lastCheckedOverall } from "@/lib/data/verification-log"
 import { PageShell, PageHeader, Section } from "@/components/sightline/page-shell"
 
 /**
@@ -29,7 +28,7 @@ import { PageShell, PageHeader, Section } from "@/components/sightline/page-shel
 
 const TITLE = "Help and questions"
 const DESCRIPTION =
-  "Why a match or title is not available where you are, why the channel differs by country, why kick-off times look wrong, and how our listings are verified."
+  "Why a match or title is not available where you are, why the channel differs by country, why kick-off times look wrong, and where our listings come from."
 
 export const metadata: Metadata = {
   title: `${TITLE} | ${SITE_NAME}`,
@@ -70,7 +69,6 @@ function QA({ q, children }: { q: string; children: React.ReactNode }) {
 export default function FaqPage() {
   const country = getViewerCountry()
   const where = countryLabel(country)
-  const lastChecked = lastCheckedOverall()
 
   /*
    * Only questions whose answers are self-contained go in the schema. A question whose
@@ -200,9 +198,9 @@ export default function FaqPage() {
       <Section title="How we know">
         <QA q="Where do the listings come from?">
           <p>
-            Broadcast rights are checked by hand against the rights holder&apos;s own
-            listing wherever possible, and each carries the date someone last confirmed it.
-            {lastChecked ? ` The most recent check anywhere was ${lastChecked}.` : ""}
+            Broadcast listings are compiled from rights holders&apos; own published
+            schedules. Rights are sold country by country and change between seasons, so
+            confirm with the broadcaster before relying on one.
           </p>
           <p>
             Film and television availability comes from TMDB&apos;s watch-provider data,
@@ -219,19 +217,10 @@ export default function FaqPage() {
             held for days at a time.
           </p>
           <p>
-            Broadcast rights are the slowest and the most human: they change by rights
-            cycle, not by minute, so they are verified by a person rather than polled. We
-            would rather show a date and let you judge it than imply a freshness we do not
-            have.
-          </p>
-        </QA>
-
-        <QA q="What does the date on a listing actually mean?">
-          <p>
-            That a person opened the broadcaster&apos;s own schedule on that date and
-            confirmed the listing was still correct. It is not the date the page was built,
-            and not the date the data was fetched. Where no date is shown, we have not
-            checked it, and we would rather say so than imply otherwise.
+            Broadcast listings are the slowest of all: rights are sold on multi-year cycles
+            and change between seasons rather than by the minute. They are compiled rather
+            than polled, so treat them as a starting point and confirm with the broadcaster
+            for anything you would be disappointed to miss.
           </p>
         </QA>
       </Section>

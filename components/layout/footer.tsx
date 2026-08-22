@@ -4,6 +4,7 @@ import { SITE_NAME } from "@/lib/config/site-url"
 import { DATA_ATTRIBUTION } from "@/lib/api/tmdb"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
 import { countryName } from "@/lib/geo/country"
+import { BROADCAST_PROVENANCE } from "@/lib/data/provenance"
 
 /**
  * Site footer, on the Sightline palette.
@@ -109,9 +110,7 @@ export function Footer() {
         <div className="mt-10 border-t border-sl-hair pt-6">
           <p className="max-w-[720px] text-[13px] leading-[1.55] text-sl-mute">
             {SITE_NAME} lists where things are shown. It transmits no video, sells no
-            subscription and bundles nobody&apos;s channels. Broadcast rights are verified
-            by hand and carry the date they were last checked; where a country is not
-            listed, we have not checked it rather than guessed.
+            subscription and bundles nobody&apos;s channels. {BROADCAST_PROVENANCE}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
             <p className="font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-dim">

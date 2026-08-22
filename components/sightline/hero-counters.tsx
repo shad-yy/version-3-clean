@@ -17,8 +17,8 @@ import { useEffect, useRef, useState } from "react"
  * wired honestly, that column would have read `0` beneath the site's strongest claim.
  *
  * The owner's call was to keep three columns and change the metric to one that is true.
- * It counts broadcast listings verified by hand — a smaller number than the mockup's, and
- * the only one of the three that can be defended line by line against the log.
+ * The three figures describe coverage rather than activity. A counter of checks performed
+ * would need daily upkeep to stay true, and the site no longer claims a checking cadence.
  *
  * `tabular-nums` throughout: without it the digits shift width as they count and the
  * whole row jitters.

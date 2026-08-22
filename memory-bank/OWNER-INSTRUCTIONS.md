@@ -294,6 +294,40 @@ find a current answer here.
   real and the claim to be sourced. Trend-following expands *what* is covered, never
   loosens *how* it is verified.
 
+## 5g-2. Nothing on this site may require daily upkeep to stay true.
+
+**Superseded rule 1a's per-item verification dates. Read this before adding any date,
+counter or freshness claim.**
+
+The site used to stamp every broadcast listing with the date a person last confirmed it.
+It was the strongest idea in the product and it was removed on 2026-08-21, because it was
+a promise that had to be kept by hand every day and nobody could keep it.
+
+**A verification date that stops being updated is worse than no date.** It looks precise,
+it looks maintained, and it silently becomes a false claim — someone trusting "Verified 31
+Jul 2026" a year later is misled by a number that was true once.
+
+So the standing test for anything shown to a reader is: **if nobody touches this for a
+year, is it still true?**
+
+*   **No per-item dates.** No "last checked", "verified on", "as of", "updated".
+*   **No badges, ticks or verified markers.** They imply a check that is not happening.
+*   **No counters of activity** — checks performed, items reviewed, updates this week.
+    There is no cadence to count.
+*   **Facts that change on multi-year cycles are fine** — a broadcaster holding a
+    competition, a competition's own start date. State them without a timestamp.
+*   **Provider data is fine**, because it refreshes itself. Describe it as what the
+    provider lists, never as something we verified.
+
+Use `lib/data/provenance.ts` for the standing wording. If hand-verification ever resumes,
+the dates come back with it — not before.
+
+**What this removed:** the rights ledger, the "just re-checked" marquee, the discovery
+dock, and the "what we changed this week" panel. All four existed only to display
+verification freshness, so with no cadence they had nothing to say.
+
+---
+
 ## 5h. Finish means optimised. Every task, no exceptions.
 
 **A feature is not done when it works. It is done when it works and the component it

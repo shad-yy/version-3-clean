@@ -6,16 +6,10 @@ import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { SchemaMarkup } from "@/components/SchemaMarkup"
 
 import { Hero } from "@/components/sightline/hero"
-import { RecheckMarquee } from "@/components/sightline/recheck-marquee"
 import { HomeBand } from "@/components/sightline/home-band"
-import { ChangedAndUnknown } from "@/components/sightline/changed-and-unknown"
 import { TrendingTitles } from "@/components/sightline/trending-titles"
 import { UpcomingFights } from "@/components/sightline/upcoming-fights"
 import { RailSkeleton } from "@/components/sightline/rail-skeleton"
-import { DiscoveryDock } from "@/components/sightline/discovery-dock"
-import { dockItemsFor } from "@/lib/data/verification-log"
-import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
-import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 
 /**
  * Homepage — design/sightline/HANDOFF.md §1.
@@ -42,7 +36,7 @@ import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 
 const TITLE = "Where can I watch it? Sport, film and TV by country"
 const DESCRIPTION =
-  "Find which service carries a match, film or series in your country. Live scores, fixtures and per-country availability, each with the date we last checked."
+  "Find which service carries a match, film or series in your country. Fixtures, live scores and per-country availability for sport, film and television."
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -52,15 +46,6 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  // The dock shows only things re-verified by hand in the last day, in the reader's own
-  // country. It renders nothing when that set is empty, which is the common case at a
-  // low verification cadence -- announcing "0 verified" would be worse than absent.
-  const viewerCountry = getViewerCountry()
-  const dockItems = dockItemsFor(
-    viewerCountry,
-    COMPETITION_RIGHTS.map((c) => ({ id: c.id, name: c.name, href: c.href })),
-  )
-
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -70,7 +55,7 @@ export default async function HomePage() {
         name: `What is ${SITE_NAME}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${SITE_NAME} answers one question: where can I watch this, from where I am. It covers sport, film and television, naming the service that carries something in your country and the date that answer was last checked.`,
+          text: `${SITE_NAME} answers one question: where can I watch this, from where I am. It covers sport, film and television, naming the service that carries something in your country, and saying plainly where we hold nothing.`,
         },
       },
       {
@@ -78,7 +63,7 @@ export default async function HomePage() {
         name: "How often is the information updated?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Scores, fixtures and league tables update continuously from live data. Broadcast rights are verified by hand and carry the date they were last confirmed, because rights change by rights cycle rather than by minute.",
+          text: "Scores, fixtures and league tables update continuously from live data. Broadcast listings are compiled from rights holders' own published schedules and change between seasons rather than by the minute.",
         },
       },
       {
@@ -118,7 +103,6 @@ export default async function HomePage() {
         full-width text bands became four sections with different weights.
       */}
       <Hero />
-      <RecheckMarquee />
 
       <Suspense fallback={null}>
         <HomeBand />
@@ -137,10 +121,6 @@ export default async function HomePage() {
       <Suspense fallback={<RailSkeleton kind="card" />}>
         <UpcomingFights />
       </Suspense>
-
-      <ChangedAndUnknown />
-
-      <DiscoveryDock items={dockItems} countryName={countryLabel(viewerCountry)} />
     </div>
   )
 }

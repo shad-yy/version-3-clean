@@ -8,7 +8,6 @@ import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { countryName } from "@/lib/geo/country"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
-import { lastCheckedForCountry } from "@/lib/data/verification-log"
 import {
   buildTitleSlug,
   getAvailableRegions,
@@ -44,7 +43,7 @@ import { CompetitionBadge } from "@/components/sightline/competition-badge"
 
 export const revalidate = 21600
 
-/** Pre-render the countries we have hand-verified. The rest render on demand. */
+/** Pre-render the countries we hold listings for. The rest render on demand. */
 export async function generateStaticParams() {
   const verified = new Set(
     COMPETITION_RIGHTS.flatMap((c) => c.listings.map((l) => l.country.toLowerCase())),
@@ -74,7 +73,7 @@ export async function generateMetadata({
   if (!resolved) return { title: "Country not found" }
 
   const title = `Where to watch in ${resolved.name}`
-  const description = `Which services carry films, series and sport in ${resolved.name} — with the date each broadcast listing was last verified by hand.`
+  const description = `Which services carry films, series and sport in ${resolved.name} — compiled from the rights holders' own schedules.`
   const url = `${ENV.BASE_URL}/where-to-watch/${params.country.toLowerCase()}`
 
   return {
@@ -92,8 +91,6 @@ async function SportSection({ code, name }: { code: string; name: string }) {
       .map((l) => ({ competition, listing: l })),
   )
 
-  const checked = lastCheckedForCountry(code)
-
   if (rows.length === 0) {
     return (
       <Section title="Sport">
@@ -109,13 +106,6 @@ async function SportSection({ code, name }: { code: string; name: string }) {
   return (
     <Section
       title="Sport"
-      aside={
-        checked ? (
-          <span className="font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mute">
-            Last checked {checked}
-          </span>
-        ) : undefined
-      }
     >
       <RowList>
         {rows.map(({ competition, listing }) => (
@@ -127,7 +117,7 @@ async function SportSection({ code, name }: { code: string; name: string }) {
             title={competition.name}
             meta={listing.streamingOn ? `Streams on ${listing.streamingOn}` : undefined}
             right={listing.broadcaster}
-            rightNote="Verified by hand"
+            rightNote={undefined}
           />
         ))}
       </RowList>

@@ -284,8 +284,8 @@ export function HeroSearch({
                   </p>
                   {!loading && (
                     <p className="mt-1.5 max-w-[460px] text-[12.5px] leading-[1.5] text-sl-mute">
-                      We hold 139 countries for film and TV, and hand-verified rights for 2
-                      competitions. If it should be here, tell us.
+                      We hold 139 countries for film and TV, and broadcast listings for a
+                      small number of competitions. If it should be here, tell us.
                     </p>
                   )}
                 </div>

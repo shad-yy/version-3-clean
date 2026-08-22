@@ -37,8 +37,6 @@ export interface FixtureRowData {
   artwork?: string | null
   /** The broadcaster in the viewer's country, when we hold one. */
   broadcaster?: string | null
-  /** Provenance for that listing. Never rendered as a badge — a mono date only. */
-  verified?: string | null
   isLive?: boolean
 }
 
@@ -111,12 +109,6 @@ export function FixtureList({
                 <span className="block truncate text-[13.5px] text-sl-mid">
                   {f.broadcaster ?? `Not verified in ${countryText}`}
                 </span>
-                {f.verified && (
-                  // A mono date. Never a tick, never coloured — design opinion 3.
-                  <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[.1em] text-sl-dim">
-                    Checked {f.verified}
-                  </span>
-                )}
               </span>
 
               <button
@@ -171,17 +163,6 @@ export function FixtureList({
                         Venue
                       </p>
                       <p className="text-[14px] text-sl-text">{f.venue}</p>
-                    </div>
-                  )}
-
-                  {f.verified && (
-                    <div className="ml-auto text-right">
-                      <p className="mb-1.5 font-mono text-[9.5px] uppercase tracking-[.14em] text-sl-mute">
-                        Checked by hand
-                      </p>
-                      <p className="font-mono text-[13px] uppercase tracking-[.06em] text-sl-mid">
-                        {f.verified}
-                      </p>
                     </div>
                   )}
                 </div>

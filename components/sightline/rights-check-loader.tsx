@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
  *
  * **Purpose: make the wait explain the product instead of hiding it.** A generic spinner
  * says "please hold". This says what is actually being done — region, then title, then
- * catalogues, then hand-verified rights — which is the one moment a reader is guaranteed
+ * catalogues, then broadcast rights — which is the one moment a reader is guaranteed
  * to be looking at the screen with nothing else to read.
  *
  * ## The stages are real work, shown on a timer
@@ -72,7 +72,7 @@ function stages(regionCount: number): Stage[] {
     },
     {
       title: "Confirming broadcast rights",
-      sub: "Hand-verified competitions only",
+      sub: "Competitions we hold listings for",
       pct: 96,
       legend: "Rights",
     },

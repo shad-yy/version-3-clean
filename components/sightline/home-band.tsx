@@ -2,8 +2,8 @@ import Link from "next/link"
 import Image from "next/image"
 import { ENV } from "@/lib/config/env"
 import { COMPETITION_RIGHTS } from "@/lib/data/broadcast-rights"
-import { lastCheckedForCountry } from "@/lib/data/verification-log"
 import { countryName } from "@/lib/geo/country"
+import { BROADCAST_PROVENANCE_SHORT } from "@/lib/data/provenance"
 import { getTrendingTitles, isTmdbConfigured, tmdbImage } from "@/lib/api/tmdb"
 import { TeamBadge } from "@/components/sightline/team-badge"
 import { LocalTime } from "@/components/ui/local-time"
@@ -12,7 +12,7 @@ import { LocalTime } from "@/components/ui/local-time"
  * The homepage two-column band — design_handoff_sightline_ui/README.md §3a.4.
  *
  * Left (`flex: 1.35`) is the live feed inside a card with a rotating border beam. Right
- * (`flex: 1`) stacks the hand-verified rights panel over an editorial promo card.
+ * (`flex: 1`) stacks the broadcast listings panel over an editorial promo card.
  *
  * ## The beam appears exactly once
  *
@@ -26,7 +26,7 @@ import { LocalTime } from "@/components/ui/local-time"
  * frequently zero, and a card that only looks right on a Saturday is the wrong card. The
  * empty body keeps the same geometry and states what is true — design opinion 2, empty
  * states are answers rather than errors — and the beam keeps turning, because the feed is
- * still live in the sense that matters: it is being checked.
+ * still the one thing on the page that changes on its own.
  */
 
 interface Fixture {
@@ -203,7 +203,7 @@ export async function HomeBand() {
           <div className="rounded-[9px] border border-sl-line bg-sl-panel">
             <div className="border-b border-sl-hair px-4 py-[13px]">
               <h2 className="font-mono text-[10.5px] uppercase tracking-[.16em] text-sl-mid">
-                Hand-verified broadcast rights
+                Broadcast listings
               </h2>
             </div>
 
@@ -226,21 +226,14 @@ export async function HomeBand() {
                     <p className="mt-0.5 truncate text-[12.5px] text-sl-mute">
                       {casters.join(" · ")}
                     </p>
-                    {/* A mono date. Never a tick, never coloured — design opinion 3. */}
-                    {lastCheckedForCountry(code) && (
-                      <p className="mt-1.5 font-mono text-[9.5px] uppercase tracking-[.1em] text-sl-dim">
-                        Verified {lastCheckedForCountry(code)}
-                      </p>
-                    )}
                   </Link>
                 )
               })}
             </div>
 
-            {/* The honest gap, stated on the screen — design opinion 7. */}
+            {/* One static line. Nothing here needs maintaining to stay true. */}
             <p className="border-t border-sl-hair px-4 py-3 text-[12.5px] leading-[1.5] text-sl-mute">
-              Everywhere else — Germany, Spain, Japan and 130 more — is not verified. We
-              show nothing rather than guess.
+              {BROADCAST_PROVENANCE_SHORT}
             </p>
           </div>
 

@@ -36,18 +36,18 @@ export async function Hero() {
   const countryText = countryLabel(country)
 
   /*
-   * Stats, all three read from real data.
+   * Stats, all three read from real data and none of them time-bound.
    *
-   * The handoff's third column was "4,128 checks in the last 7 days". The verification
-   * log holds seven entries from a single day, so that metric is genuinely zero and the
-   * number was sample data the designer flagged as representative. Counting listings
-   * verified by hand is smaller and defensible line by line. See DECISIONS.md.
+   * The handoff wanted "4,128 checks in the last 7 days" here. That was sample data, and
+   * the site no longer claims a checking cadence at all — a counter of checks is exactly
+   * the kind of number that needs daily upkeep to stay true. These three describe coverage
+   * instead, which changes only when the data does.
    */
   const listings = COMPETITION_RIGHTS.reduce((n, c) => n + c.listings.length, 0)
   const stats: HeroStat[] = [
     { value: regions.length, label: "Countries for film & TV" },
-    { value: COMPETITION_RIGHTS.length, label: "Competitions hand-verified" },
-    { value: listings, label: "Broadcast listings verified by hand" },
+    { value: COMPETITION_RIGHTS.length, label: "Competitions covered" },
+    { value: listings, label: "Broadcast listings held" },
   ]
 
   return (
@@ -97,7 +97,7 @@ export async function Hero() {
           style={{ animation: "wordIn .62s cubic-bezier(.2,.7,.3,1) 372ms both" }}
         >
           One lookup for sport, film and television. We tell you which service carries it
-          where you are — and the date we last checked.
+          where you are, and say plainly where we hold nothing.
         </p>
 
         <div style={{ animation: "wordIn .62s cubic-bezier(.2,.7,.3,1) 424ms both" }}>

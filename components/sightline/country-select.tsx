@@ -208,7 +208,11 @@ export function CountrySelect({
             placeholder="Search countries"
             aria-label="Search countries"
             aria-controls="country-listbox"
-            className="h-9 w-full rounded-[6px] border border-sl-chip-border bg-sl-surface pl-8 pr-3 text-[13px] text-sl-text placeholder:text-sl-dim focus:border-sl-amber focus:outline-none focus:ring-[3px] focus:ring-sl-amber/[.13]"
+            // `focus:outline-none` alone leaves the browser's own :focus-visible ring in
+            // some engines, which paints blue over an amber design. `outline-none` on the
+            // base state plus an explicit focus-visible ring makes the amber the only ring
+            // that can appear.
+            className="h-9 w-full rounded-[6px] border border-sl-chip-border bg-sl-surface pl-8 pr-3 text-[13px] text-sl-text outline-none placeholder:text-sl-dim focus:border-sl-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sl-amber/60"
           />
         </div>
       </div>

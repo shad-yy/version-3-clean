@@ -69,7 +69,7 @@ export const HELP_TOPICS: HelpTopic[] = [
     body: [
       "Within one country, a competition's rights are rarely sold whole. They are broken into packages, split by kick-off slot, by pick order, or by platform, and different buyers take different packages. That is why following one league can require more than one subscription, and why the answer changes fixture by fixture rather than season by season.",
       "It is also why a competition guide that names a single broadcaster is usually wrong for some of its matches. We list the broadcaster per competition and per country, and where a competition is split we name each holder we have confirmed.",
-      "Where we have not verified your country, we show nothing. A named broadcaster you cannot actually watch on is worse than an admitted gap — it costs you the kick-off.",
+      "Where we hold nothing for your country, we show nothing. A named broadcaster you cannot actually watch on is worse than an admitted gap — it costs you the kick-off.",
     ],
     links: [
       { label: "Competition guides", href: "/watch" },
@@ -106,12 +106,12 @@ export const HELP_TOPICS: HelpTopic[] = [
     slug: "listing-out-of-date",
     question: "You list a service but it is not there any more",
     short:
-      "Rights cycles turn over constantly and out of step between countries, so any listing decays — which is why every one of ours carries the date it was checked.",
+      "Rights cycles turn over constantly and out of step between countries, so any listing decays. Ours are compiled from rights holders' published schedules, which means they are a strong starting point rather than a guarantee for a given week.",
     category: "Both",
     body: [
       "Broadcast rights are sold on multi-year cycles that expire at different times in different markets. A competition can change hands in one country in a year when nothing changes anywhere else, and streaming licences lapse per territory on their own timetable.",
-      "This is the reason every broadcast listing here carries the date a person last confirmed it. A listing without a date is asking you to trust a number that decays silently. With a date, you can judge for yourself how much weight it still carries.",
-      "If you find one that has gone stale, telling us is genuinely useful — it is corrected by hand, and the correction is recorded rather than quietly swapped.",
+      "So treat any listing — ours or anyone's — as a strong starting point rather than a guarantee for a given week. For anything you would be disappointed to miss, the broadcaster's own schedule is the last word.",
+      "If you find one that has gone stale, telling us is genuinely useful — it gets corrected.",
     ],
     links: [{ label: "Contact us", href: "/contact" }],
   },
@@ -131,12 +131,12 @@ export const HELP_TOPICS: HelpTopic[] = [
     slug: "no-listing-for-my-country",
     question: "Why do you show nothing for my country?",
     short:
-      "Because we have not checked it yet. Broadcast rights here are confirmed by a person, one competition and one country at a time.",
+      "Because we do not hold a listing for it yet. Our broadcast coverage is built competition by competition and country by country.",
     category: "Both",
     body: [
-      "Our sports listings are not scraped or inferred. Someone opens the rights holder's own schedule, confirms what carries a competition in a given country, and records the date. That is slow, and it means our coverage is narrower than a site willing to guess.",
+      "Our sports listings are compiled from rights holders' own published schedules rather than inferred from elsewhere. That keeps them narrow: we cover the competitions and countries we have data for, and nothing beyond them.",
       "So an empty answer means we have not reached your country, not that the competition is unavailable there. It almost certainly has a broadcaster; we simply have not confirmed which, and would rather leave a gap than fill it with something plausible.",
-      "Film and television availability works differently: it comes from a metadata provider covering 139 countries, so the coverage is far wider — but it carries no verification date, and we never describe it as verified. It is what the provider currently lists.",
+      "Film and television availability works differently: it comes from a metadata provider covering 139 countries, so the coverage is far wider. It is what the provider currently lists for your country, and it changes as licences move between services.",
     ],
     links: [{ label: "Availability by country", href: "/where-to-watch" }],
   },

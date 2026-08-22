@@ -6,7 +6,6 @@ import { SITE_NAME } from "@/lib/config/site-url"
 import { buildOpenGraph } from "@/lib/seo/open-graph"
 import { getViewerCountry, countryLabel } from "@/lib/geo/country"
 import { FixtureList } from "@/components/sightline/fixture-list"
-import { lastCheckedForCountry } from "@/lib/data/verification-log"
 import { resolveRights } from "@/lib/data/resolve-rights"
 import { unifiedSportsAPI } from "@/lib/api/unified-sports-api"
 import { LocalTime } from "@/components/ui/local-time"
@@ -122,7 +121,6 @@ async function FixturesByDate() {
                 time: f.time ? String(f.time) : undefined,
                 artwork: f.artwork,
                 broadcaster: forViewer?.listings?.[0]?.broadcaster ?? null,
-                verified: viewerCountry ? lastCheckedForCountry(viewerCountry) : null,
                 isLive: f.isLive,
               }
             })}

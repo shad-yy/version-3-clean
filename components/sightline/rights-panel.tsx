@@ -161,11 +161,6 @@ export function RightsPanel({
             <div className="border-t border-sl-hair px-5 py-3.5">
               {/* Verified is a mono date and nothing else -- no tick, no colour.
                   Design opinion 3. */}
-              {verifiedDate && (
-                <p className="mb-1.5 font-mono text-[10.5px] uppercase tracking-[.12em] text-sl-mute">
-                  Checked by hand · {verifiedDate}
-                </p>
-              )}
               <p className="text-[13px] leading-[1.55] text-sl-mute">
                 These are channel listings, not links to video. Sightline plays nothing.
               </p>
